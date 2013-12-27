@@ -1,0 +1,30 @@
+<template name="tmpl_person_add">
+
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h2 class="panel-title">Add Person</h2>
+		</div>
+		<div class="panel-body">
+
+			<form class="add modal-nav-box box-hide form-horizontal">
+				{{#constant}}
+
+				<!-- COMMON FIELDS -->
+				{{form_input "Name" "name" "" canCreatePerson true}}
+				{{form_date "Birth Date" "birth_date" "" canCreatePerson true}}
+
+				{{/constant}}
+				<div class="form-group">
+					<div class="col-offset-2 col-sm-4">
+						{{#if canCreatePerson}}
+							<button type="button" class="btn btn-primary" id="btnCreatePerson">Create</button>
+						{{/if}}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</template>
+
+

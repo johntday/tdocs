@@ -1,0 +1,57 @@
+<template name="tmplSidebar">
+	{{> tmpl_projects_summary}}
+	{{> tmpl_user_notices_summary}}
+	{{> tmpl_user_todos_summary}}
+</template>
+
+<template name="tmpl_projects_summary">
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h3 class="panel-title"><button id="hide-sidebar" type="button" class="btn btn-default btn-sm" title="Hide side-bar"><span
+					class="glyphicon glyphicon-chevron-left"></span></button> Projects</h3>
+		</div>
+		<div class="panel-body">
+			<ol>
+				<li><a href="#">Saks Integration</a></li>
+				<li><a href="#">AMS Documentation</a></li>
+			</ol>
+			<!--
+			<a href="#">See them all</a></li>
+			-->
+		</div>
+	</div>
+</template>
+
+<template name="tmpl_user_notices_summary">
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h3 class="panel-title">Notifications</h3>
+		</div>
+		<div class="panel-body">
+			<ol>
+				<li><a href="#">Your doc was updated</a></li>
+				<li><a href="#">You need to review doc</a></li>
+			</ol>
+			<!--
+			<a href="#">See them all</a></li>
+			-->
+		</div>
+	</div>
+</template>
+
+<template name="tmpl_user_todos_summary">
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h3 class="panel-title">ToDos</h3>
+		</div>
+		<div class="panel-body">
+			<ol>
+				<li><a href="#">Do this</a></li>
+				<li><a href="#">Do that</a></li>
+			</ol>
+			<!--
+			<a href="#">See them all</a></li>
+			-->
+		</div>
+	</div>
+</template>

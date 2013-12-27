@@ -1,0 +1,15 @@
+{
+  "packages": {
+    "spin": {},
+    "mypaginator": {
+      "path": "/home/user/GitHub/meteor-mypaginator"
+    },
+    "mytimeline": {
+      "path": "/home/user/GitHub/meteor-mytimeline"
+    },
+    "iron-router": "0.5.4",
+    "bootstrap-3": {},
+    "moment": {},
+    "bootstrap-datepicker2": {}
+  }
+}

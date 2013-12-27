@@ -1,0 +1,42 @@
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Tdocs</title>
+	<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon114.png">
+</head>
+
+<template name="layout">
+
+	<!-- HEADER
+	================================================== -->
+	{{> tmplHeader}}
+
+	<div class="container bs-docs-container">
+		<div style="padding-top: 30px;">	</div>
+		<div class="row">
+			<!-- ERRORS
+			================================================== -->
+			{{> tmplErrors}}
+
+			<!-- SIDEBAR
+			================================================== -->
+			{{#if hasSidebar}}
+			<div class="col-sm-4">
+				{{> tmplSidebar}}
+			</div>
+			{{/if}}
+
+			<!-- MAIN
+			================================================== -->
+			<div class="{{mainDivClass}}" role="main">
+				{{yield}}
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer
+	================================================== -->
+	{{> tmplFooter}}
+
+</template>

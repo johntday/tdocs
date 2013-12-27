@@ -1,0 +1,63 @@
+<template name="tmpl_person_detail">
+	{{> tmpl_breadcrumbs breadcrumbs}}
+
+	<ul class="nav nav-tabs nav-justified">
+		<li class="active"><a href="#">Person</a></li>
+	</ul>
+
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h2 class="panel-title">{{name}}
+				<div class="pull-right" style="margin-top: -5px;">
+					{{glyphicon "heart" "heart-empty" "icon-heart" isFav "Add/remove from favs"}}
+					{{#if canEdit}}
+					<button type="button" class="btn btn-default btn-sm" id="btnEditToggle">&nbsp;&nbsp;Edit&nbsp;&nbsp;</button>
+					{{/if}}
+				</div>
+				<!--<div class="clearfix"></div>-->
+			</h2>
+		</div>
+		<div class="panel-body">
+
+			<form class="add modal-nav-box box-hide form-horizontal" id="form_person">
+
+				{{#if isAdmin}}
+					{{form_input "_id" "_id" _id false}}
+					{{form_select "Status" "status" status statusOptions "" canEditAndEditToggle true}}
+				{{/if}}
+
+				<!-- COMMON FIELDS -->
+				{{form_input "Name" "name" name canEditAndEditToggle true}}
+				{{form_date "Birth Date" "birth_date" formattedBirthDate canEditAndEditToggle false}}
+
+				{{form_static "Author" "author" author false}}
+				{{#if isAdmin}}
+					{{form_static "Author UserId" "userId" userId true}}
+				{{/if}}
+				{{form_static "Favs" "favs_cnt" favs_cnt true}}
+				{{form_static "Clicks" "click_cnt" click_cnt true}}
+				{{form_static "Created" "created" createdAgo false}}
+				{{form_static "Updated" "updated" updatedAgo false}}
+
+				{{#if hasMovies}}
+					<h3>Movies</h3>
+					<ul>
+						{{#each movies}}
+							<li><a href="/sciFiMovies/{{movieId}}">{{title}}{{#if year}}({{year}}){{/if}}</a></li>
+						{{/each}}
+					</ul>
+				{{/if}}
+
+				<div class="form-group">
+					<div class="col-offset-2 col-sm-4">
+						{{#if canEditAndEditToggle}}
+							<button type="button" class="btn btn-primary" id="btnUpdatePerson">Update</button>
+							<button type="button" class="btn btn-danger" id="btnDeletePerson">Delete</button>
+						{{/if}}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</template>

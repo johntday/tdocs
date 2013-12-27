@@ -1,0 +1,79 @@
+// UPGRADE TO v0.6.x ???
+Router.configure({
+	//layoutTemplate : 'layout', //v0.6.0
+	layout : 'layout',
+	loadingTemplate: 'loading',
+	notFoundTemplate: 'not_found'
+//	yieldTemplates: {
+		//'footer': { to: 'footer' },
+		//'tmplHeader': { to: 'header' }
+//	}
+});
+
+Router.map(function () {
+	this.route('tmplHome'                 ,{path: '/'});
+	this.route('tmpl_about'               ,{path: '/about'});
+	this.route('tmpl_help'                ,{path: '/help'});
+	this.route('tmpl_settings'            ,{path: '/settings'});
+
+	/**
+	 * Tdocs
+	 */
+	this.route('tmpl_tdocs'               ,{path: '/tdocs'});
+	this.route('tmpl_tdoc_add'            ,{path: '/tdocAdd'});
+	this.route('tmpl_tdoc_detail', {
+		path  : '/tdocs/:_id',
+		waitOn: function () {
+			updateClickCnt(Tdocs, this.params._id);
+			Session.set('selected_tdoc_id', this.params._id);
+			return Meteor.subscribe('pubsub_selected_tdoc', this.params._id);
+		},
+		data  : function () {
+			var tdoc = Tdocs.findOne(this.params._id);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"Tdocs", link:"/tdocs", isActive:false},
+				{title:tdoc.title, link:"", isActive:true}
+			]});
+			return tdoc;
+		}
+	});
+
+	/**
+	 * Tdocs / Diagrams
+	 */
+//	this.route('tmpl_tdoc_diagrams', {
+//		path  : '/tdocs/diagrams/:_id',
+//		waitOn: function () {
+//			Session.set('selected_tdoc_id', this.params._id);
+//			return Meteor.subscribe('pubsub_selected_tdoc', this.params._id);
+//			//return Meteor.subscribe('pubsub_selected_tdoc_diagrams', this.params._id);
+//		},
+//		data  : function () {
+//			return MovieTimelines.find({movieId: this.params._id, userId: { $in: ["admin", Meteor.userId()] } } );
+//		}
+//	});
+
+	/**
+	 * Persons
+	 */
+	this.route('tmpl_persons' ,{path: '/persons'});
+	this.route('tmpl_person_add'          ,{path: '/personAdd'});
+	this.route('tmpl_person_detail', {
+		path  : '/person/:_id',
+		waitOn: function () {
+			updateClickCnt(Persons, this.params._id);
+			Session.set('selected_person_id', this.params._id);
+			return Meteor.subscribe('pubsub_selected_person', this.params._id);
+		},
+		data  : function () {
+			var person = Persons.findOne(this.params._id);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"People", link:"/persons", isActive:false},
+				{title:person.name, link:"", isActive:true}
+			]});
+			return person;
+		}
+	});
+});

@@ -1,0 +1,64 @@
+<template name="tmplHeader">
+	<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="/" class="navbar-brand">Tdocs</a>
+			</div>
+			<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+				<ul class="nav navbar-nav">
+					{{#if hasNoSidebar}}
+					<li>
+						<button id="show-sidebar" type="button" class="btn btn-default navbar-btn" title="Show side-bar"><span class="glyphicon glyphicon-chevron-right"></span>
+						</button>
+					</li>
+					{{/if}}
+					<li class="{{activeRouteClass  '/persons'}}">
+						<a href="/persons" title="Browse people in library">People</a>
+					</li>
+					<li class="{{activeRouteClass  '/tdocs'}}">
+						<a href="/tdocs" title="Browse all tdocs in library">All-Tdocs</a>
+					</li>
+					{{#if currentUser}}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/tdocAdd" title="Create new Tdoc">Create Tdoc</a></li>
+							<li><a href="/personAdd" title="Create new Person">Create Person</a></li>
+						</ul>
+					</li>
+
+   					{{/if}}
+					{{#if isAdmin}}
+					<!-- ADMIN ACTIONS -->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" title="Nothing here yet">Nothing here yet</a></li>
+						</ul>
+					</li>
+					{{/if}}
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Closet <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/help">Help</a></li>
+							<li><a href="/about">About</a></li>
+							<li><a href="/settings">Settings</a></li>
+						</ul>
+					</li>
+
+					<li> <p class="navbar-text">{{loginButtons}}</p> </li>
+				</ul>
+
+			</nav>
+		</div>
+	</header>
+</template>

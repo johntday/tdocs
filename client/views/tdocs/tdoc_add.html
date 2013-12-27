@@ -1,0 +1,29 @@
+<template name="tmpl_tdoc_add">
+
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h2 class="panel-title">Add Tdoc</h2>
+		</div>
+		<div class="panel-body">
+
+			<form class="add modal-nav-box box-hide form-horizontal">
+				{{#constant}}
+
+				{{form_input "Title" "title" "" canCreateTdoc true}}
+				{{form_textarea "Abstract" "abstract" "" canCreateTdoc true}}
+
+				{{/constant}}
+				<div class="form-group">
+					<div class="col-offset-2 col-sm-4">
+						{{#if canCreateTdoc}}
+							<button type="button" class="btn btn-primary" id="btnCreateTdoc">Create</button>
+						{{/if}}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</template>
+
+
