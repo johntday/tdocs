@@ -6,9 +6,6 @@
       "mypaginator": {
         "path": "../meteor-mypaginator"
       },
-      "mytimeline": {
-        "path": "../meteor-mytimeline"
-      },
       "iron-router": {
         "version": "0.5.4"
       },
@@ -24,9 +21,6 @@
       },
       "mypaginator": {
         "path": "../meteor-mypaginator"
-      },
-      "mytimeline": {
-        "path": "../meteor-mytimeline"
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
