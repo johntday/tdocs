@@ -4,7 +4,8 @@
     "basePackages": {
       "spin": {},
       "mypaginator": {
-        "path": "../meteor-mypaginator"
+        "git": "https://github.com/johntday/meteor-mypaginator.git",
+        "branch": "master"
       },
       "iron-router": {
         "version": "0.5.4"
@@ -20,7 +21,9 @@
         "commit": "fd3a2871a69442848b4b4e74f5e1ae28fa4a95a4"
       },
       "mypaginator": {
-        "path": "../meteor-mypaginator"
+        "git": "https://github.com/johntday/meteor-mypaginator.git",
+        "branch": "master",
+        "commit": "7626f423cc37b0aea4193b95a0b75be2f01f9fa8"
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
