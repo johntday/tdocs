@@ -2,7 +2,7 @@
   "packages": {
     "spin": {},
     "mypaginator": {
-		"git": "https://github.com/johntday/meteor-mypaginator.git"
+      "git": "https://github.com/johntday/meteor-mypaginator.git"
     },
     "iron-router": "0.5.4",
     "bootstrap-3": {},

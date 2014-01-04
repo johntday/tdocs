@@ -46,19 +46,13 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'Please add a valid name');
 		var personWithSameName = Persons.findOne( {name: {$regex: properties.name, $options: 'i'}} );
 
-		if (personWithSameName) {
-			//Meteor.call('upvotePost', postWithSameLink._id);
+		if (personWithSameName)
 			throw new Meteor.Error(603, 'Already have a person with name "' + properties.name + '"');
-		}
 
 		var person = _.extend(properties, {
 			userId: userId,
 			author: getUserDisplayName(user),
 			created: getNow(),
-			votes: 0,
-			comments: 0,
-			baseScore: 0,
-			score: 0,
 			status: (isAdmin(user)) ? STATUS_APPROVED : STATUS_PENDING
 		});
 
@@ -79,8 +73,8 @@ Meteor.methods({
 	updatePerson: function(_id, properties){
 		//TO-DO: make post_edit server-side?
 	},
-	clickedPerson: function(post){
-		Persons.update(post._id, { $inc: { clicks: 1 }});
+	clickedPerson: function(_id){
+		Persons.update(_id, { $inc: { clicks: 1 }});
 	},
 	deletePerson: function(_id) {
 		Persons.remove(_id);
