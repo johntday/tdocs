@@ -1,6 +1,6 @@
 Template.tmpl_tdoc_item.helpers({
     thumbnail: function() {
-	    return (this.thumbnail) ? this.thumbnail : "/img/Minion-Amazed-icon91.png";
+	    return (this.thumbnail) ? this.thumbnail : "/img/BumbleBee_60x60.png";
     },
 	tdocLink: function() {
 		return "/tdocs/" + this._id;

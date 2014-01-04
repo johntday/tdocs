@@ -1,17 +1,26 @@
 <template name="tmpl_person_item">
-	<div class="post">
-		<div class="post-content">
-			<!--<img src="{{thumbnail}}" />-->
-			<h4>
-				<a href="{{personLink}}">{{name}}</a>
-			</h4>
-			<span>{{birth_date}}</span>
-			
-			<p>
-				<strong>views:</strong>{{click_cnt}}
-				<strong>favs:</strong>{{favs_cnt}}
-			</p>
 
+	<div class="post">
+		<div class="media">
+			<a class="pull-left" href="{{personLink}}">
+				<img class="media-object" src="{{thumbnail}}" alt="thumbnail">
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading">{{name}}</h4>
+				<span>{{birth_date}}</span><br/>
+				{{#if isFav}}
+					<span class="glyphicon glyphicon-heart" title="My fav"></span>
+				{{/if}}
+				{{#if isStar}}
+					<span class="glyphicon glyphicon-star"></span>
+				{{/if}}
+				<p>
+					<strong>views:</strong>{{click_cnt}}
+					<strong>favs:</strong>{{favs_cnt}}
+					<strong>stars:</strong>{{stars_cnt}}
+				</p>
+			</div>
 		</div>
 	</div>
+
 </template>

@@ -7,12 +7,12 @@ Meteor.startup(function () {
 	if(!u)
 		Accounts.createUser({username: "admin", password: "cocoapuffs", profile: {name: "Stanley Kubrick"}});
 	// Ben Venker
-	u = Meteor.users.findOne({username: "ben.venker"}); // find Ben Venker
+	u = Meteor.users.findOne({username: "bvenker"}); // find Ben Venker
 	if(!u)
-		Accounts.createUser({username: "ben.venker", password: "cocoapuffs", profile: {name: "Ben Venker"}});
+		Accounts.createUser({username: "bvenker", password: "cocoapuffs", profile: {name: "Ben Venker"}});
 	// John T Day
-	u = Meteor.users.findOne({username: "john.t.day"}); // find John Day
+	u = Meteor.users.findOne({username: "johntday"}); // find John Day
 	if(!u)
-		Accounts.createUser({username: "john.t.day", password: "cocoapuffs", profile: {name: "John T Day"}});
+		Accounts.createUser({username: "johntday", password: "cocoapuffs", profile: {name: "John T Day"}});
 
 });
