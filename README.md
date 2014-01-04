@@ -26,3 +26,6 @@ the ones in subdirectories are loaded earlier.
 - **tmpl**: name of template
 - **coll**: name of Collection
 
+## Dependencies
+ - **Raphael**: 2.1.2
+ - **js-sequence-diagrams**: 1.0.4
