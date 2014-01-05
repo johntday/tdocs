@@ -1,3 +1,14 @@
+//var codeValue = this.code;
+//var codeDep = new Deps.Dependency();
+function isError(code) {
+	try {
+		Diagram.parse( code );
+	} catch (err) {
+		return true;
+	}
+	return false;
+};
+
 Template.tmpl_diagram_detail.helpers({
 	isAdmin: function() {
 		return isAdmin();
@@ -45,12 +56,8 @@ Template.tmpl_diagram_detail.helpers({
 	stars_cnt: function() {
 		return (this.stars_cnt && this.stars_cnt > -1) ? this.stars_cnt : 0;
 	},
-	obj: function() {
-		return {obj: {_id: this._id}};
-	},
-	rows: function() {
-		var codeArray = (this.code) ? this.code.split('\r?\n') : [];
-		return (codeArray) ? codeArray.length + 4 : 4;
+	code: function() {
+		return this.code;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -208,15 +215,33 @@ Template.tmpl_diagram_detail.rendered = function() {
 		$("#btnEditToggle").removeClass("active");
 	}
 
+	//codeDep.depend();
+	//codeValue = codeValue || this.code;
+	Session.set('diagram_code', this.data.code);
+	Session.set('diagram_id', this.data._id);
+	try {
+		var diagram = Diagram.parse( this.data.code );
+		diagram.drawSVG('diagram');
+	} catch (err) {
+		throwError('There is a problem with your "Diagram Text"');
+	}
+	$('#title').focus();
 	$('#code').focus();
 };
 
-//function expandTextarea(id) {
-//	var $element = id.get(0);
-//
-//	$element.addEventListener('keyup', function() {
-//		this.style.overflow = 'hidden';
-//		this.style.height = 0;
-//		this.style.height = this.scrollHeight + 'px';
-//	}, false);
-//};
+Template.tmpl_diagram_detail.created = function() {
+	codeInterval = Meteor.setInterval(function(){
+		var currentCodeValue = $('#code').val();
+		if ( Session.get('form_update') && (currentCodeValue != Session.get('diagram_code')) && !isError(currentCodeValue) ) {
+			console.log("currentCodeValue != Session.get('diagram_code')");
+			//codeValue = currentCodeValue;
+
+			Diagrams.update(Session.get('diagram_id'), {$set: {code: currentCodeValue}} );
+			//codeDep.changed();
+		}
+	}, 1000);
+};
+
+Template.tmpl_diagram_detail.destroyed = function() {
+	Meteor.clearInterval(codeInterval);
+};

@@ -63,6 +63,5 @@ Template.tmpl_diagram_add.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_diagram_add.rendered = function() {
-	$('#code').focus();
 	$('#title').focus();
 };
