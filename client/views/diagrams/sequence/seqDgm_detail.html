@@ -1,11 +1,13 @@
-<template name="tmpl_tdoc_detail">
+<template name="tmpl_diagram_detail">
 	{{> tmpl_breadcrumbs breadcrumbs}}
 
 	<ul class="nav nav-tabs nav-justified">
-		<li class="active"><a href="#">Tdoc</a></li>
+		<li class="active"><a href="#">Diagram</a></li>
 		<li><a href="#">Diagrams</a></li>
 		<li><a href="#">Glossary</a></li>
 	</ul>
+
+	<div class="col-sm-6">
 
 	<div class="panel panel-purple">
 		<div class="panel-heading">
@@ -14,7 +16,7 @@
 				<div class="pull-right" style="margin-top: -5px;">
 					{{glyphicon "heart" "heart-empty" "icon-heart" isFav "Add / remove from favs"}}
 					&nbsp;&nbsp;&nbsp;
-					{{glyphicon "eye-open" "eye-close" "icon-eye" hasSeen "Have read the tdoc"}}
+					{{glyphicon "eye-open" "eye-close" "icon-eye" hasSeen "Have read the diagram"}}
 					&nbsp;&nbsp;&nbsp;
 					{{glyphicon "star" "star-empty" "icon-star" isStar "Star it"}}
 					{{#if canEdit}}
@@ -26,7 +28,7 @@
 		</div>
 		<div class="panel-body">
 
-			<form class="add modal-nav-box box-hide form-horizontal" id="form_tdoc">
+			<form class="add modal-nav-box box-hide form-horizontal" id="form_diagram">
 				<!-- ID -->
 				{{#if isAdmin}}
 					{{form_input "_id" "_id" _id false}}
@@ -35,22 +37,25 @@
 				<!-- FIELDS -->
 				{{form_input "Title" "title" title canEditAndEditToggle true}}
 				{{form_textarea "Description" "description" description canEditAndEditToggle false}}
+				{{form_textarea "Diagram Text Language" "code" code canEditAndEditToggle true}}
 
 				<!-- METADATA -->
-				{{form_static "Owner" "owner" owner true}}
-				{{form_static "Favs" "favs_cnt" favs_cnt true}}
-				{{form_static "Views" "click_cnt" click_cnt true}}
-				{{form_static "Reads" "seen_cnt" seen_cnt true}}
-				{{form_static "Starred" "stars_cnt" stars_cnt true}}
-				{{form_static "Created" "created" createdAgo false}}
-				{{form_static "Updated" "updated" updatedAgo false}}
+				<p>
+					<strong>owner:</strong>{{owner}}
+					<strong>views:</strong>{{click_cnt}}
+					<strong>favs:</strong>{{favs_cnt}}
+					<strong>read:</strong>{{seen_cnt}}
+					<strong>stars:</strong>{{stars_cnt}}
+					<strong>created:</strong>{{createdAgo}}
+					<strong>updated:</strong>{{updatedAgo}}
+				</p>
 				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" canEditAndEditToggleAdmin true}} {{/if}}
 
 				<div class="form-group">
-					<div class="col-offset-2 col-sm-4">
+					<div class="col-sm-4">
 						{{#if canEditAndEditToggle}}
-							<button type="button" class="btn btn-primary" id="btnUpdateTdoc">Update</button>
-							<button type="button" class="btn btn-danger" id="btnDeleteTdoc">Delete</button>
+							<button type="button" class="btn btn-primary" id="btnUpdateDiagram">Update</button>
+							<button type="button" class="btn btn-danger" id="btnDeleteDiagram">Delete</button>
 						{{/if}}
 					</div>
 				</div>
@@ -58,4 +63,9 @@
 		</div>
 	</div>
 
+	</div>
+
+	<div class="col-sm-6">
+		{{> tmpl_diagram_diagram obj}}
+	</div>
 </template>

@@ -4,10 +4,10 @@ Router.configure({
 	layout : 'layout',
 	loadingTemplate: 'loading',
 	notFoundTemplate: 'not_found'
-//	yieldTemplates: {
-		//'footer': { to: 'footer' },
-		//'tmplHeader': { to: 'header' }
-//	}
+	//	yieldTemplates: {
+	//'footer': { to: 'footer' },
+	//'tmplHeader': { to: 'header' }
+	//	}
 });
 
 Router.map(function () {
@@ -15,6 +15,29 @@ Router.map(function () {
 	this.route('tmpl_about'               ,{path: '/about'});
 	this.route('tmpl_help'                ,{path: '/help'});
 	this.route('tmpl_settings'            ,{path: '/settings'});
+	this.route('tmpl_userprof_detail'     ,{path: '/profile'});
+
+	/**
+	 * MYSTUFF
+	 */
+	this.route('tmpl_mystuff'             ,{path: '/mystuff'});
+	this.route('tmpl_userprof_detail', {
+		path  : '/userprof/:_id',
+		waitOn: function () {
+			//			updateClickCnt(Tdocs, this.params._id);
+			//			Session.set('selected_tdoc_id', this.params._id);
+			return Meteor.subscribe('pubsub_selected_userprof', this.params._id);
+		},
+		data  : function () {
+			var tdoc = Tdocs.findOne(this.params._id);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"Tdocs", link:"/tdocs", isActive:false},
+				{title:tdoc.title, link:"", isActive:true}
+			]});
+			return tdoc;
+		}
+	});
 
 	/**
 	 * Tdocs
@@ -40,24 +63,47 @@ Router.map(function () {
 	});
 
 	/**
+	 * Diagrams
+	 */
+	this.route('tmpl_diagrams'               ,{path: '/diagrams'});
+	this.route('tmpl_diagram_add'            ,{path: '/diagramAdd'});
+	this.route('tmpl_diagram_detail', {
+		path  : '/diagrams/:_id',
+		waitOn: function () {
+			updateClickCnt(Diagrams, this.params._id);
+			Session.set('selected_diagram_id', this.params._id);
+			return Meteor.subscribe('pubsub_selected_diagram', this.params._id);
+		},
+		data  : function () {
+			var diagram = Diagrams.findOne(this.params._id);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"Diagrams", link:"/diagrams", isActive:false},
+				{title:diagram.title, link:"", isActive:true}
+			]});
+			return diagram;
+		}
+	});
+
+	/**
 	 * Tdocs / Diagrams
 	 */
-//	this.route('tmpl_tdoc_diagrams', {
-//		path  : '/tdocs/diagrams/:_id',
-//		waitOn: function () {
-//			Session.set('selected_tdoc_id', this.params._id);
-//			return Meteor.subscribe('pubsub_selected_tdoc', this.params._id);
-//			//return Meteor.subscribe('pubsub_selected_tdoc_diagrams', this.params._id);
-//		},
-//		data  : function () {
-//			return MovieTimelines.find({movieId: this.params._id, userId: { $in: ["admin", Meteor.userId()] } } );
-//		}
-//	});
+	//	this.route('tmpl_tdoc_diagrams', {
+	//		path  : '/tdocs/diagrams/:_id',
+	//		waitOn: function () {
+	//			Session.set('selected_tdoc_id', this.params._id);
+	//			return Meteor.subscribe('pubsub_selected_tdoc', this.params._id);
+	//			//return Meteor.subscribe('pubsub_selected_tdoc_diagrams', this.params._id);
+	//		},
+	//		data  : function () {
+	//			return MovieTimelines.find({movieId: this.params._id, userId: { $in: ["admin", Meteor.userId()] } } );
+	//		}
+	//	});
 
 	/**
 	 * Persons
 	 */
-	this.route('tmpl_persons' ,{path: '/persons'});
+	this.route('tmpl_persons'             ,{path: '/persons'});
 	this.route('tmpl_person_add'          ,{path: '/personAdd'});
 	this.route('tmpl_person_detail', {
 		path  : '/person/:_id',

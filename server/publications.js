@@ -11,6 +11,18 @@ Meteor.publish('pubsub_selected_tdoc', function(id) {
 });
 
 /**
+ * Diagrams
+ */
+Meteor.publish('pubsub_diagram_list', function(query, options, limit) {
+	options = options || {};
+	options.limit = limit;
+	return Diagrams.find(query || {}, options);
+});
+Meteor.publish('pubsub_selected_diagram', function(id) {
+	return Diagrams.find(id);
+});
+
+/**
  * Persons
  */
 Meteor.publish('pubsub_person_list', function(query, options, limit) {

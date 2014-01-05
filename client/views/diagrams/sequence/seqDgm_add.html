@@ -1,0 +1,30 @@
+<template name="tmpl_diagram_add">
+
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h2 class="panel-title">Add Sequence Diagram</h2>
+		</div>
+		<div class="panel-body">
+
+			<form class="add modal-nav-box box-hide form-horizontal">
+				{{#constant}}
+
+				{{form_input "Title" "title" "" canCreateDiagram true}}
+				{{form_textarea "Description" "description" "" canCreateDiagram true}}
+				{{form_textarea "Diagram Text Language" "code" "" canCreateDiagram true}}
+
+				{{/constant}}
+				<div class="form-group">
+					<div class="col-sm-4">
+						{{#if canCreateDiagram}}
+							<button type="button" class="btn btn-primary" id="btnCreateDiagram">Create</button>
+						{{/if}}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</template>
+
+

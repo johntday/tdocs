@@ -1,4 +1,4 @@
-Template.tmpl_tdoc_detail.helpers({
+Template.tmpl_userprof_detail.helpers({
 	isAdmin: function() {
 		return isAdmin();
 	},
@@ -16,13 +16,13 @@ Template.tmpl_tdoc_detail.helpers({
 		return isAdmin() && Session.get('form_update');
 	},
 	createdAgo: function() {
-		return moment(this.created).fromNow();
+		return (this.created) ? moment(this.created).fromNow() : this.created;
 	},
 	updatedAgo: function() {
 		return (this.updated) ? moment(this.updated).fromNow() : this.updated;
 	},
 	statusOptions: function() {
-		return getTdocStatusOptions();
+		return getUserprofStatusOptions();
 	},
 	isFav: function() {
 		return isFav(this.favs);
@@ -44,21 +44,27 @@ Template.tmpl_tdoc_detail.helpers({
 	},
 	stars_cnt: function() {
 		return (this.stars_cnt && this.stars_cnt > -1) ? this.stars_cnt : 0;
+	},
+	name: function() {
+		return (this.profile && this.profile.name) ? this.profile.name : '';
+	},
+	title: function() {
+		return getUserDisplayName(this);
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_tdoc_detail.events({
-	'click #btnDeleteTdoc': function(e) {
+Template.tmpl_userprof_detail.events({
+	'click #btnDeleteUserprof': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to delete a tdoc');
+			throwError('You must login to delete a userprof');
 			$(e.target).removeClass('disabled');
 			return false;
 		}
 
-		Meteor.call('deleteTdoc', this._id, function(error) {
+		Meteor.call('deleteUserprof', this._id, function(error) {
 			if(error){
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
@@ -71,58 +77,58 @@ Template.tmpl_tdoc_detail.events({
 	'click #icon-heart': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a tdoc to your favorities');
+			throwError('You must login to add a userprof to your favorities');
 			return false;
 		}
 
 		if ( isFav(this.favs) ) {
-			Tdocs.update(this._id,
+			Userprofs.update(this._id,
 				{
 					$pull: { favs: user._id },
 					$inc: { favs_cnt: -1 }
 				}
 			);
-			MyLog("tdoc_details.js/click #icon-heart/1", "remove from favs");
+			MyLog("userprof_details.js/click #icon-heart/1", "remove from favs");
 		} else {
-			Tdocs.update(this._id,
+			Userprofs.update(this._id,
 				{
 					$addToSet: { favs: user._id },
 					$inc: { favs_cnt: 1 }
 				}
 			);
-			MyLog("tdoc_details.js/click #icon-heart/1", "add to favs");
+			MyLog("userprof_details.js/click #icon-heart/1", "add to favs");
 		}
 	},
 
 	'click #icon-eye': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a tdoc to your "seen it" list');
+			throwError('You must login to add a userprof to your "seen it" list');
 			return false;
 		}
 
 		if ( hasSeen(this.seen) ) {
-			Tdocs.update(this._id, { $pull: { seen: user._id }, $inc: { seen_cnt: -1 } } );
-			MyLog("tdoc_details.js/click #icon-eye/2", "remove from seen");
+			Userprofs.update(this._id, { $pull: { seen: user._id }, $inc: { seen_cnt: -1 } } );
+			MyLog("userprof_details.js/click #icon-eye/2", "remove from seen");
 		} else {
-			Tdocs.update(this._id, { $addToSet: { seen: user._id }, $inc: { seen_cnt: 1 } } );
-			MyLog("tdoc_details.js/click #icon-eye/1", "remove from seen");
+			Userprofs.update(this._id, { $addToSet: { seen: user._id }, $inc: { seen_cnt: 1 } } );
+			MyLog("userprof_details.js/click #icon-eye/1", "remove from seen");
 		}
 	},
 
 	'click #icon-star': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a tdoc to your "star" list');
+			throwError('You must login to add a userprof to your "star" list');
 			return false;
 		}
 
 		if ( isStar(this.stars) ) {
-			Tdocs.update(this._id, { $pull: { stars: user._id }, $inc: { stars_cnt: -1 } } );
-			MyLog("tdoc_details.js/click #icon-star/2", "remove from stars");
+			Userprofs.update(this._id, { $pull: { stars: user._id }, $inc: { stars_cnt: -1 } } );
+			MyLog("userprof_details.js/click #icon-star/2", "remove from stars");
 		} else {
-			Tdocs.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
-			MyLog("tdoc_details.js/click #icon-star/1", "remove from stars");
+			Userprofs.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
+			MyLog("userprof_details.js/click #icon-star/1", "remove from stars");
 		}
 	},
 
@@ -132,12 +138,12 @@ Template.tmpl_tdoc_detail.events({
 		Session.set('form_update', !Session.get('form_update'));
 	},
 
-	'click #btnUpdateTdoc': function(e) {
+	'click #btnUpdateUserprof': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to update a tdoc');
+			throwError('You must login to update a userprof');
 			$(e.target).removeClass('disabled');
 			return false;
 		}
@@ -145,12 +151,28 @@ Template.tmpl_tdoc_detail.events({
 		// GET INPUT
 		var _id = this._id;
 		var title= $('#title').val();
-		var description = $('#description').val();
+		var year = $('#year').val();
+		var release_date = formatReleaseDateForSave( $('#release_date').val() );
+		var original_title= $('#original_title').val();
+		var mpaa_rating= $('#mpaa_rating').val();
+		var runtime= $('#runtime').val();
+		var tagline= $('#tagline').val();
+		var overview= $('#overview').val();
+		var critics_consensus= $('#critics_consensus').val();
+		var adult = $('#adult').prop('checked');
 		var status = $('#status').val();
 
 		var properties = {
 			title: title
-			, description: description
+			, year: year
+			, release_date: release_date
+			, original_title: original_title
+			, mpaa_rating: mpaa_rating
+			, runtime: runtime
+			, tagline: tagline
+			, overview: overview
+			, critics_consensus: critics_consensus
+			, adult: adult
 		};
 
 		if ( isAdmin(Meteor.user()) ) {
@@ -160,31 +182,31 @@ Template.tmpl_tdoc_detail.events({
 		}
 
 		// VALIDATE
-		var isInputError = validateTdoc(properties);
+		var isInputError = validateUserprof(properties);
 		if (isInputError) {
 			$(e.target).removeClass('disabled');
 			return false;
 		}
 
 		// TRANSFORM AND DEFAULTS
-		transformTdoc(properties);
+		transformUserprof(properties);
 
-		Meteor.call('updateTdoc', _id, properties, function(error, tdoc) {
+		Meteor.call('updateUserprof', _id, properties, function(error, userprof) {
 			if(error){
 				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
-				MyLog("tdoc_details.js/1", "updated tdoc", {'_id': _id, 'title': tdoc.title});
+				MyLog("userprof_details.js/1", "updated userprof", {'_id': _id, 'title': userprof.title});
 				Router.go('/tdocs/'+_id);
 			}
 		});
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_tdoc_detail.rendered = function() {
-	$("#title").focus();
+Template.tmpl_userprof_detail.rendered = function() {
+	$("#name").focus();
 
 //	$('#div-release_date .input-append.date').datepicker({
 //		autoclose: true,

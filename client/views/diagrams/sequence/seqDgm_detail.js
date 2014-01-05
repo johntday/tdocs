@@ -1,4 +1,4 @@
-Template.tmpl_tdoc_detail.helpers({
+Template.tmpl_diagram_detail.helpers({
 	isAdmin: function() {
 		return isAdmin();
 	},
@@ -22,7 +22,7 @@ Template.tmpl_tdoc_detail.helpers({
 		return (this.updated) ? moment(this.updated).fromNow() : this.updated;
 	},
 	statusOptions: function() {
-		return getTdocStatusOptions();
+		return getDiagramStatusOptions();
 	},
 	isFav: function() {
 		return isFav(this.favs);
@@ -44,26 +44,33 @@ Template.tmpl_tdoc_detail.helpers({
 	},
 	stars_cnt: function() {
 		return (this.stars_cnt && this.stars_cnt > -1) ? this.stars_cnt : 0;
+	},
+	obj: function() {
+		return {obj: {_id: this._id}};
+	},
+	rows: function() {
+		var codeArray = (this.code) ? this.code.split('\r?\n') : [];
+		return (codeArray) ? codeArray.length + 4 : 4;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_tdoc_detail.events({
-	'click #btnDeleteTdoc': function(e) {
+Template.tmpl_diagram_detail.events({
+	'click #btnDeleteDiagram': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to delete a tdoc');
+			throwError('You must login to delete a diagram');
 			$(e.target).removeClass('disabled');
 			return false;
 		}
 
-		Meteor.call('deleteTdoc', this._id, function(error) {
+		Meteor.call('deleteDiagram', this._id, function(error) {
 			if(error){
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
-				Router.go('/tdocs');
+				Router.go('/diagrams');
 			}
 		});
 	},
@@ -71,58 +78,58 @@ Template.tmpl_tdoc_detail.events({
 	'click #icon-heart': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a tdoc to your favorities');
+			throwError('You must login to add a diagram to your favorities');
 			return false;
 		}
 
 		if ( isFav(this.favs) ) {
-			Tdocs.update(this._id,
+			Diagrams.update(this._id,
 				{
 					$pull: { favs: user._id },
 					$inc: { favs_cnt: -1 }
 				}
 			);
-			MyLog("tdoc_details.js/click #icon-heart/1", "remove from favs");
+			MyLog("diagram_details.js/click #icon-heart/1", "remove from favs");
 		} else {
-			Tdocs.update(this._id,
+			Diagrams.update(this._id,
 				{
 					$addToSet: { favs: user._id },
 					$inc: { favs_cnt: 1 }
 				}
 			);
-			MyLog("tdoc_details.js/click #icon-heart/1", "add to favs");
+			MyLog("diagram_details.js/click #icon-heart/1", "add to favs");
 		}
 	},
 
 	'click #icon-eye': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a tdoc to your "seen it" list');
+			throwError('You must login to add a diagram to your "seen it" list');
 			return false;
 		}
 
 		if ( hasSeen(this.seen) ) {
-			Tdocs.update(this._id, { $pull: { seen: user._id }, $inc: { seen_cnt: -1 } } );
-			MyLog("tdoc_details.js/click #icon-eye/2", "remove from seen");
+			Diagrams.update(this._id, { $pull: { seen: user._id }, $inc: { seen_cnt: -1 } } );
+			MyLog("diagram_details.js/click #icon-eye/2", "remove from seen");
 		} else {
-			Tdocs.update(this._id, { $addToSet: { seen: user._id }, $inc: { seen_cnt: 1 } } );
-			MyLog("tdoc_details.js/click #icon-eye/1", "remove from seen");
+			Diagrams.update(this._id, { $addToSet: { seen: user._id }, $inc: { seen_cnt: 1 } } );
+			MyLog("diagram_details.js/click #icon-eye/1", "remove from seen");
 		}
 	},
 
 	'click #icon-star': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a tdoc to your "star" list');
+			throwError('You must login to add a diagram to your "star" list');
 			return false;
 		}
 
 		if ( isStar(this.stars) ) {
-			Tdocs.update(this._id, { $pull: { stars: user._id }, $inc: { stars_cnt: -1 } } );
-			MyLog("tdoc_details.js/click #icon-star/2", "remove from stars");
+			Diagrams.update(this._id, { $pull: { stars: user._id }, $inc: { stars_cnt: -1 } } );
+			MyLog("diagram_details.js/click #icon-star/2", "remove from stars");
 		} else {
-			Tdocs.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
-			MyLog("tdoc_details.js/click #icon-star/1", "remove from stars");
+			Diagrams.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
+			MyLog("diagram_details.js/click #icon-star/1", "remove from stars");
 		}
 	},
 
@@ -132,12 +139,12 @@ Template.tmpl_tdoc_detail.events({
 		Session.set('form_update', !Session.get('form_update'));
 	},
 
-	'click #btnUpdateTdoc': function(e) {
+	'click #btnUpdateDiagram': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to update a tdoc');
+			throwError('You must login to update a diagram');
 			$(e.target).removeClass('disabled');
 			return false;
 		}
@@ -146,11 +153,14 @@ Template.tmpl_tdoc_detail.events({
 		var _id = this._id;
 		var title= $('#title').val();
 		var description = $('#description').val();
+		var code = $('#code').val();
 		var status = $('#status').val();
 
+		// CREATE OBJECT
 		var properties = {
 			title: title
 			, description: description
+			, code: code
 		};
 
 		if ( isAdmin(Meteor.user()) ) {
@@ -160,40 +170,53 @@ Template.tmpl_tdoc_detail.events({
 		}
 
 		// VALIDATE
-		var isInputError = validateTdoc(properties);
+		var isInputError = validateDiagram(properties);
 		if (isInputError) {
 			$(e.target).removeClass('disabled');
 			return false;
 		}
 
 		// TRANSFORM AND DEFAULTS
-		transformTdoc(properties);
+		transformDiagram(properties);
 
-		Meteor.call('updateTdoc', _id, properties, function(error, tdoc) {
+		Meteor.call('updateDiagram', _id, properties, function(error, diagram) {
 			if(error){
 				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
-				Session.set('form_update', false);
-				MyLog("tdoc_details.js/1", "updated tdoc", {'_id': _id, 'title': tdoc.title});
-				Router.go('/tdocs/'+_id);
+				//Session.set('form_update', false);
+				MyLog("diagram_details.js/1", "updated diagram", {'_id': _id, 'title': diagram.title});
+				//Router.go('/diagrams/'+_id);
 			}
 		});
+	},
+
+	'keyup, focus #code': function(e) {
+		//e.preventDefault();
+		var $element = $(e.target).get(0);
+		$element.style.overflow = 'hidden';
+		$element.style.height = 0;
+		$element.style.height = $element.scrollHeight + 'px';
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_tdoc_detail.rendered = function() {
-	$("#title").focus();
-
-//	$('#div-release_date .input-append.date').datepicker({
-//		autoclose: true,
-//		todayHighlight: true
-//	});
-
+Template.tmpl_diagram_detail.rendered = function() {
 	if ( Session.get('form_update') ) {
 		$("#btnEditToggle").addClass("active");
 	} else {
 		$("#btnEditToggle").removeClass("active");
 	}
+
+	$('#code').focus();
 };
+
+//function expandTextarea(id) {
+//	var $element = id.get(0);
+//
+//	$element.addEventListener('keyup', function() {
+//		this.style.overflow = 'hidden';
+//		this.style.height = 0;
+//		this.style.height = this.scrollHeight + 'px';
+//	}, false);
+//};

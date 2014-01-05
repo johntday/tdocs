@@ -7,9 +7,6 @@ Template.tmplHeader.helpers({
 	},
 	hasNoSidebar: function() {
 		return !Session.get('has_sidebar');
-	},
-	canCreateMovie: function() {
-		return canCreateMovie(Meteor.user());
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
