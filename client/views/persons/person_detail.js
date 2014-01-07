@@ -13,10 +13,10 @@ Template.tmpl_person_detail.helpers({
 		return canEdit(Meteor.user(), this) && Session.get('form_update');
 	},
 	createdAgo: function() {
-		return (this.created) ? moment(this.created).fromNow() : this.created;
+		return (this.created) ? moment(this.created).fromNow() : 'never';
 	},
 	updatedAgo: function() {
-		return (this.updated) ? moment(this.updated).fromNow() : this.updated;
+		return (this.updated) ? moment(this.updated).fromNow() : 'never';
 	},
 	statusOptions: function() {
 		return getMovieStatusOptions();

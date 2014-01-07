@@ -1,6 +1,6 @@
 Template.tmpl_diagram_item.helpers({
     thumbnail: function() {
-	    return (this.thumbnail) ? this.thumbnail : "/img/BumbleBee_60x60.png";
+	    return (this.thumbnail) ? this.thumbnail : "/img/sequence_60x60.png";
     },
 	diagramLink: function() {
 		return "/diagrams/" + this._id;

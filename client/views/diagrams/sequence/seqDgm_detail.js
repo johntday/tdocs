@@ -27,10 +27,10 @@ Template.tmpl_diagram_detail.helpers({
 		return isAdmin() && Session.get('form_update');
 	},
 	createdAgo: function() {
-		return moment(this.created).fromNow();
+		return (this.created) ? moment(this.created).fromNow() : 'never';
 	},
 	updatedAgo: function() {
-		return (this.updated) ? moment(this.updated).fromNow() : this.updated;
+		return (this.updated) ? moment(this.updated).fromNow() : 'never';
 	},
 	statusOptions: function() {
 		return getDiagramStatusOptions();
@@ -239,7 +239,7 @@ Template.tmpl_diagram_detail.created = function() {
 			Diagrams.update(Session.get('diagram_id'), {$set: {code: currentCodeValue}} );
 			//codeDep.changed();
 		}
-	}, 1000);
+	}, 5000);
 };
 
 Template.tmpl_diagram_detail.destroyed = function() {

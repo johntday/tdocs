@@ -1,11 +1,11 @@
 <template name="tmpl_diagram_detail">
 	{{> tmpl_breadcrumbs breadcrumbs}}
 
-	<ul class="nav nav-tabs nav-justified">
-		<li class="active"><a href="#">Diagram</a></li>
-		<li><a href="#">Diagrams</a></li>
-		<li><a href="#">Glossary</a></li>
-	</ul>
+	<!--<ul class="nav nav-tabs nav-justified">-->
+		<!--<li class="active"><a href="#">Diagram</a></li>-->
+		<!--<li><a href="#">Diagrams</a></li>-->
+		<!--<li><a href="#">Glossary</a></li>-->
+	<!--</ul>-->
 
 	<div class="col-sm-6">
 
@@ -42,11 +42,11 @@
 				<!-- METADATA -->
 				<p>
 					<strong>owner:</strong>{{owner}}
-					<strong>views:</strong>{{click_cnt}}
+					</br><strong>views:</strong>{{click_cnt}}
 					<strong>favs:</strong>{{favs_cnt}}
-					<strong>read:</strong>{{seen_cnt}}
+					<strong>reads:</strong>{{seen_cnt}}
 					<strong>stars:</strong>{{stars_cnt}}
-					<strong>created:</strong>{{createdAgo}}
+					</br><strong>created:</strong>{{createdAgo}}
 					<strong>updated:</strong>{{updatedAgo}}
 				</p>
 				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" canEditAndEditToggleAdmin true}} {{/if}}

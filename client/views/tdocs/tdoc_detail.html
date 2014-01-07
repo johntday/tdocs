@@ -37,13 +37,15 @@
 				{{form_textarea "Description" "description" description canEditAndEditToggle false}}
 
 				<!-- METADATA -->
-				{{form_static "Owner" "owner" owner true}}
-				{{form_static "Favs" "favs_cnt" favs_cnt true}}
-				{{form_static "Views" "click_cnt" click_cnt true}}
-				{{form_static "Reads" "seen_cnt" seen_cnt true}}
-				{{form_static "Starred" "stars_cnt" stars_cnt true}}
-				{{form_static "Created" "created" createdAgo false}}
-				{{form_static "Updated" "updated" updatedAgo false}}
+				<p>
+					<strong>owner:</strong>{{owner}}
+					</br><strong>views:</strong>{{click_cnt}}
+					<strong>favs:</strong>{{favs_cnt}}
+					<strong>reads:</strong>{{seen_cnt}}
+					<strong>stars:</strong>{{stars_cnt}}
+					</br><strong>created:</strong>{{createdAgo}}
+					<strong>updated:</strong>{{updatedAgo}}
+				</p>
 				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" canEditAndEditToggleAdmin true}} {{/if}}
 
 				<div class="form-group">

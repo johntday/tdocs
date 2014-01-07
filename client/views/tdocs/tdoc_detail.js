@@ -16,10 +16,10 @@ Template.tmpl_tdoc_detail.helpers({
 		return isAdmin() && Session.get('form_update');
 	},
 	createdAgo: function() {
-		return moment(this.created).fromNow();
+		return (this.created) ? moment(this.created).fromNow() : 'never';
 	},
 	updatedAgo: function() {
-		return (this.updated) ? moment(this.updated).fromNow() : this.updated;
+		return (this.updated) ? moment(this.updated).fromNow() : 'never';
 	},
 	statusOptions: function() {
 		return getTdocStatusOptions();
