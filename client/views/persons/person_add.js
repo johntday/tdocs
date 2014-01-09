@@ -2,8 +2,8 @@ Template.tmpl_person_add.helpers({
 	isAdmin: function() {
 		return isAdmin();
 	},
-	canCreatePerson: function() {
-		return canCreatePerson(Meteor.user());
+	canCreate: function() {
+		return canCreate(Meteor.user());
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

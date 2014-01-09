@@ -2,8 +2,8 @@ Template.tmpl_diagram_add.helpers({
 	isAdmin: function() {
 		return isAdmin();
 	},
-	canCreateDiagram: function() {
-		return canCreateDiagram(Meteor.user());
+	canCreate: function() {
+		return canCreate(Meteor.user());
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

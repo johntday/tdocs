@@ -10,13 +10,13 @@
 				{{#constant}}
 
 				<!-- COMMON FIELDS -->
-				{{form_input "Name" "name" "" canCreatePerson true null true}}
-				{{form_date "Birth Date" "birth_date" "" canCreatePerson true null}}
+				{{form_input "Name" "name" "" canCreate true null true}}
+				{{form_date "Birth Date" "birth_date" "" canCreate true null}}
 
 				{{/constant}}
 				<div class="form-group">
 					<div class="col-offset-2 col-sm-4">
-						{{#if canCreatePerson}}
+						{{#if canCreate}}
 							<button type="button" class="btn btn-primary" id="btnCreatePerson">Create</button>
 						{{/if}}
 					</div>

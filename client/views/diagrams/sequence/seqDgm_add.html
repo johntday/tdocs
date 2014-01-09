@@ -9,15 +9,15 @@
 			<form class="add modal-nav-box box-hide form-horizontal">
 				{{#constant}}
 
-				{{form_input "Title" "title" "" canCreateDiagram true null true}}
+				{{form_input "Title" "title" "" canCreate true null true}}
 
-				{{form_textarea "Description" "description" "" canCreateDiagram true null true}}
-				{{form_textarea "Diagram Text Language" "code" "" canCreateDiagram true null true}}
+				{{form_textarea "Description" "description" "" canCreate true null true}}
+				{{form_textarea "Diagram Text Language" "code" "" canCreate true null true}}
 
 				{{/constant}}
 				<div class="form-group">
 					<div class="col-sm-4">
-						{{#if canCreateDiagram}}
+						{{#if canCreate}}
 							<button type="button" class="btn btn-primary" id="btnCreateDiagram">Create</button>
 						{{/if}}
 					</div>

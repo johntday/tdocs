@@ -39,6 +39,8 @@
 					</br><strong>updated:</strong>{{updatedAgo}}
 				</p>
 
+				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
+
 				<div class="form-group">
 					<div class="col-offset-2 col-sm-4">
 						{{#if canEdit}}

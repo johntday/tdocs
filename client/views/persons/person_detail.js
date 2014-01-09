@@ -38,6 +38,9 @@ Template.tmpl_person_detail.helpers({
 	},
 	stars_cnt: function() {
 		return (this.stars_cnt && this.stars_cnt > -1) ? this.stars_cnt : 0;
+	},
+	statusOptions: function() {
+		return getTdocStatusOptions();
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

@@ -166,15 +166,24 @@ Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit,
 			"</div>"
 		);
 	} else {
+//		return new Handlebars.SafeString(
+//			"<div class='form-group row'>" +
+//			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
+//			"<div class='col-sm-8'>"+
+//			"<textarea type='text' class='form-control' id='" + name + "' " + (canEdit ? "" : "readonly") + " >" +
+//			value +
+//			"</textarea>"+
+//			"</div>"+
+//		"</div>"
+//		);
+
 		return new Handlebars.SafeString(
 			"<div class='form-group row'>" +
-			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
-			"<div class='col-sm-8'>"+
-			"<textarea type='text' class='form-control' id='" + name + "' " + (canEdit ? "" : "readonly") + " >" +
-			value +
-			"</textarea>"+
-			"</div>"+
-		"</div>"
+				"<label class='col-sm-3 control-label'>" + label + "</label>"+
+				"<div class='col-sm-8'>"+
+				"<p class='form-control-static'>" + value + "</p>"+
+				"</div>"+
+				"</div>"
 		);
 	}
 });

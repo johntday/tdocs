@@ -2,8 +2,8 @@ Template.tmpl_tdoc_add.helpers({
 	isAdmin: function() {
 		return isAdmin();
 	},
-	canCreateTdoc: function() {
-		return canCreateTdoc(Meteor.user());
+	canCreate: function() {
+		return canCreate(Meteor.user());
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
