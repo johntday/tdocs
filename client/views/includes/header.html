@@ -27,6 +27,9 @@
 					<li class="{{activeRouteClass  '/persons'}}">
 						<a href="/persons" title="Browse people in library">People</a>
 					</li>
+					<li class="{{activeRouteClass  '/glossarys'}}">
+						<a href="/glossarys" title="Browse glossary items in library">Glossary</a>
+					</li>
 					{{#if currentUser}}
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
@@ -34,6 +37,7 @@
 							<li><a href="/tdocAdd" title="Create new Tdoc">Create Tdoc</a></li>
 							<li><a href="/diagramAdd" title="Create new Diagram">Create Diagram</a></li>
 							<li><a href="/personAdd" title="Create new Person">Create Person</a></li>
+							<li><a href="/glossaryAdd" title="Create new Glossary item">Create Glossary</a></li>
 						</ul>
 					</li>
 

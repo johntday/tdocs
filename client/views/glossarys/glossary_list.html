@@ -1,7 +1,7 @@
-<template name="tmpl_tdocs_list">
+<template name="tmpl_glossarys_list">
 	<div class="posts">
-        {{#each tdocs}}
-	        {{> tmpl_tdoc_item}}
+        {{#each glossarys}}
+	        {{> tmpl_glossary_item}}
         {{/each}}
 
         {{#if ready}}
@@ -14,20 +14,20 @@
     </div>
 </template>
 
-<template name="tmpl_tdocs">
+<template name="tmpl_glossarys">
 	<ul class="nav nav-tabs nav-justified">
-		<li class="active"><a href="#">Tdocs</a></li>
+		<li><a href="/tdocs">Tdocs</a></li>
 		<li><a href="/diagrams">Diagrams</a></li>
 		<li><a href="/persons">People</a></li>
-		<li><a href="/glossarys">Glossary</a></li>
+		<li class="active"><a href="#">Glossary</a></li>
 	</ul>
 
-	{{> tmpl_tdocs_sort_select}}
+	{{> tmpl_glossarys_sort_select}}
 
-	{{> tmpl_tdocs_list tdocsHandle}}
+	{{> tmpl_glossarys_list glossarysHandle}}
 </template>
 
-<template name="tmpl_tdocs_sort_select">
+<template name="tmpl_glossarys_sort_select">
 	<div class="row">
 		<div class="col-sm-8">
 			<ol class="breadcrumb">
@@ -42,7 +42,7 @@
 		</div>
 
 		<div class="col-sm-4">
-			{{form_options option_value options "tdoc-sort"}}
+			{{form_options option_value options "glossary-sort"}}
 		</div>
 	</div>
 </template>

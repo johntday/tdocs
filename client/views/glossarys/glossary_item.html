@@ -1,0 +1,30 @@
+<template name="tmpl_glossary_item">
+
+	<div class="post">
+		<div class="media">
+			<a class="pull-left" href="{{glossaryLink}}">
+				<img class="media-object" src="{{thumbnail}}" alt="thumbnail">
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading">{{title}}</h4>
+				<span>{{description}}</span><span class="pull-right small">{{lastUpdAgo}}</span><br/>
+				{{#if isFav}}
+					<span class="glyphicon glyphicon-heart" title="My fav"></span>
+				{{/if}}
+				{{#if hasSeen}}
+					<span class="glyphicon glyphicon-eye-open" title="Read it"></span>
+				{{/if}}
+				{{#if isStar}}
+					<span class="glyphicon glyphicon-star"></span>
+				{{/if}}
+				<p>
+					<strong>views:</strong>{{click_cnt}}
+					<strong>favs:</strong>{{favs_cnt}}
+					<strong>reads:</strong>{{seen_cnt}}
+					<strong>stars:</strong>{{stars_cnt}}
+				</p>
+			</div>
+		</div>
+	</div>
+
+</template>

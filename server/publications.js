@@ -35,6 +35,18 @@ Meteor.publish('pubsub_selected_person', function(id) {
 });
 
 /**
+ * Glossarys
+ */
+Meteor.publish('pubsub_glossary_list', function(query, options, limit) {
+	options = options || {};
+	options.limit = limit;
+	return Glossarys.find(query || {}, options);
+});
+Meteor.publish('pubsub_selected_glossary', function(id) {
+	return Glossarys.find(id);
+});
+
+/**
  * Stats
  */
 Meteor.publish('stats', function() {

@@ -88,6 +88,29 @@ Router.map(function () {
 	});
 
 	/**
+	 * Glossarys
+	 */
+	this.route('tmpl_glossarys'               ,{path: '/glossarys'});
+	this.route('tmpl_glossary_add'            ,{path: '/glossaryAdd'});
+	this.route('tmpl_glossary_detail', {
+		path  : '/glossarys/:_id',
+		waitOn: function () {
+			updateClickCnt(Glossarys, this.params._id);
+			Session.set('selected_glossary_id', this.params._id);
+			return Meteor.subscribe('pubsub_selected_glossary', this.params._id);
+		},
+		data  : function () {
+			var glossary = Glossarys.findOne(this.params._id);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"Glossarys", link:"/glossarys", isActive:false},
+				{title:glossary.title, link:"", isActive:true}
+			]});
+			return glossary;
+		}
+	});
+
+	/**
 	 * Tdocs / Diagrams
 	 */
 	//	this.route('tmpl_tdoc_diagrams', {

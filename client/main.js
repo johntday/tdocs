@@ -72,16 +72,28 @@ Deps.autorun(function(){
 });
 
 /**
+ * Glossary
+ */
+glossaryListSubscription = function(find, options, per_page) {
+	var handle = Meteor.subscribeWithPagination('pubsub_glossary_list', find, options, per_page);
+	handle.fetch = function() {
+		var ourFind = _.isFunction(find) ? find() : find;
+		return limitDocuments(Glossarys.find(ourFind, options), handle.loaded());
+	}
+	return handle;
+};
+Deps.autorun(function(){
+	glossarysHandle = glossaryListSubscription(
+		glossaryQuery( Session.get('search_text') ),
+		glossarySort[ Session.get('glossary_sort') ],
+		Meteor.MyClientModule.appConfig.pageLimit
+	);
+});
+
+/**
  * Stats
  */
-PersonsCount = new Meteor.Collection('persons_count');
-Meteor.subscribe('stats');
-//Meteor.startup(function() {
-//	return Meteor.setInterval((function() {
-//		var uc = MoviesCount.findOne();
-//		return console.log(uc.count || 0);
-//	}), 1000);
-//});
+//...???
 
 /**
  * layout template JS
