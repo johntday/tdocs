@@ -9,12 +9,6 @@ Template.tmpl_tdoc_detail.helpers({
 	canEdit: function() {
 		return canEdit(Meteor.user(), this);
 	},
-	canEditAndEditToggle: function() {
-		return canEdit(Meteor.user(), this) && Session.get('form_update');
-	},
-	canEditAndEditToggleAdmin: function() {
-		return isAdmin() && Session.get('form_update');
-	},
 	createdAgo: function() {
 		return (this.created) ? moment(this.created).fromNow() : 'never';
 	},
@@ -124,76 +118,136 @@ Template.tmpl_tdoc_detail.events({
 			Tdocs.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
 			MyLog("tdoc_details.js/click #icon-star/1", "remove from stars");
 		}
-	},
-
-	'click #btnEditToggle': function(e) {
-		e.preventDefault();
-
-		Session.set('form_update', !Session.get('form_update'));
-	},
-
-	'click #btnUpdateTdoc': function(e) {
-		e.preventDefault();
-		$(e.target).addClass('disabled');
-
-		if(!Meteor.user()){
-			throwError('You must login to update a tdoc');
-			$(e.target).removeClass('disabled');
-			return false;
-		}
-
-		// GET INPUT
-		var _id = this._id;
-		var title= $('#title').val();
-		var description = $('#description').val();
-		var status = $('#status').val();
-
-		var properties = {
-			title: title
-			, description: description
-		};
-
-		if ( isAdmin(Meteor.user()) ) {
-			_.extend(properties, {
-				status: status
-			});
-		}
-
-		// VALIDATE
-		var isInputError = validateTdoc(properties);
-		if (isInputError) {
-			$(e.target).removeClass('disabled');
-			return false;
-		}
-
-		// TRANSFORM AND DEFAULTS
-		transformTdoc(properties);
-
-		Meteor.call('updateTdoc', _id, properties, function(error, tdoc) {
-			if(error){
-				console.log(JSON.stringify(error));
-				throwError(error.reason);
-				$(e.target).removeClass('disabled');
-			}else{
-				Session.set('form_update', false);
-				MyLog("tdoc_details.js/1", "updated tdoc", {'_id': _id, 'title': tdoc.title});
-				Router.go('/tdocs/'+_id);
-			}
-		});
 	}
+
+//	'click #btnUpdateTdoc': function(e) {
+//		e.preventDefault();
+//		$(e.target).addClass('disabled');
+//
+//		if(!Meteor.user()){
+//			throwError('You must login to update a tdoc');
+//			$(e.target).removeClass('disabled');
+//			return false;
+//		}
+//
+//		// GET INPUT
+//		var _id = this._id;
+//		var title= $('#title').val();
+//		var description = $('#description').val();
+//		var status = $('#status').val();
+//
+//		var properties = {
+//			title: title
+//			, description: description
+//		};
+//
+//		if ( isAdmin(Meteor.user()) ) {
+//			_.extend(properties, {
+//				status: status
+//			});
+//		}
+//
+//		// VALIDATE
+//		var isInputError = validateTdoc(properties);
+//		if (isInputError) {
+//			$(e.target).removeClass('disabled');
+//			return false;
+//		}
+//
+//		// TRANSFORM AND DEFAULTS
+//		transformTdoc(properties);
+//
+//		Meteor.call('updateTdoc', _id, properties, function(error, tdoc) {
+//			if(error){
+//				console.log(JSON.stringify(error));
+//				throwError(error.reason);
+//				$(e.target).removeClass('disabled');
+//			}else{
+//				Session.set('form_update', false);
+//				MyLog("tdoc_details.js/1", "updated tdoc", {'_id': _id, 'title': tdoc.title});
+//				Router.go('/tdocs/'+_id);
+//			}
+//		});
+//	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_tdoc_detail.rendered = function() {
 	$("#title").focus();
 
-//	$('#div-release_date .input-append.date').datepicker({
-//		autoclose: true,
-//		todayHighlight: true
-//	});
+	$('.editable:not(.editable-click)').editable('destroy').editable({
+		success: function(response, newValue) {
+			// GET INPUT
+			var _id = this.dataset._id;
+			var field = $(this).attr('id');
+			var description = (_.isString(newValue)) ? newValue.trim() : newValue;
+			var fieldObj = _.object([field, 'updated'], [description, getNow()]);
 
-	if ( Session.get('form_update') ) {
-		$("#btnEditToggle").addClass("active");
-	} else {
-		$("#btnEditToggle").removeClass("active");
-	}
+			try {
+				Tdocs.update(_id, {$set: fieldObj} );
+			} catch (err) {
+				throwError(JSON.stringify(err));
+			}
+		},
+		validate: function(value) {
+			var field = $(this).attr('id');
+			if ( field==='title' )
+				return checkTitle(value);
+			if ( field==='description' )
+				return checkDescription(value);
+		}
+	});
+//	$('#title.editable:not(.editable-click)').editable('destroy').editable({
+//		success: function(response, newValue) {
+//			//$('#btnUpdateTdoc').addClass('disabled');
+//
+//			// GET INPUT
+//			var _id = this.dataset._id;
+//			var title= $('#title').val();
+//			var title = newValue;
+//			var status = $('#status').val();
+//			console.log('this._id='+_id);
+//
+//			console.log('title='+title);
+//
+//
+//			var properties = {
+//				title: title
+//				, title: title
+//			};
+//
+//			if ( isAdmin(Meteor.user()) ) {
+//				_.extend(properties, {
+//					status: status
+//				});
+//			}
+//
+//			// VALIDATE
+//			var isInputError = validateTdoc(properties);
+//			if (isInputError) {
+//				return false;
+//			}
+//
+//			// TRANSFORM AND DEFAULTS
+//			transformTdoc(properties);
+//
+//			Meteor.call('updateTdoc', _id, properties, function(error, tdoc) {
+//				if(error){
+//					throwError(error.reason);
+//				}else{
+//					MyLog("tdoc_details.js/1", "updated tdoc", {'_id': _id, 'title': tdoc.title});
+//				}
+//			});
+//		},
+//		error: function(response, newValue) {
+//			if(response.status === 500) {
+//				return 'Service unavailable. Please try later.';
+//			} else {
+//				return response.responseText;
+//			}
+//		},
+//		validate: function(value) {
+//			return checkFieldLength(value, 10, 128);
+//		}
+//	});
+//
 };

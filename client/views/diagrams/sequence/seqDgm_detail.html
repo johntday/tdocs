@@ -13,15 +13,12 @@
 		<div class="panel-heading">
 
 			<h2 class="panel-title">{{title}}
-				<div class="pull-right" style="margin-top: -5px;">
+				<div class="pull-right">
 					{{glyphicon "heart" "heart-empty" "icon-heart" isFav "Add / remove from favs"}}
 					&nbsp;&nbsp;&nbsp;
 					{{glyphicon "eye-open" "eye-close" "icon-eye" hasSeen "Have read the diagram"}}
 					&nbsp;&nbsp;&nbsp;
 					{{glyphicon "star" "star-empty" "icon-star" isStar "Star it"}}
-					{{#if canEdit}}
-						<button type="button" class="btn btn-default btn-sm" id="btnEditToggle">&nbsp;&nbsp;Edit&nbsp;&nbsp;</button>
-					{{/if}}
 				</div>
 		<!--<div class="clearfix"></div>-->
 			</h2>
@@ -31,13 +28,13 @@
 			<form class="add modal-nav-box box-hide form-horizontal" id="form_diagram">
 				<!-- ID -->
 				{{#if isAdmin}}
-					{{form_input "_id" "_id" _id false}}
+					{{form_input "_id" "_id" _id false _id false}}
 				{{/if}}
 
 				<!-- FIELDS -->
-				{{form_input "Title" "title" title canEditAndEditToggle true}}
-				{{form_textarea "Description" "description" description canEditAndEditToggle false}}
-				{{form_textarea "Diagram Text Language" "code" code canEditAndEditToggle true}}
+				{{form_input "Title" "title" title canEdit true _id false}}
+				{{form_textarea "Description" "description" description canEdit true _id false}}
+				{{form_textarea "Diagram Text Language" "code" code canEdit true _id false}}
 
 				<!-- METADATA -->
 				<p>
@@ -49,12 +46,11 @@
 					</br><strong>created:</strong>{{createdAgo}}
 					<strong>updated:</strong>{{updatedAgo}}
 				</p>
-				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" canEditAndEditToggleAdmin true}} {{/if}}
+				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
 
 				<div class="form-group">
 					<div class="col-sm-4">
-						{{#if canEditAndEditToggle}}
-							<button type="button" class="btn btn-primary" id="btnUpdateDiagram">Update</button>
+						{{#if canEdit}}
 							<button type="button" class="btn btn-danger" id="btnDeleteDiagram">Delete</button>
 						{{/if}}
 					</div>
@@ -66,6 +62,6 @@
 	</div>
 
 	<div class="col-sm-6">
-			<div id="diagram"></div>
+		<div id="diagram"></div>
 	</div>
 </template>

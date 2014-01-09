@@ -34,6 +34,9 @@ Template.tmpl_tdoc_item.helpers({
 	},
 	stars_cnt: function() {
 		return (this.stars_cnt && this.stars_cnt > -1) ? this.stars_cnt : 0;
+	},
+	lastUpdAgo: function() {
+		return (this.updated) ? moment(this.updated).fromNow() : moment(this.created).fromNow();
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

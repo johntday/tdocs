@@ -53,7 +53,7 @@ Template.tmpl_diagram_add.events({
 
 	},
 
-	'keyup, focus #code': function(e) {
+	'keyup #code, focus #code, keyup #description, focus #description': function(e) {
 		//e.preventDefault();
 		var $element = $(e.target).get(0);
 		$element.style.overflow = 'hidden';

@@ -49,16 +49,25 @@ Handlebars.registerHelper('tabss', function(tabList, activeTab, activeTabDefault
 /**
  * Template to generate INPUT form elements.
  */
-Handlebars.registerHelper('form_input', function(label, name, value, canEdit, showEmpty) {
+Handlebars.registerHelper('form_input', function(label, name, value, canEdit, showEmpty, _id, isAdd) {
 	// CHECK FOR Integer UNKNOWN value
 	if (typeof value === 'number' && value == -1)
 		value = "";
-	if (canEdit) {
+	if (isAdd) {
 		return new Handlebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8'>"+
-				"<input type='text' class='form-control' id='" + name + "' value='" + value + "' />"+
+				"<input type='text' class='form-control' id='" + name + "' value='" + value + "' " + (canEdit ? "" : "readonly") + " />" +
+				"</div>"+
+				"</div>"
+		);
+	} else if (canEdit) {
+		return new Handlebars.SafeString(
+			"<div class='form-group row'>" +
+				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
+				"<div class='col-sm-8'>"+
+				"<a class='editable' data-_id='"+_id+"' data-type='text' data-placement='right' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" + name + "' >" + value + "</a>" +
 				"</div>"+
 				"</div>"
 		);
@@ -76,13 +85,13 @@ Handlebars.registerHelper('form_input', function(label, name, value, canEdit, sh
 /**
  * Template to generate INPUT DATE form elements.
  */
-Handlebars.registerHelper('form_date', function(label, name, value, canEdit, showEmpty) {
+Handlebars.registerHelper('form_date', function(label, name, value, canEdit, showEmpty, _id) {
 	if (canEdit) {
 		return new Handlebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8' id='div-" + name + "'>"+
-					"<div class='input-append date'>"+
+					"<div class='input-append date' data-_id='" + _id + "'>" +
 					"<input type='text' class='form-control' id='" + name + "' value='" + value + "' />"+
 					"<span class='add-on'></span>"+
 					"</div>"+
@@ -127,21 +136,47 @@ Handlebars.registerHelper('form_checkbox', function(label, name, value, canEdit,
 /**
  * Template to generate TEXTAREA form elements
  */
-Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit, showEmpty) {
+Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit, showEmpty, _id, isAdd) {
 	var showField = (value || canEdit || (showEmpty === true));
 	if (! showField)
 		return;
 
-	return new Handlebars.SafeString(
+	if (isAdd) {
+		return new Handlebars.SafeString(
+			"<div class='form-group row'>" +
+				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
+				"<div class='col-sm-8'>"+
+				"<textarea type='text' class='form-control' id='" + name + "' " + (canEdit ? "" : "readonly") + " >" +
+				value +
+				"</textarea>" +
+				"</div>"+
+				"</div>"
+		);
+	} else if (canEdit) {
+		return new Handlebars.SafeString(
 		"<div class='form-group row'>" +
+			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
+			"<div class='col-sm-8'>"+
+			//"<textarea type='text' class='form-control' id='" + name + "' " + (canEdit ? "" : "readonly") + " >" +
+			"<p class='editable' data-_id='"+_id+"' data-type='textarea' data-placement='right' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" +
+			name + "' data-rows='4'>" +
+			value +
+			"</p>"+
+			"</div>"+
+			"</div>"
+		);
+	} else {
+		return new Handlebars.SafeString(
+			"<div class='form-group row'>" +
 			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 			"<div class='col-sm-8'>"+
 			"<textarea type='text' class='form-control' id='" + name + "' " + (canEdit ? "" : "readonly") + " >" +
 			value +
 			"</textarea>"+
 			"</div>"+
-			"</div>"
-	);
+		"</div>"
+		);
+	}
 });
 /**
  * Template to generate STATIC TEXT form elements

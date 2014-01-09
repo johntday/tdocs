@@ -29,3 +29,4 @@ the ones in subdirectories are loaded earlier.
 ## Dependencies
  - **Raphael**: 2.1.2
  - **js-sequence-diagrams**: 1.0.4
+ - **flowchart**: 1.2.6

@@ -104,10 +104,6 @@ Meteor.methods({
 		updateClickCnt(Tdocs, this.params._id);
 	},
 
-	clickedTdocByMyTdocId: function(mytdoc_id){
-		Tdocs.update({mytdoc_id: mytdoc_id}, { $inc: { click_cnt: 1 }});
-	},
-
 	deleteTdoc: function(tdocId) {
 		// remove associated stuff
 		if(!this.isSimulation) {
