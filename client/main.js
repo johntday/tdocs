@@ -1,11 +1,11 @@
 /**
  * SESSION VARIABLE DEFAULTS
  */
+Session.setDefault('has_sidebar', true);
 Session.setDefault('search_text', '');
 Session.setDefault('form_update', false);
 Session.setDefault('selected_person_id', null);
 Session.setDefault('breadcrumbs', null);
-Session.setDefault('has_sidebar', true);
 Session.setDefault('person_sort', 'name');
 
 Session.setDefault('tdoc_sort', 'title');

@@ -71,6 +71,7 @@ Router.map(function () {
 		path  : '/diagrams/:_id',
 		waitOn: function () {
 			updateClickCnt(Diagrams, this.params._id);
+			Session.set('has_sidebar', false);
 			Session.set('selected_diagram_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_diagram', this.params._id);
 		},

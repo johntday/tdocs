@@ -489,3 +489,9 @@ h1[id] {
 .panel-body {
     background-color: rgba(0,0,0,.02);
 }
+.width300px {
+    width: 300px;
+    overflow: hidden;
+    /*min-height: 300px;*/
+    /*height: auto;*/
+}

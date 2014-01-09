@@ -210,6 +210,9 @@ Template.tmpl_diagram_detail.rendered = function() {
 //		$("#btnEditToggle").removeClass("active");
 //	}
 	$('.editable:not(.editable-click)').editable('destroy').editable({
+		placement: 'left',
+		inputclass: 'width300px',
+
 		success: function(response, newValue) {
 			// GET INPUT
 			var _id = this.dataset._id;
@@ -234,10 +237,16 @@ Template.tmpl_diagram_detail.rendered = function() {
 		}
 	});
 
-	//codeDep.depend();
-	//codeValue = codeValue || this.code;
-//	Session.set('diagram_code', this.data.code);
-//	Session.set('diagram_id', this.data._id);
+	$('#code').on('shown', function(e, editable) {
+		//e.preventDefault();
+		var $element = editable.container.$element.context; //$(e.target).get(0);
+		$element.style.overflow = 'hidden';
+		$element.style.height = 0;
+		$element.style.height = $element.scrollHeight + 'px';
+console.log("hello");
+		//editable.input.$input.val('overwriting value of input..');
+	});
+
 	try {
 		var diagram = Diagram.parse( this.data.code );
 		diagram.drawSVG('diagram');

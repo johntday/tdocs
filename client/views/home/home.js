@@ -1,14 +1,14 @@
-Template.tmplHome.events({
-});
+//Template.tmplHome.events({
+//});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 
-Template.tmplHome.rendered = function() {
-
-	// SEQUENCE DIAGRAM UNIT TEST
-	var diagram = Diagram.parse("A->B: Does something");
-	diagram.drawSVG('diagram');
-
-
+//Template.tmplHome.rendered = function() {
+//
+//	// SEQUENCE DIAGRAM UNIT TEST
+//	var diagram = Diagram.parse("A->B: Does something");
+//	diagram.drawSVG('diagram');
+//
+//
 	// Raphael unit test
 //	var paper = Raphael("diagram", 800, 600);
 //
@@ -20,5 +20,5 @@ Template.tmplHome.rendered = function() {
 //
 //	// Sets the stroke attribute of the circle to white
 //	circle.attr("stroke", "#fff");
-};
+//};
 

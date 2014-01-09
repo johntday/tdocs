@@ -67,7 +67,7 @@ Handlebars.registerHelper('form_input', function(label, name, value, canEdit, sh
 			"<div class='form-group row'>" +
 				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8'>"+
-				"<a class='editable' data-_id='"+_id+"' data-type='text' data-placement='right' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" + name + "' >" + value + "</a>" +
+				"<a class='editable' data-_id='"+_id+"' data-type='text' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" + name + "' >" + value + "</a>" +
 				"</div>"+
 				"</div>"
 		);
@@ -158,7 +158,7 @@ Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit,
 			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 			"<div class='col-sm-8'>"+
 			//"<textarea type='text' class='form-control' id='" + name + "' " + (canEdit ? "" : "readonly") + " >" +
-			"<p class='editable' data-_id='"+_id+"' data-type='textarea' data-placement='right' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" +
+			"<p class='editable' data-_id='"+_id+"' data-type='textarea' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" +
 			name + "' data-rows='4'>" +
 			value +
 			"</p>"+
