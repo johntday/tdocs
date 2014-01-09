@@ -15,6 +15,7 @@ Router.map(function () {
 	this.route('tmpl_about'               ,{path: '/about'});
 	this.route('tmpl_help'                ,{path: '/help'});
 	this.route('tmpl_settings'            ,{path: '/settings'});
+	this.route('tmpl_license'             ,{path: '/license'});
 	this.route('tmpl_userprof_detail'     ,{path: '/profile'});
 
 	/**
