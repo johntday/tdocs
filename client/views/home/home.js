@@ -1,7 +1,13 @@
+//Template.tmplHome.helpers({
+//	tdocs_count: function() {
+//		var tdocsCount = TdocsCount.findOne();
+//		return (tdocsCount) ? tdocsCount.count : 0;
+//	}
+//});
+/*------------------------------------------------------------------------------------------------------------------------------*/
 //Template.tmplHome.events({
 //});
 /*------------------------------------------------------------------------------------------------------------------------------*/
-
 //Template.tmplHome.rendered = function() {
 //
 //	// SEQUENCE DIAGRAM UNIT TEST
@@ -21,4 +27,3 @@
 //	// Sets the stroke attribute of the circle to white
 //	circle.attr("stroke", "#fff");
 //};
-

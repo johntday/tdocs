@@ -179,8 +179,8 @@ Template.tmpl_tdoc_detail.rendered = function() {
 			// GET INPUT
 			var _id = this.dataset._id;
 			var field = $(this).attr('id');
-			var description = (_.isString(newValue)) ? newValue.trim() : newValue;
-			var fieldObj = _.object([field, 'updated'], [description, getNow()]);
+			var v = (_.isString(newValue)) ? newValue.trim() : newValue;
+			var fieldObj = _.object([field, 'updated'], [v, getNow()]);
 
 			try {
 				Tdocs.update(_id, {$set: fieldObj} );
@@ -196,7 +196,8 @@ Template.tmpl_tdoc_detail.rendered = function() {
 				return checkDescription(value);
 		}
 	});
-//	$('#title.editable:not(.editable-click)').editable('destroy').editable({
+
+	//	$('#title.editable:not(.editable-click)').editable('destroy').editable({
 //		success: function(response, newValue) {
 //			//$('#btnUpdateTdoc').addClass('disabled');
 //

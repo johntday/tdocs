@@ -6,8 +6,9 @@
     },
     "iron-router": "0.5.4",
     "moment": {},
-	"bootstrap-3": {},
+    "bootstrap-3": {},
     "bootstrap-datepicker2": {},
-    "x-editable-bootstrap3": {}
+    "x-editable-bootstrap3": {},
+    "select2": {}
   }
 }

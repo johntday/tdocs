@@ -57,24 +57,25 @@ Meteor.publish('stats', function() {
 
 	count = 0;
 	initializing = true;
-	handle = Persons.find().observeChanges({
+	handle = Tdocs.find().observeChanges({
 		added: function() {
 			count++;
 			if (!initializing) {
-				return _this.changed('persons_count', 1, {
+				//return _this.changed('persons_count', 1, {
+				return _this.changed('stats', 1, {
 					count: count
 				});
 			}
 		},
 		removed: function() {
 			count--;
-			return _this.changed('persons_count', 1, {
+			return _this.changed('stats', 1, {
 				count: count
 			});
 		}
 	});
 	initializing = false;
-	this.added('persons_count', 1, {
+	this.added('stats', 1, {
 		count: count
 	});
 	this.ready();

@@ -93,7 +93,14 @@ Deps.autorun(function(){
 /**
  * Stats
  */
-//...???
+TdocsCount = new Meteor.Collection('stats');
+Meteor.subscribe('stats');
+//Meteor.startup(function() {
+//	return Meteor.setInterval((function() {
+//		var uc = MoviesCount.findOne();
+//		return console.log(uc.count || 0);
+//	}), 1000);
+//});
 
 /**
  * layout template JS

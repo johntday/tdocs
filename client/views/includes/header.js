@@ -7,6 +7,10 @@ Template.tmplHeader.helpers({
 	},
 	hasNoSidebar: function() {
 		return !Session.get('has_sidebar');
+	},
+	tdocs_count: function() {
+		var tdocsCount = TdocsCount.findOne();
+		return (tdocsCount) ? tdocsCount.count : 0;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
