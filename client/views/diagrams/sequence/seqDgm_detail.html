@@ -32,9 +32,16 @@
 				{{/if}}
 
 				<!-- FIELDS -->
-				{{form_input "Title" "title" title canEdit true _id false}}
-				{{form_textarea "Description" "description" description canEdit true _id false}}
-				{{form_textarea "Diagram Text Language" "code" code canEdit true _id false}}
+				{{form_input "Title" "title" title canEditAndEditToggle true _id false}}
+				{{form_textarea "Description" "description" description canEditAndEditToggle true _id false}}
+				{{form_textarea "Diagram Text Language" "code" code canEditAndEditToggle true _id false}}
+
+				<div class="form-group row">
+					<label for="theme" class="col-sm-3 control-label">Theme</label>
+					<div class="col-sm-8">
+						<a href="#" id="theme" data-type="select2"></a>
+					</div>
+				</div>
 
 				<!-- METADATA -->
 				<p>
@@ -46,11 +53,16 @@
 					</br><strong>created:</strong>{{createdAgo}}
 					<strong>updated:</strong>{{updatedAgo}}
 				</p>
-				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
+				{{#if isAdmin}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
 
 				<div class="form-group">
-					<div class="col-sm-4">
-						{{#if canEdit}}
+					<div class="col-sm-8">
+						{{#if showEditButton}}
+							<button type="button" class="btn btn-primary" id="btnEditToggle">Edit</button>
+						{{/if}}
+						{{#if canEditAndEditToggle}}
+							<button type="button" class="btn btn-primary" id="btnUpdateDiagram">Update</button>
+							<button type="button" class="btn btn-default" id="btnCancelDiagram">Cancel</button>
 							<button type="button" class="btn btn-danger" id="btnDeleteDiagram">Delete</button>
 						{{/if}}
 					</div>
@@ -64,4 +76,5 @@
 	<div class="col-sm-6">
 		<div id="diagram"></div>
 	</div>
+
 </template>

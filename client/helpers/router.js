@@ -71,6 +71,7 @@ Router.map(function () {
 	this.route('tmpl_diagram_detail', {
 		path  : '/diagrams/:_id',
 		waitOn: function () {
+			Session.set('form_update', false);
 			updateClickCnt(Diagrams, this.params._id);
 			Session.set('has_sidebar', false);
 			Session.set('selected_diagram_id', this.params._id);

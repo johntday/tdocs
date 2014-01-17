@@ -13,7 +13,6 @@
       "moment": {},
       "bootstrap-3": {},
       "bootstrap-datepicker2": {},
-      "x-editable-bootstrap3": {},
       "select2": {}
     },
     "packages": {
@@ -46,11 +45,6 @@
         "git": "https://github.com/deepwell/meteor-bootstrap-datepicker.git",
         "tag": "v1.2.0",
         "commit": "b7de18a7cc651ea665cda75048663f90d1a11d10"
-      },
-      "x-editable-bootstrap3": {
-        "git": "https://github.com/JustinSGray/meteor-x-editable-bootstrap.git",
-        "tag": "v1.5.2",
-        "commit": "1e5e6d7bddf0b17cc6ea2fc1f50c3f9fd2cfc3f3"
       },
       "select2": {
         "git": "https://github.com/nate-strauser/meteor-select2.git",

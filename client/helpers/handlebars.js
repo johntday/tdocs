@@ -53,7 +53,7 @@ Handlebars.registerHelper('form_input', function(label, name, value, canEdit, sh
 	// CHECK FOR Integer UNKNOWN value
 	if (typeof value === 'number' && value == -1)
 		value = "";
-	if (isAdd) {
+	if (isAdd || canEdit) {
 		return new Handlebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
@@ -62,15 +62,15 @@ Handlebars.registerHelper('form_input', function(label, name, value, canEdit, sh
 				"</div>"+
 				"</div>"
 		);
-	} else if (canEdit) {
-		return new Handlebars.SafeString(
-			"<div class='form-group row'>" +
-				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
-				"<div class='col-sm-8'>"+
-				"<a class='editable' data-_id='"+_id+"' data-type='text' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" + name + "' >" + value + "</a>" +
-				"</div>"+
-				"</div>"
-		);
+//	} else if (canEdit) {
+//		return new Handlebars.SafeString(
+//			"<div class='form-group row'>" +
+//				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
+//				"<div class='col-sm-8'>"+
+//				"<a class='editable' data-_id='"+_id+"' data-type='text' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" + name + "' >" + value + "</a>" +
+//				"</div>"+
+//				"</div>"
+//		);
 	} else if (value || showEmpty === true) {
 		return new Handlebars.SafeString(
 			"<div class='form-group row'>" +
@@ -141,7 +141,7 @@ Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit,
 	if (! showField)
 		return;
 
-	if (isAdd) {
+	if (isAdd || canEdit) {
 		return new Handlebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
@@ -152,19 +152,19 @@ Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit,
 				"</div>"+
 				"</div>"
 		);
-	} else if (canEdit) {
-		return new Handlebars.SafeString(
-		"<div class='form-group row'>" +
-			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
-			"<div class='col-sm-8'>"+
-			//"<textarea type='text' class='form-control' id='" + name + "' " + (canEdit ? "" : "readonly") + " >" +
-			"<p class='editable' data-_id='"+_id+"' data-type='textarea' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" +
-			name + "' data-rows='4'>" +
-			value +
-			"</p>"+
-			"</div>"+
-			"</div>"
-		);
+//	} else if (canEdit) {
+//		return new Handlebars.SafeString(
+//		"<div class='form-group row'>" +
+//			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
+//			"<div class='col-sm-8'>"+
+//			//"<textarea type='text' class='form-control' id='" + name + "' " + (canEdit ? "" : "readonly") + " >" +
+//			"<p class='editable' data-_id='"+_id+"' data-type='textarea' data-placeholder='Enter text' data-emptytext='Click to enter text' id='" +
+//			name + "' data-rows='4'>" +
+//			value +
+//			"</p>"+
+//			"</div>"+
+//			"</div>"
+//		);
 	} else {
 //		return new Handlebars.SafeString(
 //			"<div class='form-group row'>" +
