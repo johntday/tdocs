@@ -7,10 +7,10 @@ Template.tmpl_glossary_detail.helpers({
 		return Session.get("breadcrumbs");
 	},
 	showEditButton: function() {
-		return showEditButton();
+		return showEditButton(this);
 	},
 	canEditAndEditToggle: function() {
-		return canEditAndEditToggle();
+		return canEditAndEditToggle(this);
 	},
 	createdAgo: function() {
 		return dateAgo(this.created);
