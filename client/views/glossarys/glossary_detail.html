@@ -30,8 +30,8 @@
 				{{/if}}
 
 				<!-- FIELDS -->
-				{{form_input "Title" "title" title canEdit true _id false}}
-				{{form_textarea "Description" "description" description canEdit true _id false}}
+				{{form_input "Title" "title" title canEditAndEditToggle true _id false}}
+				{{form_textarea "Description" "description" description canEditAndEditToggle true _id false}}
 
 				<!-- METADATA -->
 				<p>
@@ -46,9 +46,14 @@
 				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
 
 				<div class="form-group">
-					<div class="col-offset-2 col-sm-4">
-						{{#if canEdit}}
-							<button type="button" class="btn btn-danger" id="btnDeleteGlossary">Delete</button>
+					<div class="col-sm-8">
+						{{#if showEditButton}}
+						<button type="button" class="btn btn-primary" id="btnEditToggle">Edit</button>
+						{{/if}}
+						{{#if canEditAndEditToggle}}
+						<button type="button" class="btn btn-primary" id="btnUpdateGlossary">Update</button>
+						<button type="button" class="btn btn-default" id="btnCancelGlossary">Cancel</button>
+						<button type="button" class="btn btn-danger" id="btnDeleteGlossary">Delete</button>
 						{{/if}}
 					</div>
 				</div>

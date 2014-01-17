@@ -25,6 +25,7 @@ Router.map(function () {
 	this.route('tmpl_userprof_detail', {
 		path  : '/userprof/:_id',
 		waitOn: function () {
+			Session.set('form_update', false);
 			//			updateClickCnt(Tdocs, this.params._id);
 			//			Session.set('selected_tdoc_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_userprof', this.params._id);
@@ -48,6 +49,7 @@ Router.map(function () {
 	this.route('tmpl_tdoc_detail', {
 		path  : '/tdocs/:_id',
 		waitOn: function () {
+			Session.set('form_update', false);
 			updateClickCnt(Tdocs, this.params._id);
 			Session.set('selected_tdoc_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_tdoc', this.params._id);
@@ -96,6 +98,7 @@ Router.map(function () {
 	this.route('tmpl_glossary_detail', {
 		path  : '/glossarys/:_id',
 		waitOn: function () {
+			Session.set('form_update', false);
 			updateClickCnt(Glossarys, this.params._id);
 			Session.set('selected_glossary_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_glossary', this.params._id);
@@ -134,6 +137,7 @@ Router.map(function () {
 	this.route('tmpl_person_detail', {
 		path  : '/person/:_id',
 		waitOn: function () {
+			Session.set('form_update', false);
 			updateClickCnt(Persons, this.params._id);
 			Session.set('selected_person_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_person', this.params._id);

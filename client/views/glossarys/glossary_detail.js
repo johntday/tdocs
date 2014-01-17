@@ -6,14 +6,17 @@ Template.tmpl_glossary_detail.helpers({
 		Meteor.MyClientModule.scrollToTopOfPageFast();
 		return Session.get("breadcrumbs");
 	},
-	canEdit: function() {
-		return canEdit(Meteor.user(), this);
+	showEditButton: function() {
+		return showEditButton();
+	},
+	canEditAndEditToggle: function() {
+		return canEditAndEditToggle();
 	},
 	createdAgo: function() {
-		return (this.created) ? moment(this.created).fromNow() : 'never';
+		return dateAgo(this.created);
 	},
 	updatedAgo: function() {
-		return (this.updated) ? moment(this.updated).fromNow() : 'never';
+		return dateAgo(this.updated);
 	},
 	statusOptions: function() {
 		return getGlossaryStatusOptions();
@@ -38,13 +41,15 @@ Template.tmpl_glossary_detail.helpers({
 	},
 	stars_cnt: function() {
 		return (this.stars_cnt && this.stars_cnt > -1) ? this.stars_cnt : 0;
-	},
-	code: function() {
-		return this.code;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_glossary_detail.events({
+	'click #btnEditToggle, click #btnCancelGlossary': function(e) {
+		e.preventDefault();
+		Session.set('form_update', !Session.get('form_update'));
+	},
+
 	'click #btnDeleteGlossary': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
@@ -107,6 +112,14 @@ Template.tmpl_glossary_detail.events({
 		}
 	},
 
+	'keyup #description, focus #description': function(e) {
+		e.preventDefault();
+		var $element = $(e.target).get(0);
+		$element.style.overflow = 'hidden';
+		$element.style.height = 0;
+		$element.style.height = $element.scrollHeight + 'px';
+	},
+
 	'click #icon-star': function(e) {
 		var user = Meteor.user();
 		if(!user){
@@ -121,34 +134,58 @@ Template.tmpl_glossary_detail.events({
 			Glossarys.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
 			MyLog("glossary_details.js/click #icon-star/1", "remove from stars");
 		}
+	},
+
+	'click #btnUpdateGlossary': function(e) {
+		e.preventDefault();
+		$(e.target).addClass('disabled');
+
+		if(!Meteor.user()){
+			throwError('You must login to update a glossary');
+			$(e.target).removeClass('disabled');
+			return false;
+		}
+
+		// GET INPUT
+		var _id = this._id;
+
+		// CREATE OBJECT
+		var properties = {
+			title: $('#title').val()
+			, description: $('#description').val()
+		};
+
+		if ( isAdmin(Meteor.user()) ) {
+			_.extend(properties, {
+				status: status
+			});
+		}
+
+		// VALIDATE
+		var isInputError = validateGlossary(properties);
+		if (isInputError) {
+			$(e.target).removeClass('disabled');
+			return false;
+		}
+
+		// TRANSFORM AND DEFAULTS
+		transformGlossary(properties);
+
+		Meteor.call('updateGlossary', _id, properties, function(error, glossary) {
+			if(error){
+				MyLog("glossary_details.js/1", "updated glossary", {'error': error, 'title': glossary.title});
+				throwError(error.reason);
+				$(e.target).removeClass('disabled');
+			}else{
+				Session.set('form_update', false);
+				MyLog("glossary_details.js/1", "updated glossary", {'_id': _id, 'title': glossary.title});
+				//Router.go('/glossarys/'+_id);
+			}
+		});
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_glossary_detail.rendered = function() {
-	$('.editable:not(.editable-click)').editable('destroy').editable({
-		placement: 'left',
-		inputclass: 'width300px',
-
-		success: function(response, newValue) {
-			// GET INPUT
-			var _id = this.dataset._id;
-			var field = $(this).attr('id');
-			var v = (_.isString(newValue)) ? newValue.trim() : newValue;
-			var fieldObj = _.object([field, 'updated'], [v, getNow()]);
-
-			try {
-				Glossarys.update(_id, {$set: fieldObj} );
-			} catch (err) {
-				throwError(JSON.stringify(err));
-			}
-		},
-		validate: function(value) {
-			var field = $(this).attr('id');
-			if ( field==='title' )
-				return checkTitle(value);
-			if ( field==='description' )
-				return checkDescription(value);
-		}
-	});
-
+	$('#title').focus();
+	$('#description').focus();
 };
