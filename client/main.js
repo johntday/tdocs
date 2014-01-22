@@ -1,6 +1,7 @@
 /**
  * SESSION VARIABLE DEFAULTS
  */
+Session.setDefault('namespace', 'default');
 Session.setDefault('has_sidebar', true);
 Session.setDefault('search_text', '');
 Session.setDefault('form_update', false);
