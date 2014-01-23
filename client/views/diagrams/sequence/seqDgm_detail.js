@@ -156,9 +156,15 @@ Template.tmpl_diagram_detail.events({
 		$element.style.overflow = 'hidden';
 		$element.style.height = 0;
 		$element.style.height = $element.scrollHeight + 'px';
-//		if (e.type === "keyup" && e.which === 13) {
-//			$('#btnUpdateDiagram').click();
-//		}
+		if (e.type === "keyup" /*&& e.which === 13*/) {
+			try {
+				var options = (this.theme) ? {theme: this.theme} : {theme: 'simple'};
+				var diagram = Diagram.parse( $(e.target).val() );
+				$('#diagram').html('');
+				diagram.drawSVG('diagram', options);
+			} catch (err) {
+			}
+		}
 	},
 
 	'click #btnUpdateDiagram': function(e) {
