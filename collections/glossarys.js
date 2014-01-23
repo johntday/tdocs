@@ -39,20 +39,16 @@ Meteor.methods({
 		MyLog("collections/glossarys.js/createGlossary/1", "properties", properties);
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
-		//var glossaryWithSameTitle = Glossarys.findOne( {title: {$regex: glossary.title, $options: 'i'}} );
 		var glossaryId = '';
 
 		if (!user)
 			throw new Meteor.Error(601, 'You need to login to create a new glossary');
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
+		if ( checkForDupOnServer( Glossarys, 'title', properties.title ) )
+			throw new Meteor.Error(603, 'Glossary with title "' + properties.title + '" already exists.  To avoid confusion, Title must be unique when expressed as lower-case');
 
-		var glossary = _.extend(properties, {
-			userId: userId,
-			owner: getUserDisplayName(user),
-			created: getNow(),
-			status: (isAdmin(user)) ? STATUS_APPROVED : STATUS_PENDING
-		});
+		var glossary = extendWithMetadataForInsert( properties, userId, user );
 
 		MyLog("collections/glossarys.js/createGlossary/2", "glossary", glossary);
 
@@ -75,10 +71,10 @@ Meteor.methods({
 			throw new Meteor.Error(601, 'You need to login to update a glossary');
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
+		if ( checkForDupOnServer( Glossarys, 'title', properties.title, _id ) )
+			throw new Meteor.Error(603, 'Glossary with title "' + properties.title + '" already exists');
 
-		var glossary = _.extend(properties, {
-			updated: getNow()
-		});
+		var glossary = extendWithMetadataForUpdate( properties );
 
 		MyLog("collections/glossarys.js/updateGlossary/1", "properties", properties);
 

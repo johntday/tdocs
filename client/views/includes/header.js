@@ -9,8 +9,16 @@ Template.tmplHeader.helpers({
 		return !Session.get('has_sidebar');
 	},
 	tdocs_count: function() {
-		var tdocsCount = TdocsCount.findOne();
-		return (tdocsCount) ? tdocsCount.count : 0;
+		var stats = TdocsCount.findOne();
+		return (stats) ? stats.count : 0;
+	},
+	glossarys_cnt: function() {
+		var stats = GlossaryCount.findOne();
+		return (stats) ? stats.count : 0;
+	},
+	diagrams_count: function() {
+		var stats = DiagramsCount.findOne();
+		return (stats) ? stats.count : 0;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

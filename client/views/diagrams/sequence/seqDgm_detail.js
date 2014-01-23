@@ -23,6 +23,9 @@ Template.tmpl_diagram_detail.helpers({
 	canEditAndEditToggle: function() {
 		return canEditAndEditToggle(this);
 	},
+	isAdminAndEditToggle: function() {
+		return isAdminAndEditToggle();
+	},
 	createdAgo: function() {
 		return dateAgo(this.created);
 	},
@@ -59,9 +62,14 @@ Template.tmpl_diagram_detail.helpers({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_diagram_detail.events({
-	'click #btnEditToggle, click #btnCancelDiagram': function(e) {
+	'click #btnEditToggle': function(e) {
 		e.preventDefault();
-		Session.set('form_update', !Session.get('form_update'));
+		Session.set('form_update', true);
+	},
+
+	'click #btnCancelDiagram': function(e) {
+		e.preventDefault();
+		Session.set('form_update', false);
 	},
 
 	'click #btnDeleteDiagram': function(e) {
@@ -148,14 +156,10 @@ Template.tmpl_diagram_detail.events({
 		$element.style.overflow = 'hidden';
 		$element.style.height = 0;
 		$element.style.height = $element.scrollHeight + 'px';
-	},
-
-//	'keyup #title': function(e) {
-//		e.preventDefault();
-//		MyLog("diagram_details.js/keyup #title/1", "data", {'e.target.value': e.target.value, 'this.title': this.title, 'e.target.value != this.title': e.target.value != this.title});
-//		if ( e.target.value != this.title )
+//		if (e.type === "keyup" && e.which === 13) {
 //			$('#btnUpdateDiagram').click();
-//	},
+//		}
+	},
 
 	'click #btnUpdateDiagram': function(e) {
 		e.preventDefault();
@@ -180,7 +184,7 @@ Template.tmpl_diagram_detail.events({
 
 		if ( isAdmin(Meteor.user()) ) {
 			_.extend(properties, {
-				status: status
+				status: $('#status').val()
 			});
 		}
 
@@ -196,13 +200,12 @@ Template.tmpl_diagram_detail.events({
 
 		Meteor.call('updateDiagram', _id, properties, function(error, diagram) {
 			if(error){
-				MyLog("diagram_details.js/1", "updated diagram", {'error': error, 'title': diagram.title});
+				MyLog("diagram_details.js/1", "updated diagram", {'error': error, 'diagram': diagram});
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
-				MyLog("diagram_details.js/1", "updated diagram", {'_id': _id, 'title': diagram.title});
-				//Router.go('/diagrams/'+_id);
+				MyLog("diagram_details.js/1", "updated diagram", {'_id': _id, 'diagram': diagram});
 			}
 		});
 	}
@@ -225,7 +228,7 @@ Template.tmpl_diagram_detail.rendered = function() {
 		//		console.log("change");
 	})
 	.select2("val", this.data.theme)
-	.select2("readonly", !canEditAndEditToggle());
+	.select2("readonly", !canEditAndEditToggle(this.data));
 
 	try {
 		var options = (this.data.theme) ? {theme: this.data.theme} : {theme: 'simple'};
@@ -234,6 +237,7 @@ Template.tmpl_diagram_detail.rendered = function() {
 	} catch (err) {
 		throwError('There is a problem with your "Diagram Text"');
 	}
+
 	$('#description').focus();
 	$('#code').focus();
 };

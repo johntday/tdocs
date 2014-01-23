@@ -1,7 +1,7 @@
-<template name="tmpl_diagrams_list">
+<template name="tmpl_projects_list">
 	<div class="posts">
-        {{#each diagrams}}
-	        {{> tmpl_diagram_item}}
+        {{#each projects}}
+	        {{> tmpl_project_item}}
         {{/each}}
 
         {{#if ready}}
@@ -14,19 +14,19 @@
     </div>
 </template>
 
-<template name="tmpl_diagrams">
+<template name="tmpl_projects">
 	<ul class="nav nav-tabs nav-justified">
 		<li><a href="/tdocs">Tdocs</a></li>
-		<li class="active"><a href="#">Diagrams</a></li>
-		<li><a href="/glossarys">Glossary</a></li>
+		<li><a href="/diagrams">Diagrams</a></li>
+		<li class="active"><a href="#">Project</a></li>
 	</ul>
 
-	{{> tmpl_diagrams_sort_select}}
+	{{> tmpl_projects_sort_select}}
 
-	{{> tmpl_diagrams_list diagramsHandle}}
+	{{> tmpl_projects_list projectsHandle}}
 </template>
 
-<template name="tmpl_diagrams_sort_select">
+<template name="tmpl_projects_sort_select">
 	<div class="row">
 		<div class="col-sm-8">
 			<ol class="breadcrumb">
@@ -41,7 +41,7 @@
 		</div>
 
 		<div class="col-sm-4">
-			{{form_options option_value options "diagram-sort"}}
+			{{form_options option_value options "project-sort"}}
 		</div>
 	</div>
 </template>

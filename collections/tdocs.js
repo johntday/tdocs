@@ -51,12 +51,7 @@ Meteor.methods({
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
 
-		var tdoc = _.extend(properties, {
-			userId: userId,
-			owner: getUserDisplayName(user),
-			created: getNow(),
-			status: (isAdmin(user)) ? STATUS_APPROVED : STATUS_PENDING
-		});
+		var tdoc = extendWithMetadataForInsert( properties, userId, user );
 
 		MyLog("collections/tdocs.js/createTdoc/2", "tdoc", tdoc);
 
@@ -80,9 +75,7 @@ Meteor.methods({
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
 
-		var tdoc = _.extend(properties, {
-			updated: getNow()
-		});
+		var tdoc = extendWithMetadataForUpdate( properties );
 
 		MyLog("collections/tdocs.js/updateTdoc/1", "properties", properties);
 

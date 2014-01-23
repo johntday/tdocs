@@ -18,14 +18,10 @@ Template.tmpl_tdoc_add.events({
 			return false;
 		}
 
-		// GET INPUT
-		var title= $('#title').val();
-		var description = $('#description').val();
-
 		// CREATE OBJECT
 		var properties = {
-			title: title
-			, description: description
+			title: $('#title').val()
+			, description: $('#description').val()
 		};
 
 		// VALIDATE
@@ -50,6 +46,14 @@ Template.tmpl_tdoc_add.events({
 		});
 
 
+	},
+
+	'keyup #description, focus #description': function(e) {
+		e.preventDefault();
+		var $element = $(e.target).get(0);
+		$element.style.overflow = 'hidden';
+		$element.style.height = 0;
+		$element.style.height = $element.scrollHeight + 'px';
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

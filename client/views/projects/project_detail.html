@@ -1,10 +1,10 @@
-<template name="tmpl_glossary_detail">
+<template name="tmpl_project_detail">
 	{{> tmpl_breadcrumbs breadcrumbs}}
 
 	<!--<ul class="nav nav-tabs nav-justified">-->
-		<!--<li class="active"><a href="#">Glossary</a></li>-->
-		<!--<li><a href="#">Glossarys</a></li>-->
-		<!--<li><a href="#">Glossary</a></li>-->
+		<!--<li class="active"><a href="#">Project</a></li>-->
+		<!--<li><a href="#">Projects</a></li>-->
+		<!--<li><a href="#">Project</a></li>-->
 	<!--</ul>-->
 
 	<div class="panel panel-purple">
@@ -14,7 +14,7 @@
 				<div class="pull-right">
 					{{glyphicon "heart" "heart-empty" "icon-heart" isFav "Add / remove from favs"}}
 					&nbsp;&nbsp;&nbsp;
-					{{glyphicon "eye-open" "eye-close" "icon-eye" hasSeen "Have read the glossary item"}}
+					{{glyphicon "eye-open" "eye-close" "icon-eye" hasSeen "Have read the project item"}}
 					&nbsp;&nbsp;&nbsp;
 					{{glyphicon "star" "star-empty" "icon-star" isStar "Star it"}}
 				</div>
@@ -23,7 +23,7 @@
 		</div>
 		<div class="panel-body">
 
-			<form class="add modal-nav-box box-hide form-horizontal" id="form_glossary">
+			<form class="add modal-nav-box box-hide form-horizontal" id="form_project">
 				<!-- ID -->
 				{{#if isAdmin}}
 					{{form_input "_id" "_id" _id false _id false}}
@@ -43,7 +43,7 @@
 					</br><strong>created:</strong>{{createdAgo}}
 					<strong>updated:</strong>{{updatedAgo}}
 				</p>
-				{{#if isAdmin}} {{form_select "Status" "status" status statusOptions "" isAdminAndEditToggle true}} {{/if}}
+				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
 
 				<div class="form-group">
 					<div class="col-sm-8">
@@ -51,9 +51,9 @@
 						<button type="button" class="btn btn-primary" id="btnEditToggle">Edit</button>
 						{{/if}}
 						{{#if canEditAndEditToggle}}
-						<button type="button" class="btn btn-primary" id="btnUpdateGlossary">Update</button>
-						<button type="button" class="btn btn-default" id="btnCancelGlossary">Cancel</button>
-						<button type="button" class="btn btn-danger" id="btnDeleteGlossary">Delete</button>
+						<button type="button" class="btn btn-primary" id="btnUpdateProject">Update</button>
+						<button type="button" class="btn btn-default" id="btnCancelProject">Cancel</button>
+						<button type="button" class="btn btn-danger" id="btnDeleteProject">Delete</button>
 						{{/if}}
 					</div>
 				</div>

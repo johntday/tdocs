@@ -25,7 +25,6 @@ Router.map(function () {
 	this.route('tmpl_userprof_detail', {
 		path  : '/userprof/:_id',
 		waitOn: function () {
-			Session.set('form_update', false);
 			//			updateClickCnt(Tdocs, this.params._id);
 			//			Session.set('selected_tdoc_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_userprof', this.params._id);
@@ -66,7 +65,7 @@ Router.map(function () {
 	});
 
 	/**
-	 * Diagrams
+	 * Diagrams: Sequence
 	 */
 	this.route('tmpl_diagrams'               ,{path: '/diagrams'});
 	this.route('tmpl_diagram_add'            ,{path: '/diagramAdd'});
@@ -89,6 +88,11 @@ Router.map(function () {
 			return diagram;
 		}
 	});
+
+	/**
+	 * Diagrams: Graph
+	 */
+	this.route('tmpl_graphDgm_detail'         ,{path: '/diagramGraphAdd'});
 
 	/**
 	 * Glossarys

@@ -1,4 +1,4 @@
-Template.tmpl_glossary_add.helpers({
+Template.tmpl_project_add.helpers({
 	isAdmin: function() {
 		return isAdmin();
 	},
@@ -7,13 +7,13 @@ Template.tmpl_glossary_add.helpers({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_glossary_add.events({
-	'click #btnCreateGlossary': function(e) {
+Template.tmpl_project_add.events({
+	'click #btnCreateProject': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to create a glossary');
+			throwError('You must login to create a project');
 			$(e.target).removeClass('disabled');
 			return false;
 		}
@@ -29,24 +29,23 @@ Template.tmpl_glossary_add.events({
 		};
 
 		// VALIDATE
-		var isInputError = validateGlossary( properties );
+		var isInputError = validateProject(properties);
 		if (isInputError) {
 			$(e.target).removeClass('disabled');
-			$('#title').focus();
 			return false;
 		}
 
 		// TRANSFORM AND DEFAULTS
-		transformGlossary(properties);
+		transformProject(properties);
 
-		Meteor.call('createGlossary', properties, function(error, glossary) {
+		Meteor.call('createProject', properties, function(error, project) {
 			if(error){
 				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
-				Router.go('/glossarys/'+glossary.glossaryId);
+				Router.go('/projects/'+project.projectId);
 			}
 		});
 
@@ -61,6 +60,6 @@ Template.tmpl_glossary_add.events({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_glossary_add.rendered = function() {
+Template.tmpl_project_add.rendered = function() {
 	$('#title').focus();
 };

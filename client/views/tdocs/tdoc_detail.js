@@ -12,6 +12,9 @@ Template.tmpl_tdoc_detail.helpers({
 	canEditAndEditToggle: function() {
 		return canEditAndEditToggle(this);
 	},
+	isAdminAndEditToggle: function() {
+		return isAdminAndEditToggle();
+	},
 	createdAgo: function() {
 		return dateAgo(this.created);
 	},
@@ -45,9 +48,14 @@ Template.tmpl_tdoc_detail.helpers({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_tdoc_detail.events({
-	'click #btnEditToggle, click #btnCancelTdoc': function(e) {
+	'click #btnEditToggle': function(e) {
 		e.preventDefault();
-		Session.set('form_update', !Session.get('form_update'));
+		Session.set('form_update', true);
+	},
+
+	'click #btnCancelTdoc': function(e) {
+		e.preventDefault();
+		Session.set('form_update', false);
 	},
 
 	'click #btnDeleteTdoc': function(e) {
@@ -148,18 +156,15 @@ Template.tmpl_tdoc_detail.events({
 
 		// GET INPUT
 		var _id = this._id;
-		var title= $('#title').val();
-		var description = $('#description').val();
-		var status = $('#status').val();
 
 		var properties = {
-			title: title
-			, description: description
+			title: $('#title').val()
+			, description: $('#description').val()
 		};
 
 		if ( isAdmin(Meteor.user()) ) {
 			_.extend(properties, {
-				status: status
+				status: $('#status').val()
 			});
 		}
 
@@ -180,8 +185,7 @@ Template.tmpl_tdoc_detail.events({
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
-				MyLog("tdoc_details.js/1", "updated tdoc", {'_id': _id, 'title': tdoc.title});
-				Router.go('/tdocs/'+_id);
+				MyLog("tdoc_details.js/1", "updated tdoc", {'_id': _id, 'tdoc': tdoc});
 			}
 		});
 	}

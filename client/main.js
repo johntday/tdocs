@@ -94,14 +94,12 @@ Deps.autorun(function(){
 /**
  * Stats
  */
-TdocsCount = new Meteor.Collection('stats');
-Meteor.subscribe('stats');
-//Meteor.startup(function() {
-//	return Meteor.setInterval((function() {
-//		var uc = MoviesCount.findOne();
-//		return console.log(uc.count || 0);
-//	}), 1000);
-//});
+TdocsCount = new Meteor.Collection('tdocs_cnt');
+GlossaryCount = new Meteor.Collection('glossarys_cnt');
+DiagramsCount = new Meteor.Collection('diagrams_cnt');
+Meteor.subscribe('pubsub_stats_glossarys_cnt');
+Meteor.subscribe('pubsub_stats_tdocs_cnt');
+Meteor.subscribe('pubsub_stats_diagrams_cnt');
 
 /**
  * layout template JS

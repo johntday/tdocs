@@ -4,6 +4,9 @@ Template.tmpl_diagram_add.helpers({
 	},
 	canCreate: function() {
 		return canCreate(Meteor.user());
+	},
+	seqDgmThemOptions: function() {
+		return getSeqDgmThemOptions();
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -18,16 +21,12 @@ Template.tmpl_diagram_add.events({
 			return false;
 		}
 
-		// GET INPUT
-		var title= $('#title').val();
-		var description = $('#description').val();
-		var code = $('#code').val();
-
 		// CREATE OBJECT
 		var properties = {
-			title: title
-			, description: description
-			, code: code
+			title: $('#title').val()
+			, description: $('#description').val()
+			, code: $('#code').val()
+			, theme: $('#theme').val()
 		};
 
 		// VALIDATE

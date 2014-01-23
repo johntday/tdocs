@@ -112,7 +112,7 @@ Template.tmpl_person_detail.events({
 	//	'click #btnEditToggle': function(e) {
 //		e.preventDefault();
 //
-//		Session.set('form_update', !Session.get('form_update'));
+//	Session.set('form_update', true);
 //	}
 
 //	'click #btnUpdatePerson': function(e) {

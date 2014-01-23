@@ -1,4 +1,31 @@
 /**
+ * Tags: common for all name-value objects (e.g. tags)
+ * TYPE:  project, tag
+ */
+Meteor.publish('pubsub_tag_list', function(query, options, limit) {
+	options = options || {};
+	options.limit = limit;
+	return Tags.find(query || {}, options);
+});
+Meteor.publish('pubsub_selected_tag', function(id) {
+	// TODO: maybe add details here
+	return Tags.find(id);
+});
+
+/**
+ * Nouns:  common for all listable objects
+ */
+//Meteor.publish('pubsub_noun_list', function(query, options, limit) {
+//	options = options || {};
+//	options.limit = limit;
+//	return Nouns.find(query || {}, options);
+//});
+//Meteor.publish('pubsub_selected_noun', function(id) {
+//	// TODO: maybe add details here
+//	return Nouns.find(id);
+//});
+
+/**
  * Tdocs
  */
 Meteor.publish('pubsub_tdoc_list', function(query, options, limit) {
@@ -47,9 +74,42 @@ Meteor.publish('pubsub_selected_glossary', function(id) {
 });
 
 /**
- * Stats
+ * Stats / Counts
  */
-Meteor.publish('stats', function() {
+Meteor.publish('pubsub_stats_glossarys_cnt', function() {
+	var count;
+	var handle;
+	var initializing;
+	var _this = this;
+
+	count = 0;
+	initializing = true;
+	handle = Glossarys.find().observeChanges({
+		added: function() {
+			count++;
+			if (!initializing) {
+				return _this.changed('glossarys_cnt', 1, {
+					count: count
+				});
+			}
+		},
+		removed: function() {
+			count--;
+			return _this.changed('glossarys_cnt', 1, {
+				count: count
+			});
+		}
+	});
+	initializing = false;
+	this.added('glossarys_cnt', 1, {
+		count: count
+	});
+	this.ready();
+	return this.onStop(function() {
+		return handle.stop();
+	});
+});
+Meteor.publish('pubsub_stats_tdocs_cnt', function() {
 	var count;
 	var handle;
 	var initializing;
@@ -61,21 +121,20 @@ Meteor.publish('stats', function() {
 		added: function() {
 			count++;
 			if (!initializing) {
-				//return _this.changed('persons_count', 1, {
-				return _this.changed('stats', 1, {
+				return _this.changed('tdocs_cnt', 1, {
 					count: count
 				});
 			}
 		},
 		removed: function() {
 			count--;
-			return _this.changed('stats', 1, {
+			return _this.changed('tdocs_cnt', 1, {
 				count: count
 			});
 		}
 	});
 	initializing = false;
-	this.added('stats', 1, {
+	this.added('tdocs_cnt', 1, {
 		count: count
 	});
 	this.ready();
@@ -83,3 +142,79 @@ Meteor.publish('stats', function() {
 		return handle.stop();
 	});
 });
+Meteor.publish('pubsub_stats_diagrams_cnt', function() {
+	var count;
+	var handle;
+	var initializing;
+	var _this = this;
+
+	count = 0;
+	initializing = true;
+	handle = Tdocs.find().observeChanges({
+		added: function() {
+			count++;
+			if (!initializing) {
+				return _this.changed('diagrams_cnt', 1, {
+					count: count
+				});
+			}
+		},
+		removed: function() {
+			count--;
+			return _this.changed('diagrams_cnt', 1, {
+				count: count
+			});
+		}
+	});
+	initializing = false;
+	this.added('diagrams_cnt', 1, {
+		count: count
+	});
+	this.ready();
+	return this.onStop(function() {
+		return handle.stop();
+	});
+});
+
+
+/**
+ * Better way to to Stats publish, but requires subscribe in Deps.autorun
+ * need to think if this is an issue
+ */
+//publishCollectionCount = function(pubsub_name, collection, selector, cntName) {
+//
+//	Meteor.publish( pubsub_name, function() {
+//		var count;
+//		var handle;
+//		var initializing;
+//		var _this = this;
+//
+//		count = 0;
+//		initializing = true;
+//		handle = collection.find(selector).observeChanges({
+//			added: function() {
+//				count++;
+//				if (!initializing) {
+//					return _this.changed(cntName, 1, {
+//						count: count
+//					});
+//				}
+//			},
+//			removed: function() {
+//				count--;
+//				return _this.changed(cntName, 1, {
+//					count: count
+//				});
+//			}
+//		});
+//		initializing = false;
+//		_this.added(cntName, 1, {
+//			count: count
+//		});
+//		_this.ready();
+//		return _this.onStop(function() {
+//			return handle.stop();
+//		});
+//	});
+//};
+//publishCollectionCount('pubsub_stats_diagrams_cnt', Diagrams, {}, 'diagrams_cnt');

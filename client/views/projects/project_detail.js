@@ -1,4 +1,4 @@
-Template.tmpl_glossary_detail.helpers({
+Template.tmpl_project_detail.helpers({
 	isAdmin: function() {
 		return isAdmin();
 	},
@@ -22,7 +22,7 @@ Template.tmpl_glossary_detail.helpers({
 		return dateAgo(this.updated);
 	},
 	statusOptions: function() {
-		return getGlossaryStatusOptions();
+		return getProjectStatusOptions();
 	},
 	isFav: function() {
 		return isFav(this.favs);
@@ -47,7 +47,7 @@ Template.tmpl_glossary_detail.helpers({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_glossary_detail.events({
+Template.tmpl_project_detail.events({
 	'click #btnEditToggle': function(e) {
 		e.preventDefault();
 		Session.set('form_update', true);
@@ -58,22 +58,22 @@ Template.tmpl_glossary_detail.events({
 		Session.set('form_update', false);
 	},
 
-	'click #btnDeleteGlossary': function(e) {
+	'click #btnDeleteProject': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to delete a glossary');
+			throwError('You must login to delete a project');
 			$(e.target).removeClass('disabled');
 			return false;
 		}
 
-		Meteor.call('deleteGlossary', this._id, function(error) {
+		Meteor.call('deleteProject', this._id, function(error) {
 			if(error){
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
-				Router.go('/glossarys');
+				Router.go('/projects');
 			}
 		});
 	},
@@ -81,42 +81,42 @@ Template.tmpl_glossary_detail.events({
 	'click #icon-heart': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a glossary to your favorities');
+			throwError('You must login to add a project to your favorities');
 			return false;
 		}
 
 		if ( isFav(this.favs) ) {
-			Glossarys.update(this._id,
+			Projects.update(this._id,
 				{
 					$pull: { favs: user._id },
 					$inc: { favs_cnt: -1 }
 				}
 			);
-			MyLog("glossary_details.js/click #icon-heart/1", "remove from favs");
+			MyLog("project_details.js/click #icon-heart/1", "remove from favs");
 		} else {
-			Glossarys.update(this._id,
+			Projects.update(this._id,
 				{
 					$addToSet: { favs: user._id },
 					$inc: { favs_cnt: 1 }
 				}
 			);
-			MyLog("glossary_details.js/click #icon-heart/1", "add to favs");
+			MyLog("project_details.js/click #icon-heart/1", "add to favs");
 		}
 	},
 
 	'click #icon-eye': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a glossary to your "seen it" list');
+			throwError('You must login to add a project to your "seen it" list');
 			return false;
 		}
 
 		if ( hasSeen(this.seen) ) {
-			Glossarys.update(this._id, { $pull: { seen: user._id }, $inc: { seen_cnt: -1 } } );
-			MyLog("glossary_details.js/click #icon-eye/2", "remove from seen");
+			Projects.update(this._id, { $pull: { seen: user._id }, $inc: { seen_cnt: -1 } } );
+			MyLog("project_details.js/click #icon-eye/2", "remove from seen");
 		} else {
-			Glossarys.update(this._id, { $addToSet: { seen: user._id }, $inc: { seen_cnt: 1 } } );
-			MyLog("glossary_details.js/click #icon-eye/1", "remove from seen");
+			Projects.update(this._id, { $addToSet: { seen: user._id }, $inc: { seen_cnt: 1 } } );
+			MyLog("project_details.js/click #icon-eye/1", "remove from seen");
 		}
 	},
 
@@ -131,25 +131,25 @@ Template.tmpl_glossary_detail.events({
 	'click #icon-star': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a glossary to your "star" list');
+			throwError('You must login to add a project to your "star" list');
 			return false;
 		}
 
 		if ( isStar(this.stars) ) {
-			Glossarys.update(this._id, { $pull: { stars: user._id }, $inc: { stars_cnt: -1 } } );
-			MyLog("glossary_details.js/click #icon-star/2", "remove from stars");
+			Projects.update(this._id, { $pull: { stars: user._id }, $inc: { stars_cnt: -1 } } );
+			MyLog("project_details.js/click #icon-star/2", "remove from stars");
 		} else {
-			Glossarys.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
-			MyLog("glossary_details.js/click #icon-star/1", "remove from stars");
+			Projects.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
+			MyLog("project_details.js/click #icon-star/1", "remove from stars");
 		}
 	},
 
-	'click #btnUpdateGlossary': function(e) {
+	'click #btnUpdateProject': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to update a glossary');
+			throwError('You must login to update a project');
 			$(e.target).removeClass('disabled');
 			return false;
 		}
@@ -165,34 +165,35 @@ Template.tmpl_glossary_detail.events({
 
 		if ( isAdmin(Meteor.user()) ) {
 			_.extend(properties, {
-				status: $('#status').val()
+				status: status
 			});
 		}
 
 		// VALIDATE
-		var isInputError = validateGlossary(properties);
+		var isInputError = validateProject(properties);
 		if (isInputError) {
 			$(e.target).removeClass('disabled');
 			return false;
 		}
 
 		// TRANSFORM AND DEFAULTS
-		transformGlossary(properties);
+		transformProject(properties);
 
-		Meteor.call('updateGlossary', _id, properties, function(error, glossary) {
+		Meteor.call('updateProject', _id, properties, function(error, project) {
 			if(error){
-				MyLog("glossary_details.js/1", "updated glossary", {'error': error, 'glossary': glossary});
+				MyLog("project_details.js/1", "updated project", {'error': error, 'title': project.title});
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
-				MyLog("glossary_details.js/1", "updated glossary", {'_id': _id, 'glossary': glossary});
+				MyLog("project_details.js/1", "updated project", {'_id': _id, 'title': project.title});
+				//Router.go('/projects/'+_id);
 			}
 		});
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_glossary_detail.rendered = function() {
+Template.tmpl_project_detail.rendered = function() {
 	$('#title').focus();
 	$('#description').focus();
 };

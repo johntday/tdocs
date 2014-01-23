@@ -1,8 +1,8 @@
-<template name="tmpl_diagram_add">
+<template name="tmpl_project_add">
 
 	<div class="panel panel-purple">
 		<div class="panel-heading">
-			<h2 class="panel-title">Add Sequence Diagram</h2>
+			<h2 class="panel-title">Add Project Term</h2>
 		</div>
 		<div class="panel-body">
 
@@ -10,16 +10,13 @@
 				{{#constant}}
 
 				{{form_input "Title" "title" "" canCreate true null true}}
-
 				{{form_textarea "Description" "description" "" canCreate true null true}}
-				{{form_textarea "Diagram Text Language" "code" "" canCreate true null true}}
-				{{form_select "Theme" "theme" "simple" seqDgmThemOptions "" canCreate true}}
 
 				{{/constant}}
 				<div class="form-group">
 					<div class="col-sm-4">
 						{{#if canCreate}}
-							<button type="button" class="btn btn-primary" id="btnCreateDiagram">Create</button>
+							<button type="button" class="btn btn-primary" id="btnCreateProject">Create</button>
 						{{/if}}
 					</div>
 				</div>
@@ -28,5 +25,3 @@
 	</div>
 
 </template>
-
-

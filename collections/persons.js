@@ -49,12 +49,7 @@ Meteor.methods({
 		if (personWithSameName)
 			throw new Meteor.Error(603, 'Already have a person with name "' + properties.name + '"');
 
-		var person = _.extend(properties, {
-			userId: userId,
-			author: getUserDisplayName(user),
-			created: getNow(),
-			status: (isAdmin(user)) ? STATUS_APPROVED : STATUS_PENDING
-		});
+		var person = extendWithMetadataForInsert( properties, userId, user );
 
 		MyLog("collections/persons.js/createPerson/2", "person", person);
 
