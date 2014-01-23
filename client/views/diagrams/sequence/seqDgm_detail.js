@@ -8,7 +8,6 @@ function isError(code) {
 	}
 	return false;
 };
-
 Template.tmpl_diagram_detail.helpers({
 	isAdmin: function() {
 		return isAdmin();
@@ -218,8 +217,8 @@ Template.tmpl_diagram_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_diagram_detail.rendered = function() {
-
-	$('#theme').select2({
+	var $theme = $('#theme');
+	$theme.select2({
 		data: [
 			{id: 'hand', text: 'hand'},
 			{id: 'simple', text: 'simple'}
@@ -235,6 +234,16 @@ Template.tmpl_diagram_detail.rendered = function() {
 	})
 	.select2("val", this.data.theme)
 	.select2("readonly", !canEditAndEditToggle(this.data));
+
+	$theme.on("change", function(e) {
+		try {
+			var options = {theme: $theme.val()};
+			var diagram = Diagram.parse( $('#code').val() );
+			$('#diagram').html('');
+			diagram.drawSVG('diagram', options);
+		} catch (err) {
+		}
+	});
 
 	try {
 		var options = (this.data.theme) ? {theme: this.data.theme} : {theme: 'simple'};
