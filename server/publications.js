@@ -150,7 +150,7 @@ Meteor.publish('pubsub_stats_diagrams_cnt', function() {
 
 	count = 0;
 	initializing = true;
-	handle = Glossarys.find().observeChanges({
+	handle = Diagrams.find().observeChanges({
 		added: function() {
 			count++;
 			if (!initializing) {
