@@ -96,10 +96,6 @@ Meteor.methods({
 		return diagram;
 	},
 
-	clickedDiagram: function(_id){
-		updateClickCnt(Diagrams, this.params._id);
-	},
-
 	deleteDiagram: function(diagramId) {
 		// remove associated stuff
 		if(!this.isSimulation) {

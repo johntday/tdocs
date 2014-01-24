@@ -92,10 +92,6 @@ Meteor.methods({
 		return glossary;
 	},
 
-	clickedGlossary: function(_id){
-		updateClickCnt(Glossarys, this.params._id);
-	},
-
 	deleteGlossary: function(glossaryId) {
 		// remove associated stuff
 		if(!this.isSimulation) {

@@ -25,7 +25,6 @@ Router.map(function () {
 	this.route('tmpl_userprof_detail', {
 		path  : '/userprof/:_id',
 		waitOn: function () {
-			//			updateClickCnt(Tdocs, this.params._id);
 			//			Session.set('selected_tdoc_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_userprof', this.params._id);
 		},
@@ -49,7 +48,6 @@ Router.map(function () {
 		path  : '/tdocs/:_id',
 		waitOn: function () {
 			Session.set('form_update', false);
-			updateClickCnt(Tdocs, this.params._id);
 			Session.set('selected_tdoc_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_tdoc', this.params._id);
 		},
@@ -72,14 +70,15 @@ Router.map(function () {
 	this.route('tmpl_diagram_detail', {
 		path  : '/diagrams/:_id',
 		waitOn: function () {
-			Session.set('form_update', false);
-			updateClickCnt(Diagrams, this.params._id);
 			Session.set('has_sidebar', false);
 			Session.set('selected_diagram_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_diagram', this.params._id);
 		},
 		data  : function () {
 			var diagram = Diagrams.findOne(this.params._id);
+			Session.set('form_update', false);
+			if ( !diagram.code )
+				Session.set('form_update', true);
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Diagrams", link:"/diagrams", isActive:false},
@@ -103,7 +102,6 @@ Router.map(function () {
 		path  : '/glossarys/:_id',
 		waitOn: function () {
 			Session.set('form_update', false);
-			updateClickCnt(Glossarys, this.params._id);
 			Session.set('selected_glossary_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_glossary', this.params._id);
 		},
@@ -142,7 +140,6 @@ Router.map(function () {
 		path  : '/person/:_id',
 		waitOn: function () {
 			Session.set('form_update', false);
-			updateClickCnt(Persons, this.params._id);
 			Session.set('selected_person_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_person', this.params._id);
 		},

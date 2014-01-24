@@ -93,10 +93,6 @@ Meteor.methods({
 		return tdoc;
 	},
 
-	clickedTdoc: function(_id){
-		updateClickCnt(Tdocs, this.params._id);
-	},
-
 	deleteTdoc: function(tdocId) {
 		// remove associated stuff
 		if(!this.isSimulation) {

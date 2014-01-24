@@ -25,8 +25,8 @@ Template.tmpl_diagram_add.events({
 		var properties = {
 			title: $('#title').val()
 			, description: $('#description').val()
-			, code: $('#code').val()
-			, theme: $('#theme').val()
+			, code: ''//$('#code').val()
+			, theme: 'simple'//$('#theme').val()
 		};
 
 		// VALIDATE
