@@ -3,8 +3,7 @@
  * TYPE:  project, tag
  */
 Meteor.publish('pubsub_tag_list', function(query, options, limit) {
-	options = options || {};
-	options.limit = limit;
+	options = options || {}; options.limit = limit;
 	return Tags.find(query || {}, options);
 });
 Meteor.publish('pubsub_selected_tag', function(id) {
@@ -29,8 +28,7 @@ Meteor.publish('pubsub_selected_tag', function(id) {
  * Tdocs
  */
 Meteor.publish('pubsub_tdoc_list', function(query, options, limit) {
-	options = options || {};
-	options.limit = limit;
+	options = options || {}; options.limit = limit;
 	return Tdocs.find(query || {}, options);
 });
 Meteor.publish('pubsub_selected_tdoc', function(id) {
@@ -41,8 +39,7 @@ Meteor.publish('pubsub_selected_tdoc', function(id) {
  * Diagrams
  */
 Meteor.publish('pubsub_diagram_list', function(query, options, limit) {
-	options = options || {};
-	options.limit = limit;
+	options = options || {}; options.limit = limit;
 	return Diagrams.find(query || {}, options);
 });
 Meteor.publish('pubsub_selected_diagram', function(id) {
@@ -53,8 +50,7 @@ Meteor.publish('pubsub_selected_diagram', function(id) {
  * Persons
  */
 Meteor.publish('pubsub_person_list', function(query, options, limit) {
-	options = options || {};
-	options.limit = limit;
+	options = options || {}; options.limit = limit;
 	return Persons.find(query || {}, options);
 });
 Meteor.publish('pubsub_selected_person', function(id) {
@@ -65,8 +61,7 @@ Meteor.publish('pubsub_selected_person', function(id) {
  * Glossarys
  */
 Meteor.publish('pubsub_glossary_list', function(query, options, limit) {
-	options = options || {};
-	options.limit = limit;
+	options = options || {}; options.limit = limit;
 	return Glossarys.find(query || {}, options);
 });
 Meteor.publish('pubsub_selected_glossary', function(id) {
