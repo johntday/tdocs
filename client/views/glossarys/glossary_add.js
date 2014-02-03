@@ -53,7 +53,7 @@ Template.tmpl_glossary_add.events({
 	},
 
 	'keyup #code, focus #code, keyup #description, focus #description': function(e) {
-		//e.preventDefault();
+		e.preventDefault();
 		var $element = $(e.target).get(0);
 		$element.style.overflow = 'hidden';
 		$element.style.height = 0;
