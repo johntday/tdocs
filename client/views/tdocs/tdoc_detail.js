@@ -197,3 +197,7 @@ Template.tmpl_tdoc_detail.rendered = function() {
 	$("#title").focus();
 	$("#description").focus();
 };
+/*------------------------------------------------------------------------------------------------------------------------------*/
+Template.tmpl_tdoc_detail.destroyed = function() {
+	incClickCnt(Tdocs, this.data._id);
+};

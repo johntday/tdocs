@@ -256,20 +256,12 @@ Template.tmpl_diagram_detail.rendered = function() {
 	$('#description').focus();
 	$('#code').focus();
 };
-
+/*------------------------------------------------------------------------------------------------------------------------------*/
 //Template.tmpl_diagram_detail.created = function() {
-//	codeInterval = Meteor.setInterval(function(){
-//		var currentCodeValue = $('#code').val();
-//		if ( Session.get('form_update') && (currentCodeValue != Session.get('diagram_code')) && !isError(currentCodeValue) ) {
-//			console.log("currentCodeValue != Session.get('diagram_code')");
-//			//codeValue = currentCodeValue;
-//
-//			Diagrams.update(Session.get('diagram_id'), {$set: {code: currentCodeValue}} );
-//			//codeDep.changed();
-//		}
-//	}, 5000);
+//	console.log( this.data._id );
+//	Diagrams.update(this.data._id, {$inc: {click_cnt: 1}})
 //};
-
-//Template.tmpl_diagram_detail.destroyed = function() {
-//	Meteor.clearInterval(codeInterval);
-//};
+/*------------------------------------------------------------------------------------------------------------------------------*/
+Template.tmpl_diagram_detail.destroyed = function() {
+	incClickCnt(Diagrams, this.data._id);
+};

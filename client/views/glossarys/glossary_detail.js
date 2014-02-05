@@ -196,3 +196,7 @@ Template.tmpl_glossary_detail.rendered = function() {
 	$('#title').focus();
 	$('#description').focus();
 };
+/*------------------------------------------------------------------------------------------------------------------------------*/
+Template.tmpl_glossary_detail.destroyed = function() {
+	incClickCnt(Glossarys, this.data._id);
+};
