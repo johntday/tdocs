@@ -5,74 +5,171 @@ Template.tmpl_graphDgm_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.rendered = function() {
+	Session.set('has_sidebar', false);
 
 	var graph = new joint.dia.Graph;
 
+	// Create a paper and wrap it in a PaperScroller.
+	// ----------------------------------------------
+
+	var paperScroller = new joint.ui.PaperScroller({
+		autoResizePaper: true
+	});
+
 	var paper = new joint.dia.Paper({
-		el: $('#paper'),
-		width: 800,
-		height: 600,
-		gridSize: 1,
+		el: paperScroller.el,
+		width: 500,
+		height: 500,
+		gridSize: 10,
+		perpendicularLinks: true,
 		model: graph
+	});
+	paperScroller.options.paper = paper;
+
+	$('#paper').append(paperScroller.render().el);
+
+	paperScroller.center();
+
+	var rect = new joint.shapes.basic.Rect({
+		position: { x: 100, y: 30 },
+		size: { width: 100, height: 30 },
+		attrs: { rect: { fill: 'blue' }, text: { text: 'my box', fill: 'white' } }
+	});
+
+	var rect2 = rect.clone();
+	rect2.translate(300);
+
+	var link = new joint.dia.Link({
+		source: { id: rect.id },
+		target: { id: rect2.id }
+	});
+
+	graph.addCells([rect, rect2, link]);
+
+
+	// Selection.
+	// ----------
+
+	var selection = new Backbone.Collection;
+
+	var selectionView = new joint.ui.SelectionView({
+		paper: paper,
+		graph: graph,
+		model: selection
 	});
 
 
-	var uml = joint.shapes.uml;
+	// Initiate selecting when the user grabs the blank area of the paper while the Shift key is pressed.
+	// Otherwise, initiate paper pan.
+	paper.on('blank:pointerdown', function(evt, x, y) {
 
-	var states = {
+		if (_.contains(KeyboardJS.activeKeys(), 'shift')) {
+			selectionView.startSelecting(evt, x, y);
+		} else {
+			paperScroller.startPanning(evt, x, y);
+		}
+	});
 
-		s0: new uml.StartState({
-			position: { x:20  , y: 20 },
-			size: { width: 30, height: 30 },
-		}),
+	paper.on('cell:pointerdown', function(cellView, evt) {
+		// Select an element if CTRL/Meta key is pressed while the element is clicked.
+		if ((evt.ctrlKey || evt.metaKey) && !(cellView.model instanceof joint.dia.Link)) {
+			selectionView.createSelectionBox(cellView);
+			selection.add(cellView.model);
+		}
+	});
 
-		s1: new uml.State({
-			position: { x:100  , y: 100 },
-			size: { width: 200, height: 100 },
-			name: "state 1",
-			events: ["entry / init()","exit / destroy()"]
-		}),
+	selectionView.on('selection-box:pointerdown', function(evt) {
+		// Unselect an element if the CTRL/Meta key is pressed while a selected element is clicked.
+		if (evt.ctrlKey || evt.metaKey) {
+			var cell = selection.get($(evt.target).data('model'));
+			selectionView.destroySelectionBox(paper.findViewByModel(cell));
+			selection.reset(selection.without(cell));
+		}
+	});
 
-		s2: new uml.State({
-			position: { x:400  , y: 200 },
-			size: { width: 300, height: 300 },
-			name: "state 2",
-			events: ["entry / create()","exit / kill()","A / foo()","B / bar()"]
-		}),
+	// Disable context menu inside the paper.
+	// This prevents from context menu being shown when selecting individual elements with Ctrl in OS X.
+	paper.el.oncontextmenu = function(evt) { evt.preventDefault(); };
 
-		s3: new uml.State({
-			position: { x:130  , y: 400 },
-			size: { width: 160, height: 60 },
-			name: "state 3",
-			events: ["entry / create()","exit / kill()"]
-		}),
+	// enable link inspector
+	paper.on('link:options', function(evt, cellView, x, y) {
+		// Here you can create an inspector for the link the same way as it is done for normal elements.
+		console.log('link inspector');
+	});
 
-		s4: new uml.State({
-			position: { x:530  , y: 400 },
-			size: { width: 160, height: 50 },
-			name: "sub state 4",
-			events: ["entry / create()"]
-		}),
+	// An example of a simple element editor.
+	// --------------------------------------
 
-		se: new uml.EndState({
-			position: { x:750  , y: 550 },
-			size: { width: 30, height: 30 },
-		})
+	//var elementInspector = new ElementInspector();
+	//$('.inspector').append(elementInspector.el);
 
-	};
+	// Halo - element tools.
+	// ---------------------
 
-	graph.addCells(states);
+	paper.on('cell:pointerup', function(cellView, evt) {
 
-	states.s2.embed(states.s4);
+		if (cellView.model instanceof joint.dia.Link || selection.contains(cellView.model)) return;
 
-	var transitons = [
-		new uml.Transition({ source: { id: states.s0.id }, target: { id: states.s1.id }}),
-		new uml.Transition({ source: { id: states.s1.id }, target: { id: states.s2.id }}),
-		new uml.Transition({ source: { id: states.s1.id }, target: { id: states.s3.id }}),
-		new uml.Transition({ source: { id: states.s3.id }, target: { id: states.s4.id }}),
-		new uml.Transition({ source: { id: states.s2.id }, target: { id: states.se.id }})
-	];
+		var halo = new joint.ui.Halo({
+			graph: graph,
+			paper: paper,
+			cellView: cellView,
+			linkAttributes: {
+				'.marker-source': { d: 'M 10 0 L 0 5 L 10 10 z', transform: 'scale(0.001)' },
+				// @TODO: scale(0) fails in Firefox
+				'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' }
+			}
+		});
 
-	graph.addCells(transitons);
+		halo.render();
+		//createInspector(cellView);
+	});
+
+
+	// Command Manager - undo/redo.
+	// ----------------------------
+
+	var commandManager = new joint.dia.CommandManager({ graph: graph });
+
+	// Validator
+	// ---------
+	// nothing
+
+	// Hook on toolbar buttons.
+	// ------------------------
+
+	$('#btn-undo').on('click', _.bind(commandManager.undo, commandManager));
+	$('#btn-redo').on('click', _.bind(commandManager.redo, commandManager));
+	$('#btn-clear').on('click', _.bind(graph.clear, graph));
+	$('#btn-svg').on('click', function() {
+		paper.openAsSVG();
+		console.log(paper.toSVG()); // An exmaple of retriving the paper SVG as a string.
+	});
+	$('#btn-find-element, #btn-layout, #btn-group, #btn-ungroup').on('click', function() {
+		alert('not ready yet');
+	});
+	$('#btn-center-content').click(function(){
+		paperScroller.centerContent();
+	});
+
+	var zoomLevel = 1;
+
+	function zoom(paper, newZoomLevel) {
+
+		if (newZoomLevel > 0.2 && newZoomLevel < 20) {
+
+			var ox = (paper.el.scrollLeft + paper.el.clientWidth / 2) / zoomLevel;
+			var oy = (paper.el.scrollTop + paper.el.clientHeight / 2) / zoomLevel;
+
+			paper.scale(newZoomLevel, newZoomLevel, ox, oy);
+
+			zoomLevel = newZoomLevel;
+		}
+	}
+
+	$('#btn-zoom-in').on('click', function() { zoom(paper, zoomLevel + 0.2); });
+	$('#btn-zoom-out').on('click', function() { zoom(paper, zoomLevel - 0.2); });
 
 };
+
+
