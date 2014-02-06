@@ -3,6 +3,7 @@ Template.tmpl_diagrams.helpers({
 		return diagramsHandle;
 	}
 });
+/*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_diagrams_sort_select.helpers({
 	breadcrumbs: function() {
 		return [
@@ -40,7 +41,6 @@ Template.tmpl_diagrams_list.helpers({
 		return ( this.fetch().length < this.loaded() );
 	}
 });
-/*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_diagrams_list.events({
     'click .load-more': function(e) {
         e.preventDefault();
