@@ -60,26 +60,6 @@ Template.tmpl_tdoc_add.events({
 Template.tmpl_tdoc_add.rendered = function() {
 	$("#title").focus();
 
-	$('#tags').select2({
-		data: [
-			{id: 'gb', text: 'Great Britain'},
-			{id: 'us', text: 'United States'},
-			{id: 'xx', text: 'Russia'},
-			{id: 'xy', text: 'asdfasdf'},
-			{id: 'zz', text: 'ahraetr'},
-		],
-		multiple: true,
-		placeholder: "add some tags",
-		success: function(response, newValue) {
-			var _id = this.dataset.pk;
-			console.log("newValue: "+newValue);
-			console.log("_id: "+_id);
-		}
-	})
-		.on("change", function(e) {
-			console.log("change");
-		});
-
 	//	$('#div-release_date .input-append.date').datepicker({
 //		autoclose: true,
 //		todayHighlight: true

@@ -12,8 +12,7 @@
       },
       "moment": {},
       "bootstrap-3": {},
-      "bootstrap-datepicker2": {},
-      "select2": {}
+      "bootstrap-datepicker2": {}
     },
     "packages": {
       "spin": {
@@ -45,11 +44,6 @@
         "git": "https://github.com/deepwell/meteor-bootstrap-datepicker.git",
         "tag": "v1.2.0",
         "commit": "b7de18a7cc651ea665cda75048663f90d1a11d10"
-      },
-      "select2": {
-        "git": "https://github.com/nate-strauser/meteor-select2.git",
-        "tag": "v3.4.5",
-        "commit": "4a8d05582b949a14f0ee217c185166abbf112822"
       }
     }
   }

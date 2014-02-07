@@ -18,7 +18,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	var paper = new joint.dia.Paper({
 		el: paperScroller.el,
-		width: 500,
+		width: 600,
 		height: 500,
 		gridSize: 10,
 		perpendicularLinks: true,

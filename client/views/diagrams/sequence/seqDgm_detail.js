@@ -217,34 +217,6 @@ Template.tmpl_diagram_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_diagram_detail.rendered = function() {
-	var $theme = $('#theme');
-	$theme.select2({
-		data: [
-			{id: 'hand', text: 'hand'},
-			{id: 'simple', text: 'simple'}
-		],
-		multiple: false,
-		placeholder: "diagram theme"
-//		success: function(response, newValue) {
-//			//var _id = this.dataset.pk;
-//		}
-		//	})
-		//	.on("change", function(e) {
-		//		console.log("change");
-	})
-	.select2("val", this.data.theme)
-	.select2("readonly", !canEditAndEditToggle(this.data));
-
-	$theme.on("change", function(e) {
-		try {
-			var options = {theme: $theme.val()};
-			var diagram = Diagram.parse( $('#code').val() );
-			$('#diagram').html('');
-			diagram.drawSVG('diagram', options);
-		} catch (err) {
-		}
-	});
-
 	try {
 		var options = (this.data.theme) ? {theme: this.data.theme} : {theme: 'simple'};
 		var diagram = Diagram.parse( this.data.code );
