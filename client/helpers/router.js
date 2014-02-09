@@ -77,7 +77,7 @@ Router.map(function () {
 		data  : function () {
 			var diagram = Diagrams.findOne(this.params._id);
 			Session.set('form_update', false);
-			if ( !diagram.code )
+			if ( diagram && !diagram.code )
 				Session.set('form_update', true);
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},

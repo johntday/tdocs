@@ -227,6 +227,8 @@ Template.tmpl_diagram_detail.rendered = function() {
 
 	$('#description').focus();
 	$('#code').focus();
+	if ( !Session.get('form_update') )
+		$("#code").blur();
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 //Template.tmpl_diagram_detail.created = function() {

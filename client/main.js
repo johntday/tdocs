@@ -2,7 +2,7 @@
  * SESSION VARIABLE DEFAULTS
  */
 Session.setDefault('namespace', 'default');
-Session.setDefault('has_sidebar', true);
+Session.setDefault('has_sidebar', false);
 Session.setDefault('search_text', '');
 Session.setDefault('form_update', false);
 Session.setDefault('selected_person_id', null);

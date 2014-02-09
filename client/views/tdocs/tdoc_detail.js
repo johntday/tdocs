@@ -193,9 +193,10 @@ Template.tmpl_tdoc_detail.events({
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_tdoc_detail.rendered = function() {
 
-
 	$("#title").focus();
 	$("#description").focus();
+	if ( !Session.get('form_update') )
+		$("#description").blur();
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_tdoc_detail.destroyed = function() {

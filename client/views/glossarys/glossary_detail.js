@@ -195,6 +195,8 @@ Template.tmpl_glossary_detail.events({
 Template.tmpl_glossary_detail.rendered = function() {
 	$('#title').focus();
 	$('#description').focus();
+	if ( !Session.get('form_update') )
+		$("#description").blur();
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_glossary_detail.destroyed = function() {
