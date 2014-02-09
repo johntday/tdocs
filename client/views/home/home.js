@@ -10,20 +10,24 @@
 /*------------------------------------------------------------------------------------------------------------------------------*/
 //Template.tmplHome.rendered = function() {
 //
-//	// SEQUENCE DIAGRAM UNIT TEST
-//	var diagram = Diagram.parse("A->B: Does something");
-//	diagram.drawSVG('diagram');
+//	var data = [
+//		{
+//			field_1: "value1",
+//			field_2: "value2"
+//		}, {
+//			field_1: "value3",
+//			field_2: "value4"
+//		}
+//	];
+//	var cols = [
+//		{ id: "field_1", name: "Field 1", field: "field_1" },
+//		{ id: "field_2", name: "Field 2", field: "field_2" }
+//	];
 //
+//	var options = {
+//		enableCellNavigation: true,
+//		enableColumnReorder: false
+//	};
 //
-	// Raphael unit test
-//	var paper = Raphael("diagram", 800, 600);
-//
-//	// Creates circle at x = 50, y = 40, with radius 10
-//	var circle = paper.circle(50, 40, 10);
-//
-//	// Sets the fill attribute of the circle to red (#f00)
-//	circle.attr("fill", "#f00");
-//
-//	// Sets the stroke attribute of the circle to white
-//	circle.attr("stroke", "#fff");
+//	var slickgrid = new Slick.Grid('#example', data, cols, options);
 //};

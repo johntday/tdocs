@@ -11,6 +11,7 @@ Router.configure({
 });
 
 Router.map(function () {
+	this.route('test'                 ,{path: '/test'});
 	this.route('tmplHome'                 ,{path: '/'});
 	this.route('tmpl_about'               ,{path: '/about'});
 	this.route('tmpl_help'                ,{path: '/help'});
