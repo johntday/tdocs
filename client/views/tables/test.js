@@ -33,7 +33,40 @@ Template.test.events({
 		});
 	},
 	'click #btn-table-save': function (e) {
-		// DO SAVE
+		e.preventDefault();
+
+		if(!Meteor.user()){
+			throwError('You must login to create a table');
+			//$(e.target).removeClass('disabled');
+			return false;
+		}
+
+		// CREATE OBJECT
+		var properties = {
+			data: data
+			, colHeaders: colHeaders
+		};
+
+		// VALIDATE
+//		var isInputError = validateTable(properties);
+//		if (isInputError) {
+//			$(e.target).removeClass('disabled');
+//			return false;
+//		}
+
+		// TRANSFORM AND DEFAULTS
+//		transformTable(properties);
+
+		Meteor.call('createTable', properties, function(error, table) {
+			if(error){
+				console.log(JSON.stringify(error));
+				throwError(error.reason);
+				//$(e.target).removeClass('disabled');
+			}else{
+				//Session.set('form_update', false);
+				//Router.go('/tables/'+table.tableId);
+			}
+		});
 		//$(e.currentTarget).addClass("disabled");
 		//Template.test.dirty = false;
 	}
@@ -70,8 +103,8 @@ Template.test.rendered = function() {
 	var settings = tableSettings(
 		"test",
 		$example1,
-		{data:data
-		, colHeaders: ["", "Maserati", "Mazda", "Mercedes", "Mini", "Mitsubishi"]
+		{data: Template.test.table.getData()
+		, colHeaders: Template.test.table.getColHeader()
 		}
 	);
 
