@@ -9,11 +9,13 @@ Session.setDefault('selected_person_id', null);
 Session.setDefault('breadcrumbs', null);
 Session.setDefault('person_sort', 'name');
 
-Session.setDefault('tdoc_sort', 'title');
 Session.setDefault('selected_tdoc_id', null);
-
-Session.setDefault('diagram_sort', 'title');
 Session.setDefault('selected_diagram_id', null);
+
+Session.setDefault('tdoc_sort', 'title');
+Session.setDefault('diagram_sort', 'title');
+Session.setDefault('glossary_sort', 'title');
+Session.setDefault('table_sort', 'title');
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs
@@ -92,14 +94,35 @@ Deps.autorun(function(){
 });
 
 /**
+ * Table
+ */
+tableListSubscription = function(find, options, per_page) {
+	var handle = Meteor.subscribeWithPagination('pubsub_table_list', find, options, per_page);
+	handle.fetch = function() {
+		var ourFind = _.isFunction(find) ? find() : find;
+		return limitDocuments(Tables.find(ourFind, options), handle.loaded());
+	}
+	return handle;
+};
+Deps.autorun(function(){
+	tablesHandle = tableListSubscription(
+		tableQuery( Session.get('search_text') ),
+		tableSort[ Session.get('table_sort') ],
+		Meteor.MyClientModule.appConfig.pageLimit
+	);
+});
+
+/**
  * Stats
  */
 TdocsCount = new Meteor.Collection('tdocs_cnt');
 GlossaryCount = new Meteor.Collection('glossarys_cnt');
 DiagramsCount = new Meteor.Collection('diagrams_cnt');
+TablesCount = new Meteor.Collection('tables_cnt');
 Meteor.subscribe('pubsub_stats_glossarys_cnt');
 Meteor.subscribe('pubsub_stats_tdocs_cnt');
 Meteor.subscribe('pubsub_stats_diagrams_cnt');
+Meteor.subscribe('pubsub_stats_tables_cnt');
 
 /**
  * layout template JS
@@ -110,6 +133,9 @@ Template.layout.helpers({
 	},
 	mainDivClass: function() {
 		return (Session.get('has_sidebar')) ? "col-sm-8" : "col-sm-12";
+	},
+	showFooter: function() {
+		return _.contains(['/tables/'], Location._state.path);
 	}
 });
 
@@ -117,4 +143,4 @@ Template.layout.helpers({
  * set debug=true in "/lib/client_module.js" to log template render counts to console.
  * Set as last statement in "main.js"
  */
-Meteor.MyClientModule.performanceLogRenders();
+//Meteor.MyClientModule.performanceLogRenders();

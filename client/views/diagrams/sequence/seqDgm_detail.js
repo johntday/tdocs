@@ -86,6 +86,7 @@ Template.tmpl_diagram_detail.events({
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
+				growl( "Diagram deleted", {type:'s', hideSnark:true} );
 				Router.go('/diagrams');
 			}
 		});
@@ -210,6 +211,7 @@ Template.tmpl_diagram_detail.events({
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
+				growl( "Diagram updated", {type:'s', hideSnark:true} );
 				MyLog("diagram_details.js/1", "updated diagram", {'_id': _id, 'diagram': diagram});
 			}
 		});

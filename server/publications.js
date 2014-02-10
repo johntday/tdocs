@@ -69,6 +69,17 @@ Meteor.publish('pubsub_selected_glossary', function(id) {
 });
 
 /**
+ * Tables
+ */
+Meteor.publish('pubsub_table_list', function(query, options, limit) {
+	options = options || {}; options.limit = limit;
+	return Tables.find(query || {}, options);
+});
+Meteor.publish('pubsub_selected_table', function(id) {
+	return Tables.find(id);
+});
+
+/**
  * Stats / Counts
  */
 Meteor.publish('pubsub_stats_glossarys_cnt', function() {
@@ -163,6 +174,39 @@ Meteor.publish('pubsub_stats_diagrams_cnt', function() {
 	});
 	initializing = false;
 	this.added('diagrams_cnt', 1, {
+		count: count
+	});
+	this.ready();
+	return this.onStop(function() {
+		return handle.stop();
+	});
+});
+Meteor.publish('pubsub_stats_tables_cnt', function() {
+	var count;
+	var handle;
+	var initializing;
+	var _this = this;
+
+	count = 0;
+	initializing = true;
+	handle = Tables.find().observeChanges({
+		added: function() {
+			count++;
+			if (!initializing) {
+				return _this.changed('tables_cnt', 1, {
+					count: count
+				});
+			}
+		},
+		removed: function() {
+			count--;
+			return _this.changed('tables_cnt', 1, {
+				count: count
+			});
+		}
+	});
+	initializing = false;
+	this.added('tables_cnt', 1, {
 		count: count
 	});
 	this.ready();

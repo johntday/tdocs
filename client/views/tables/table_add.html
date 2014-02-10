@@ -1,0 +1,30 @@
+<template name="tmpl_table_add">
+
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h2 class="panel-title">Add Table</h2>
+		</div>
+		<div class="panel-body">
+
+			<form class="add modal-nav-box box-hide form-horizontal">
+				{{#constant}}
+
+				{{form_input "Title" "title" "" canCreate true null true}}
+
+				{{form_textarea "Description" "description" "" canCreate true null true}}
+
+				{{/constant}}
+				<div class="form-group">
+					<div class="col-sm-4">
+						{{#if canCreate}}
+							<button type="button" class="btn btn-primary" id="btnCreateTable">Next</button>
+						{{/if}}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</template>
+
+

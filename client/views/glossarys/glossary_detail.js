@@ -73,6 +73,7 @@ Template.tmpl_glossary_detail.events({
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
+				growl( "Glossary item deleted", {type:'s', hideSnark:true} );
 				Router.go('/glossarys');
 			}
 		});
@@ -186,6 +187,7 @@ Template.tmpl_glossary_detail.events({
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
+				growl( "Glossary item updated", {type:'s', hideSnark:true} );
 				MyLog("glossary_details.js/1", "updated glossary", {'_id': _id, 'glossary': glossary});
 			}
 		});

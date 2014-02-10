@@ -73,6 +73,7 @@ Template.tmpl_tdoc_detail.events({
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
+				growl( "Tdoc deleted", {type:'s', hideSnark:true} );
 				Router.go('/tdocs');
 			}
 		});
@@ -185,6 +186,7 @@ Template.tmpl_tdoc_detail.events({
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
+				growl( "Tdoc updated", {type:'s', hideSnark:true} );
 				MyLog("tdoc_details.js/1", "updated tdoc", {'_id': _id, 'tdoc': tdoc});
 			}
 		});

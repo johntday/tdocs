@@ -20,8 +20,8 @@ var setDirty = function(templateName) {
 //$window.on('resize', calculateSize);
 
 
-tableSettings = function(templateName, $example1, settings) {
-	var table_width = settings.table_width || 400;
+tableSettings = function(templateName, canEdit, $example1, settings) {
+	var table_width = settings.table_width || 600;
 	var table_height = settings.table_height || 300;
 
 	return _.extend( {
@@ -29,13 +29,17 @@ tableSettings = function(templateName, $example1, settings) {
 		//colWidths: [55, 47, 47, 47, 47, 47, 47], //can also be a number or a function
 		rowHeaders: false,
 		//colHeaders: ["", "Maserati", "Mazda", "Mercedes", "Mini", "Mitsubishi"],
-		fixedRowsTop: 1,
+		//fixedRowsTop: 1,
 		columnSorting: true,
 		scrollH: 'auto',
 		scrollV: 'auto',
 		stretchH: 'all',//'hybrid', //default
 		minSpareRows: 1,
-		contextMenu: {
+		autoWrapRow: true,
+		manualColumnResize: true,
+		manualColumnMove: true,
+		//persistentState: true,
+			contextMenu: {
 			callback: function (key, options) {
 				if (key === 'change_header') {
 					//var header_name = prompt("Enter new header name");
@@ -82,28 +86,21 @@ tableSettings = function(templateName, $example1, settings) {
 			}
 		},
 		fillHandle: true,
+		cells: function (row, col, prop) {
+			var cellProperties = {};
+			if (!canEdit)
+				cellProperties.readOnly = true;
+			return cellProperties;
+		},
 
-//		beforeChange: function (changes, source) {
+
+			//		beforeChange: function (changes, source) {
 //			lastChange = changes;
 //		},
-		beforeKeyDown: function (e) {
-//			var HOT = Template[templateName].table
-//				, selection = HOT.getSelected();
-//
-//			if (e.keyCode === 13) { //ENTER
-//				if (lastChange && lastChange.length === 1 && lastChange[0][2] == lastChange[0][3]) { //if last change affected a single cell and did not change it's values
-//					//e.stopImmediatePropagation();
-//				} else {
-//					setDirty(templateName);
-//				}
-//			} else
-//			if (e.keyCode !== 27) {
-//				setDirty(templateName);
-//				//console.log(e.keyCode);
-//			}
-
-			lastChange = null;
-		},
+//		beforeKeyDown: function (e) {
+//			if (!canEdit)
+//				return;
+//		},
 
 		width: function () {
 			if (Template[templateName].maxed && availableWidth === void 0) {
@@ -118,5 +115,5 @@ tableSettings = function(templateName, $example1, settings) {
 			return Template[templateName].maxed ? availableHeight : table_height;
 		}
 	},
-		settings)
+		settings);
 };

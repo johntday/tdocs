@@ -20,6 +20,10 @@ Template.tmplHeader.helpers({
 	diagrams_count: function() {
 		var stats = DiagramsCount.findOne();
 		return (stats) ? stats.count : 0;
+	},
+	tables_cnt: function() {
+		var stats = TablesCount.findOne();
+		return (stats) ? stats.count : 0;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

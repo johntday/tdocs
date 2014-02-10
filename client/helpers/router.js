@@ -118,6 +118,29 @@ Router.map(function () {
 	});
 
 	/**
+	 * Tables
+	 */
+	this.route('tmpl_tables'               ,{path: '/tables'});
+	this.route('tmpl_table_add'            ,{path: '/tableAdd'});
+	this.route('tmpl_table_detail', {
+		path  : '/tables/:_id',
+		waitOn: function () {
+			Session.set('form_update', false);
+			Session.set('selected_table_id', this.params._id);
+			return Meteor.subscribe('pubsub_selected_table', this.params._id);
+		},
+		data  : function () {
+			var table = Tables.findOne(this.params._id);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"Tables", link:"/tables", isActive:false},
+				{title:table.title, link:"", isActive:true}
+			]});
+			return table;
+		}
+	});
+
+	/**
 	 * Tdocs / Diagrams
 	 */
 	//	this.route('tmpl_tdoc_diagrams', {

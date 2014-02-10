@@ -30,6 +30,9 @@
 					<li class="{{activeRouteClass  '/glossarys'}}">
 						<a href="/glossarys" title="Browse glossary items in library">Glossary ({{glossarys_cnt}})</a>
 					</li>
+					<li class="{{activeRouteClass  '/tables'}}">
+						<a href="/tables" title="Browse tables in library">Tables ({{tables_cnt}})</a>
+					</li>
 					{{#if currentUser}}
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
@@ -38,6 +41,7 @@
 							<li><a href="/diagramAdd" title="Create new Sequence Diagram">Create Sequence Diagram</a></li>
 							<li><a href="/diagramGraphAdd" title="Create new Graph Diagram">Create Graph Diagram</a></li>
 							<li><a href="/glossaryAdd" title="Create new Glossary item">Create Glossary</a></li>
+							<li><a href="/tableAdd" title="Create new Table item">Create Table</a></li>
 						</ul>
 					</li>
 

@@ -1,0 +1,60 @@
+<template name="tmpl_table_detail">
+	{{> tmpl_breadcrumbs breadcrumbs}}
+
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+
+			<h2 class="panel-title">{{title}}
+				<div class="pull-right">
+					{{glyphicon "heart" "heart-empty" "icon-heart" isFav "Add / remove from favs"}}
+					&nbsp;&nbsp;&nbsp;
+					{{glyphicon "eye-open" "eye-close" "icon-eye" hasSeen "Have read the table"}}
+					&nbsp;&nbsp;&nbsp;
+					{{glyphicon "star" "star-empty" "icon-star" isStar "Star it"}}
+				</div>
+				<!--<div class="clearfix"></div>-->
+			</h2>
+		</div>
+	</div>
+	<form class="add modal-nav-box box-hide form-horizontal" id="form_table">
+		<!-- ID -->
+		{{#if isAdmin}}
+		{{form_input "_id" "_id" _id false true _id false}}
+		{{/if}}
+
+		<!-- FIELDS -->
+		{{form_input "Title" "title" title canEditAndEditToggle true _id false}}
+		{{form_textarea "Description" "description" description canEditAndEditToggle true _id false}}
+
+		<!-- METADATA -->
+		<p>
+			<strong>owner:</strong>{{owner}}
+			<strong>views:</strong>{{click_cnt}}
+			<strong>favs:</strong>{{favs_cnt}}
+			<strong>reads:</strong>{{seen_cnt}}
+			<strong>stars:</strong>{{stars_cnt}}
+			<strong>created:</strong>{{createdAgo}}
+			<strong>updated:</strong>{{updatedAgo}}
+		</p>
+		{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
+
+		<div class="form-group">
+			<div class="col-sm-8">
+				{{#if showEditButton}}
+				<button type="button" class="btn btn-primary" id="btnEditToggle">Edit</button>
+				{{/if}}
+				<button id="btn-max-table" type="button" class="btn btn-primary">Maximize Table</button>
+				<button id="btn-table-help" type="button" class="btn btn-info">Show Help</button>
+				{{#if canEditAndEditToggle}}
+				<button type="button" class="btn btn-primary" id="btnUpdateTable">Update</button>
+				<button type="button" class="btn btn-default" id="btnCancelTable">Cancel</button>
+				<button type="button" class="btn btn-danger" id="btnDeleteTable">Delete</button>
+				{{/if}}
+			</div>
+		</div>
+	</form>
+
+	{{#constant}}
+	<div id="test" style="overflow: scroll"></div>
+	{{/constant}}
+</template>
