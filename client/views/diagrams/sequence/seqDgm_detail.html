@@ -37,7 +37,7 @@
 				{{form_textarea "Diagram Text Language" "code" code canEditAndEditToggle true _id false}}
 
 				<!-- METADATA -->
-				<p>
+				<div class="pull-right" style="margin-right: 40px">
 					<strong>owner:</strong>{{owner}}
 					</br><strong>views:</strong>{{click_cnt}}
 					<strong>favs:</strong>{{favs_cnt}}
@@ -45,7 +45,7 @@
 					<strong>stars:</strong>{{stars_cnt}}
 					</br><strong>created:</strong>{{createdAgo}}
 					<strong>updated:</strong>{{updatedAgo}}
-				</p>
+				</div>
 				{{#if isAdmin}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
 
 				<div class="form-group">

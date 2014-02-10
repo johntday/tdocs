@@ -1,6 +1,6 @@
 Template.tmpl_table_item.helpers({
     thumbnail: function() {
-	    return (this.thumbnail) ? this.thumbnail : "/img/BumbleBee_60x60.png";
+	    return (this.thumbnail) ? this.thumbnail : "/img/table.png";
     },
 	tableLink: function() {
 		return "/tables/" + this._id;
