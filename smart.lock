@@ -12,7 +12,15 @@
       },
       "moment": {},
       "bootstrap-3": {},
-      "bootstrap-datepicker2": {}
+      "bootstrap-datepicker2": {},
+      "myhandsontable": {
+        "git": "https://github.com/johntday/meteor-myhandsontable.git",
+        "branch": "master"
+      },
+      "mybootbox": {
+        "git": "https://github.com/johntday/meteor-mybootbox.git",
+        "branch": "master"
+      }
     },
     "packages": {
       "spin": {
@@ -44,6 +52,16 @@
         "git": "https://github.com/deepwell/meteor-bootstrap-datepicker.git",
         "tag": "v1.2.0",
         "commit": "b7de18a7cc651ea665cda75048663f90d1a11d10"
+      },
+      "myhandsontable": {
+        "git": "https://github.com/johntday/meteor-myhandsontable.git",
+        "branch": "master",
+        "commit": "5dc890e52881e555b9ecfccb86b66d65ba85c26d"
+      },
+      "mybootbox": {
+        "git": "https://github.com/johntday/meteor-mybootbox.git",
+        "branch": "master",
+        "commit": "050eb330e015326971c95766d15b1b45344c7f9c"
       }
     }
   }
