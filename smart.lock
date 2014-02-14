@@ -20,6 +20,10 @@
       "mybootbox": {
         "git": "https://github.com/johntday/meteor-mybootbox.git",
         "branch": "master"
+      },
+      "myjointjs": {
+        "git": "https://github.com/johntday/meteor-myjointjs.git",
+        "branch": "master"
       }
     },
     "packages": {
@@ -62,6 +66,11 @@
         "git": "https://github.com/johntday/meteor-mybootbox.git",
         "branch": "master",
         "commit": "050eb330e015326971c95766d15b1b45344c7f9c"
+      },
+      "myjointjs": {
+        "git": "https://github.com/johntday/meteor-myjointjs.git",
+        "branch": "master",
+        "commit": "db038b47bfaf65d0e2778f3426bb9335c851c0d2"
       }
     }
   }
