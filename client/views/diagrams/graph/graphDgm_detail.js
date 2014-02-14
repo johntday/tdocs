@@ -18,7 +18,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	var paper = new joint.dia.Paper({
 		el: paperScroller.el,
-		width: 600,
+		width: 500,
 		height: 500,
 		gridSize: 10,
 		perpendicularLinks: true,
@@ -30,21 +30,37 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	paperScroller.center();
 
-	var rect = new joint.shapes.basic.Rect({
-		position: { x: 100, y: 30 },
-		size: { width: 100, height: 30 },
-		attrs: { rect: { fill: 'blue' }, text: { text: 'my box', fill: 'white' } }
+	var stencil = new joint.ui.Stencil({
+		graph: graph
+		,paper: paper
+		,width: 200
+		,height: 450
+		,groups: {
+			simple: { label: 'Simple', index: 1, closed: false }
+			//,custom: { label: 'Custom', index: 2, closed: true }
+		}
+	});
+	$('#stencil').append(stencil.render().el);
+
+
+	var r = new joint.shapes.basic.Rect({
+		position: { x: 60, y: 20 },
+		size: { width: 100, height: 60 },
+		attrs: {
+			rect: { rx: 2, ry: 2, width: 50, height: 30, fill: '#27AE60' },
+			text: { text: 'rect', fill: 'white', 'font-size': 10 }
+		}
+	});
+	var c = new joint.shapes.basic.Circle({
+		position: { x: 60, y: 100 },
+		size: { width: 100, height: 60 },
+		attrs: {
+			circle: { width: 50, height: 30, fill: '#E74C3C' },
+			text: { text: 'ellipse', fill: 'white', 'font-size': 10 }
+		}
 	});
 
-	var rect2 = rect.clone();
-	rect2.translate(300);
-
-	var link = new joint.dia.Link({
-		source: { id: rect.id },
-		target: { id: rect2.id }
-	});
-
-	graph.addCells([rect, rect2, link]);
+	stencil.load([r,c], 'simple');
 
 
 	// Selection.
