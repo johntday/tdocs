@@ -13,6 +13,9 @@
 	},
 	"mybootbox": {
 		"git": "https://github.com/johntday/meteor-mybootbox.git"
-	}
+	},
+	  "myjointjs": {
+		  "git": "https://github.com/johntday/meteor-myjointjs.git"
+	  }
   }
 }
