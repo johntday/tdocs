@@ -5,7 +5,10 @@ Template.tmpl_graphDgm_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.rendered = function() {
+	resizePaper();
 	Session.set('has_sidebar', false);
+
+	//Template['tmpl_graphDgm_detail'].
 
 	var graph = new joint.dia.Graph;
 
@@ -187,5 +190,33 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	$('#btn-zoom-out').on('click', function() { zoom(paper, zoomLevel - 0.2); });
 
 };
+/*------------------------------------------------------------------------------------------------------------------------------*/
+Template.tmpl_graphDgm_detail.created = function() {
+};
+/*------------------------------------------------------------------------------------------------------------------------------*/
+Template.tmpl_graphDgm_detail.destroyed = function() {
 
+};
 
+function resizePaper() {
+	var w = $(window).width();
+	var h = $(window).height();
+
+	var $paper = $( '#paper' );
+	var $stencil = $( '#stencil' );
+	//console.log( 'stencil offset left '+$stencil.offset().left);
+
+	var css = {
+		position: 'absolute'
+		,top: '40px'
+		,left: '241px'
+		,right: '241px'
+		,width:  (w - $stencil.offset().left - 240) + 'px'
+		,height: (h - $stencil.offset().top -   40) + 'px'
+		,bottom: 0
+		,overflow: 'hidden'
+		,'background-color': 'hsla(220,11%,97%,.95)'
+	};
+
+	$paper.css(css);
+}

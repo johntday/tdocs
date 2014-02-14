@@ -16,6 +16,8 @@ Session.setDefault('tdoc_sort', 'title');
 Session.setDefault('diagram_sort', 'title');
 Session.setDefault('glossary_sort', 'title');
 Session.setDefault('table_sort', 'title');
+
+//Session.setDefault('size', {});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs
@@ -138,6 +140,17 @@ Template.layout.helpers({
 		return _.contains(['/tables/'], Location._state.path);
 	}
 });
+
+//function RESIZE() {
+//	var w = $(window).width();
+//	var h = $(window).height();
+//	Session.set('size', {w:w, h:h} );
+//	console.log('resize: '+ JSON.stringify(Session.get('size')));
+//};
+//$( window ).resize(function() {
+//	RESIZE()
+//});
+//RESIZE();
 
 /*
  * set debug=true in "/lib/client_module.js" to log template render counts to console.
