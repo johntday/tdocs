@@ -4,11 +4,59 @@ Template.tmpl_graphDgm_detail.helpers({
 	},
 	breadcrumbs: function() {
 		Meteor.MyClientModule.scrollToTopOfPageFast();
+		console.log( Session.get("breadcrumbs") );
 		return Session.get("breadcrumbs");
+	},
+	changeTitle: function() {
+		return '';
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.events({
+	'click #btn-graph-help': function() {
+		bootbox.dialog({
+			title: "Graph Diagram Help"
+			,message: "Works similar to Visio"+
+				"<h3>Buttons</h3>" +
+				"<ul>" +
+				"<li><b>Help</b> Click on header column to sort</li>" +
+				"<li><b>Save</b> Save diagram</li>" +
+				"<li><b>undo</b> Undo last change</li>" +
+				"<li><b>redo</b> Redo last change</li>" +
+				"<li><b>clear</b> Clear - remove all stuff and start with an clean paper</li>" +
+				"<li><b>picturize</b> Opens diagram as a picture in another window.  Useful to save your diagram and use somewhere else</li>" +
+				"<li><b>zoom in</b> Zooms in</li>" +
+				"<li><b>zoom out</b> Zooms out</li>" +
+				"<li><b>find</b> Search for elements by text</li>" +
+				"<li><b>center</b> Centers the diagram content</li>" +
+				"<li><b>layout</b> Layout the diagram elements</li>" +
+				"<li><b>Delete</b> Deletes your diagram</li>" +
+				"</ul>"
+			,buttons: {
+				main: {
+					label: "OK",
+					className: "btn-primary",
+					callback: function() {
+					}
+				}
+			}
+		});
+	},
+	'click div.toolbar .not-yet': function() {
+		bootbox.dialog({
+			title: "Sorry",
+			message: "Function not available yet",
+			buttons: {
+				main: {
+					label: "OK",
+					className: "btn-primary",
+					callback: function() {
+					}
+				}
+			}
+		});
+
+	},
 	'click #btn-delete-graph': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
@@ -29,7 +77,6 @@ Template.tmpl_graphDgm_detail.events({
 			}
 		});
 	},
-
 	'click #btn-save': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
@@ -238,9 +285,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		paper.openAsSVG();
 		console.log(paper.toSVG()); // An exmaple of retriving the paper SVG as a string.
 	});
-	$('#btn-find-element, #btn-layout, #btn-group, #btn-ungroup').on('click', function() {
-		alert('not ready yet');
-	});
 	$('#btn-center-content').click(function(){
 		paperScroller.centerContent();
 	});
@@ -310,42 +354,12 @@ function resizePaper($paper, $stencil) {
 	
 	$stencil.css({
 		position: 'absolute'
-		,left: 0
 		,top: '100px'
-		,bottom: 0
+		,left: 0
 		,width: '240px'
+		,height: (h - $stencil.offset().top -   50) + 'px'
+		,bottom: 0
 		//,border: 1px solid #333
 		,'box-shadow': 'inset 0 0 0 1px rgba(0,0,0,0.1),0px 0 0 1px rgba(255,255,255,0.1)'
 	})
-}
-
-function updateTitleDescription() {
-	bootbox.dialog({
-		title: "Table Help",
-		message: "Works similar to Microsoft Excel"+
-			"<h3>Keys</h3><ul><li><b>CTRL+Z</b> undo</li><li><b>CTRL+Y</b> redo</li><li><b>F2</b> edit cell</li>" +
-			"<li><b>ENTER</b> edit/save changes to cell</li>" +
-			"</ul>" +
-			"<h3>General</h3><ul><li><b>Sorting</b> Click on header column to sort</li>" +
-			"<li><b>Column Resize</b> RIGHT part of column header has a draggable column resize handle.  Double click on the column resize handle to automatically adjust column width.</li>" +
-			"<li><b>Column Move</b> LEFT part of column header has a draggable column MOVE handle</li>" +
-			"</ul>" +
-			"<h3>Right click on table for context Menu</h3><ul>" +
-			"<li><b>Insert Row</b></li>" +
-			"<li><b>Remove Row</b></li>" +
-			"<li><b>Insert Column</b></li>" +
-			"<li><b>Remove Row</b></li>" +
-			"<li><b>Undo</b></li>" +
-			"<li><b>Redo</b></li>" +
-			"<li><b>Change Header Name</b></li>" +
-			"</ul>",
-		buttons: {
-			main: {
-				label: "OK",
-				className: "btn-primary",
-				callback: function() {
-				}
-			}
-		}
-	});
 }

@@ -3,19 +3,22 @@
 
 	{{#constant}}
 	<div class="toolbar">
+		<button id="btn-graph-help"    class="btn btn-info"> Help </button>
 		{{#if canEdit}}
 		<button id="btn-save"           class="btn btn-primary"> save </button>
 		{{/if}}
 		<button id="btn-undo"           class="btn">undo</button>
 		<button id="btn-redo"           class="btn">redo</button>
-		<button id="btn-clear"          class="btn btn-danger">clear</button>
-		<button id="btn-svg"            class="btn">open as SVG</button>
+		<button id="btn-svg"            class="btn">picturize</button>
 		<button id="btn-zoom-in"        class="btn">zoom in</button>
 		<button id="btn-zoom-out"       class="btn">zoom out</button>
-		<button id="btn-find-element"   class="btn">find element</button>
-		<button id="btn-center-content" class="btn">center content</button>
-		<button id="btn-layout"         class="btn">layout</button>
+		<button id="btn-find-element"   class="btn not-yet"> find </button>
+		<button id="btn-center-content" class="btn">center</button>
+		<button id="btn-layout"         class="btn not-yet">layout</button>
+		<button id="btn-clear"          class="btn btn-danger">clear</button>
+		{{#if canEdit}}
 		<button id="btn-delete-graph"   class="btn btn-danger">delete</button>
+		{{/if}}
 	</div>
 
 	<div id="stencil">
