@@ -70,7 +70,7 @@
       "myjointjs": {
         "git": "https://github.com/johntday/meteor-myjointjs.git",
         "branch": "master",
-        "commit": "db038b47bfaf65d0e2778f3426bb9335c851c0d2"
+        "commit": "537cd14db338093b60b10734e76c40479566bacc"
       }
     }
   }

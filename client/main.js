@@ -16,8 +16,6 @@ Session.setDefault('tdoc_sort', 'title');
 Session.setDefault('diagram_sort', 'title');
 Session.setDefault('glossary_sort', 'title');
 Session.setDefault('table_sort', 'title');
-
-//Session.setDefault('size', {});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs

@@ -73,18 +73,16 @@ Template.tmpl_graphDgm_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.rendered = function() {
-	console.log( !!Template['tmpl_graphDgm_detail'].graph );
-	if (Template['tmpl_graphDgm_detail'].graph) {
-		console.log('i');
-		return;
-	}
-	resizePaper();
+//	if ( !Template['tmpl_graphDgm_detail'].graph )
+//		setTooltips();
+	//	console.log( !!Template['tmpl_graphDgm_detail'].graph );
+//	if (Template['tmpl_graphDgm_detail'].graph) {
+//		console.log('i');
+//		return;
+//	}
 	Session.set('has_sidebar', false);
 
 	Template['tmpl_graphDgm_detail'].graph = new joint.dia.Graph;
-	console.log( this.data.code );
-	if (this.data.code)
-		Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(this.data.code) );
 
 	// Create a paper and wrap it in a PaperScroller.
 	// ----------------------------------------------
@@ -103,7 +101,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	});
 	paperScroller.options.paper = paper;
 
-	$('#paper').append(paperScroller.render().el);
+	var $paper = $('#paper');
+	$paper.append(paperScroller.render().el);
 
 	paperScroller.center();
 
@@ -117,7 +116,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			//,custom: { label: 'Custom', index: 2, closed: true }
 		}
 	});
-	$('#stencil').append(stencil.render().el);
+	var $stencil = $('#stencil');
+	$stencil.append(stencil.render().el);
 
 
 	var r = new joint.shapes.basic.Rect({
@@ -263,6 +263,9 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	$('#btn-zoom-in').on('click', function() { zoom(paper, zoomLevel + 0.2); });
 	$('#btn-zoom-out').on('click', function() { zoom(paper, zoomLevel - 0.2); });
 
+	resizePaper($paper, $stencil);
+	if (this.data.code)
+		Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(this.data.code) );
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.created = function() {
@@ -273,28 +276,47 @@ Template.tmpl_graphDgm_detail.destroyed = function() {
 	incClickCnt(Diagrams, this.data._id);
 };
 
-function resizePaper() {
+function setTooltips() {
+	$('#btn-layout').popover({
+		animation: true
+		,html: false
+		,placement: 'top'
+		//,selector
+		,trigger: 'hover'
+		,title: 'Delete'
+		,content: 'This deletes the graph'
+		,delay: 0
+		//,container: 'body'
+	});
+}
+
+function resizePaper($paper, $stencil) {
 	var w = $(window).width();
 	var h = $(window).height();
 
-	var $paper = $( '#paper' );
-	var $stencil = $( '#stencil' );
 	//console.log( 'stencil offset left '+$stencil.offset().left);
 
-	var top = 90;
-	var css = {
+	$paper.css({
 		position: 'absolute'
-		,top: top+'px'
-		,left: '241px'
-		,right: '241px'
+		,top: '100px'
+		,left: '220px'
+		,right: '220px'
 		,width:  (w - $stencil.offset().left - 240) + 'px'
 		,height: (h - $stencil.offset().top -   50) + 'px'
 		,bottom: 0
 		,overflow: 'hidden'
 		,'background-color': 'hsla(220,11%,97%,.95)'
-	};
-
-	$paper.css(css);
+	});
+	
+	$stencil.css({
+		position: 'absolute'
+		,left: 0
+		,top: '100px'
+		,bottom: 0
+		,width: '240px'
+		//,border: 1px solid #333
+		,'box-shadow': 'inset 0 0 0 1px rgba(0,0,0,0.1),0px 0 0 1px rgba(255,255,255,0.1)'
+	})
 }
 
 function updateTitleDescription() {
