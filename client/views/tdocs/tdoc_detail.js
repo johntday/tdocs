@@ -159,7 +159,8 @@ Template.tmpl_tdoc_detail.events({
 		var _id = this._id;
 
 		var properties = {
-			title: $('#title').val()
+			type: TYPES.tdoc
+			, title: $('#title').val()
 			, description: $('#description').val()
 		};
 

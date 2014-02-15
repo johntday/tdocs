@@ -182,7 +182,8 @@ Template.tmpl_diagram_detail.events({
 
 		// CREATE OBJECT
 		var properties = {
-			title: $('#title').val()
+			type: TYPES.sequenceDiagram
+			, title: $('#title').val()
 			, description: $('#description').val()
 			, theme: $('#theme').val()
 			, code: $('#code').val()

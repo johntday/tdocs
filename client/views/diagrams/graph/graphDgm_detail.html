@@ -1,17 +1,21 @@
 <template name="tmpl_graphDgm_detail">
+	{{> tmpl_breadcrumbs breadcrumbs}}
 
+	{{#constant}}
 	<div class="toolbar">
+		{{#if canEdit}}
+		<button id="btn-save"           class="btn btn-primary"> save </button>
+		{{/if}}
 		<button id="btn-undo"           class="btn">undo</button>
 		<button id="btn-redo"           class="btn">redo</button>
-		<button id="btn-clear"          class="btn">clear</button>
+		<button id="btn-clear"          class="btn btn-danger">clear</button>
 		<button id="btn-svg"            class="btn">open as SVG</button>
 		<button id="btn-zoom-in"        class="btn">zoom in</button>
 		<button id="btn-zoom-out"       class="btn">zoom out</button>
 		<button id="btn-find-element"   class="btn">find element</button>
 		<button id="btn-center-content" class="btn">center content</button>
 		<button id="btn-layout"         class="btn">layout</button>
-		<button id="btn-group"          class="btn">group</button>
-		<button id="btn-ungroup"        class="btn">ungroup</button>
+		<button id="btn-delete-graph"   class="btn btn-danger">delete</button>
 	</div>
 
 	<div id="stencil">
@@ -22,5 +26,6 @@
 	<div class="inspector">
 		<div id="layout"></div>
 	</div>
+	{{/constant}}
 
 </template>

@@ -20,7 +20,8 @@ Template.tmpl_table_add.events({
 
 		// CREATE OBJECT
 		var properties = {
-			title: $('#title').val()
+			type: TYPES.table
+			, title: $('#title').val()
 			, description: $('#description').val()
 		};
 

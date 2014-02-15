@@ -1,9 +1,9 @@
 Template.tmpl_diagram_item.helpers({
     thumbnail: function() {
-	    return (this.thumbnail) ? this.thumbnail : "/img/sequence_60x60.png";
+	    return (this.type===TYPES.sequenceDiagram) ? "/img/sequence_60x60.png" : "/img/graph.png";
     },
 	diagramLink: function() {
-		return "/diagrams/" + this._id;
+		return (this.type===TYPES.sequenceDiagram) ? "/diagrams/" + this._id : "/graph/" + this._id;
 	},
 	ownerLink: function() {
 		return "/person/" + this.userId;

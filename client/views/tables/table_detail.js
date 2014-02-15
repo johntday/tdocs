@@ -160,7 +160,8 @@ Template.tmpl_table_detail.events({
 		var _id = this._id;
 
 		var properties = {
-			title: $('#title').val()
+			type: TYPES.table
+			, title: $('#title').val()
 			, description: $('#description').val()
 			, data: Template['tmpl_table_detail'].table.getData()
 			, colHeaders: Template['tmpl_table_detail'].table.getColHeader()
@@ -237,7 +238,6 @@ Template.tmpl_table_detail.rendered = function() {
 	var default_colHeaders = ["A", "B", "C"];
 	var data = this.data.data || default_data;
 	var colHeaders = this.data.colHeaders || default_colHeaders;
-	console.log('hi');
 	var $example1 = $('#test');
 	var settings = tableSettings(
 		"tmpl_table_detail",

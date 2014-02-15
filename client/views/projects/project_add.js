@@ -24,7 +24,8 @@ Template.tmpl_project_add.events({
 
 		// CREATE OBJECT
 		var properties = {
-			title: title
+			type: TYPES.project
+			, title: title
 			, description: description
 		};
 

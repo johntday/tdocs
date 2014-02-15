@@ -96,6 +96,33 @@ Meteor.methods({
 		return diagram;
 	},
 
+	updateDiagramCode: function(_id, code){
+		var user = Meteor.user();
+
+		if (!user)
+			throw new Meteor.Error(601, 'You need to login to update a diagram');
+
+		var properties = {code:code};
+		var diagram = _.extend(properties, {
+			updated: getNow()
+		});
+
+		MyLog("collections/diagrams.js/updateDiagram/1", "properties", properties);
+
+		Diagrams.update(_id, {$set: diagram} );
+
+		// NOTIFICATION
+		//		if (! isAdmin(user)) {
+		//			var n = notificationFactory(MOVIE_UPDATED_BY_USER, "diagram", "admin", diagram.title, diagram.status, "/diagrams/"+_id, diagram.created);
+		//			Notifications.insert(n);
+		//		} else {
+		//			var m = Diagrams.findOne(_id);
+		//			var n = notificationFactory(MOVIE_UPDATED_BY_ADMIN, "diagram", m.userId, diagram.title, diagram.status, "/diagrams/"+_id, diagram.created);
+		//			Notifications.insert(n);
+		//		}
+		return diagram;
+	},
+
 	deleteDiagram: function(diagramId) {
 		// remove associated stuff
 		if(!this.isSimulation) {

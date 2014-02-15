@@ -24,7 +24,8 @@ Template.tmpl_glossary_add.events({
 
 		// CREATE OBJECT
 		var properties = {
-			title: title
+			type: TYPES.glossary
+			, title: title
 			, description: description
 		};
 

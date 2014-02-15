@@ -92,7 +92,25 @@ Router.map(function () {
 	/**
 	 * Diagrams: Graph
 	 */
-	this.route('tmpl_graphDgm_detail'         ,{path: '/diagramGraphAdd'});
+	this.route('tmpl_graphDgm_add'            ,{path: '/diagramGraphAdd'});
+	this.route('tmpl_graphDgm_detail', {
+		path  : '/graph/:_id',
+		waitOn: function () {
+			Session.set('has_sidebar', false);
+			Session.set('selected_diagram_id', this.params._id);
+			return Meteor.subscribe('pubsub_selected_diagram', this.params._id);
+		},
+		data  : function () {
+			var diagram = Diagrams.findOne(this.params._id);
+			Session.set('form_update', false);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"Diagrams", link:"/diagrams", isActive:false},
+				{title:diagram.title, link:"", isActive:true}
+			]});
+			return diagram;
+		}
+	});
 
 	/**
 	 * Glossarys

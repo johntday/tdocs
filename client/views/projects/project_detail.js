@@ -159,7 +159,8 @@ Template.tmpl_project_detail.events({
 
 		// CREATE OBJECT
 		var properties = {
-			title: $('#title').val()
+			type: TYPES.project
+			, title: $('#title').val()
 			, description: $('#description').val()
 		};
 

@@ -160,7 +160,8 @@ Template.tmpl_glossary_detail.events({
 
 		// CREATE OBJECT
 		var properties = {
-			title: $('#title').val()
+			type: TYPES.glossary
+			, title: $('#title').val()
 			, description: $('#description').val()
 		};
 

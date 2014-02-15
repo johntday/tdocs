@@ -20,7 +20,8 @@ Template.tmpl_tdoc_add.events({
 
 		// CREATE OBJECT
 		var properties = {
-			title: $('#title').val()
+			type: TYPES.tdoc
+			, title: $('#title').val()
 			, description: $('#description').val()
 		};
 
