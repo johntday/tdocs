@@ -16,6 +16,14 @@
 		<div style="padding-top: 30px;">	</div>
 		<div class="row">
 
+			<!-- SIDEBAR
+			================================================== -->
+			{{#if hasSidebar}}
+			<div class="col-sm-4">
+				{{> tmplSidebar}}
+			</div>
+			{{/if}}
+
 			<!-- MAIN
 			================================================== -->
 			<div class="{{mainDivClass}}" role="main">

@@ -308,8 +308,9 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	$('#btn-zoom-out').on('click', function() { zoom(paper, zoomLevel - 0.2); });
 
 	resizePaper($paper, $stencil);
-	if (this.data.code)
-		Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(this.data.code) );
+
+		if (this.data.code)
+			Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(this.data.code) );
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.created = function() {
@@ -319,20 +320,6 @@ Template.tmpl_graphDgm_detail.destroyed = function() {
 	Template['tmpl_graphDgm_detail'].graph = null;
 	incClickCnt(Diagrams, this.data._id);
 };
-
-function setTooltips() {
-	$('#btn-layout').popover({
-		animation: true
-		,html: false
-		,placement: 'top'
-		//,selector
-		,trigger: 'hover'
-		,title: 'Delete'
-		,content: 'This deletes the graph'
-		,delay: 0
-		//,container: 'body'
-	});
-}
 
 function resizePaper($paper, $stencil) {
 	var w = $(window).width();

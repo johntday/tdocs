@@ -6,8 +6,8 @@ Template.tmplHeader.helpers({
 		return isAdmin();
 	},
 	hasNoSidebar: function() {
-		return false;
-		//return !Session.get('has_sidebar');
+		//return false;
+		return !Session.get('has_sidebar');
 	},
 	tdocs_count: function() {
 		var stats = TdocsCount.findOne();

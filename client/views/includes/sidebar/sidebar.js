@@ -8,3 +8,6 @@ Template.tmplSidebar.events({
 		Session.set('has_sidebar', false);
 	}
 });
+
+Template.tmplSidebar.rendered = function() {
+};
