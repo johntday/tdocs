@@ -1,6 +1,6 @@
 <template name="tmplHeader">
 	<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
-		<div class="container">
+
 			<div class="navbar-header">
 				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
@@ -54,8 +54,11 @@
 					{{/if}}
 				</ul>
 
+
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
+					<li> <p class="navbar-text">{{loginButtons}}</p> </li>
+
+					<li class="dropdown"  style="margin-right: 50px">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Closet <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="/help">Help</a></li>
@@ -64,11 +67,9 @@
 							<li><a href="/license">License</a></li>
 						</ul>
 					</li>
-
-					<li> <p class="navbar-text">{{loginButtons}}</p> </li>
 				</ul>
 
 			</nav>
-		</div>
+
 	</header>
 </template>

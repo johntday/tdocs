@@ -329,7 +329,7 @@ function resizePaper($paper, $stencil) {
 
 	$paper.css({
 		position: 'absolute'
-		,top: '100px'
+		,top: '120px'
 		,left: '220px'
 		,right: '220px'
 		,width:  (w - $stencil.offset().left - 240) + 'px'
@@ -341,7 +341,7 @@ function resizePaper($paper, $stencil) {
 	
 	$stencil.css({
 		position: 'absolute'
-		,top: '100px'
+		,top: '120px'
 		,left: 0
 		,width: '240px'
 		,height: (h - $stencil.offset().top -   50) + 'px'
