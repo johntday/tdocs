@@ -53,7 +53,7 @@ Template.tmpl_project_detail.events({
 		Session.set('form_update', true);
 	},
 
-	'click #btnCancelGlossary': function(e) {
+	'click #btnCancelProject': function(e) {
 		e.preventDefault();
 		Session.set('form_update', false);
 	},
@@ -73,6 +73,7 @@ Template.tmpl_project_detail.events({
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
+				growl( "Project item deleted", {type:'s', hideSnark:true} );
 				Router.go('/projects');
 			}
 		});
@@ -166,7 +167,7 @@ Template.tmpl_project_detail.events({
 
 		if ( isAdmin(Meteor.user()) ) {
 			_.extend(properties, {
-				status: status
+				status: $('#status').val()
 			});
 		}
 
@@ -182,19 +183,44 @@ Template.tmpl_project_detail.events({
 
 		Meteor.call('updateProject', _id, properties, function(error, project) {
 			if(error){
-				MyLog("project_details.js/1", "updated project", {'error': error, 'title': project.title});
+				MyLog("project_details.js/1", "updated project", {'error': error, 'project': project});
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
-				MyLog("project_details.js/1", "updated project", {'_id': _id, 'title': project.title});
-				//Router.go('/projects/'+_id);
+				growl( "Project item updated", {type:'s', hideSnark:true} );
+				MyLog("project_details.js/1", "updated project", {'_id': _id, 'project': project});
 			}
 		});
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_project_detail.rendered = function() {
+	var _id = this.data._id;
+	Meteor.typeahead(
+		$("#admins"),
+		persons,
+		/*onSelection*/function() {
+			Projects.update(_id, { $addToSet: { admin: this._id } } );
+		}
+	);
+
 	$('#title').focus();
 	$('#description').focus();
+	if ( !Session.get('form_update') )
+		$("#description").blur();
+};
+/*------------------------------------------------------------------------------------------------------------------------------*/
+Template.tmpl_project_detail.destroyed = function() {
+	incClickCnt(Projects, this.data._id);
+};
+
+var persons = function(query, callback){
+	Meteor.call('findPersons', query, function(err, result){
+		callback(
+			result.map(function(v){
+				return { _id: v._id, value: v.profile.name };
+			})
+		);
+	});
 };

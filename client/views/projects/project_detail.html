@@ -2,9 +2,9 @@
 	{{> tmpl_breadcrumbs breadcrumbs}}
 
 	<!--<ul class="nav nav-tabs nav-justified">-->
-		<!--<li class="active"><a href="#">Project</a></li>-->
-		<!--<li><a href="#">Projects</a></li>-->
-		<!--<li><a href="#">Project</a></li>-->
+	<!--<li class="active"><a href="#">Project</a></li>-->
+	<!--<li><a href="#">Projects</a></li>-->
+	<!--<li><a href="#">Project</a></li>-->
 	<!--</ul>-->
 
 	<div class="panel panel-purple">
@@ -18,7 +18,7 @@
 					&nbsp;&nbsp;&nbsp;
 					{{glyphicon "star" "star-empty" "icon-star" isStar "Star it"}}
 				</div>
-		<!--<div class="clearfix"></div>-->
+				<!--<div class="clearfix"></div>-->
 			</h2>
 		</div>
 		<div class="panel-body">
@@ -26,7 +26,7 @@
 			<form class="add modal-nav-box box-hide form-horizontal" id="form_project">
 				<!-- ID -->
 				{{#if isAdmin}}
-					{{form_input "_id" "_id" _id false _id false}}
+				{{form_input "_id" "_id" _id false _id false}}
 				{{/if}}
 
 				<!-- FIELDS -->
@@ -34,7 +34,7 @@
 				{{form_textarea "Description" "description" description canEditAndEditToggle true _id false}}
 
 				<!-- METADATA -->
-				<p>
+				<div class="pull-right" style="margin-right: 40px">
 					<strong>owner:</strong>{{owner}}
 					</br><strong>views:</strong>{{click_cnt}}
 					<strong>favs:</strong>{{favs_cnt}}
@@ -42,8 +42,10 @@
 					<strong>stars:</strong>{{stars_cnt}}
 					</br><strong>created:</strong>{{createdAgo}}
 					<strong>updated:</strong>{{updatedAgo}}
-				</p>
-				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
+				</div>
+				{{#if isAdmin}}
+					{{form_select "Status" "status" status statusOptions "" isAdminAndEditToggle true}}
+				{{/if}}
 
 				<div class="form-group">
 					<div class="col-sm-8">
@@ -59,6 +61,16 @@
 				</div>
 			</form>
 		</div>
+	</div>
+
+	<div>
+		<h2>Administrators</h2>
+		<div class="form-group">
+			<input id="admins" class="form-control typeahead" name="persons" type="text" placeholder="Person Name" autocomplete="off" spellcheck="off"/>
+		</div>
+		{{#each admins}}
+			<li>this.value</li>
+		{{/each}}
 	</div>
 
 </template>

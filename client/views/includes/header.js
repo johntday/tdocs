@@ -24,6 +24,10 @@ Template.tmplHeader.helpers({
 	tables_cnt: function() {
 		var stats = TablesCount.findOne();
 		return (stats) ? stats.count : 0;
+	},
+	projects_cnt: function() {
+		var stats = ProjectsCount.findOne();
+		return (stats) ? stats.count : 0;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

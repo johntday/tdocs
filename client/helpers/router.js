@@ -159,6 +159,31 @@ Router.map(function () {
 	});
 
 	/**
+	 * Projects
+	 */
+	this.route('tmpl_projects'               ,{path: '/projects'});
+	this.route('tmpl_project_add'            ,{path: '/projectAdd'});
+	this.route('tmpl_project_detail', {
+		path  : '/projects/:_id',
+		waitOn: function () {
+			Session.set('form_update', false);
+			Session.set('selected_project_id', this.params._id);
+			return Meteor.subscribe('pubsub_selected_project', this.params._id);
+			        //Meteor.subscribe('pubsub_person_list_all')];
+		},
+		data  : function () {
+			var project = Projects.findOne(this.params._id);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"Projects", link:"/projects", isActive:false},
+				{title:project.title, link:"", isActive:true}
+			]});
+			return project;
+		}
+	});
+
+
+	/**
 	 * Tdocs / Diagrams
 	 */
 	//	this.route('tmpl_tdoc_diagrams', {

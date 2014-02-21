@@ -113,16 +113,37 @@ Deps.autorun(function(){
 });
 
 /**
+ * Project
+ */
+projectListSubscription = function(find, options, per_page) {
+	var handle = Meteor.subscribeWithPagination('pubsub_project_list', find, options, per_page);
+	handle.fetch = function() {
+		var ourFind = _.isFunction(find) ? find() : find;
+		return limitDocuments(Projects.find(ourFind, options), handle.loaded());
+	}
+	return handle;
+};
+Deps.autorun(function(){
+	projectsHandle = projectListSubscription(
+		projectQuery( Session.get('search_text') ),
+		projectSort[ Session.get('project_sort') ],
+		Meteor.MyClientModule.appConfig.pageLimit
+	);
+});
+
+/**
  * Stats
  */
 TdocsCount = new Meteor.Collection('tdocs_cnt');
 GlossaryCount = new Meteor.Collection('glossarys_cnt');
 DiagramsCount = new Meteor.Collection('diagrams_cnt');
 TablesCount = new Meteor.Collection('tables_cnt');
+ProjectsCount = new Meteor.Collection('projects_cnt');
 Meteor.subscribe('pubsub_stats_glossarys_cnt');
 Meteor.subscribe('pubsub_stats_tdocs_cnt');
 Meteor.subscribe('pubsub_stats_diagrams_cnt');
 Meteor.subscribe('pubsub_stats_tables_cnt');
+Meteor.subscribe('pubsub_stats_projects_cnt');
 
 /**
  * layout template JS

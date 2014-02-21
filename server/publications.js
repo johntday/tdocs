@@ -80,6 +80,18 @@ Meteor.publish('pubsub_selected_table', function(id) {
 });
 
 /**
+ * Projects
+ */
+Meteor.publish('pubsub_project_list', function(query, options, limit) {
+	options = options || {}; options.limit = limit;
+	return Projects.find(query || {}, options);
+});
+Meteor.publish('pubsub_selected_project', function(id) {
+	return Projects.find(id);
+});
+
+
+/**
  * Stats / Counts
  */
 Meteor.publish('pubsub_stats_glossarys_cnt', function() {
@@ -207,6 +219,39 @@ Meteor.publish('pubsub_stats_tables_cnt', function() {
 	});
 	initializing = false;
 	this.added('tables_cnt', 1, {
+		count: count
+	});
+	this.ready();
+	return this.onStop(function() {
+		return handle.stop();
+	});
+});
+Meteor.publish('pubsub_stats_projects_cnt', function() {
+	var count;
+	var handle;
+	var initializing;
+	var _this = this;
+
+	count = 0;
+	initializing = true;
+	handle = Projects.find().observeChanges({
+		added: function() {
+			count++;
+			if (!initializing) {
+				return _this.changed('projects_cnt', 1, {
+					count: count
+				});
+			}
+		},
+		removed: function() {
+			count--;
+			return _this.changed('projects_cnt', 1, {
+				count: count
+			});
+		}
+	});
+	initializing = false;
+	this.added('projects_cnt', 1, {
 		count: count
 	});
 	this.ready();

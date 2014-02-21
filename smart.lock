@@ -7,6 +7,11 @@
         "git": "https://github.com/johntday/meteor-mypaginator.git",
         "branch": "master"
       },
+      "jqTree": {},
+      "typeahead": {
+        "git": "https://github.com/johntday/meteor-typeahead.git",
+        "branch": "master"
+      },
       "iron-router": {
         "version": "0.5.4"
       },
@@ -24,8 +29,7 @@
       "myjointjs": {
         "git": "https://github.com/johntday/meteor-myjointjs.git",
         "branch": "master"
-      },
-      "jqTree": {}
+      }
     },
     "packages": {
       "spin": {
@@ -37,6 +41,16 @@
         "git": "https://github.com/johntday/meteor-mypaginator.git",
         "branch": "master",
         "commit": "7626f423cc37b0aea4193b95a0b75be2f01f9fa8"
+      },
+      "jqTree": {
+        "git": "https://github.com/terryschen/meteor-jqTree.git",
+        "tag": "v0.19.0",
+        "commit": "ac0ee4e40c8127a411b38b7810869c77e2b54c22"
+      },
+      "typeahead": {
+        "git": "https://github.com/johntday/meteor-typeahead.git",
+        "branch": "master",
+        "commit": "7cfd5b5509f431cbbe4f779552417a0e3dbdf4a5"
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
@@ -72,11 +86,6 @@
         "git": "https://github.com/johntday/meteor-myjointjs.git",
         "branch": "master",
         "commit": "ec789c46c626f5dea5bfc00afd092de84d9fd2bc"
-      },
-      "jqTree": {
-        "git": "https://github.com/terryschen/meteor-jqTree.git",
-        "tag": "v0.19.0",
-        "commit": "ac0ee4e40c8127a411b38b7810869c77e2b54c22"
       }
     }
   }

@@ -10,6 +10,8 @@ accounts-base
 accounts-ui
 accounts-password
 spin
+jqTree
+typeahead
 iron-router
 underscore
 moment
@@ -19,4 +21,3 @@ bootstrap-datepicker2
 myhandsontable
 mybootbox
 myjointjs
-jqTree
