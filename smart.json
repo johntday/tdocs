@@ -1,17 +1,21 @@
 {
   "packages": {
+	  "roles": {},
+	  "accounts-ui-bootstrap-3": {},
+	  "accounts-admin-ui-bootstrap-3": {
+		  "git": "https://github.com/johntday/meteor-accounts-admin-ui-bootstrap-3.git"
+	  },
     "spin": {},
     "mypaginator": {
       "git": "https://github.com/johntday/meteor-mypaginator.git"
     },
-	"jqTree": {},
-	"typeahead": {
-		"git": "https://github.com/johntday/meteor-typeahead.git"
-	},
+    "jqTree": {},
+    "typeahead": {
+      "git": "https://github.com/johntday/meteor-typeahead.git"
+    },
     "iron-router": "0.5.4",
     "moment": {},
     "bootstrap-3": {},
-    "bootstrap-datepicker2": {},
     "myhandsontable": {
       "git": "https://github.com/johntday/meteor-myhandsontable.git"
     },

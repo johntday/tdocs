@@ -2,6 +2,12 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
+      "roles": {},
+      "accounts-ui-bootstrap-3": {},
+      "accounts-admin-ui-bootstrap-3": {
+        "git": "https://github.com/johntday/meteor-accounts-admin-ui-bootstrap-3.git",
+        "branch": "master"
+      },
       "spin": {},
       "mypaginator": {
         "git": "https://github.com/johntday/meteor-mypaginator.git",
@@ -17,7 +23,6 @@
       },
       "moment": {},
       "bootstrap-3": {},
-      "bootstrap-datepicker2": {},
       "myhandsontable": {
         "git": "https://github.com/johntday/meteor-myhandsontable.git",
         "branch": "master"
@@ -32,6 +37,21 @@
       }
     },
     "packages": {
+      "roles": {
+        "git": "https://github.com/alanning/meteor-roles.git",
+        "tag": "v1.2.6",
+        "commit": "f2a9058281f8f2fe028767841d7445aadd6893cf"
+      },
+      "accounts-ui-bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-accounts-ui-bootstrap-3.git",
+        "tag": "v0.2.5",
+        "commit": "91cd37a1320213dd209c3a668bf542eeb9c39a00"
+      },
+      "accounts-admin-ui-bootstrap-3": {
+        "git": "https://github.com/johntday/meteor-accounts-admin-ui-bootstrap-3.git",
+        "branch": "master",
+        "commit": "2e3e6dda1444a3143e32452f0326520c3ff5d65c"
+      },
       "spin": {
         "git": "https://github.com/SachaG/meteor-spin.git",
         "tag": "v0.2.2",
@@ -66,11 +86,6 @@
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v3.1.0-1",
         "commit": "329dccb08bfc18c635676dea600ac9953162cda9"
-      },
-      "bootstrap-datepicker2": {
-        "git": "https://github.com/deepwell/meteor-bootstrap-datepicker.git",
-        "tag": "v1.2.0",
-        "commit": "b7de18a7cc651ea665cda75048663f90d1a11d10"
       },
       "myhandsontable": {
         "git": "https://github.com/johntday/meteor-myhandsontable.git",

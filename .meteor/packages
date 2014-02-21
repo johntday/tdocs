@@ -5,10 +5,13 @@
 
 preserve-inputs
 standard-app-packages
-bootstrap-3
-accounts-base
-accounts-ui
+
 accounts-password
+roles
+accounts-ui-bootstrap-3
+accounts-admin-ui-bootstrap-3
+bootstrap-3
+
 spin
 jqTree
 typeahead
@@ -16,8 +19,6 @@ iron-router
 underscore
 moment
 mypaginator
-http
-bootstrap-datepicker2
 myhandsontable
 mybootbox
 myjointjs

@@ -11,13 +11,28 @@ Router.configure({
 });
 
 Router.map(function () {
-	this.route('test'                 ,{path: '/test'});
+	this.route('test'                     ,{path: '/test'});
 	this.route('tmplHome'                 ,{path: '/'});
 	this.route('tmpl_about'               ,{path: '/about'});
 	this.route('tmpl_help'                ,{path: '/help'});
 	this.route('tmpl_settings'            ,{path: '/settings'});
 	this.route('tmpl_license'             ,{path: '/license'});
 	this.route('tmpl_userprof_detail'     ,{path: '/profile'});
+	//this.route('accountsAdmin'            ,{path: '/admin/users'});
+
+	/**
+	 * ADMIN
+	 */
+	this.route('accountsAdmin', {
+		path  : '/admin/users',
+		template: 'accountsAdmin',
+		waitOn: function () {
+			if(!Roles.userIsInRole(Meteor.user(), ['admin'])) {
+				this.redirect('/');
+			}
+			return true;
+		}
+	});
 
 	/**
 	 * MYSTUFF
