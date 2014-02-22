@@ -68,7 +68,7 @@ Template.tmpl_project_detail.events({
 			return false;
 		}
 
-		Meteor.call('deleteProject', this._id, function(error) {
+		Meteor.call('deleteProject', this._id, getProjectId(), function(error) {
 			if(error){
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
@@ -196,19 +196,6 @@ Template.tmpl_project_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_project_detail.rendered = function() {
-	var _id = this.data._id;
-	Meteor.typeahead(
-		$("#admins"),
-		persons,
-		/*onSelection*/function() {
-			Meteor.call('updateRoles', this._id, ['admin'], getProjectId(), function(error) {
-				if(error){
-					throwError(error.reason);
-				}
-			});
-		}
-	);
-
 	$('#title').focus();
 	$('#description').focus();
 	if ( !Session.get('form_update') )
@@ -217,14 +204,4 @@ Template.tmpl_project_detail.rendered = function() {
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_project_detail.destroyed = function() {
 	incClickCnt(Projects, this.data._id);
-};
-
-var persons = function(query, callback){
-	Meteor.call('findPersons', query, function(err, result){
-		callback(
-			result.map(function(v){
-				return { _id: v._id, value: v.profile.name };
-			})
-		);
-	});
 };

@@ -1,0 +1,27 @@
+<template name="tmpl_project_user_add">
+
+	<div class="col-md-3">
+		<h2>Administrators</h2>
+		<div class="form-group">
+			<input id="admins" class="form-control typeahead" name="persons" type="text" placeholder="Person Name" autocomplete="off" spellcheck="off"/>
+		</div>
+
+		<ul class="list-group">
+			{{#each admins}}
+				{{> tmpl_project_user_add_item}}
+			{{/each}}
+		</ul>
+
+	</div>
+
+</template>
+
+<template name="tmpl_project_user_add_item">
+
+		<li class="list-group-item list-group-item-info">{{profile.name}}
+			{{#if notme}}
+			<a href="#" data-user-id="{{_id}}" title="Remove user" class="pull-right glyphicon glyphicon-remove"></a>
+			{{/if}}
+		</li>
+
+</template>

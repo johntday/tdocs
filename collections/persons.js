@@ -73,12 +73,5 @@ Meteor.methods({
 	},
 	deletePerson: function(_id) {
 		Persons.remove(_id);
-	},
-	findPersons: function(text) {
-		return Meteor.users.find( { 'profile.name': {$regex: text, $options: 'i'}, _id: {$ne: Meteor.userId()}, username: {$ne: 'cocoapuffs'} },
-			{fields: { profile: 1 }, limit:5 } ).fetch();
-//	},
-//	findPersonsFromIds: function(arrayOfIds) {
-//		return Meteor.users.find( {_id: {$in: arrayOfIds}}, {fields: { profile: 1 } } );
 	}
 });

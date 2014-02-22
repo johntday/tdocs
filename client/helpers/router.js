@@ -180,6 +180,10 @@ Router.map(function () {
 		},
 		data  : function () {
 			var project = Projects.findOne(this.params._id);
+			if (!project) {
+				setProject(null);
+				Router.go('/');
+			}
 			//Meteor.users.update(Meteor.userId(), {project_id: this.params._id});
 			setProject(project);
 			Session.set('breadcrumbs', {breadcrumbs: [
@@ -187,7 +191,6 @@ Router.map(function () {
 				{title:"Projects", link:"/projects", isActive:false},
 				{title:project.title, link:"", isActive:true}
 			]});
-			console.log(project);
 			return project;
 		}
 	});

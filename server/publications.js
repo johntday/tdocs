@@ -98,7 +98,7 @@ Meteor.publish('pubsub_project_list', function(query, options, limit) {
 });
 Meteor.publish('pubsub_selected_project', function(id) {
 	if (Roles.userIsInRole(this.userId, ['admin','author','read'], id)) {
-		var query = findUsersByRoles(id);
+		var query = findUsersByRoles(id, true);
 		return [
 			Projects.find(id),
 			Meteor.users.find( query )

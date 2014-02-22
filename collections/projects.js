@@ -91,7 +91,7 @@ Meteor.methods({
 		return project;
 	},
 
-	deleteProject: function(_id) {
+	deleteProject: function(_id, currentProjectId) {
 		var userId = Meteor.userId();
 		if (!Roles.userIsInRole(this.userId, ['admin'], _id))
 			throw new Meteor.Error(601, 'You need to be an Administrator to delete a project');
@@ -99,7 +99,7 @@ Meteor.methods({
 		// remove associated stuff
 		if(!this.isSimulation) {
 			var query, unset = {};
-			query = findUsersByRoles(_id);
+			query = findUsersByRoles(_id, true);
 			unset["roles." + _id] = "";
 			Meteor.users.update(
 				query,
@@ -107,7 +107,7 @@ Meteor.methods({
 				{ multi: true }
 			);
 
-			if ( _id === getProjectId() )
+			if ( _id === currentProjectId )
 				setProject(null);
 		}
 
