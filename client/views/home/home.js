@@ -1,12 +1,14 @@
-//Template.tmplHome.helpers({
-//	tdocs_count: function() {
-//		var tdocsCount = TdocsCount.findOne();
-//		return (tdocsCount) ? tdocsCount.count : 0;
-//	}
-//});
+Template.tmplHome.helpers({
+	pickedProject: function() {
+		return !(Meteor.user() && !!getProjectId());
+	}
+});
 /*------------------------------------------------------------------------------------------------------------------------------*/
-//Template.tmplHome.events({
-//});
+Template.tmplHome.events({
+	'click #btn-create-a-project': function() {
+		Router.go('/projectAdd');
+	}
+});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 //Template.tmplHome.rendered = function() {
 //

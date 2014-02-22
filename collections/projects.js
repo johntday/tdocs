@@ -91,12 +91,24 @@ Meteor.methods({
 		return project;
 	},
 
-	deleteProject: function(projectId) {
+	deleteProject: function(_id) {
+		var userId = Meteor.userId();
+		if (!Roles.userIsInRole(this.userId, ['admin'], _id))
+			throw new Meteor.Error(601, 'You need to be an Administrator to delete a project');
+
 		// remove associated stuff
 		if(!this.isSimulation) {
-			//var users = Meteor.users.find( {} );//TODO
-//			ProjectTimelines.remove({projectId: projectId});
-//			Facts.remove({projectId: projectId});
+			var query, unset = {};
+			query = findUsersByRoles(_id);
+			unset["roles." + _id] = "";
+			Meteor.users.update(
+				query,
+				{$unset: unset },
+				{ multi: true }
+			);
+
+			if ( _id === getProjectId() )
+				setProject(null);
 		}
 
 		// NOTIFICATION
@@ -106,8 +118,8 @@ Meteor.methods({
 //			Notifications.insert(n);
 //		}
 
-		Projects.remove(projectId);
-		return projectId;
+		Projects.remove(_id);
+		return _id;
 	}
 
 });

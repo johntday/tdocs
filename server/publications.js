@@ -1,27 +1,37 @@
-/**
- * Tags: common for all name-value objects (e.g. tags)
- * TYPE:  project, tag
- */
-Meteor.publish('pubsub_tag_list', function(query, options, limit) {
-	options = options || {}; options.limit = limit;
-	return Tags.find(query || {}, options);
-});
-Meteor.publish('pubsub_selected_tag', function(id) {
-	// TODO: maybe add details here
-	return Tags.find(id);
-});
-
-/**
- * Nouns:  common for all listable objects
- */
-//Meteor.publish('pubsub_noun_list', function(query, options, limit) {
-//	options = options || {};
-//	options.limit = limit;
-//	return Nouns.find(query || {}, options);
-//});
-//Meteor.publish('pubsub_selected_noun', function(id) {
-//	// TODO: maybe add details here
-//	return Nouns.find(id);
+//Meteor.reactivePublish(null, function() {
+//	if (this.userId) {
+//		var user = Meteor.users.findOne({_id: this.userId}, {reactive: true});
+//		if (!user.project_id) {
+//			if (!user.roles) {
+//				var properties = {
+//					type: TYPES.project
+//					, title: 'Default'
+//					, description: 'Default'
+//				};
+//				var project_id = '';
+//				Meteor.call('createProject', properties, function(error, project) {
+//					if(error){
+//						console.log(JSON.stringify(error));
+//						throwError(error.reason);
+//					} else {
+//						project_id = project.projectId;
+//					}
+//				});
+//				Meteor.users.update(this.userId, {$set: {project_id: project_id}});
+//			} else {
+//
+//			}
+//		}
+//		if (user.project_id) {
+//			var project = Projects.findOne({_id: user.project_id}, {reactive: true});
+//			return [
+//				Tdocs.find({project_id: user.project_id})
+//				,Diagrams.find({project_id: user.project_id})
+//				,Glossarys.find({project_id: user.project_id})
+//				,Tables.find({project_id: user.project_id})
+//		    ];
+//		}
+//	}
 //});
 
 /**
@@ -88,9 +98,15 @@ Meteor.publish('pubsub_project_list', function(query, options, limit) {
 });
 Meteor.publish('pubsub_selected_project', function(id) {
 	if (Roles.userIsInRole(this.userId, ['admin','author','read'], id)) {
-		return [ Projects.find(id), Meteor.users.find({roles: id}) ];
+		var query = findUsersByRoles(id);
+		return [
+			Projects.find(id),
+			Meteor.users.find( query )
+		];
 	} else {
-		return Projects.find(id);
+		// user not authorized. do not publish secrets
+		this.stop();
+		return;
 	}
 });
 

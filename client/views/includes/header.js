@@ -28,6 +28,12 @@ Template.tmplHeader.helpers({
 	projects_cnt: function() {
 		var stats = ProjectsCount.findOne();
 		return (stats) ? stats.count : 0;
+	},
+	pickedProject: function() {
+		return Meteor.user() && !!getProjectId();
+	},
+	brand: function() {
+		return (Meteor.user() && !!getProjectId()) ? getProjectTitle() : "Tdocs";
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

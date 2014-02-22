@@ -176,12 +176,11 @@ Router.map(function () {
 		path  : '/projects/:_id',
 		waitOn: function () {
 			Session.set('form_update', false);
-			Session.set('selected_project_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_project', this.params._id);
-			        //Meteor.subscribe('pubsub_person_list_all')];
 		},
 		data  : function () {
 			var project = Projects.findOne(this.params._id);
+			//Meteor.users.update(Meteor.userId(), {project_id: this.params._id});
 			setProject(project);
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
@@ -192,22 +191,6 @@ Router.map(function () {
 			return project;
 		}
 	});
-
-
-	/**
-	 * Tdocs / Diagrams
-	 */
-	//	this.route('tmpl_tdoc_diagrams', {
-	//		path  : '/tdocs/diagrams/:_id',
-	//		waitOn: function () {
-	//			Session.set('selected_tdoc_id', this.params._id);
-	//			return Meteor.subscribe('pubsub_selected_tdoc', this.params._id);
-	//			//return Meteor.subscribe('pubsub_selected_tdoc_diagrams', this.params._id);
-	//		},
-	//		data  : function () {
-	//			return MovieTimelines.find({movieId: this.params._id, userId: { $in: ["admin", Meteor.userId()] } } );
-	//		}
-	//	});
 
 	/**
 	 * Persons
