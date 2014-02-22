@@ -47,12 +47,7 @@ Meteor.methods({
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
 
-		var diagram = _.extend(properties, {
-			userId: userId,
-			owner: getUserDisplayName(user),
-			created: getNow(),
-			status: (isAdmin(user)) ? STATUS_APPROVED : STATUS_PENDING
-		});
+		var diagram = extendWithMetadataForInsert( properties, userId, user );
 
 		MyLog("collections/diagrams.js/createDiagram/2", "diagram", diagram);
 

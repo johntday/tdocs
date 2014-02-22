@@ -70,7 +70,7 @@
       "typeahead": {
         "git": "https://github.com/johntday/meteor-typeahead.git",
         "branch": "master",
-        "commit": "7cfd5b5509f431cbbe4f779552417a0e3dbdf4a5"
+        "commit": "b4cf74f8b0f2d41dad6c51d48cff9455b599b1e3"
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",

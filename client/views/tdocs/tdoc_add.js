@@ -23,6 +23,7 @@ Template.tmpl_tdoc_add.events({
 			type: TYPES.tdoc
 			, title: $('#title').val()
 			, description: $('#description').val()
+			, project_id: getProjectId()
 		};
 
 		// VALIDATE

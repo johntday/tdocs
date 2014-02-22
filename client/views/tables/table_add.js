@@ -23,6 +23,7 @@ Template.tmpl_table_add.events({
 			type: TYPES.table
 			, title: $('#title').val()
 			, description: $('#description').val()
+			, project_id: getProjectId()
 		};
 
 		// VALIDATE

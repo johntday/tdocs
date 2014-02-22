@@ -27,6 +27,7 @@ Template.tmpl_glossary_add.events({
 			type: TYPES.glossary
 			, title: title
 			, description: description
+			, project_id: getProjectId()
 		};
 
 		// VALIDATE

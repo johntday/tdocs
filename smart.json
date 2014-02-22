@@ -1,10 +1,10 @@
 {
   "packages": {
-	  "roles": {},
-	  "accounts-ui-bootstrap-3": {},
-	  "accounts-admin-ui-bootstrap-3": {
-		  "git": "https://github.com/johntday/meteor-accounts-admin-ui-bootstrap-3.git"
-	  },
+    "roles": {},
+    "accounts-ui-bootstrap-3": {},
+    "accounts-admin-ui-bootstrap-3": {
+      "git": "https://github.com/johntday/meteor-accounts-admin-ui-bootstrap-3.git"
+    },
     "spin": {},
     "mypaginator": {
       "git": "https://github.com/johntday/meteor-mypaginator.git"

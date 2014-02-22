@@ -28,6 +28,7 @@ Template.tmpl_diagram_add.events({
 			, description: $('#description').val()
 			, code: ''//$('#code').val()
 			, theme: 'simple'//$('#theme').val()
+			, project_id: getProjectId()
 		};
 
 		// VALIDATE

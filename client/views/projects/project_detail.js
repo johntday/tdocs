@@ -201,7 +201,11 @@ Template.tmpl_project_detail.rendered = function() {
 		$("#admins"),
 		persons,
 		/*onSelection*/function() {
-			Projects.update(_id, { $addToSet: { admin: this._id } } );
+			Meteor.call('updateRoles', this._id, ['admin'], getProjectId(), function(error) {
+				if(error){
+					throwError(error.reason);
+				}
+			});
 		}
 	);
 

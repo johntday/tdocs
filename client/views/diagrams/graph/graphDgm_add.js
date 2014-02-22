@@ -23,6 +23,7 @@ Template.tmpl_graphDgm_add.events({
 			type: TYPES.graphDiagram
 			, title: $('#title').val()
 			, description: $('#description').val()
+			, project_id: getProjectId()
 		};
 
 		// VALIDATE AND TRANSFORM

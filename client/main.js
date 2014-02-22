@@ -9,7 +9,7 @@ Session.setDefault('selected_person_id', null);
 Session.setDefault('breadcrumbs', null);
 Session.setDefault('person_sort', 'name');
 
-Session.setDefault('project_id', null);
+Session.setDefault('project', {_id:null, title:null});
 Session.setDefault('selected_tdoc_id', null);
 Session.setDefault('selected_diagram_id', null);
 
@@ -52,25 +52,6 @@ Deps.autorun(function(){
 	diagramsHandle = diagramListSubscription(
 		diagramQuery( Session.get('search_text') ),
 		diagramSort[ Session.get('diagram_sort') ],
-		Meteor.MyClientModule.appConfig.pageLimit
-	);
-});
-
-/**
- * Persons
- */
-personListSubscription = function(find, options, per_page) {
-	var handle = Meteor.subscribeWithPagination('pubsub_person_list', find, options, per_page);
-	handle.fetch = function() {
-		var ourFind = _.isFunction(find) ? find() : find;
-		return limitDocuments(Persons.find(ourFind, options), handle.loaded());
-	}
-	return handle;
-};
-Deps.autorun(function(){
-	personsHandle = personListSubscription(
-		personQuery( Session.get('search_text') ),
-		personSort[ Session.get('person_sort') ],
 		Meteor.MyClientModule.appConfig.pageLimit
 	);
 });

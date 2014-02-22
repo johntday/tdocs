@@ -87,9 +87,20 @@ Meteor.publish('pubsub_project_list', function(query, options, limit) {
 	return Projects.find(query || {}, options);
 });
 Meteor.publish('pubsub_selected_project', function(id) {
-	return Projects.find(id);
+	if (Roles.userIsInRole(this.userId, ['admin','author','read'], id)) {
+		return [ Projects.find(id), Meteor.users.find({roles: id}) ];
+	} else {
+		return Projects.find(id);
+	}
 });
 
+/**
+ * Roles by project
+ * TODO:  fix me
+ */
+Meteor.publish(null, function (){
+	return Meteor.roles.find({})
+});
 
 /**
  * Stats / Counts

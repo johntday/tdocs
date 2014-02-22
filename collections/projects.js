@@ -61,7 +61,7 @@ Meteor.methods({
 //			var n = notificationFactory(MOVIE_CREATED_BY_USER, "project", "admin", project.title, project.status, "/projects/"+projectId, project.created);
 //			Notifications.insert(n);
 //		}
-
+		Roles.addUsersToRoles(userId, ['admin'], projectId);
 		return project;
 	},
 
@@ -94,6 +94,7 @@ Meteor.methods({
 	deleteProject: function(projectId) {
 		// remove associated stuff
 		if(!this.isSimulation) {
+			//var users = Meteor.users.find( {} );//TODO
 //			ProjectTimelines.remove({projectId: projectId});
 //			Facts.remove({projectId: projectId});
 		}

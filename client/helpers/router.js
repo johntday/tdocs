@@ -25,13 +25,7 @@ Router.map(function () {
 	 */
 	this.route('accountsAdmin', {
 		path  : '/admin/users',
-		template: 'accountsAdmin',
-		waitOn: function () {
-			if(!Roles.userIsInRole(Meteor.user(), ['admin'])) {
-				this.redirect('/');
-			}
-			return true;
-		}
+		template: 'accountsAdmin'
 	});
 
 	/**
@@ -188,11 +182,13 @@ Router.map(function () {
 		},
 		data  : function () {
 			var project = Projects.findOne(this.params._id);
+			setProject(project);
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Projects", link:"/projects", isActive:false},
 				{title:project.title, link:"", isActive:true}
 			]});
+			console.log(project);
 			return project;
 		}
 	});
