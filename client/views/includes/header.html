@@ -19,8 +19,11 @@
 					</li>
 					{{/if}}
 					{{#if currentUser}}
-					<li class="{{activeRouteClass  '/projects'}}">
-						<a href="/projects" title="Browse all projects in library">Projects ({{projects_cnt}})</a>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects ({{projects_cnt}}) <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							{{> project_dropdown}}
+						</ul>
 					</li>
 					{{/if}}
 					{{#if pickedProject}}
@@ -53,7 +56,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="/admin/users" title="Nothing here yet">Users</a></li>
+							<li><a href="/admin/users" title="User administration">Users</a></li>
 						</ul>
 					</li>
 					{{/if}}
@@ -77,4 +80,24 @@
 			</nav>
 
 	</header>
+</template>
+
+<template name="project_dropdown_list">
+	<div>
+		{{#each projects}}
+			<li><a href="/projects/{{_id}}">{{title}}</a></li>
+		{{/each}}
+
+		{{#if ready}}
+			{{#unless allLoaded}}
+			{{/unless}}
+		{{else}}
+			<div>{{> spinner}}</div>
+		{{/if}}
+		<a href="/projects">See all</a>
+	</div>
+</template>
+
+<template name="project_dropdown">
+	{{> project_dropdown_list projectsHandle}}
 </template>

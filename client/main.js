@@ -17,6 +17,7 @@ Session.setDefault('tdoc_sort', 'title');
 Session.setDefault('diagram_sort', 'title');
 Session.setDefault('glossary_sort', 'title');
 Session.setDefault('table_sort', 'title');
+Session.setDefault('project_sort', 'title');
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs
@@ -120,12 +121,10 @@ TdocsCount = new Meteor.Collection('tdocs_cnt');
 GlossaryCount = new Meteor.Collection('glossarys_cnt');
 DiagramsCount = new Meteor.Collection('diagrams_cnt');
 TablesCount = new Meteor.Collection('tables_cnt');
-ProjectsCount = new Meteor.Collection('projects_cnt');
 Meteor.subscribe('pubsub_stats_glossarys_cnt');
 Meteor.subscribe('pubsub_stats_tdocs_cnt');
 Meteor.subscribe('pubsub_stats_diagrams_cnt');
 Meteor.subscribe('pubsub_stats_tables_cnt');
-Meteor.subscribe('pubsub_stats_projects_cnt');
 
 /**
  * layout template JS

@@ -97,17 +97,11 @@ Meteor.publish('pubsub_project_list', function(query, options, limit) {
 	return Projects.find(query || {}, options);
 });
 Meteor.publish('pubsub_selected_project', function(id) {
-	if (Roles.userIsInRole(this.userId, ['admin','author','read'], id)) {
-		var query = findUsersByRoles(id, true);
+		var query = findUsersByRoles(id, true, null);
 		return [
 			Projects.find(id),
 			Meteor.users.find( query )
 		];
-	} else {
-		// user not authorized. do not publish secrets
-		this.stop();
-		return;
-	}
 });
 
 /**
@@ -246,39 +240,6 @@ Meteor.publish('pubsub_stats_tables_cnt', function() {
 	});
 	initializing = false;
 	this.added('tables_cnt', 1, {
-		count: count
-	});
-	this.ready();
-	return this.onStop(function() {
-		return handle.stop();
-	});
-});
-Meteor.publish('pubsub_stats_projects_cnt', function() {
-	var count;
-	var handle;
-	var initializing;
-	var _this = this;
-
-	count = 0;
-	initializing = true;
-	handle = Projects.find().observeChanges({
-		added: function() {
-			count++;
-			if (!initializing) {
-				return _this.changed('projects_cnt', 1, {
-					count: count
-				});
-			}
-		},
-		removed: function() {
-			count--;
-			return _this.changed('projects_cnt', 1, {
-				count: count
-			});
-		}
-	});
-	initializing = false;
-	this.added('projects_cnt', 1, {
 		count: count
 	});
 	this.ready();

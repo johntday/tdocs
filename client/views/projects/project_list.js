@@ -19,9 +19,9 @@ Template.tmpl_projects_sort_select.helpers({
 	}
 });
 Template.tmpl_projects_sort_select.events({
-	'click #project-sort': function(e) {
+	'click #project_sort': function(e) {
 		e.preventDefault();
-		var $selector = $('#project-sort');
+		var $selector = $('#project_sort');
 		if ( Session.get('project_sort') !== $selector.val() ) {
 			Session.set('project_sort', $selector.val());
 			Router.go('/projects');

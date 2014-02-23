@@ -1,14 +1,14 @@
-Template.tmplHome.helpers({
-	pickedProject: function() {
-		return !(Meteor.user() && !!getProjectId());
-	}
-});
+//Template.tmplHome.helpers({
+//	pickedProject: function() {
+//		return !(Meteor.user() && !!getProjectId());
+//	}
+//});
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmplHome.events({
-	'click #btn-create-a-project': function() {
-		Router.go('/projectAdd');
-	}
-});
+//Template.tmplHome.events({
+//	'click #btn-create-a-project': function() {
+//		Router.go('/projectAdd');
+//	}
+//});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 //Template.tmplHome.rendered = function() {
 //
