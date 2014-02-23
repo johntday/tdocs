@@ -91,7 +91,7 @@ Meteor.methods({
 		return project;
 	},
 
-	deleteProject: function(_id, currentProjectId) {
+	deleteProject: function(_id) {
 		var userId = Meteor.userId();
 		if (!Roles.userIsInRole(this.userId, ['admin'], _id))
 			throw new Meteor.Error(601, 'You need to be an Administrator to delete a project');
@@ -106,9 +106,6 @@ Meteor.methods({
 				{$unset: unset },
 				{ multi: true }
 			);
-
-			if ( _id === currentProjectId )
-				setProject(null);
 		}
 
 		// NOTIFICATION

@@ -23,12 +23,14 @@ Meteor.methods({
 	 */
 	removeRoles: function (targetUserId, project_id) {
 		var loggedInUser = Meteor.user();
-		console.log( targetUserId, project_id );
+		var project = Projects.findOne(project_id);
 
 		if ( !loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'], project_id))
 			throw new Meteor.Error(403, "You must be an Administrator to perform this function");
 		if ( loggedInUser._id === targetUserId )
 			throw new Meteor.Error(403, "You cannot remove you own role");
+		if ( project.userId === targetUserId )
+			throw new Meteor.Error(403, "You cannot remove role for the project owner");
 
 		var unset = {};
 		unset["roles." + project_id] = "";

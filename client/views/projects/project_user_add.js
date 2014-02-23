@@ -40,7 +40,7 @@ var persons = function(text, callback){
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_project_user_add_item.helpers({
 	notme: function() {
-		return (Meteor.userId() !== this._id);
+		return (Meteor.userId() !== this._id && this._id !== getProjectOwnerId());
 	},
 	project_id: function() {
 		return getProjectId();
@@ -51,7 +51,7 @@ Template.tmpl_project_user_add_item.events({
 	'click a.glyphicon-remove': function(e) {
 		var loggedInUser = Meteor.user();
 		var targetUserId = $(e.currentTarget).data('userId');
-		console.log( loggedInUser._id, targetUserId, this._id );
+
 		if ( !loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'], getProjectId())) {
 			throwError( "You must be in Administrator to perform this function" );
 			e.preventDefault();
@@ -62,6 +62,7 @@ Template.tmpl_project_user_add_item.events({
 			e.preventDefault();
 			return;
 		}
+
 
 		Meteor.call('removeRoles', targetUserId, getProjectId(), function(error) {
 			if(error){

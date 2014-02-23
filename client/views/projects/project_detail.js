@@ -68,12 +68,14 @@ Template.tmpl_project_detail.events({
 			return false;
 		}
 
-		Meteor.call('deleteProject', this._id, getProjectId(), function(error) {
+		Meteor.call('deleteProject', this._id, function(error) {
 			if(error){
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
 				growl( "Project item deleted", {type:'s', hideSnark:true} );
+				if (this._id === getProjectId())
+					setProject(null);
 				Router.go('/projects');
 			}
 		});

@@ -9,7 +9,7 @@ Session.setDefault('selected_person_id', null);
 Session.setDefault('breadcrumbs', null);
 Session.setDefault('person_sort', 'name');
 
-Session.setDefault('project', {_id:null, title:null});
+Session.setDefault('project', {_id:null, title:null, userId:null});
 Session.setDefault('selected_tdoc_id', null);
 Session.setDefault('selected_diagram_id', null);
 
