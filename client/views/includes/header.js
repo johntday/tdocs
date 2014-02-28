@@ -9,22 +9,22 @@ Template.tmplHeader.helpers({
 		//return false;
 		return !Session.get('has_sidebar');
 	},
-	tdocs_count: function() {
-		var stats = TdocsCount.findOne();
-		return (stats) ? stats.count : 0;
-	},
-	glossarys_cnt: function() {
-		var stats = GlossaryCount.findOne();
-		return (stats) ? stats.count : 0;
-	},
-	diagrams_count: function() {
-		var stats = DiagramsCount.findOne();
-		return (stats) ? stats.count : 0;
-	},
-	tables_cnt: function() {
-		var stats = TablesCount.findOne();
-		return (stats) ? stats.count : 0;
-	},
+//	tdocs_count: function() {
+//		var stats = TdocsCount.findOne();
+//		return (stats) ? stats.count : 0;
+//	},
+//	glossarys_cnt: function() {
+//		var stats = GlossaryCount.findOne();
+//		return (stats) ? stats.count : 0;
+//	},
+//	diagrams_count: function() {
+//		var stats = DiagramsCount.findOne();
+//		return (stats) ? stats.count : 0;
+//	},
+//	tables_cnt: function() {
+//		var stats = TablesCount.findOne();
+//		return (stats) ? stats.count : 0;
+//	},
 	projects_cnt: function() {
 		return getUserProjects().length;
 	},

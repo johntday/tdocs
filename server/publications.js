@@ -130,138 +130,138 @@ Meteor.publish(null, function (){
 /**
  * Stats / Counts
  */
-Meteor.publish('pubsub_stats_glossarys_cnt', function() {
-	var count;
-	var handle;
-	var initializing;
-	var _this = this;
-
-	count = 0;
-	initializing = true;
-	handle = Glossarys.find().observeChanges({
-		added: function() {
-			count++;
-			if (!initializing) {
-				return _this.changed('glossarys_cnt', 1, {
-					count: count
-				});
-			}
-		},
-		removed: function() {
-			count--;
-			return _this.changed('glossarys_cnt', 1, {
-				count: count
-			});
-		}
-	});
-	initializing = false;
-	this.added('glossarys_cnt', 1, {
-		count: count
-	});
-	this.ready();
-	return this.onStop(function() {
-		return handle.stop();
-	});
-});
-Meteor.publish('pubsub_stats_tdocs_cnt', function() {
-	var count;
-	var handle;
-	var initializing;
-	var _this = this;
-
-	count = 0;
-	initializing = true;
-	handle = Tdocs.find().observeChanges({
-		added: function() {
-			count++;
-			if (!initializing) {
-				return _this.changed('tdocs_cnt', 1, {
-					count: count
-				});
-			}
-		},
-		removed: function() {
-			count--;
-			return _this.changed('tdocs_cnt', 1, {
-				count: count
-			});
-		}
-	});
-	initializing = false;
-	this.added('tdocs_cnt', 1, {
-		count: count
-	});
-	this.ready();
-	return this.onStop(function() {
-		return handle.stop();
-	});
-});
-Meteor.publish('pubsub_stats_diagrams_cnt', function() {
-	var count;
-	var handle;
-	var initializing;
-	var _this = this;
-
-	count = 0;
-	initializing = true;
-	handle = Diagrams.find().observeChanges({
-		added: function() {
-			count++;
-			if (!initializing) {
-				return _this.changed('diagrams_cnt', 1, {
-					count: count
-				});
-			}
-		},
-		removed: function() {
-			count--;
-			return _this.changed('diagrams_cnt', 1, {
-				count: count
-			});
-		}
-	});
-	initializing = false;
-	this.added('diagrams_cnt', 1, {
-		count: count
-	});
-	this.ready();
-	return this.onStop(function() {
-		return handle.stop();
-	});
-});
-Meteor.publish('pubsub_stats_tables_cnt', function() {
-	var count;
-	var handle;
-	var initializing;
-	var _this = this;
-
-	count = 0;
-	initializing = true;
-	handle = Tables.find().observeChanges({
-		added: function() {
-			count++;
-			if (!initializing) {
-				return _this.changed('tables_cnt', 1, {
-					count: count
-				});
-			}
-		},
-		removed: function() {
-			count--;
-			return _this.changed('tables_cnt', 1, {
-				count: count
-			});
-		}
-	});
-	initializing = false;
-	this.added('tables_cnt', 1, {
-		count: count
-	});
-	this.ready();
-	return this.onStop(function() {
-		return handle.stop();
-	});
-});
+//Meteor.publish('pubsub_stats_glossarys_cnt', function() {
+//	var count;
+//	var handle;
+//	var initializing;
+//	var _this = this;
+//
+//	count = 0;
+//	initializing = true;
+//	handle = Glossarys.find().observeChanges({
+//		added: function() {
+//			count++;
+//			if (!initializing) {
+//				return _this.changed('glossarys_cnt', 1, {
+//					count: count
+//				});
+//			}
+//		},
+//		removed: function() {
+//			count--;
+//			return _this.changed('glossarys_cnt', 1, {
+//				count: count
+//			});
+//		}
+//	});
+//	initializing = false;
+//	this.added('glossarys_cnt', 1, {
+//		count: count
+//	});
+//	this.ready();
+//	return this.onStop(function() {
+//		return handle.stop();
+//	});
+//});
+//Meteor.publish('pubsub_stats_tdocs_cnt', function() {
+//	var count;
+//	var handle;
+//	var initializing;
+//	var _this = this;
+//
+//	count = 0;
+//	initializing = true;
+//	handle = Tdocs.find().observeChanges({
+//		added: function() {
+//			count++;
+//			if (!initializing) {
+//				return _this.changed('tdocs_cnt', 1, {
+//					count: count
+//				});
+//			}
+//		},
+//		removed: function() {
+//			count--;
+//			return _this.changed('tdocs_cnt', 1, {
+//				count: count
+//			});
+//		}
+//	});
+//	initializing = false;
+//	this.added('tdocs_cnt', 1, {
+//		count: count
+//	});
+//	this.ready();
+//	return this.onStop(function() {
+//		return handle.stop();
+//	});
+//});
+//Meteor.publish('pubsub_stats_diagrams_cnt', function() {
+//	var count;
+//	var handle;
+//	var initializing;
+//	var _this = this;
+//
+//	count = 0;
+//	initializing = true;
+//	handle = Diagrams.find().observeChanges({
+//		added: function() {
+//			count++;
+//			if (!initializing) {
+//				return _this.changed('diagrams_cnt', 1, {
+//					count: count
+//				});
+//			}
+//		},
+//		removed: function() {
+//			count--;
+//			return _this.changed('diagrams_cnt', 1, {
+//				count: count
+//			});
+//		}
+//	});
+//	initializing = false;
+//	this.added('diagrams_cnt', 1, {
+//		count: count
+//	});
+//	this.ready();
+//	return this.onStop(function() {
+//		return handle.stop();
+//	});
+//});
+//Meteor.publish('pubsub_stats_tables_cnt', function() {
+//	var count;
+//	var handle;
+//	var initializing;
+//	var _this = this;
+//
+//	count = 0;
+//	initializing = true;
+//	handle = Tables.find().observeChanges({
+//		added: function() {
+//			count++;
+//			if (!initializing) {
+//				return _this.changed('tables_cnt', 1, {
+//					count: count
+//				});
+//			}
+//		},
+//		removed: function() {
+//			count--;
+//			return _this.changed('tables_cnt', 1, {
+//				count: count
+//			});
+//		}
+//	});
+//	initializing = false;
+//	this.added('tables_cnt', 1, {
+//		count: count
+//	});
+//	this.ready();
+//	return this.onStop(function() {
+//		return handle.stop();
+//	});
+//});
 
 
 /**

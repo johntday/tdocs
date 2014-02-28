@@ -115,14 +115,14 @@ projectListSubscription = function(query, options, per_page) {
 /**
  * Stats
  */
-TdocsCount = new Meteor.Collection('tdocs_cnt');
-GlossaryCount = new Meteor.Collection('glossarys_cnt');
-DiagramsCount = new Meteor.Collection('diagrams_cnt');
-TablesCount = new Meteor.Collection('tables_cnt');
-Meteor.subscribe('pubsub_stats_glossarys_cnt');
-Meteor.subscribe('pubsub_stats_tdocs_cnt');
-Meteor.subscribe('pubsub_stats_diagrams_cnt');
-Meteor.subscribe('pubsub_stats_tables_cnt');
+//TdocsCount = new Meteor.Collection('tdocs_cnt');
+//GlossaryCount = new Meteor.Collection('glossarys_cnt');
+//DiagramsCount = new Meteor.Collection('diagrams_cnt');
+//TablesCount = new Meteor.Collection('tables_cnt');
+//Meteor.subscribe('pubsub_stats_glossarys_cnt');
+//Meteor.subscribe('pubsub_stats_tdocs_cnt');
+//Meteor.subscribe('pubsub_stats_diagrams_cnt');
+//Meteor.subscribe('pubsub_stats_tables_cnt');
 
 /**
  * layout template JS
