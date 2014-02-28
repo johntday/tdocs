@@ -18,6 +18,14 @@
 						</button>
 					</li>
 					{{/if}}
+					{{#if currentUser}}
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects ({{projects_cnt}}) <b class="caret"></b></a>
+						<ul class="dropdown-menu" style="width: 400px">
+							{{> project_dropdown}}
+						</ul>
+					</li>
+					{{/if}}
 					{{#if pickedProject}}
 					<li class="{{activeRouteClass  '/tdocs'}}">
 						<a href="/tdocs" title="Browse all tdocs in library">Tdocs ({{tdocs_count}})</a>
@@ -72,4 +80,17 @@
 			</nav>
 
 	</header>
+</template>
+
+<template name="project_dropdown_list">
+	<div>
+		{{#each projects}}
+			<li><a href="/projects/{{_id}}">{{title}}</a></li>
+		{{/each}}
+
+	</div>
+</template>
+
+<template name="project_dropdown">
+	{{> tmpl_projects}}
 </template>

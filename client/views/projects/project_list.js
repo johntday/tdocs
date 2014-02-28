@@ -1,5 +1,5 @@
 Template.tmpl_projects.helpers({
-	projectsHandle: function() {
+	projects: function() {
 		return projectsHandle;
 	}
 });
@@ -30,22 +30,3 @@ Template.tmpl_projects_sort_select.events({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_projects_list.helpers({
-	projects: function() {
-		return this.fetch();
-	},
-	ready: function() {
-		return this.ready();
-	},
-	allLoaded: function() {
-		return ( this.fetch().length < this.loaded() );
-	}
-});
-Template.tmpl_projects_list.events({
-    'click .load-more': function(e) {
-        e.preventDefault();
-	    this.loadNextPage();
-
-	    Meteor.MyClientModule.scrollToBottomOfPageFast( $('div[class="post"]').last() );
-    }
-});

@@ -46,6 +46,8 @@ Meteor.methods({
 			throw new Meteor.Error(601, 'You need to login to create a new diagram');
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
+		if(!properties.project_id)
+			throw new Meteor.Error(602, 'Must select a project first');
 
 		var diagram = extendWithMetadataForInsert( properties, userId, user );
 

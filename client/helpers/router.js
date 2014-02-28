@@ -184,7 +184,6 @@ Router.map(function () {
 				setProject(null);
 				Router.go('/');
 			}
-			//Meteor.users.update(Meteor.userId(), {project_id: this.params._id});
 			setProject(project);
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},

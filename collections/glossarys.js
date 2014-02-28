@@ -47,6 +47,8 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'Please add a title');
 		if ( checkForDupOnServer( Glossarys, 'title', properties.title ) )
 			throw new Meteor.Error(603, 'Glossary with title "' + properties.title + '" already exists.  To avoid confusion, Title must be unique when expressed as lower-case');
+		if(!properties.project_id)
+			throw new Meteor.Error(602, 'Must select a project first');
 
 		var glossary = extendWithMetadataForInsert( properties, userId, user );
 

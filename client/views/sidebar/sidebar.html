@@ -7,26 +7,12 @@
 		<div class="panel panel-purple">
 			<div class="panel-heading">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-						Projects ({{projects_cnt}})
-					</a>
-				</h4>
-			</div>
-			<div id="collapseOne" class="panel-collapse collapse in">
-				<div class="panel-body">
-					{{> project_dropdown}}
-				</div>
-			</div>
-		</div>
-		<div class="panel panel-purple">
-			<div class="panel-heading">
-				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 						Tdocs
 					</a>
 				</h4>
 			</div>
-			<div id="collapseTwo" class="panel-collapse collapse">
+			<div id="collapseTwo" class="panel-collapse collapse in">
 				<div class="panel-body">
 				</div>
 			</div>
@@ -75,15 +61,3 @@
 </template>
 
 
-<template name="project_dropdown_list">
-	<div>
-		{{#each projects}}
-			<li><a href="/projects/{{_id}}">{{title}}</a></li>
-		{{/each}}
-
-	</div>
-</template>
-
-<template name="project_dropdown">
-	{{> tmpl_projects_list projectsHandle}}
-</template>

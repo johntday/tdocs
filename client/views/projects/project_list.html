@@ -1,24 +1,7 @@
-<template name="tmpl_projects_list">
-	<div>
-        {{#each projects}}
-	        {{> tmpl_project_item}}
-        {{/each}}
-
-        {{#if ready}}
-	        {{#unless allLoaded}}
-				<a class="load-more" href="#">Load more</a>
-	        {{/unless}}
-	    {{else}}
-		    <div>{{> spinner}}</div>
-        {{/if}}
-    </div>
-</template>
-
 <template name="tmpl_projects">
-
-	{{> tmpl_projects_sort_select}}
-
-	{{> tmpl_projects_list projectsHandle}}
+	{{#each projects}}
+		{{> tmpl_project_item}}
+	{{/each}}
 </template>
 
 <template name="tmpl_projects_sort_select">

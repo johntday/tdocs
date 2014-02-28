@@ -39,8 +39,21 @@ Meteor.methods({
 			{$unset: unset }
 		);
 	},
+
 	findPersons: function(text) {
 		return Meteor.users.find( { 'profile.name': {$regex: text, $options: 'i'}, _id: {$ne: Meteor.userId()}, username: {$ne: 'cocoapuffs'} },
 			{fields: { profile: 1 }, limit:10, sort: {"profile.name": 1} } ).fetch();
+	},
+
+	updateUserProject: function(project) {
+		var loggedInUser = Meteor.user();
+		if (!loggedInUser)
+			return;
+		if (!project)
+			project = {_id: '', title: '', userId: ''};
+		else
+			project = _.pick(project, '_id', 'title', 'userId');
+
+		Meteor.users.update(loggedInUser._id, {$set: {project: project } } );
 	}
 });

@@ -9,7 +9,6 @@ Session.setDefault('selected_person_id', null);
 Session.setDefault('breadcrumbs', null);
 Session.setDefault('person_sort', 'name');
 
-Session.setDefault('project', {_id:null, title:null, userId:null});
 Session.setDefault('selected_tdoc_id', null);
 Session.setDefault('selected_diagram_id', null);
 
@@ -98,21 +97,20 @@ Deps.autorun(function(){
 /**
  * Project
  */
-projectListSubscription = function(find, options, per_page) {
-	var handle = Meteor.subscribeWithPagination('pubsub_project_list', find, options, per_page);
-	handle.fetch = function() {
-		var ourFind = _.isFunction(find) ? find() : find;
-		return limitDocuments(Projects.find(ourFind, options), handle.loaded());
-	}
+projectListSubscription = function(query, options, per_page) {
+//	var handle = Meteor.subscribeWithPagination('pubsub_project_list', query, options, per_page);
+	options = options || {};
+	options.limit = per_page;
+	var handle = Projects.find(query || {}, options);
 	return handle;
 };
-Deps.autorun(function(){
+//Deps.autorun(function(){
 	projectsHandle = projectListSubscription(
 		projectQuery( Session.get('search_text') ),
 		projectSort[ Session.get('project_sort') ],
-		Meteor.MyClientModule.appConfig.pageLimit
+		100
 	);
-});
+//});
 
 /**
  * Stats
