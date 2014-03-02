@@ -128,12 +128,12 @@ Router.map(function () {
 	this.route('tmpl_glossary_add'            ,{path: '/glossaryAdd'});
 	this.route('tmpl_glossary_detail', {
 		path  : '/glossarys/:_id',
-		waitOn: function () {
-			Session.set('form_update', false);
-			Session.set('selected_glossary_id', this.params._id);
-			return Meteor.subscribe('pubsub_selected_glossary', this.params._id);
-		},
+//		waitOn: function () {
+//			return Meteor.subscribe('pubsub_selected_glossary', this.params._id);
+//		},
 		data  : function () {
+			Session.set('form_update', false);
+//			Session.set('selected_glossary_id', this.params._id);
 			var glossary = Glossarys.findOne(this.params._id);
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},

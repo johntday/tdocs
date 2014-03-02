@@ -1,7 +1,7 @@
 /**
  * SESSION VARIABLE DEFAULTS
  */
-Session.setDefault('namespace', 'default');
+Session.setDefault('paging', {page_size: 5, current_page: 1});
 Session.setDefault('has_sidebar', false);
 Session.setDefault('search_text', '');
 Session.setDefault('form_update', false);
@@ -21,78 +21,58 @@ Session.setDefault('project_sort', 'title');
 /**
  * Tdocs
  */
-tdocListSubscription = function(find, options, per_page) {
-	var handle = Meteor.subscribeWithPagination('pubsub_tdoc_list', find, options, per_page);
-	handle.fetch = function() {
-		var ourFind = _.isFunction(find) ? find() : find;
-		return limitDocuments(Tdocs.find(ourFind, options), handle.loaded());
-	}
-	return handle;
+tdocListSubscription = function(query, options, per_page) {
+	options = options || {};
+	options.limit = per_page;
+	return Tdocs.find(query || {}, options);
 };
-Deps.autorun(function(){
 	tdocsHandle = tdocListSubscription(
 		tdocQuery( Session.get('search_text') ),
 		tdocSort[ Session.get('tdoc_sort') ],
 		Meteor.MyClientModule.appConfig.pageLimit
 	);
-});
 
 /**
  * Diagrams
  */
-diagramListSubscription = function(find, options, per_page) {
-	var handle = Meteor.subscribeWithPagination('pubsub_diagram_list', find, options, per_page);
-	handle.fetch = function() {
-		var ourFind = _.isFunction(find) ? find() : find;
-		return limitDocuments(Diagrams.find(ourFind, options), handle.loaded());
-	}
-	return handle;
+diagramListSubscription = function(query, options, per_page) {
+	options = options || {};
+	options.limit = per_page;
+	return Diagrams.find(query || {}, options);
 };
-Deps.autorun(function(){
 	diagramsHandle = diagramListSubscription(
 		diagramQuery( Session.get('search_text') ),
 		diagramSort[ Session.get('diagram_sort') ],
 		Meteor.MyClientModule.appConfig.pageLimit
 	);
-});
 
 /**
  * Glossary
  */
-glossaryListSubscription = function(find, options, per_page) {
-	var handle = Meteor.subscribeWithPagination('pubsub_glossary_list', find, options, per_page);
-	handle.fetch = function() {
-		var ourFind = _.isFunction(find) ? find() : find;
-		return limitDocuments(Glossarys.find(ourFind, options), handle.loaded());
-	}
-	return handle;
+glossaryListSubscription = function(query, options, per_page) {
+	options = options || {};
+	options.limit = per_page;
+	return Glossarys.find(query || {}, options);
 };
-Deps.autorun(function(){
 	glossarysHandle = glossaryListSubscription(
 		glossaryQuery( Session.get('search_text') ),
 		glossarySort[ Session.get('glossary_sort') ],
 		Meteor.MyClientModule.appConfig.pageLimit
 	);
-});
 
 /**
  * Table
  */
-tableListSubscription = function(find, options, per_page) {
-	var handle = Meteor.subscribeWithPagination('pubsub_table_list', find, options, per_page);
-	handle.fetch = function() {
-		var ourFind = _.isFunction(find) ? find() : find;
-		return limitDocuments(Tables.find(ourFind, options), handle.loaded());
-	}
-	return handle;
+tableListSubscription = function(query, options, per_page) {
+	options = options || {};
+	options.limit = per_page;
+	return Tables.find(query || {}, options);
 };
-Deps.autorun(function(){
 	tablesHandle = tableListSubscription(
 		tableQuery( Session.get('search_text') ),
 		tableSort[ Session.get('table_sort') ],
 		Meteor.MyClientModule.appConfig.pageLimit
 	);
-});
 
 /**
  * Project
@@ -108,7 +88,7 @@ projectListSubscription = function(query, options, per_page) {
 	projectsHandle = projectListSubscription(
 		projectQuery( Session.get('search_text') ),
 		projectSort[ Session.get('project_sort') ],
-		100
+		Meteor.MyClientModule.appConfig.pageLimit
 	);
 //});
 

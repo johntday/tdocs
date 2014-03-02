@@ -1,5 +1,5 @@
 Template.tmpl_glossarys.helpers({
-	glossarysHandle: function() {
+	glossarys: function() {
 		return glossarysHandle;
 	}
 });
@@ -30,22 +30,3 @@ Template.tmpl_glossarys_sort_select.events({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_glossarys_list.helpers({
-	glossarys: function() {
-		return this.fetch();
-	},
-	ready: function() {
-		return this.ready();
-	},
-	allLoaded: function() {
-		return ( this.fetch().length < this.loaded() );
-	}
-});
-Template.tmpl_glossarys_list.events({
-    'click .load-more': function(e) {
-        e.preventDefault();
-	    this.loadNextPage();
-
-	    Meteor.MyClientModule.scrollToBottomOfPageFast( $('div[class="post"]').last() );
-    }
-});

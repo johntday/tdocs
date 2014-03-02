@@ -1,5 +1,5 @@
 Template.tmpl_diagrams.helpers({
-	diagramsHandle: function() {
+	diagrams: function() {
 		return diagramsHandle;
 	}
 });
@@ -30,22 +30,3 @@ Template.tmpl_diagrams_sort_select.events({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_diagrams_list.helpers({
-	diagrams: function() {
-		return this.fetch();
-	},
-	ready: function() {
-		return this.ready();
-	},
-	allLoaded: function() {
-		return ( this.fetch().length < this.loaded() );
-	}
-});
-Template.tmpl_diagrams_list.events({
-    'click .load-more': function(e) {
-        e.preventDefault();
-	    this.loadNextPage();
-
-	    Meteor.MyClientModule.scrollToBottomOfPageFast( $('div[class="post"]').last() );
-    }
-});

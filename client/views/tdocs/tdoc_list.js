@@ -1,5 +1,5 @@
 Template.tmpl_tdocs.helpers({
-	tdocsHandle: function() {
+	tdocs: function() {
 		return tdocsHandle;
 	}
 });
@@ -30,22 +30,3 @@ Template.tmpl_tdocs_sort_select.events({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_tdocs_list.helpers({
-	tdocs: function() {
-		return this.fetch();
-	},
-	ready: function() {
-		return this.ready();
-	},
-	allLoaded: function() {
-		return ( this.fetch().length < this.loaded() );
-	}
-});
-Template.tmpl_tdocs_list.events({
-    'click .load-more': function(e) {
-        e.preventDefault();
-	    this.loadNextPage();
-
-	    Meteor.MyClientModule.scrollToBottomOfPageFast( $('div[class="post"]').last() );
-    }
-});

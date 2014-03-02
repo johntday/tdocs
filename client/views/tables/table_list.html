@@ -1,24 +1,12 @@
-<template name="tmpl_tables_list">
-	<div>
-        {{#each tables}}
-	        {{> tmpl_table_item}}
-        {{/each}}
-
-        {{#if ready}}
-	        {{#unless allLoaded}}
-				<a class="load-more" href="#">Load more</a>
-	        {{/unless}}
-	    {{else}}
-		    <div>{{> spinner}}</div>
-        {{/if}}
-    </div>
-</template>
-
 <template name="tmpl_tables">
 
 	{{> tmpl_tables_sort_select}}
 
-	{{> tmpl_tables_list tablesHandle}}
+	<div>
+		{{#each tables}}
+			{{> tmpl_table_item}}
+		{{/each}}
+	</div>
 </template>
 
 <template name="tmpl_tables_sort_select">

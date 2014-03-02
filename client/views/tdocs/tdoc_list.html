@@ -1,24 +1,12 @@
-<template name="tmpl_tdocs_list">
-	<div>
-        {{#each tdocs}}
-	        {{> tmpl_tdoc_item}}
-        {{/each}}
-
-        {{#if ready}}
-	        {{#unless allLoaded}}
-				<a class="load-more" href="#">Load more</a>
-	        {{/unless}}
-	    {{else}}
-		    <div>{{> spinner}}</div>
-        {{/if}}
-    </div>
-</template>
-
 <template name="tmpl_tdocs">
 
 	{{> tmpl_tdocs_sort_select}}
 
-	{{> tmpl_tdocs_list tdocsHandle}}
+	<div>
+		{{#each tdocs}}
+			{{> tmpl_tdoc_item}}
+		{{/each}}
+	</div>
 </template>
 
 <template name="tmpl_tdocs_sort_select">

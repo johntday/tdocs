@@ -1,15 +1,28 @@
 Meteor.reactivePublish(null, function() {
+	var returnArray = [];
+
 	if (this.userId) {
 		var user = Meteor.users.findOne({_id: this.userId}, {reactive: true});
-		if (user.project) {
+		if (user.roles) {
 			var myprojects = _.keys(user.roles);
 			if (!myprojects)
 				myprojects = [];
 			var query =  {_id: {$in: myprojects} };
 
-			return Projects.find( query, {sort: {title: 1}} );
+			returnArray.push( Projects.find( query, {sort: {title: 1}} ) );
+		}
+		if (user.project) {
+			var project_id = user.project._id;
+			if (project_id) {
+				returnArray.push( Glossarys.find( {project_id: project_id} ) );
+				returnArray.push( Diagrams.find( {project_id: project_id} ) );
+				returnArray.push( Tdocs.find( {project_id: project_id} ) );
+				returnArray.push( Tables.find( {project_id: project_id} ) );
+			}
 		}
 	}
+
+	return returnArray;
 });
 
 
