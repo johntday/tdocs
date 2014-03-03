@@ -18,6 +18,7 @@ Meteor.reactivePublish(null, function() {
 				returnArray.push( Diagrams.find( {project_id: project_id} ) );
 				returnArray.push( Tdocs.find( {project_id: project_id} ) );
 				returnArray.push( Tables.find( {project_id: project_id} ) );
+				returnArray.push( Nouns.find( {project_id: project_id} ) );
 			}
 		}
 	}

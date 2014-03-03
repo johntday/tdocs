@@ -1,0 +1,27 @@
+<template name="tmpl_noun_add">
+
+	<div class="panel panel-purple">
+		<div class="panel-heading">
+			<h2 class="panel-title">Add Business Capability</h2>
+		</div>
+		<div class="panel-body">
+
+			<form class="add modal-nav-box box-hide form-horizontal">
+				{{#constant}}
+
+				{{form_input "Title" "title" "" canCreate true null true}}
+				{{form_textarea "Description" "description" "" canCreate true null true}}
+
+				{{/constant}}
+				<div class="form-group">
+					<div class="col-offset-2 col-sm-4">
+						{{#if canCreate}}
+							<button type="button" class="btn btn-primary" id="btnCreateNoun">Create</button>
+						{{/if}}
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</template>

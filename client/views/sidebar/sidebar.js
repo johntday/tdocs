@@ -12,6 +12,27 @@ Template.tmplSidebar.events({
 	}
 });
 
-Template.tmplSidebar.rendered = function() {
-};
+Template.tmpl_bus_layer.rendered = function() {
+	var data = [
+		{
+			label: 'node1',
+			children: [
+				{ label: 'child1' },
+				{ label: 'child2' }
+			]
+		},
+		{
+			label: 'node2',
+			children: [
+				{ label: 'child3' }
+			]
+		}
+	];
 
+	$('#business-capability').tree({
+		data: data
+		,autoOpen: 0
+		,dragAndDrop: true
+		,saveState: true
+	});
+};

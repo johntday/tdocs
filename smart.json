@@ -9,7 +9,6 @@
     "mypaginator": {
       "git": "https://github.com/johntday/meteor-mypaginator.git"
     },
-    "jqTree": {},
     "typeahead": {
       "git": "https://github.com/johntday/meteor-typeahead.git"
     },

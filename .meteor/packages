@@ -13,7 +13,6 @@ accounts-admin-ui-bootstrap-3
 bootstrap-3
 
 spin
-jqTree
 typeahead
 iron-router
 underscore

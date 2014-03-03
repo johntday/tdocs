@@ -73,6 +73,25 @@ Router.map(function () {
 	});
 
 	/**
+	 * Noun
+	 */
+	//this.route('tmpl_nouns'               ,{path: '/nouns'});
+	this.route('tmpl_noun_add'            ,{path: '/nounAdd'});
+	this.route('tmpl_noun_detail', {
+		path  : '/nouns/:_id',
+		data  : function () {
+			Session.set('form_update', false);
+			var noun = Nouns.findOne(this.params._id);
+			Session.set('breadcrumbs', {breadcrumbs: [
+				{title:"home", link:"/", isActive:false},
+				{title:"Nouns", link:"/nouns", isActive:false},
+				{title:noun.title, link:"", isActive:true}
+			]});
+			return noun;
+		}
+	});
+
+	/**
 	 * Diagrams: Sequence
 	 */
 	this.route('tmpl_diagrams'               ,{path: '/diagrams'});

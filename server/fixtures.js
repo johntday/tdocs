@@ -32,4 +32,20 @@ Meteor.startup(function () {
 	if(!Meteor.roles.findOne({name: "author"}))
 		Roles.createRole("author");
 
+
+	// BUSINESS CONCEPTUAL
+//	var cnt = Nouns.find().count();
+//	if (cnt === 0) {
+//		loadEAs();
+//	}
+//
+//	function loadEAs() {
+//			var noun = {
+//				title:'Accounts Payable and Expense Management'
+//				,description:''
+//				,type: ea.eaType.Business_Capability
+//				,business_domain:'Financial Management'
+//				//,parent_id:''
+//			};
+//	}
 });
