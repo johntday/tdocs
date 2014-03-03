@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$ = this.jQuery;
 
 (function() {
   var BorderDropHint, DragAndDropHandler, DragElement, FolderElement, GhostDropHint, HitAreasGenerator, /*JqTreeWidget,*/ KeyHandler, MouseWidget, Node, NodeElement, Position, SaveStateHandler, ScrollHandler, SelectNodeHandler, SimpleWidget, VisibleNodeIterator, html_escape, indexOf, json_escapable, json_meta, json_quote, json_str, _indexOf, _ref, _ref1, _ref2,
@@ -23,7 +22,7 @@ $ = this.jQuery;
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  //$ = this.jQuery;
+  $ = this.jQuery;
 
   SimpleWidget = (function() {
     SimpleWidget.prototype.defaults = {};
@@ -301,7 +300,7 @@ $ = this.jQuery;
 
   this.Tree = {};
 
-  //$ = this.jQuery;
+  $ = this.jQuery;
 
   Position = {
     getName: function(position) {

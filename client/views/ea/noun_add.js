@@ -29,6 +29,7 @@ Template.tmpl_noun_add.events({
 			, title: $('#title').val()
 			, description: $('#description').val()
 			, project_id: getProjectId()
+			, parent_id: ''
 		};
 
 		// VALIDATE and TRANSFORM
