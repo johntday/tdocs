@@ -9,6 +9,9 @@ Template.tmplSidebar.events({
 		e.preventDefault();
 
 		Session.set('has_sidebar', false);
+	},
+	'click .glyphicon .glyphicon-plus': function(e) {
+		e.preventDefault();
 	}
 });
 
@@ -59,6 +62,7 @@ Template.tmpl_bus_layer.rendered = function() {
 					// node was selected
 					var node = event.node;
 					Router.go('/nouns/'+node.id);
+					$busCap.tree('selectNode', null);
 				} else {
 					// event.node is null
 					// a node was deselected
@@ -72,7 +76,24 @@ Template.tmpl_bus_layer.rendered = function() {
 				// The clicked node is 'event.node'
 				var node = event.node;
 				//alert(node.name);
-				console.log( $busCap.tree('toJson') );
+				bootbox.dialog({
+					title: "Context Menu",
+					message: 'What to do with "' + node.name + '"',
+					buttons: {
+						main: {
+							label: "Cancel",
+							className: "btn-default",
+							callback: function() {
+							}
+						},
+						remove: {
+							label: "Delete",
+							className: "btn-danger",
+							callback: function() {
+							}
+						}
+					}
+				});
 			}
 		);
 

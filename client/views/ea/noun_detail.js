@@ -73,7 +73,7 @@ Template.tmpl_noun_detail.events({
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
-				growl( "Noun deleted", {type:'s', hideSnark:true} );
+				growl( this.type + " / " + this.title + " deleted", {type:'s', hideSnark:true} );
 				Router.go('/');
 			}
 		});

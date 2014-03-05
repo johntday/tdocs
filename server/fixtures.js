@@ -33,19 +33,25 @@ Meteor.startup(function () {
 		Roles.createRole("author");
 
 
-	// BUSINESS CONCEPTUAL
-//	var cnt = Nouns.find().count();
-//	if (cnt === 0) {
-//		loadEAs();
-//	}
-//
-//	function loadEAs() {
-//			var noun = {
-//				title:'Accounts Payable and Expense Management'
-//				,description:''
-//				,type: ea.eaType.Business_Capability
-//				,business_domain:'Financial Management'
-//				//,parent_id:''
-//			};
-//	}
+
+	var nouns = [
+		{
+			instance_name: 'eas_framework_example_v3.7.1_Instance_10000',
+			class_name: 'Technology_Product',
+
+			'external_repository_instance_reference': 'essential_baseline_v3.5_Class21788',
+			'implements_technology_components': [
+				'essential_prj_DD_v1.1_Instance_90025',
+				'essential_prj_DD_v1.1_Instance_90026'],
+			'title': 'Application Server',
+			'product_label': 'JBoss::Application Server',
+			'supplier_technology_product': 'essential_prj_DD_v1.1_Instance_34'
+		}
+	];
+
+	nouns.forEach(function(noun){
+		if ( !Nouns.findOne({instance_name: noun.instance_name}) ) {
+			Nouns.insert(noun);
+		}
+	});
 });
