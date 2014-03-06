@@ -33,14 +33,14 @@ Template.tmpl_bus_layer.rendered = function() {
 	];
 
 	var $busCap = $('#business-capability');
-	var business_capabilities = Nouns.find({project_id: getProjectId(), type: ea.eaType.Business_Capability}).fetch();
+	var business_capabilities = Nouns.find({project_id: getProjectId(), class_name: ea.eaType.Business_Capability}).fetch();
 	data = toNodeArray( business_capabilities, "BUSINESS CAPABILITIES" );
 
 //	if (!Template['tmpl_bus_layer'].bus_cap) {
 
 		Template['tmpl_bus_layer'].bus_cap = $busCap.tree({
 			data: data
-			,autoOpen: 0
+			,autoOpen: true
 			,dragAndDrop: true
 			//,saveState: true
 			,slide: true
