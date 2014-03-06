@@ -3,6 +3,7 @@
  */
 Session.setDefault('paging', {page_size: 5, current_page: 1});
 Session.setDefault('has_sidebar', false);
+Session.setDefault('sidebar_nbr', 3);
 Session.setDefault('search_text', '');
 Session.setDefault('form_update', false);
 Session.setDefault('selected_person_id', null);
@@ -118,6 +119,12 @@ Template.layout.helpers({
 	},
 	showFooter: function() {
 		return _.contains(['/tables/'], Location._state.path);
+	},
+	sidebarNbr: function() {
+		return Session.get('sidebar_nbr');
+	},
+	mainNbr: function() {
+		return 12 - Session.get('sidebar_nbr');
 	}
 });
 

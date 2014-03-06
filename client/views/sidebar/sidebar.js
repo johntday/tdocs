@@ -28,7 +28,7 @@ Template.tmpl_bus_layer.events({
 		if(!sel.length) { return false; }
 		sel = sel[0];
 		sel = ref.create_node(sel);
-		if(sel) {
+		if(sel && sel !== 'root') {
 			ref.edit(sel);
 		}
 	},
@@ -37,29 +37,40 @@ Template.tmpl_bus_layer.events({
 			sel = ref.get_selected();
 		if(!sel.length) { return false; }
 		sel = sel[0];
-		ref.edit(sel);
+		if (sel !== 'root')
+			ref.edit(sel);
 	},
 	'click button.btn.btn-danger.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
 		if(!sel.length) { return false; }
-		ref.delete_node(sel);
+		if (sel !== 'root')
+			ref.delete_node(sel);
+	},
+	'click #sidebar_left': function() {
+		var nbr = Session.get('sidebar_nbr');
+		if (nbr > 2)
+			Session.set('sidebar_nbr', (nbr-1) );
+	},
+	'click #sidebar_right': function() {
+		var nbr = Session.get('sidebar_nbr');
+		if (nbr < 10)
+			Session.set('sidebar_nbr', (nbr+1) );
 	}
 
 });
 Template.tmpl_bus_layer.rendered = function() {
 	if (!sidebar.bus_capabilities) {
-		var level0 = Nouns.find({class_name: ea.class_name.Business_Capability, business_capability_level:"0"}).fetch();
-		var level1 = getChildren( level0[0] );
-		console.log(level1);
-		var data = [{id:'root', text:"BUSINESS CAPABILITIES", type:"root", children:level0}];
+		var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"0"});
+		var treeData = getTree( "BUSINESS CAPABILITIES", root );
+		var $bus_capabilities = $('#bus-capabilities');
 
-		$('#bus-capabilities').jstree({
+		$bus_capabilities.jstree({
 			"core" : {
 				"animation" : 0
 				,"check_callback" : true
 				,"themes" : { "stripes" : true }
-				,'data' : data
+				,'data' : treeData
 			},
 			"types" : {
 				"#" : {
@@ -78,7 +89,11 @@ Template.tmpl_bus_layer.rendered = function() {
 			]
 		});
 
-		sidebar.bus_capabilities = $('#bus-capabilities').jstree(true);
+		sidebar.bus_capabilities = $bus_capabilities.jstree(true);
+
+//		$bus_capabilities.on("hover_node.jstree", function(e, data) {
+//			growl(data.node.text, {type:'s', hideSnark:true});
+//		});
 	}
 
 };
@@ -86,30 +101,31 @@ Template.tmpl_bus_layer.rendered = function() {
 //Template.tmpl_bus_layer.destroyed = function() {
 //	Template['tmpl_bus_layer'].bus_capabilities = null;
 //};
-function packageChildren(noun) {
 
-}
-function getChildren(noun) {
+function getTree(rootName, noun) {
 	var descendants=[]
 	var stack=[];
 	var item = Nouns.findOne({instance_name:noun.instance_name});
 	stack.push(item);
 	while (stack.length>0){
 		var currentnode = stack.pop();
+		_.extend(currentnode, {id: currentnode._id, text:currentnode.title});
 		var children = [];
 		if (currentnode && currentnode.contained_business_capabilities)
-			children = Nouns.find({instance_name:{$in:currentnode.contained_business_capabilities}});
+			children = Nouns.find({instance_name:{$in:currentnode.contained_business_capabilities}}).fetch();
 
 		children.forEach(function(child) {
+			_.extend(child, {id: child._id, text:child.title});
 			descendants.push(child);
 			if(child && child.contained_business_capabilities && child.contained_business_capabilities.length>0){
 				stack.push(child);
 			}
 		});
+		_.extend(currentnode, {children: children});
 	}
 
-	return descendants;
+	return [{id:'root', text:rootName, type:"root", children:[item]}];
 }
 function mapToTree(noun) {
-	return {id:noun._id, text:noun.title};
+	return {id:noun._id, text:noun.title, children:noun.children};
 }

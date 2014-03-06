@@ -45,14 +45,14 @@
 	</div>
 -->
 	<div id="wrapper">
-		<div id="sidebar-wrapper" class="col-md-1">
+		<div id="sidebar-wrapper" class="col-md-{{sidebarNbr}}">
 			<div id="sidebar">
 				<ul class="nav list-group">
 					{{> tmplSidebar}}
 				</ul>
 			</div>
 		</div>
-		<div id="main-wrapper" class="col-md-11 pull-right">
+		<div id="main-wrapper" class="col-md-{{mainNbr}} pull-right">
 			<div id="main">
 				{{yield}}
 			</div>
