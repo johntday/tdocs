@@ -87,13 +87,13 @@ projectListSubscription = function(query, options, per_page) {
 	var handle = Projects.find(query || {}, options);
 	return handle;
 };
-//Deps.autorun(function(){
+Deps.autorun(function(){
 	projectsHandle = projectListSubscription(
 		projectQuery( Session.get('search_text') ),
 		projectSort[ Session.get('project_sort') ],
 		Meteor.MyClientModule.appConfig.pageLimit
 	);
-//});
+});
 
 /**
  * Stats

@@ -6,6 +6,12 @@ Template.tmplSidebar.events({
 	}
 });
 
+Template.tmpl_bus_layer.helpers({
+	pickedProject: function() {
+		return Meteor.user() && !!getProjectId();
+	}
+});
+
 Template.tmpl_bus_layer.events({
 //	'keyup #demo_q': function(e) {
 //		if (to) { Meteor.clearTimeout(to); }

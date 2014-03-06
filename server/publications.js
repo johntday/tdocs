@@ -27,42 +27,6 @@ Meteor.reactivePublish(null, function() {
 });
 
 
-//Meteor.reactivePublish(null, function() {
-//	if (this.userId) {
-//		var user = Meteor.users.findOne({_id: this.userId}, {reactive: true});
-//		if (!user.project_id) {
-//			if (!user.roles) {
-//				var properties = {
-//					type: TYPES.project
-//					, title: 'Default'
-//					, description: 'Default'
-//				};
-//				var project_id = '';
-//				Meteor.call('createProject', properties, function(error, project) {
-//					if(error){
-//						console.log(JSON.stringify(error));
-//						throwError(error.reason);
-//					} else {
-//						project_id = project.projectId;
-//					}
-//				});
-//				Meteor.users.update(this.userId, {$set: {project_id: project_id}});
-//			} else {
-//
-//			}
-//		}
-//		if (user.project_id) {
-//			var project = Projects.findOne({_id: user.project_id}, {reactive: true});
-//			return [
-//				Tdocs.find({project_id: user.project_id})
-//				,Diagrams.find({project_id: user.project_id})
-//				,Glossarys.find({project_id: user.project_id})
-//				,Tables.find({project_id: user.project_id})
-//		    ];
-//		}
-//	}
-//});
-
 /**
  * Tdocs
  */
