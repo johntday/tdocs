@@ -49,7 +49,9 @@ Template.tmpl_bus_layer.events({
 });
 Template.tmpl_bus_layer.rendered = function() {
 	if (!sidebar.bus_capabilities) {
-		var level0 = Nouns.find({class_name: ea.class_name.Business_Capability, business_capability_level:"0"}).fetch().map(mapToTree);
+		var level0 = Nouns.find({class_name: ea.class_name.Business_Capability, business_capability_level:"0"}).fetch();
+		var level1 = getChildren( level0[0] );
+		console.log(level1);
 		var data = [{id:'root', text:"BUSINESS CAPABILITIES", type:"root", children:level0}];
 
 		$('#bus-capabilities').jstree({
@@ -84,23 +86,26 @@ Template.tmpl_bus_layer.rendered = function() {
 //Template.tmpl_bus_layer.destroyed = function() {
 //	Template['tmpl_bus_layer'].bus_capabilities = null;
 //};
+function packageChildren(noun) {
 
-function getChildren(parent_id) {
+}
+function getChildren(noun) {
 	var descendants=[]
 	var stack=[];
-	var item = Nouns.findOne({_id:parent_id});
+	var item = Nouns.findOne({instance_name:noun.instance_name});
 	stack.push(item);
 	while (stack.length>0){
 		var currentnode = stack.pop();
-		var children = Nouns.find({_id:{$in:currentnode.contained_business_capabilities}});
+		var children = [];
+		if (currentnode && currentnode.contained_business_capabilities)
+			children = Nouns.find({instance_name:{$in:currentnode.contained_business_capabilities}});
 
-		while(true === children.hasNext()) {
-			var child = children.next();
+		children.forEach(function(child) {
 			descendants.push(child);
-			if(child.contained_business_capabilities.length>0){
+			if(child && child.contained_business_capabilities && child.contained_business_capabilities.length>0){
 				stack.push(child);
 			}
-		}
+		});
 	}
 
 	return descendants;
