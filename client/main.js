@@ -17,6 +17,8 @@ Session.setDefault('diagram_sort', 'title');
 Session.setDefault('glossary_sort', 'title');
 Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
+
+sidebar = {bus_capabilities: null};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs
