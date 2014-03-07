@@ -9,17 +9,10 @@
 				<a data-toggle="collapse" data-parent="#accordion" href="#busLayer">
 					Business Layer
 				</a>
-					<span class="pull-right" style="margin-top: -5px;">
-					{{#if pickedProject}}
-					<!--<button type="button" class="btn btn-info btn-sm" title="Search"><span class="glyphicon glyphicon-search"></span> </button>-->
-					<button type="button" class="btn btn-success btn-sm" title="Create"><span class="glyphicon glyphicon-plus"></span> </button>
-					<button type="button" class="btn btn-warning btn-sm" title="Update"><span class="glyphicon glyphicon-pencil"></span> </button>
-					<button type="button" class="btn btn-danger btn-sm" title="Delete"><span class="glyphicon glyphicon-remove"></span> </button>
-					{{/if}}
-					<button id="sidebar_left" type="button" class="btn btn-default btn-sm" title="move sidebar to the left"><span class="glyphicon glyphicon-chevron-left"></span> </button>
-					<button id="sidebar_right" type="button" class="btn btn-default btn-sm" title="move sidebar to the right"><span
-							class="glyphicon glyphicon-chevron-right"></span></button>
-					</span>
+				<span class="pull-right">
+					<span id="sidebar_left" class="glyphicon glyphicon-chevron-left" title="Move sidebar left"></span>
+					<span id="sidebar_right" class="glyphicon glyphicon-chevron-right" title="Move sidebar right"></span>
+				</span>
 			</h4>
 		</div>
 		<div id="busLayer" class="panel-collapse collapse in">
@@ -30,9 +23,17 @@
 			solid silver; font-size:1.1em;" id="demo_q" placeholder="Search">
 				</div>
 				-->
+				{{#if pickedProject}}
+				<span>
+				<!--<button type="button" class="btn btn-info btn-sm" title="Search"><span class="glyphicon glyphicon-search"></span> </button>-->
+				<button type="button" class="btn btn-success btn-sm" title="Create"><span class="glyphicon glyphicon-plus"></span> </button>
+				<button type="button" class="btn btn-warning btn-sm" title="Update"><span class="glyphicon glyphicon-pencil"></span> </button>
+				<button type="button" class="btn btn-danger btn-sm" title="Delete"><span class="glyphicon glyphicon-remove"></span> </button>
+				</span>
+				{{/if}}
+
 				{{#constant}}
-				<div id="bus-capabilities">
-				</div>
+				<div id="bus-capabilities"></div>
 				{{/constant}}
 
 			</div>

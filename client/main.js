@@ -20,6 +20,18 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 
 sidebar = {bus_capabilities: null};
+model = {nouns:
+	{
+		instance_name: 'instance_name',
+		class_name: 'class_name',
+		'business_capability_id': 'business_capability_id',
+		'business_capability_index': 'business_capability_index',
+		'business_capability_level': 'business_capability_level',
+		'contained_business_capabilities': 'contained_business_capabilities',
+		'external_repository_instance_reference': 'external_repository_instance_reference',
+		'title': 'title'
+	}
+};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs
