@@ -31,12 +31,14 @@ Template.tmpl_bus_layer.events({
 	'click button.btn.btn-success.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
-		if(!sel.length) { return false; }
+		if(!sel.length) { growl("Select a parent item first.  Your new item will be place under this parent"); return false; }
 		sel = sel[0];
 		sel = ref.create_node(sel);
-		if(sel && sel !== 'root') {
+		if(sel) {
 			ref.edit(sel);
-		}
+		} else
+			growl("Select a parent item first.  Your new item will be place under this parent");
+
 	},
 	'click button.btn.btn-warning.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
@@ -45,6 +47,8 @@ Template.tmpl_bus_layer.events({
 		sel = sel[0];
 		if (sel !== 'root')
 			ref.edit(sel);
+		else
+			growl("Cannot edit this item");
 	},
 	'click button.btn.btn-danger.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
@@ -52,6 +56,8 @@ Template.tmpl_bus_layer.events({
 		if(!sel.length) { return false; }
 		if (sel !== 'root')
 			ref.delete_node(sel);
+		else
+			growl("Cannot delete this item");
 	},
 	'click #sidebar_left': function() {
 		var nbr = Session.get('sidebar_nbr');
