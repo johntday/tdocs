@@ -43,7 +43,7 @@ Template.tmpl_bus_layer.events({
 	'click button.btn.btn-warning.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
-		if(!sel.length) { return false; }
+		if(!sel.length) { growl("Select an item first"); return false; }
 		sel = sel[0];
 		if (sel !== 'root')
 			ref.edit(sel);
@@ -53,7 +53,7 @@ Template.tmpl_bus_layer.events({
 	'click button.btn.btn-danger.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
-		if(!sel.length) { return false; }
+		if(!sel.length) { growl("Select an item first"); return false; }
 		if (sel !== 'root')
 			ref.delete_node(sel);
 		else
