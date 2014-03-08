@@ -76,8 +76,8 @@ Template.tmpl_bus_layer.rendered = function() {
 		console.log('here');
 		//return [{id:'root', text:rootName, type:"root", children:[item]}];
 
-//		var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
-//		var treeData = getTree( root );
+		var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
+		var treeData = getTree( root );
 
 
 		var $bus_capabilities = $('#bus-capabilities');
@@ -87,7 +87,7 @@ Template.tmpl_bus_layer.rendered = function() {
 				"animation" : 0
 				,"check_callback" : true
 				,"themes" : { "stripes" : true }
-				,'data' : BusCapsHandle
+				,'data' : treeData
 			},
 			"types" : {
 				"#" : {

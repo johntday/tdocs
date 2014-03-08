@@ -97,51 +97,6 @@ Deps.autorun(function(){
 });
 
 /**
- * Business Capabilities
- */
-BusCapListSubscription = function() {
-	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
-	function treeData( noun ) {
-		var descendants=[]
-		var stack=[];
-		var item = Nouns.findOne({instance_name:noun.instance_name});
-		stack.push(item);
-		while (stack.length>0){
-			var currentnode = stack.pop();
-			_.extend(currentnode, {id: currentnode._id, text:currentnode.title});
-			var children = [];
-			if (currentnode && currentnode.contained_business_capabilities)
-				children = Nouns.find({instance_name:{$in:currentnode.contained_business_capabilities}}).fetch();
-
-			children.forEach(function(child) {
-				_.extend(child, {id: child._id, text:child.title});
-				descendants.push(child);
-				if(child && child.contained_business_capabilities && child.contained_business_capabilities.length>0){
-					stack.push(child);
-				}
-			});
-			_.extend(currentnode, {children: children});
-		}
-
-		// remove extra attributes
-		var itemFlatten = _.flatten(item);
-		itemFlatten.map(mapToTree);
-
-		return item;
-	}
-	return treeData(root);
-};
-
-BusCapsHandle = BusCapListSubscription();
-
-function mapToTree(noun) {
-	if (!noun.type)
-		return {id:noun._id, text:noun.title, children:noun.children};
-	else
-		return {id:noun._id, text:noun.title, type: noun.type, children:noun.children};
-}
-
-/**
  * Stats
  */
 //TdocsCount = new Meteor.Collection('tdocs_cnt');
