@@ -73,8 +73,10 @@ Template.tmpl_bus_layer.events({
 });
 Template.tmpl_bus_layer.rendered = function() {
 	if (!sidebar.bus_capabilities) {
-		var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"0"});
-		var treeData = getTree( "BUSINESS CAPABILITIES", root );
+		//return [{id:'root', text:rootName, type:"root", children:[item]}];
+
+		var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
+		var treeData = getTree( root );
 		var $bus_capabilities = $('#bus-capabilities');
 
 		$bus_capabilities.jstree({
@@ -114,7 +116,7 @@ Template.tmpl_bus_layer.rendered = function() {
 //	Template['tmpl_bus_layer'].bus_capabilities = null;
 //};
 
-function getTree(rootName, noun) {
+function getTree(noun) {
 	var descendants=[]
 	var stack=[];
 	var item = Nouns.findOne({instance_name:noun.instance_name});
@@ -136,8 +138,15 @@ function getTree(rootName, noun) {
 		_.extend(currentnode, {children: children});
 	}
 
-	return [{id:'root', text:rootName, type:"root", children:[item]}];
+	// remove extra attributes
+	var itemFlatten = _.flatten(item);
+	itemFlatten.map(mapToTree);
+
+	return item;
 }
 function mapToTree(noun) {
-	return {id:noun._id, text:noun.title, children:noun.children};
+	if (!noun.type)
+		return {id:noun._id, text:noun.title, children:noun.children};
+	else
+		return {id:noun._id, text:noun.title, type: noun.type, children:noun.children};
 }
