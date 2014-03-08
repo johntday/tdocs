@@ -31,6 +31,7 @@ Template.tmpl_bus_layer.events({
 	'click button.btn.btn-success.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
+		console.log('hi');
 		if(!sel.length) { growl("Select a parent item first.  Your new item will be place under this parent"); return false; }
 		sel = sel[0];
 		sel = ref.create_node(sel);
@@ -42,21 +43,22 @@ Template.tmpl_bus_layer.events({
 	},
 	'click button.btn.btn-warning.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
-			sel = ref.get_selected();
+			sel = ref.get_selected(true);
 		if(!sel.length) { growl("Select an item first"); return false; }
 		sel = sel[0];
-		if (sel !== 'root')
+		if (sel.type !== 'root')
 			ref.edit(sel);
 		else
 			growl("Cannot edit this item");
 	},
 	'click button.btn.btn-danger.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
-			sel = ref.get_selected();
+			sel = ref.get_selected(true);
 		if(!sel.length) { growl("Select an item first"); return false; }
-		if (sel !== 'root')
+		sel = sel[0];
+		if (sel.type !== 'root' && sel.type !== 'top') {
 			ref.delete_node(sel);
-		else
+		} else
 			growl("Cannot delete this item");
 	},
 	'click #sidebar_left': function() {
@@ -96,7 +98,11 @@ Template.tmpl_bus_layer.rendered = function() {
 				}
 				,"root" : {
 					"icon" : "glyphicon glyphicon-certificate"
-					,"valid_children" : ["default"]
+					//,"valid_children" : ["default"]
+				}
+				,"top" : {
+					"icon" : "glyphicon glyphicon-flag"
+					//,"valid_children" : ["default"]
 				}
 				,"default" : {
 					"icon" : "glyphicon glyphicon-flag"
@@ -124,6 +130,7 @@ Template.tmpl_bus_layer.destroyed = function() {
 };
 
 function getTree(noun) {
+	if (!noun) return;
 	var descendants=[]
 	var stack=[];
 	var item = Nouns.findOne({instance_name:noun.instance_name});
@@ -144,16 +151,5 @@ function getTree(noun) {
 		});
 		_.extend(currentnode, {children: children});
 	}
-
-	// remove extra attributes
-	var itemFlatten = _.flatten(item);
-	itemFlatten.map(mapToTree);
-
 	return item;
-}
-function mapToTree(noun) {
-	if (!noun.type)
-		return {id:noun._id, text:noun.title, children:noun.children};
-	else
-		return {id:noun._id, text:noun.title, type: noun.type, children:noun.children};
 }

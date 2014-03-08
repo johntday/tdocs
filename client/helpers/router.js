@@ -194,16 +194,20 @@ Router.map(function () {
 	this.route('tmpl_project_detail', {
 		path  : '/projects/:_id',
 		waitOn: function () {
-			Session.set('form_update', false);
-			return Meteor.subscribe('pubsub_selected_project', this.params._id);
+			return [
+				Meteor.subscribe('pubsub_selected_project', this.params._id),
+				Meteor.subscribe('pubsub_buscap_list', {project_id: getProjectId(), class_name: ea.class_name.Business_Capability}, null, 10000)
+		        ];
 		},
 		data  : function () {
+			Session.set('form_update', false);
 			var project = Projects.findOne(this.params._id);
 			if (!project) {
 				setProject(null);
 				Router.go('/');
 			}
 			setProject(project);
+			sidebar.bus_capabilities.destroy();
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Projects", link:"/projects", isActive:false},

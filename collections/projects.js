@@ -65,16 +65,29 @@ Meteor.methods({
 
 		// ADD CONFIGURATION DATA
 		var buscap = {
-			instance_name: 'Business_Capability_root',
+			instance_name: 'buscap'+projectId,
 			class_name: ea.class_name.Business_Capability,
 			type: 'root',
 			business_capability_level: '-1',
-			title: 'BUSINESS CAPABILITIES'
+			title: 'BUSINESS CAPABILITIES',
+			contained_business_capabilities: [
+				'root'+projectId
+			]
 		};
 		_.extend(buscap, {project_id: projectId});
 		extendWithMetadataForInsert(buscap, userId, user);
 		Nouns.insert(buscap);
 
+		buscap = {
+			instance_name: 'root'+projectId,
+			class_name: ea.class_name.Business_Capability,
+			type: 'top',
+			business_capability_level: '0',
+			title: 'My Top Level Business Capability'
+		};
+		_.extend(buscap, {project_id: projectId});
+		extendWithMetadataForInsert(buscap, userId, user);
+		Nouns.insert(buscap);
 
 		return project;
 	},

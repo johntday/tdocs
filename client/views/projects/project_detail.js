@@ -73,9 +73,11 @@ Template.tmpl_project_detail.events({
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
-				growl( "Project item deleted", {type:'s', hideSnark:true} );
-				if (this._id === getProjectId())
+				growl( "Project deleted", {type:'s', hideSnark:true} );
+				if (this._id === getProjectId()) {
 					setProject(null);
+					sidebar.bus_capabilities.destroy();
+				}
 				Router.go('/projects');
 			}
 		});
