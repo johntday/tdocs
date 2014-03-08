@@ -98,6 +98,18 @@ Meteor.publish('pubsub_selected_project', function(id) {
 });
 
 /**
+ * Business Capabilities
+ */
+Meteor.publish('pubsub_buscap_list', function(query, options, limit) {
+	options = options || {}; options.limit = limit;
+	return Nouns.find(query || {}, options);
+});
+Meteor.publish('pubsub_selected_buscap', function(id) {
+	return Nouns.find(id);
+});
+
+
+/**
  * Roles by project
  * TODO:  fix me
  */

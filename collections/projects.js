@@ -62,6 +62,20 @@ Meteor.methods({
 //			Notifications.insert(n);
 //		}
 		Roles.addUsersToRoles(userId, ['admin'], projectId);
+
+		// ADD CONFIGURATION DATA
+		var buscap = {
+			instance_name: 'Business_Capability_root',
+			class_name: ea.class_name.Business_Capability,
+			type: 'root',
+			business_capability_level: '-1',
+			title: 'BUSINESS CAPABILITIES'
+		};
+		_.extend(buscap, {project_id: projectId});
+		extendWithMetadataForInsert(buscap, userId, user);
+		Nouns.insert(buscap);
+
+
 		return project;
 	},
 

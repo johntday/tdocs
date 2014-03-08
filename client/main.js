@@ -18,6 +18,7 @@ Session.setDefault('diagram_sort', 'title');
 Session.setDefault('glossary_sort', 'title');
 Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
+Session.setDefault('noun_sort', 'title');
 
 sidebar = {bus_capabilities: null, openAccordian: 'busLayer'
 };
@@ -92,6 +93,25 @@ Deps.autorun(function(){
 	projectsHandle = projectListSubscription(
 		projectQuery( Session.get('search_text') ),
 		projectSort[ Session.get('project_sort') ],
+		Meteor.MyClientModule.appConfig.pageLimit
+	);
+});
+
+/**
+ * Glossary
+ */
+buscapListSubscription = function(find, options, per_page) {
+	var handle = Meteor.subscribeWithPagination('pubsub_buscap_list', find, options, per_page);
+	handle.fetch = function() {
+		var ourFind = _.isFunction(find) ? find() : find;
+		return limitDocuments(Nouns.find(ourFind, options), handle.loaded());
+	}
+	return handle;
+};
+Deps.autorun(function(){
+	buscapsHandle = buscapListSubscription(
+		{project_id: getProjectId(), class_name: ea.class_name.Business_Capability},
+		nounSort[ Session.get('noun_sort') ],
 		Meteor.MyClientModule.appConfig.pageLimit
 	);
 });
