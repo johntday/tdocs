@@ -20,14 +20,14 @@ Template.tmpl_bus_layer.events({
 //			$('#bus-capabilities').jstree(true).search(v);
 //		}, 250);
 //	}
-	'dblclick li': function(e) {
-		var ref = sidebar.bus_capabilities,
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		sel = sel[0];
-		if (sel !== 'root')
-			Router.go('/nouns/'+sel);
-	},
+//	'dblclick li': function(e) {
+//		var ref = sidebar.bus_capabilities,
+//			sel = ref.get_selected();
+//		if(!sel.length) { return false; }
+//		sel = sel[0];
+//		if (sel !== 'root')
+//			Router.go('/nouns/'+sel);
+//	},
 	'click button.btn.btn-success.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
@@ -72,11 +72,14 @@ Template.tmpl_bus_layer.events({
 
 });
 Template.tmpl_bus_layer.rendered = function() {
-	if (!sidebar.bus_capabilities) {
+//	if (!sidebar.bus_capabilities) {
+		console.log('here');
 		//return [{id:'root', text:rootName, type:"root", children:[item]}];
 
-		var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
-		var treeData = getTree( root );
+//		var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
+//		var treeData = getTree( root );
+
+
 		var $bus_capabilities = $('#bus-capabilities');
 
 		$bus_capabilities.jstree({
@@ -84,7 +87,7 @@ Template.tmpl_bus_layer.rendered = function() {
 				"animation" : 0
 				,"check_callback" : true
 				,"themes" : { "stripes" : true }
-				,'data' : treeData
+				,'data' : BusCapsHandle
 			},
 			"types" : {
 				"#" : {
@@ -108,13 +111,16 @@ Template.tmpl_bus_layer.rendered = function() {
 //		$bus_capabilities.on("hover_node.jstree", function(e, data) {
 //			growl(data.node.text, {type:'s', hideSnark:true});
 //		});
-	}
+//	} else {
+//		console.log('redo');
+//		sidebar.bus_capabilities.redraw(true);
+//	}
 
 };
 
-//Template.tmpl_bus_layer.destroyed = function() {
-//	Template['tmpl_bus_layer'].bus_capabilities = null;
-//};
+Template.tmpl_bus_layer.destroyed = function() {
+	sidebar.bus_capabilities = null;
+};
 
 function getTree(noun) {
 	var descendants=[]

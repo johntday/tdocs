@@ -19,18 +19,7 @@ Session.setDefault('glossary_sort', 'title');
 Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 
-sidebar = {bus_capabilities: null};
-model = {nouns:
-	{
-		instance_name: 'instance_name',
-		class_name: 'class_name',
-		'business_capability_id': 'business_capability_id',
-		'business_capability_index': 'business_capability_index',
-		'business_capability_level': 'business_capability_level',
-		'contained_business_capabilities': 'contained_business_capabilities',
-		'external_repository_instance_reference': 'external_repository_instance_reference',
-		'title': 'title'
-	}
+sidebar = {bus_capabilities: null, openAccordian: 'busLayer'
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
@@ -106,6 +95,51 @@ Deps.autorun(function(){
 		Meteor.MyClientModule.appConfig.pageLimit
 	);
 });
+
+/**
+ * Business Capabilities
+ */
+BusCapListSubscription = function() {
+	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
+	function treeData( noun ) {
+		var descendants=[]
+		var stack=[];
+		var item = Nouns.findOne({instance_name:noun.instance_name});
+		stack.push(item);
+		while (stack.length>0){
+			var currentnode = stack.pop();
+			_.extend(currentnode, {id: currentnode._id, text:currentnode.title});
+			var children = [];
+			if (currentnode && currentnode.contained_business_capabilities)
+				children = Nouns.find({instance_name:{$in:currentnode.contained_business_capabilities}}).fetch();
+
+			children.forEach(function(child) {
+				_.extend(child, {id: child._id, text:child.title});
+				descendants.push(child);
+				if(child && child.contained_business_capabilities && child.contained_business_capabilities.length>0){
+					stack.push(child);
+				}
+			});
+			_.extend(currentnode, {children: children});
+		}
+
+		// remove extra attributes
+		var itemFlatten = _.flatten(item);
+		itemFlatten.map(mapToTree);
+
+		return item;
+	}
+	return treeData(root);
+};
+
+BusCapsHandle = BusCapListSubscription();
+
+function mapToTree(noun) {
+	if (!noun.type)
+		return {id:noun._id, text:noun.title, children:noun.children};
+	else
+		return {id:noun._id, text:noun.title, type: noun.type, children:noun.children};
+}
 
 /**
  * Stats

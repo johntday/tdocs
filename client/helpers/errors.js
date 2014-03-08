@@ -11,9 +11,9 @@ throwError = function(message, messageType, hideSnark) {
 	growl( message, {type:messageType, hideSnark:hideSnark} );
 }
 
-clearErrors = function() {
-  Errors.remove({seen: true});
-}
+//clearErrors = function() {
+//  Errors.remove({seen: true});
+//}
 
 growl = function(message, options) {
 
@@ -104,7 +104,7 @@ var growl_default_options = {
 	type: 'd',
 	offset: {from: 'top', amount: 60},
 	align: 'right', // (left, right, or center)
-	width: 250,
+	width: 400,
 	delay: 4000,
 	allow_dismiss: true,
 	stackup_spacing: 10,
