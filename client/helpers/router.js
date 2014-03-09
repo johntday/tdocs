@@ -40,6 +40,7 @@ Router.map(function () {
 		},
 		data  : function () {
 			var tdoc = Tdocs.findOne(this.params._id);
+			if (!toc) return {};
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Tdocs", link:"/tdocs", isActive:false},
@@ -63,6 +64,7 @@ Router.map(function () {
 		},
 		data  : function () {
 			var tdoc = Tdocs.findOne(this.params._id);
+			if (!toc) return {};
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Tdocs", link:"/tdocs", isActive:false},
@@ -82,6 +84,7 @@ Router.map(function () {
 		data  : function () {
 			Session.set('form_update', false);
 			var noun = Nouns.findOne(this.params._id);
+			if (!noun) return {};
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Nouns", link:"/nouns", isActive:false},
@@ -105,6 +108,7 @@ Router.map(function () {
 		},
 		data  : function () {
 			var diagram = Diagrams.findOne(this.params._id);
+			if (!diagram) return {};
 			Session.set('form_update', false);
 			if ( diagram && !diagram.code )
 				Session.set('form_update', true);
@@ -130,6 +134,7 @@ Router.map(function () {
 		},
 		data  : function () {
 			var diagram = Diagrams.findOne(this.params._id);
+			if (!diagram) return {};
 			Session.set('form_update', false);
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
@@ -154,6 +159,7 @@ Router.map(function () {
 			Session.set('form_update', false);
 //			Session.set('selected_glossary_id', this.params._id);
 			var glossary = Glossarys.findOne(this.params._id);
+			if (!glossary) return {};
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Glossarys", link:"/glossarys", isActive:false},
@@ -177,6 +183,7 @@ Router.map(function () {
 		},
 		data  : function () {
 			var table = Tables.findOne(this.params._id);
+			if (!table) return {};
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Tables", link:"/tables", isActive:false},
@@ -218,26 +225,4 @@ Router.map(function () {
 		}
 	});
 
-	/**
-	 * Persons
-	 */
-	this.route('tmpl_persons'             ,{path: '/persons'});
-	this.route('tmpl_person_add'          ,{path: '/personAdd'});
-	this.route('tmpl_person_detail', {
-		path  : '/person/:_id',
-		waitOn: function () {
-			Session.set('form_update', false);
-			Session.set('selected_person_id', this.params._id);
-			return Meteor.subscribe('pubsub_selected_person', this.params._id);
-		},
-		data  : function () {
-			var person = Persons.findOne(this.params._id);
-			Session.set('breadcrumbs', {breadcrumbs: [
-				{title:"home", link:"/", isActive:false},
-				{title:"People", link:"/persons", isActive:false},
-				{title:person.name, link:"", isActive:true}
-			]});
-			return person;
-		}
-	});
 });
