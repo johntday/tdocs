@@ -9,6 +9,12 @@ Template.tmplSidebar.events({
 Template.tmpl_bus_layer.helpers({
 	pickedProject: function() {
 		return Meteor.user() && !!getProjectId();
+	},
+	chevronLeft: function() {
+		return (Session.get('sidebar_nbr') > 2);
+	},
+	chevronRight: function() {
+		return (Session.get('sidebar_nbr') < 10);
 	}
 });
 
