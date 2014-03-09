@@ -79,60 +79,41 @@ Template.tmpl_bus_layer.events({
 	}
 
 });
+
 Template.tmpl_bus_layer.rendered = function() {
-//	if (!sidebar.bus_capabilities) {
-		console.log('here');
-		//return [{id:'root', text:rootName, type:"root", children:[item]}];
+	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
+	var treeData = getTree( root );
+	var $bus_capabilities = $('#bus-capabilities');
+	$bus_capabilities.jstree({
+		"core" : {
+			"animation" : 0
+			,"check_callback" : true
+			,"themes" : { "stripes" : true }
+			,'data' : treeData
+		},
+		"types" : {
+			"#" : {
+				"valid_children" : ["root"]
+			}
+			,"root" : {
+				"icon" : "glyphicon glyphicon-certificate"
+				//,"valid_children" : ["default"]
+			}
+			,"top" : {
+				"icon" : "glyphicon glyphicon-flag"
+				//,"valid_children" : ["default"]
+			}
+			,"default" : {
+				"icon" : "glyphicon glyphicon-flag"
+			}
+		},
+		"plugins" : [
+			"dnd", "search", "state", "types", "wholerow"
+		]
+	});
+	sidebar.bus_capabilities = $bus_capabilities.jstree(true);
 
-		var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
-		//if (root)
-			var treeData = getTree( root );
 
-
-		var $bus_capabilities = $('#bus-capabilities');
-
-		$bus_capabilities.jstree({
-			"core" : {
-				"animation" : 0
-				,"check_callback" : true
-				,"themes" : { "stripes" : true }
-				,'data' : treeData
-			},
-			"types" : {
-				"#" : {
-					"valid_children" : ["root"]
-				}
-				,"root" : {
-					"icon" : "glyphicon glyphicon-certificate"
-					//,"valid_children" : ["default"]
-				}
-				,"top" : {
-					"icon" : "glyphicon glyphicon-flag"
-					//,"valid_children" : ["default"]
-				}
-				,"default" : {
-					"icon" : "glyphicon glyphicon-flag"
-				}
-			},
-			"plugins" : [
-				"dnd", "search", "state", "types", "wholerow"
-			]
-		});
-
-		sidebar.bus_capabilities = $bus_capabilities.jstree(true);
-
-//		$bus_capabilities.on("hover_node.jstree", function(e, data) {
-//			growl(data.node.text, {type:'s', hideSnark:true});
-//		});
-//	} else {
-//		console.log('redo');
-//		sidebar.bus_capabilities.redraw(true);
-//	}
-
-};
-
-Template.tmpl_bus_layer.destroyed = function() {
-	sidebar.bus_capabilities = null;
 };
 
 function getTree(noun) {
@@ -159,3 +140,7 @@ function getTree(noun) {
 	}
 	return item;
 }
+
+//Template.tmpl_bus_layer.destroyed = function() {
+//	sidebar.bus_capabilities = null;
+//};

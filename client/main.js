@@ -20,7 +20,7 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
-sidebar = {bus_capabilities: null, openAccordian: 'busLayer'
+sidebar = {bus_capabilities: null, bus_domains: null, openAccordian: 'busLayer'
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
@@ -146,6 +146,9 @@ Template.layout.helpers({
 	},
 	mainNbr: function() {
 		return 12 - Session.get('sidebar_nbr');
+	},
+	pickedProject: function() {
+		return !!getProjectId();
 	}
 });
 
