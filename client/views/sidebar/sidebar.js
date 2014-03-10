@@ -26,14 +26,40 @@ Template.tmpl_bus_layer.events({
 //			$('#bus-capabilities').jstree(true).search(v);
 //		}, 250);
 //	}
-//	'dblclick li': function(e) {
-//		var ref = sidebar.bus_capabilities,
-//			sel = ref.get_selected();
-//		if(!sel.length) { return false; }
-//		sel = sel[0];
-//		if (sel !== 'root')
-//			Router.go('/nouns/'+sel);
-//	},
+	'dblclick li': function(e) {
+		e.preventDefault();
+		var ref = sidebar.bus_capabilities,
+			sel = ref.get_selected();
+		if(!sel.length) { return false; }
+		sel = sel[0];
+		//if (sel !== 'root')
+		Router.go('/nouns/'+sel);
+	},
+	'click #btn-sidebar-help': function() {
+		bootbox.dialog({
+			title: "Sidebar Help"
+			,message: "<h3>Buttons</h3>" +
+				"<ul>" +
+				"<li><button class='btn btn-info btn-sm'><span class='glyphicon glyphicon-question-sign'></span> </button> This help dialog</li>" +
+				"<li><button class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus'></span> </button> Add an item under selected parent</li>" +
+				"<li><button class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-pencil'></span> </button> Edit title of the selected item</li>" +
+				"<li><button class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span> </button> Delete the selected item</li>" +
+				"</ul>" +
+				"<h3>Actions</h3>" +
+				"<ul>" +
+					"<li><b>Drag and Drop</b>: select and move item to drop to another spot</li>" +
+					"<li><b>Double-Click</b>: View/Edit item</li>" +
+				"</ul>"
+			,buttons: {
+				main: {
+					label: "OK",
+					className: "btn-primary",
+					callback: function() {
+					}
+				}
+			}
+		});
+	},
 	'click button.btn.btn-success.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
@@ -112,8 +138,13 @@ Template.tmpl_bus_layer.rendered = function() {
 		]
 	});
 	sidebar.bus_capabilities = $bus_capabilities.jstree(true);
-
-
+//	$bus_capabilities.on("select_node.jstree", function() {
+//		var ref = sidebar.bus_capabilities,
+//			sel = ref.get_selected();
+//		if(!sel.length) { return false; }
+//		sel = sel[0];
+//		Router.go('/nouns/'+sel);
+//	});
 };
 
 function getTree(noun) {

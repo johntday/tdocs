@@ -50,6 +50,7 @@ Handlebars.registerHelper('tabss', function(tabList, activeTab, activeTabDefault
  * Template to generate INPUT form elements.
  */
 Handlebars.registerHelper('form_input', function(label, name, value, canEdit, showEmpty, _id, isAdd) {
+	value = value || '';
 	// CHECK FOR Integer UNKNOWN value
 	if (typeof value === 'number' && value == -1)
 		value = "";
@@ -66,6 +67,7 @@ Handlebars.registerHelper('form_input', function(label, name, value, canEdit, sh
  * Template to generate INPUT DATE form elements.
  */
 Handlebars.registerHelper('form_date', function(label, name, value, canEdit, showEmpty, _id) {
+	value = value || '';
 	if (canEdit) {
 		return new Handlebars.SafeString(
 			"<div class='form-group row'>" +
@@ -93,6 +95,7 @@ Handlebars.registerHelper('form_date', function(label, name, value, canEdit, sho
  * Template to generate CHECKBOX form elements.
  */
 Handlebars.registerHelper('form_checkbox', function(label, name, value, canEdit, showEmpty) {
+	value = value || '';
 	if (canEdit) {
 		return new Handlebars.SafeString(
 			"<div class='form-group row'>" +
@@ -117,6 +120,7 @@ Handlebars.registerHelper('form_checkbox', function(label, name, value, canEdit,
  * Template to generate TEXTAREA form elements
  */
 Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit, showEmpty, _id, isAdd) {
+	value = value || '';
 	var showField = (value || canEdit || (showEmpty === true));
 	if (! showField)
 		return;
@@ -136,6 +140,7 @@ Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit,
  * Template to generate STATIC TEXT form elements
  */
 Handlebars.registerHelper('form_static', function(label, name, value, showEmpty) {
+	value = value || '';
 	var showField = (value || isAdmin() || (showEmpty === true));
 	if (! showField)
 		return;
@@ -154,6 +159,7 @@ Handlebars.registerHelper('form_static', function(label, name, value, showEmpty)
  * options: [{id: 'a', label: 'b'}, ...]
  */
 Handlebars.registerHelper('form_select', function(label, name, value, options, defaultValue, canEdit, showEmpty) {
+	value = value || '';
 	if (canEdit && options && options.length !=0) {
 		var s = "";
 		for (var i=0; i < options.length; i++) {
@@ -204,6 +210,7 @@ Handlebars.registerHelper('alert_class', function(messageType) {
 });
 
 Handlebars.registerHelper('form_options', function(value, options, htmlElementId) {
+	value = value || '';
 	var s = "<select class='form-control' id='" + htmlElementId + "'>";
 	for (var i=0; i < options.length; i++) {
 		s += "<option value='"+ options[i].id +"'" + ((options[i].id === value) ? " selected" : "") + ">" + options[i].label + "</option>";
