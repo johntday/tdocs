@@ -26,13 +26,12 @@ Template.tmpl_bus_layer.events({
 //			$('#bus-capabilities').jstree(true).search(v);
 //		}, 250);
 //	}
-	'dblclick li': function(e) {
+	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
 		if(!sel.length) { return false; }
 		sel = sel[0];
-		//if (sel !== 'root')
 		Router.go('/nouns/'+sel);
 	},
 	'click #btn-sidebar-help': function() {
@@ -44,11 +43,11 @@ Template.tmpl_bus_layer.events({
 				"<li><button class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus'></span> </button> Add an item under selected parent</li>" +
 				"<li><button class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-pencil'></span> </button> Edit title of the selected item</li>" +
 				"<li><button class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span> </button> Delete the selected item</li>" +
+				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-arrow-right'></span> </button> Goto selected item</li>" +
 				"</ul>" +
 				"<h3>Actions</h3>" +
 				"<ul>" +
 					"<li><b>Drag and Drop</b>: select and move item to drop to another spot</li>" +
-					"<li><b>Double-Click</b>: View/Edit item</li>" +
 				"</ul>"
 			,buttons: {
 				main: {
