@@ -85,9 +85,11 @@ Router.map(function () {
 			Session.set('form_update', false);
 			var noun = Nouns.findOne(this.params._id);
 			if (!noun) return {};
+
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
-				{title:"Nouns", link:"/nouns", isActive:false},
+				{title: ea.getClassBelongsToArea(noun.class_name), link:"#", isActive:false},
+				{title: noun.class_name, link:"#", isActive:false},
 				{title:noun.title, link:"", isActive:true}
 			]});
 			return noun;
