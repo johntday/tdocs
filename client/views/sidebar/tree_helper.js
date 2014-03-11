@@ -1,5 +1,5 @@
 refreshBusCap = function() {
-	if (sidebar.bus_capabilities) { sidebar.bus_capabilities.destroy(); sidebar.bus_capabilities=null; }
+	if (sidebar.bus_capabilities && sidebar.bus_capabilities._cnt) { sidebar.bus_capabilities.destroy(); sidebar.bus_capabilities=null; }
 	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
 	var treeData = getTree( root );
 	function getTree(noun) {

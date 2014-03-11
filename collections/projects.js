@@ -125,6 +125,14 @@ Meteor.methods({
 
 		// remove associated stuff
 		if(!this.isSimulation) {
+			//CASCADE DELETE DEPENDENT STUFF
+			Diagrams.remove({project_id: _id});
+			Glossarys.remove({project_id: _id});
+			Nouns.remove({project_id: _id});
+			Tables.remove({project_id: _id});
+			Tdocs.remove({project_id: _id});
+
+			//REMOVE FROM USERS
 			var query, unset = {};
 			query = findUsersByRoles(_id, true);
 			unset["roles." + _id] = "";

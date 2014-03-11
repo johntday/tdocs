@@ -210,20 +210,23 @@ Router.map(function () {
 		        ];
 		},
 		data  : function () {
-//			if (sidebar.bus_capabilities) { sidebar.bus_capabilities.destroy(); }
 			Session.set('form_update', false);
 			var project = Projects.findOne(this.params._id);
 			if (!project) {
 				setProject(null);
 				Router.go('/');
+				this.stop();
+			} else {
+				setProject(project);
 			}
 			refreshBusCap();
-			setProject(project);
-			Session.set('breadcrumbs', {breadcrumbs: [
-				{title:"home", link:"/", isActive:false},
-				{title:"Projects", link:"/projects", isActive:false},
-				{title:project.title, link:"", isActive:true}
-			]});
+			if (project && project.title) {
+				Session.set('breadcrumbs', {breadcrumbs: [
+					{title:"home", link:"/", isActive:false},
+					{title:"Projects", link:"/projects", isActive:false},
+					{title:project.title, link:"", isActive:true}
+				]});
+			}
 			return project;
 		}
 	});

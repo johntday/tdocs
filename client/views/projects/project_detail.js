@@ -68,19 +68,39 @@ Template.tmpl_project_detail.events({
 			return false;
 		}
 
-		Meteor.call('deleteProject', this._id, function(error) {
-			if(error){
-				throwError(error.reason);
-				$(e.target).removeClass('disabled');
-			}else{
-				growl( "Project deleted", {type:'s', hideSnark:true} );
-				if (this._id === getProjectId()) {
-					setProject(null);
-					sidebar.bus_capabilities.destroy();
-				}
-				Router.go('/projects');
-			}
-		});
+//		bootbox.dialog({
+//			title: 'Delete "' + this.title + '" Project'
+//			,message: "Are you sure"
+//			,buttons: {
+//				main: {
+//					label: "Delete",
+//					className: "btn-danger",
+//					callback: function() {
+						Meteor.call('deleteProject', this._id, function(error) {
+							if(error){
+								growl(error.reason);
+								$(e.target).removeClass('disabled');
+							}else{
+								growl( "Project deleted", {type:'s', hideSnark:true} );
+								if (this._id === getProjectId()) {
+									setProject(null);
+									sidebar.bus_capabilities.destroy();
+									sidebar.bus_capabilities = null;
+								}
+								Router.go('/projects');
+							}
+						});
+//					}
+//				},
+//				cancel: {
+//					label: "Cancel",
+//					className: "btn-default",
+//					callback: function() {
+//						$(e.target).removeClass('disabled');
+//					}
+//				}
+//			}
+//		});
 	},
 
 	'click #icon-heart': function(e) {
