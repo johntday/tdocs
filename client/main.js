@@ -20,8 +20,7 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
-sidebar = {bus_capabilities: null, bus_domains: null, openAccordian: 'busLayer'
-};
+sidebar = {bus_capabilities: null, bus_domains: null, openAccordian: 'busLayer'};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs

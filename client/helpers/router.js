@@ -205,19 +205,20 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('pubsub_selected_project', this.params._id),
-				Meteor.subscribe('pubsub_buscap_list', {project_id: getProjectId(), class_name: ea.class_name.Business_Capability}, null, 10000),
-				Meteor.subscribe('pubsub_buscap_list', {project_id: getProjectId(), class_name: ea.class_name.Business_Domain}, null, 10000)
+				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Capability}, null, 100),
+				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Domain}, null, 100)
 		        ];
 		},
 		data  : function () {
+//			if (sidebar.bus_capabilities) { sidebar.bus_capabilities.destroy(); }
 			Session.set('form_update', false);
 			var project = Projects.findOne(this.params._id);
 			if (!project) {
 				setProject(null);
 				Router.go('/');
 			}
+			refreshBusCap();
 			setProject(project);
-			sidebar.bus_capabilities.destroy();
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},
 				{title:"Projects", link:"/projects", isActive:false},

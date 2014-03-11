@@ -35,11 +35,12 @@ Nouns.deny({
 /*------------------------------------------------------------------------------------------------------------------------------*/
 
 Meteor.methods({
-	createNoun: function(properties){
+	createNoun: function(properties, parent_id){
 		MyLog("collections/nouns.js/createNoun/1", "properties", properties);
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
-		var nounWithSameTitle = Nouns.findOne( {title: {$regex: properties.title, $options: 'i'}} );
+		var slug = generateSlug(properties.title);
+		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, class_name:properties.class_name, instance_name: slug} );
 		var nounId = '';
 
 		if (!user)
@@ -52,12 +53,16 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
 
 		var noun = extendWithMetadataForInsert( properties, userId, user );
+		_.extend(noun, {instance_name: slug});
 
 		MyLog("collections/nouns.js/createNoun/2", "noun", noun);
 
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;
 
+		if (parent_id) {
+			Nouns.update(parent_id, {$addToSet: {contained_business_capabilities: noun.instance_name}});
+		}
 		// NOTIFICATION
 //		if (! isAdmin(user)) {
 //			var n = notificationFactory(MOVIE_CREATED_BY_USER, "noun", "admin", noun.title, noun.status, "/nouns/"+nounId, noun.created);
