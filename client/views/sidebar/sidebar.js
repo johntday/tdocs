@@ -41,8 +41,10 @@ Template.tmpl_bus_layer.events({
 				"<ul>" +
 				"<li><button class='btn btn-info btn-sm'><span class='glyphicon glyphicon-question-sign'></span> </button> This help dialog</li>" +
 				"<li><button class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus'></span> </button> Add an item under selected parent</li>" +
-				"<li><button class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-pencil'></span> </button> Edit title of the selected item</li>" +
+				//"<li><button class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-pencil'></span> </button> Edit title of the selected item</li>" +
 				"<li><button class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span> </button> Delete the selected item</li>" +
+				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-folder-open'></span> </button> Open all</li>" +
+				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-folder-close'></span> </button> Close all</li>" +
 				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-arrow-right'></span> </button> Goto selected item</li>" +
 				"</ul>" +
 				"<h3>Actions</h3>" +
@@ -62,7 +64,6 @@ Template.tmpl_bus_layer.events({
 	'click button.btn.btn-success.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected();
-		console.log('hi');
 		if(!sel.length) { growl("Select a parent item first.  Your new item will be place under this parent"); return false; }
 		sel = sel[0];
 		sel = ref.create_node(sel);
@@ -72,25 +73,56 @@ Template.tmpl_bus_layer.events({
 			growl("Select a parent item first.  Your new item will be place under this parent");
 
 	},
-	'click button.btn.btn-warning.btn-sm': function(e) {
-		var ref = sidebar.bus_capabilities,
-			sel = ref.get_selected(true);
-		if(!sel.length) { growl("Select an item first"); return false; }
-		sel = sel[0];
-		if (sel.type !== 'root')
-			ref.edit(sel);
-		else
-			growl("Cannot edit this item");
-	},
+//	'click button.btn.btn-warning.btn-sm': function(e) {
+//		var ref = sidebar.bus_capabilities,
+//			sel = ref.get_selected(true);
+//		if(!sel.length) { growl("Select an item first"); return false; }
+//		sel = sel[0];
+//		if (sel.type !== 'root')
+//			ref.edit(sel);
+//		else
+//			growl("Cannot edit this item");
+//	},
 	'click button.btn.btn-danger.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected(true);
 		if(!sel.length) { growl("Select an item first"); return false; }
 		sel = sel[0];
+		var id = sel.id;
+		var parent = sel.parent;
 		if (sel.type !== 'root' && sel.type !== 'top') {
-			ref.delete_node(sel);
-		} else
+			var properties = {
+				_id: id
+				,instance_name: sel.original.instance_name
+			};
+
+			Meteor.call('deleteNoun', properties, sel.parent, function(error) {
+				if(error){
+					growl(error.reason);
+				}else{
+					ref.delete_node(sel);
+					if (Location.state().path === '/nouns/'+id) {
+						ref.select_node(parent);
+						Router.go('/nouns/'+parent);
+					}
+					growl( "Deleted "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
+				}
+			});
+		} else {
 			growl("Cannot delete this item");
+		}
+	},
+	'click #btn-open-all': function() {
+		var ref = sidebar.bus_capabilities,
+			sel = ref.get_selected();
+		if(!sel.length) { growl("Select an item first"); return false; }
+		ref.open_all();
+	},
+	'click #btn-close-all': function() {
+		var ref = sidebar.bus_capabilities,
+			sel = ref.get_selected();
+		if(!sel.length) { growl("Select an item first"); return false; }
+		ref.close_all();
 	},
 	'click #sidebar_left': function() {
 		var nbr = Session.get('sidebar_nbr');

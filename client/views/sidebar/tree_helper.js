@@ -1,5 +1,7 @@
 refreshBusCap = function() {
-	if (sidebar.bus_capabilities && sidebar.bus_capabilities._cnt) { sidebar.bus_capabilities.destroy(); sidebar.bus_capabilities=null; }
+	try {
+		if (sidebar.bus_capabilities/* && sidebar.bus_capabilities._cnt*/) { sidebar.bus_capabilities.destroy(); sidebar.bus_capabilities=null; }
+	} catch(err) {}
 	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
 	var treeData = getTree( root );
 	function getTree(noun) {
@@ -57,9 +59,9 @@ refreshBusCap = function() {
 	});
 	sidebar.bus_capabilities = $bus_capabilities.jstree(true);
 	//EVENTS
-	//create node
+	//CREATE NODE
 	$bus_capabilities.on("create_node.jstree", function(e, data) {
-		console.log('create node: '+data.position, data.parent, data.node);
+//		console.log('create node: '+data.position, data.parent, data.node);
 
 		var properties = {
 			title: data.node.text
@@ -71,9 +73,12 @@ refreshBusCap = function() {
 			if(error){
 				growl(error.reason);
 			}else{
-				growl( "created "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
+				refreshBusCap();
+				Router.go('/nouns/'+noun.nounId);
+				growl( "Created "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
 			}
 		});
-
 	});
+	//CHANGE TEXT
+
 };

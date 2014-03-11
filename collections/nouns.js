@@ -40,7 +40,7 @@ Meteor.methods({
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
 		var slug = generateSlug(properties.title);
-		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, class_name:properties.class_name, instance_name: slug} );
+//		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, class_name:properties.class_name, instance_name: slug} );
 		var nounId = '';
 
 		if (!user)
@@ -49,14 +49,14 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'Please add a title');
 		if(!properties.project_id)
 			throw new Meteor.Error(602, 'Must select a project first');
-		if(nounWithSameTitle)
-			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
+//		if(nounWithSameTitle)
+//			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
 
 		var noun = extendWithMetadataForInsert( properties, userId, user );
 		_.extend(noun, {instance_name: slug});
 
 		MyLog("collections/nouns.js/createNoun/2", "noun", noun);
-
+console.log(noun);
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;
 
@@ -98,11 +98,10 @@ Meteor.methods({
 		return noun;
 	},
 
-	deleteNoun: function(nounId) {
+	deleteNoun: function(noun, parent_id) {
 		// remove associated stuff
 		if(!this.isSimulation) {
-//			NounTimelines.remove({nounId: nounId});
-//			Facts.remove({nounId: nounId});
+			Nouns.update(parent_id, {$pull: {contained_business_capabilities: noun.instance_name}});
 		}
 
 		// NOTIFICATION
@@ -112,8 +111,20 @@ Meteor.methods({
 //			Notifications.insert(n);
 //		}
 
-		Nouns.remove(nounId);
-		return nounId;
+		Nouns.remove(noun._id);
+		return;
+	},
+	updateNounTitle: function(_id, title) {
+		// NOTIFICATION
+		//		if (isAdmin()) {
+		//			var m = Nouns.findOne(nounId);
+		//			var n = notificationFactory(MOVIE_DELETED_BY_ADMIN, "noun", m.userId, m.title, m.status, "/nouns/"+nounId, getNow());
+		//			Notifications.insert(n);
+		//		}
+
+		Nouns.update(_id, {$set: {title: title}});
+		return;
 	}
+
 
 });
