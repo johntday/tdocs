@@ -74,6 +74,8 @@ Router.map(function () {
 		}
 	});
 
+	this.route('items'            ,{path: '/items'});
+
 	/**
 	 * Noun
 	 */
