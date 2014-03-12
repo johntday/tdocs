@@ -36,11 +36,11 @@ Nouns.deny({
 
 Meteor.methods({
 	createNoun: function(properties, parent_id){
-		MyLog("collections/nouns.js/createNoun/1", "properties", properties);
+		console.log('3');
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
 		var slug = generateSlug(properties.title);
-//		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, class_name:properties.class_name, instance_name: slug} );
+		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, class_name:properties.class_name, instance_name: slug} );
 		var nounId = '';
 
 		if (!user)
@@ -49,18 +49,17 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'Please add a title');
 		if(!properties.project_id)
 			throw new Meteor.Error(602, 'Must select a project first');
-//		if(nounWithSameTitle)
-//			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
+		if(nounWithSameTitle)
+			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
 
 		var noun = extendWithMetadataForInsert( properties, userId, user );
 		_.extend(noun, {instance_name: slug});
 
-		MyLog("collections/nouns.js/createNoun/2", "noun", noun);
-console.log(noun);
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;
 
-		if (parent_id) {
+		console.log(noun, parent_id);
+		if (!this.isSimulation && parent_id) {
 			Nouns.update(parent_id, {$addToSet: {contained_business_capabilities: noun.instance_name}});
 		}
 		// NOTIFICATION
@@ -81,8 +80,6 @@ console.log(noun);
 			throw new Meteor.Error(602, 'Please add a title');
 
 		var noun = extendWithMetadataForUpdate( properties );
-
-		MyLog("collections/nouns.js/updateNoun/1", "properties", properties);
 
 		Nouns.update(_id, {$set: noun} );
 

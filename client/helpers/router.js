@@ -81,10 +81,13 @@ Router.map(function () {
 	this.route('tmpl_noun_add'            ,{path: '/nounAdd'});
 	this.route('tmpl_noun_detail', {
 		path  : '/nouns/:_id',
+		waitOn: function () {
+			Session.set('has_sidebar', false);
+			return Meteor.subscribe('pubsub_selected_buscap', this.params._id);
+		},
 		data  : function () {
 			Session.set('form_update', false);
 			var noun = Nouns.findOne(this.params._id);
-			if (!noun) return {};
 
 			Session.set('breadcrumbs', {breadcrumbs: [
 				{title:"home", link:"/", isActive:false},

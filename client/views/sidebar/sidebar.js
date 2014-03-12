@@ -71,18 +71,17 @@ Template.tmpl_bus_layer.events({
 			ref.edit(sel);
 		} else
 			growl("Select a parent item first.  Your new item will be place under this parent");
-
 	},
-//	'click button.btn.btn-warning.btn-sm': function(e) {
-//		var ref = sidebar.bus_capabilities,
-//			sel = ref.get_selected(true);
-//		if(!sel.length) { growl("Select an item first"); return false; }
-//		sel = sel[0];
-//		if (sel.type !== 'root')
-//			ref.edit(sel);
-//		else
-//			growl("Cannot edit this item");
-//	},
+	'click button.btn.btn-warning.btn-sm': function(e) {
+		var ref = sidebar.bus_capabilities,
+			sel = ref.get_selected(true);
+		if(!sel.length) { growl("Select an item first"); return false; }
+		sel = sel[0];
+		if (sel.type !== 'root')
+			ref.edit(sel);
+		else
+			growl("Cannot edit this item");
+	},
 	'click button.btn.btn-danger.btn-sm': function(e) {
 		var ref = sidebar.bus_capabilities,
 			sel = ref.get_selected(true);
@@ -91,23 +90,24 @@ Template.tmpl_bus_layer.events({
 		var id = sel.id;
 		var parent = sel.parent;
 		if (sel.type !== 'root' && sel.type !== 'top') {
-			var properties = {
-				_id: id
-				,instance_name: sel.original.instance_name
-			};
-
-			Meteor.call('deleteNoun', properties, sel.parent, function(error) {
-				if(error){
-					growl(error.reason);
-				}else{
-					ref.delete_node(sel);
-					if (Location.state().path === '/nouns/'+id) {
-						ref.select_node(parent);
-						Router.go('/nouns/'+parent);
-					}
-					growl( "Deleted "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
-				}
-			});
+			ref.delete_node(sel);
+//			var properties = {
+//				_id: id
+//				,instance_name: sel.original.instance_name
+//			};
+//
+//			Meteor.call('deleteNoun', properties, sel.parent, function(error) {
+//				if(error){
+//					growl(error.reason);
+//				}else{
+//					ref.delete_node(sel);
+//					if (Location.state().path === '/nouns/'+id) {
+//						ref.select_node(parent);
+//						Router.go('/nouns/'+parent);
+//					}
+//					growl( "Deleted "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
+//				}
+//			});
 		} else {
 			growl("Cannot delete this item");
 		}

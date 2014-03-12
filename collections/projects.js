@@ -36,7 +36,6 @@ Projects.deny({
 
 Meteor.methods({
 	createProject: function(properties){
-		MyLog("collections/projects.js/createProject/1", "properties", properties);
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
 //		var projectWithSameTitle = Projects.findOne( {title: {$regex: project.title, $options: 'i'}} );
@@ -51,8 +50,6 @@ Meteor.methods({
 
 		var project = extendWithMetadataForInsert( properties, userId, user );
 
-		MyLog("collections/projects.js/createProject/2", "project", project);
-
 		projectId = Projects.insert(project);
 		project.projectId = projectId;
 
@@ -61,34 +58,36 @@ Meteor.methods({
 //			var n = notificationFactory(MOVIE_CREATED_BY_USER, "project", "admin", project.title, project.status, "/projects/"+projectId, project.created);
 //			Notifications.insert(n);
 //		}
-		Roles.addUsersToRoles(userId, ['admin'], projectId);
 
-		// ADD CONFIGURATION DATA
-		var buscap = {
-			instance_name: 'buscap'+projectId,
-			class_name: ea.class_name.Business_Capability,
-			type: 'root',
-			business_capability_level: '-1',
-			title: 'BUSINESS CAPABILITIES',
-			contained_business_capabilities: [
-				'root'+projectId
-			]
-		};
-		_.extend(buscap, {project_id: projectId});
-		extendWithMetadataForInsert(buscap, userId, user);
-		Nouns.insert(buscap);
+		if(!this.isSimulation) {
+			Roles.addUsersToRoles(userId, ['admin'], projectId);
 
-		buscap = {
-			instance_name: 'root'+projectId,
-			class_name: ea.class_name.Business_Capability,
-			type: 'top',
-			business_capability_level: '0',
-			title: 'My Top Level Business Capability'
-		};
-		_.extend(buscap, {project_id: projectId});
-		extendWithMetadataForInsert(buscap, userId, user);
-		Nouns.insert(buscap);
+			// ADD CONFIGURATION DATA
+			var buscap = {
+				instance_name: 'buscap'+projectId,
+				class_name: ea.class_name.Business_Capability,
+				type: 'root',
+				business_capability_level: '-1',
+				title: 'BUSINESS CAPABILITIES',
+				contained_business_capabilities: [
+					'root'+projectId
+				]
+			};
+			_.extend(buscap, {project_id: projectId});
+			extendWithMetadataForInsert(buscap, userId, user);
+			Nouns.insert(buscap);
 
+			buscap = {
+				instance_name: 'root'+projectId,
+				class_name: ea.class_name.Business_Capability,
+				type: 'top',
+				business_capability_level: '0',
+				title: 'My Top Level Business Capability'
+			};
+			_.extend(buscap, {project_id: projectId});
+			extendWithMetadataForInsert(buscap, userId, user);
+			Nouns.insert(buscap);
+		}
 		return project;
 	},
 

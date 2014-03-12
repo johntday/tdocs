@@ -1,11 +1,8 @@
-Template.tmplHome.helpers({
-	pickedProject: function() {
-		return !(Meteor.user() && !!getProjectId());
-	},
-	notLoggedIn: function() {
-		return !Meteor.user();
-	}
-});
+//Template.tmplHome.helpers({
+//	pickedProject: function() {
+//		return !(Meteor.user() && !!getProjectId());
+//	}
+//});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 //Template.tmplHome.events({
 //	'click #btn-create-a-project': function() {
