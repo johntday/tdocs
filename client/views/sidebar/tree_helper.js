@@ -83,8 +83,16 @@ refreshBusCap = function() {
 			mode = null;
 		} else if (data.text !== data.old) {
 			mode === 'u';
-			console.log('rename: ', data.node, data.text, data.old, mode);
+//			console.log('rename: ', data.node, data.text, data.old, mode);
 			// UPDATE TITLE
+			Meteor.call('updateNounTitle', data.node.id, data.text, function(error, noun) {
+				if(error){
+					growl(error.reason);
+				}else{
+					refreshBusCap();
+					growl( "Update "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
+				}
+			});
 		}
 	});
 	$bus_capabilities.on("create_node.jstree", function(e, data) {
