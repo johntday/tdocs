@@ -36,7 +36,6 @@ Nouns.deny({
 
 Meteor.methods({
 	createNoun: function(properties, parent_id){
-		console.log('3');
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
 		var slug = generateSlug(properties.title);
@@ -44,7 +43,7 @@ Meteor.methods({
 		var nounId = '';
 
 		if (!user)
-			throw new Meteor.Error(601, 'You need to login to create a new noun');
+			throw new Meteor.Error(601, 'You need to login to create a new '+properties.class_name);
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
 		if(!properties.project_id)
@@ -58,7 +57,6 @@ Meteor.methods({
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;
 
-		console.log(noun, parent_id);
 		if (!this.isSimulation && parent_id) {
 			Nouns.update(parent_id, {$addToSet: {contained_business_capabilities: noun.instance_name}});
 		}
@@ -73,9 +71,8 @@ Meteor.methods({
 
 	updateNoun: function(_id, properties){
 		var user = Meteor.user();
-
 		if (!user)
-			throw new Meteor.Error(601, 'You need to login to update a noun');
+			throw new Meteor.Error(601, 'You need to login to update a '+properties.class_name);
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
 
@@ -95,10 +92,18 @@ Meteor.methods({
 		return noun;
 	},
 
-	deleteNoun: function(noun, parent_id) {
+	deleteNoun: function(properties, parent_id) {
+		var _id = (properties.original) ? properties.id : properties._id;
+		var class_name = (properties.original) ? properties.original.class_name : properties.class_name;
+		var user = Meteor.user();
+		if (!user)
+			throw new Meteor.Error(601, 'You need to login to delete a '+class_name);
+		if (properties.children && properties.children.length > 0)
+			throw new Meteor.Error(601, 'Cannot delete a '+class_name+' with children');
+
 		// remove associated stuff
 		if(!this.isSimulation) {
-			Nouns.update(parent_id, {$pull: {contained_business_capabilities: noun.instance_name}});
+			Nouns.update(parent_id, {$pull: {contained_business_capabilities: properties.instance_name}});
 		}
 
 		// NOTIFICATION
@@ -108,7 +113,7 @@ Meteor.methods({
 //			Notifications.insert(n);
 //		}
 
-		Nouns.remove(noun._id);
+		Nouns.remove(_id);
 		return;
 	},
 	updateNounTitle: function(_id, title) {

@@ -91,23 +91,6 @@ Template.tmpl_bus_layer.events({
 		var parent = sel.parent;
 		if (sel.type !== 'root' && sel.type !== 'top') {
 			ref.delete_node(sel);
-//			var properties = {
-//				_id: id
-//				,instance_name: sel.original.instance_name
-//			};
-//
-//			Meteor.call('deleteNoun', properties, sel.parent, function(error) {
-//				if(error){
-//					growl(error.reason);
-//				}else{
-//					ref.delete_node(sel);
-//					if (Location.state().path === '/nouns/'+id) {
-//						ref.select_node(parent);
-//						Router.go('/nouns/'+parent);
-//					}
-//					growl( "Deleted "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
-//				}
-//			});
 		} else {
 			growl("Cannot delete this item");
 		}

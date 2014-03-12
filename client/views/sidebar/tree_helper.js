@@ -61,22 +61,21 @@ refreshBusCap = function() {
 
 	$bus_capabilities.on("rename_node.jstree", function(e, data) {
 		if (mode === 'i') {
-			console.log('insert: ', data.node, data.text, data.old, mode);
+//			console.log('insert: ', data.node, data.text, data.old, mode);
 			// INSERT
 			var properties = {
 				title: data.text
 				,project_id: getProjectId()
 				,class_name: ea.class_name.Business_Capability
 			};
-			console.log('1');
 			Meteor.call('createNoun', properties, parent, function(error, noun) {
-				console.log('2');
 				if(error){
+					mode = 'e';
 					sidebar.bus_capabilities.delete_node(data.node);
 					growl(error.reason);
 				}else{
 					refreshBusCap();
-					Router.go('/nouns/'+noun.nounId);
+//					Router.go('/nouns/'+noun.nounId);
 					growl( "Created "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
 				}
 			});
@@ -91,12 +90,24 @@ refreshBusCap = function() {
 	$bus_capabilities.on("create_node.jstree", function(e, data) {
 		mode = 'i';
 		parent = data.parent;
-		console.log('create: ', data.node, data.parent, data.position, mode);
+//		console.log('create: ', data.node, data.parent, data.position, mode);
 	});
 	$bus_capabilities.on("delete_node.jstree", function(e, data) {
+		if (mode === 'e') { return; }
 		mode = 'd';
-		console.log('delete: ', data.node, data.parent, mode);
+//		console.log('delete: ', data.node, data.parent, mode);
 		// DELETE
+		Meteor.call('deleteNoun', data.node, data.parent, function(error, noun) {
+			if(error){
+				growl(error.reason);
+			}else{
+				if (Location.state().path === '/nouns/'+data.node.id)
+					Router.go('/nouns/'+data.parent);
+				growl( "Deleted "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
+			}
+			refreshBusCap();
+		});
+
 	});
 
 };

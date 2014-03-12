@@ -82,19 +82,20 @@ Router.map(function () {
 	this.route('tmpl_noun_detail', {
 		path  : '/nouns/:_id',
 		waitOn: function () {
-			Session.set('has_sidebar', false);
 			return Meteor.subscribe('pubsub_selected_buscap', this.params._id);
 		},
 		data  : function () {
 			Session.set('form_update', false);
 			var noun = Nouns.findOne(this.params._id);
 
-			Session.set('breadcrumbs', {breadcrumbs: [
-				{title:"home", link:"/", isActive:false},
-				{title: ea.getClassBelongsToArea(noun.class_name), link:"#", isActive:false},
-				{title: noun.class_name, link:"#", isActive:false},
-				{title:noun.title, link:"", isActive:true}
-			]});
+			if (noun) {
+				Session.set('breadcrumbs', {breadcrumbs: [
+					{title:"home", link:"/", isActive:false},
+					{title: ea.getClassBelongsToArea(noun.class_name), link:"#", isActive:false},
+					{title: noun.class_name, link:"#", isActive:false},
+					{title:noun.title, link:"", isActive:true}
+				]});
+			}
 			return noun;
 		}
 	});
@@ -107,7 +108,6 @@ Router.map(function () {
 	this.route('tmpl_diagram_detail', {
 		path  : '/diagrams/:_id',
 		waitOn: function () {
-			Session.set('has_sidebar', false);
 			Session.set('selected_diagram_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_diagram', this.params._id);
 		},
@@ -133,7 +133,6 @@ Router.map(function () {
 	this.route('tmpl_graphDgm_detail', {
 		path  : '/graph/:_id',
 		waitOn: function () {
-			Session.set('has_sidebar', false);
 			Session.set('selected_diagram_id', this.params._id);
 			return Meteor.subscribe('pubsub_selected_diagram', this.params._id);
 		},
