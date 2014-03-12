@@ -3,7 +3,6 @@ Pages = Meteor.Paginate(
 	{
 		sort: {title: 1}
 		,router: "iron-router"
-//		,router: true
 //		,homeRoute: "/"
 //		,infinite: true
 //		,infiniteTrigger: 600
