@@ -124,7 +124,6 @@ Template.tmpl_bus_layer.rendered = function() {
 	if (!sidebar.Business_Capability)
 		refreshBusCap('Business_Capability');
 };
-
 //Template.tmpl_bus_layer.destroyed = function() {
 //	sidebar.Business_Capability = null;
 //};

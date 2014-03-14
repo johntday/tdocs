@@ -3,7 +3,7 @@ refreshBusCap = function(class_name) {
 	try {
 		if (sidebar.Business_Capability) { sidebar.Business_Capability.destroy(); sidebar.Business_Capability=null; }
 	} catch(err) {}
-	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
+	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, type:"root"});
 //	if (!root && retryCnt++ < 3) {
 //			// TRY AGAIN
 //			Meteor.setTimeout(function(){

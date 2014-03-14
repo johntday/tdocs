@@ -20,7 +20,7 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
-sidebar = {Business_Capability: null, bus_domains: null, openAccordian: 'busLayer'};
+sidebar = {Business_Capability: null, Business_Actor: null, openAccordian: 'busLayer'};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs
