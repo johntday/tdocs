@@ -19,6 +19,7 @@ Meteor.reactivePublish(null, function() {
 				returnArray.push( Tdocs.find( {project_id: project_id} ) );
 				returnArray.push( Tables.find( {project_id: project_id} ) );
 				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Capability} ) );
+				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Domain} ) );
 			}
 		}
 	}
@@ -101,7 +102,8 @@ Meteor.publish('pubsub_selected_project', function(id) {
  * Business Capabilities
  */
 Meteor.publish('pubsub_buscap_list', function(query, options, limit) {
-	options = options || {}; options.limit = limit;
+	options = options || {};
+	if (limit) { options.limit = limit; }
 	return Nouns.find(query || {}, options);
 });
 Meteor.publish('pubsub_selected_buscap', function(id) {

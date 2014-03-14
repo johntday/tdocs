@@ -1,8 +1,14 @@
 refreshBusCap = function() {
 	try {
-		if (sidebar.bus_capabilities/* && sidebar.bus_capabilities._cnt*/) { sidebar.bus_capabilities.destroy(); sidebar.bus_capabilities=null; }
+		if (sidebar.bus_capabilities) { sidebar.bus_capabilities.destroy(); sidebar.bus_capabilities=null; }
 	} catch(err) {}
 	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
+	if (!root && retryCnt++ < 3) {
+			// TRY AGAIN
+			Meteor.setTimeout(function(){
+				refreshBusCap();
+				1000});
+	}
 	var treeData = getTree( root );
 	function getTree(noun) {
 		if (!noun) return;
@@ -117,7 +123,8 @@ refreshBusCap = function() {
 		});
 
 	});
-
+	return true;
 };
 
 var mode, parent = null;
+var retryCnt=0;

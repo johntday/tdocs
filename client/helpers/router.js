@@ -209,8 +209,8 @@ Router.map(function () {
 		waitOn: function () {
 			return [
 				Meteor.subscribe('pubsub_selected_project', this.params._id),
-				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Capability}, null, 100),
-				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Domain}, null, 100)
+				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Capability}, null, null),
+				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Domain}, null, null)
 		        ];
 		},
 		data  : function () {
