@@ -63,7 +63,7 @@ Template.tmpl_noun_detail.events({
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to delete a noun');
+			throwError('You must login to delete a '+this.class_name);
 			$(e.target).removeClass('disabled');
 			return false;
 		}
@@ -82,7 +82,7 @@ Template.tmpl_noun_detail.events({
 	'click #icon-heart': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a noun to your favorities');
+			throwError('You must login to add a '+this.class_name+' to your favorities');
 			return false;
 		}
 
@@ -108,7 +108,7 @@ Template.tmpl_noun_detail.events({
 	'click #icon-eye': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a noun to your "seen it" list');
+			throwError('You must login to add a '+this.class_name+' to your "seen it" list');
 			return false;
 		}
 
@@ -124,7 +124,7 @@ Template.tmpl_noun_detail.events({
 	'click #icon-star': function(e) {
 		var user = Meteor.user();
 		if(!user){
-			throwError('You must login to add a noun to your "star" list');
+			throwError('You must login to add a '+this.class_name+' to your "star" list');
 			return false;
 		}
 
@@ -150,7 +150,7 @@ Template.tmpl_noun_detail.events({
 		$(e.target).addClass('disabled');
 
 		if(!Meteor.user()){
-			throwError('You must login to update a noun');
+			throwError('You must login to update a '+this.class_name);
 			$(e.target).removeClass('disabled');
 			return false;
 		}
@@ -186,7 +186,6 @@ Template.tmpl_noun_detail.events({
 			}else{
 				Session.set('form_update', false);
 				growl( "Noun updated", {type:'s', hideSnark:true} );
-				MyLog("noun_details.js/1", "updated noun", {'_id': _id, 'noun': noun});
 			}
 		});
 	}

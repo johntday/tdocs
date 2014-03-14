@@ -55,5 +55,19 @@ Meteor.methods({
 			project = _.pick(project, '_id', 'title', 'userId');
 
 		Meteor.users.update(loggedInUser._id, {$set: {project: project } } );
+	},
+
+	updateUserprof: function(properties) {
+//		if(!this.isSimulation) {
+			console.log(properties);
+			var loggedInUser = Meteor.user();
+			if ( !loggedInUser )
+				throw new Meteor.Error(403, "You must logged in to change your profile");
+
+			//Meteor.users.update({_id:loggedInUser._id}, {$set:{"emails":[{address:properties.email, verified:false}], "profile.name": properties.name } } );
+			Meteor.users.update({_id:loggedInUser._id}, {$set:{"profile.name": properties.name } } );
+//		}
 	}
+
+
 });

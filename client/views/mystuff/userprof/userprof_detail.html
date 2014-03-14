@@ -1,5 +1,4 @@
 <template name="tmpl_userprof_detail">
-	{{> tmpl_breadcrumbs breadcrumbs}}
 
 	<ul class="nav nav-tabs nav-justified">
 		<li><a href="/mystuff">My Stuff</a></li>
@@ -11,49 +10,39 @@
 	<div class="panel panel-purple">
 		<div class="panel-heading">
 
-			<h2 class="panel-title">{{title}}
-				<div class="pull-right" style="margin-top: -5px;">
-					{{glyphicon "heart" "heart-empty" "icon-heart" isFav "Add / remove from favs"}}
-					&nbsp;&nbsp;&nbsp;
-					{{glyphicon "eye-open" "eye-close" "icon-eye" hasSeen "Have read it"}}
-					&nbsp;&nbsp;&nbsp;
-					{{glyphicon "star" "star-empty" "icon-star" isStar "Star it"}}
-					{{#if canEdit}}
-						<button type="button" class="btn btn-default btn-sm" id="btnEditToggle">&nbsp;&nbsp;Edit&nbsp;&nbsp;</button>
-					{{/if}}
-				</div>
-		<!--<div class="clearfix"></div>-->
+			<h2 class="panel-title">Profile
 			</h2>
 		</div>
 		<div class="panel-body">
 
-			<form class="add modal-nav-box box-hide form-horizontal" id="form_userprof">
+			<form class="add modal-nav-box box-hide form-horizontal" id="form_userprofile">
 				<!-- ID -->
 				{{#if isAdmin}}
-					{{form_input "_id" "_id" _id false}}
+					{{form_input "_id" "_id" _id false true _id false}}
 				{{/if}}
 
 				<!-- FIELDS -->
-				{{form_input "Name" "name" name canEditAndEditToggle true}}
+				{{form_input "Name" "name" name canEditAndEditToggle true _id false}}
+				<!--{{form_input "Email" "email" email canEditAndEditToggle true _id false}}-->
+				{{form_static "Created" "createdAgo" createdAgo false}}
 
-				<!-- METADATA -->
-				{{form_static "Favs" "favs_cnt" favs_cnt true}}
-				{{form_static "Views" "click_cnt" click_cnt true}}
-				{{form_static "Reads" "seen_cnt" seen_cnt true}}
-				{{form_static "Starred" "stars_cnt" stars_cnt true}}
-				{{form_static "Created" "created" createdAgo false}}
-				{{form_static "Updated" "updated" updatedAgo false}}
+				{{#if isAdmin}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}
 
 				<div class="form-group">
-					<div class="col-offset-2 col-sm-4">
+					<div class="col-sm-8">
+						{{#if showEditButton}}
+							<button type="button" class="btn btn-primary" id="btnEditToggle">Edit</button>
+						{{/if}}
 						{{#if canEditAndEditToggle}}
-							<button type="button" class="btn btn-primary" id="btnUpdateUserprof">Update</button>
-							<button type="button" class="btn btn-danger" id="btnDeleteUserprof">Delete</button>
+						<button type="button" class="btn btn-primary" id="btnUpdateUserprof">Update</button>
+						<button type="button" class="btn btn-default" id="btnCancelUserprof">Cancel</button>
 						{{/if}}
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+
+	<h2>Projects</h2>
 
 </template>
