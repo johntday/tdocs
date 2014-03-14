@@ -1,14 +1,15 @@
-refreshBusCap = function() {
+refreshBusCap = function(class_name) {
+//	if (!getProjectId()) return false;
 	try {
-		if (sidebar.bus_capabilities) { sidebar.bus_capabilities.destroy(); sidebar.bus_capabilities=null; }
+		if (sidebar.Business_Capability) { sidebar.Business_Capability.destroy(); sidebar.Business_Capability=null; }
 	} catch(err) {}
 	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, business_capability_level:"-1"});
-	if (!root && retryCnt++ < 3) {
-			// TRY AGAIN
-			Meteor.setTimeout(function(){
-				refreshBusCap();
-				1000});
-	}
+//	if (!root && retryCnt++ < 3) {
+//			// TRY AGAIN
+//			Meteor.setTimeout(function(){
+//				refreshBusCap(class_name);
+//				1000});
+//	}
 	var treeData = getTree( root );
 	function getTree(noun) {
 		if (!noun) return;
@@ -35,7 +36,7 @@ refreshBusCap = function() {
 		return item;
 	}
 
-	var $bus_capabilities = $('#bus-capabilities');
+	var $bus_capabilities = $('#'+class_name);
 	$bus_capabilities.jstree({
 		"core" : {
 			"animation" : 0
@@ -63,7 +64,7 @@ refreshBusCap = function() {
 			"dnd", "search", "state", "types", "wholerow"
 		]
 	});
-	sidebar.bus_capabilities = $bus_capabilities.jstree(true);
+	sidebar.Business_Capability = $bus_capabilities.jstree(true);
 
 	$bus_capabilities.on("rename_node.jstree", function(e, data) {
 		if (mode === 'i') {
@@ -77,12 +78,12 @@ refreshBusCap = function() {
 			Meteor.call('createNoun', properties, parent, function(error, noun) {
 				if(error){
 					mode = 'e';
-					sidebar.bus_capabilities.delete_node(data.node);
+					sidebar.Business_Capability.delete_node(data.node);
 					growl(error.reason);
 				}else{
-					refreshBusCap();
+					refreshBusCap(properties.class_name);
 //					Router.go('/nouns/'+noun.nounId);
-					growl( "Created "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
+					growl( "Created "+properties.class_name, {type:'s', hideSnark:true} );
 				}
 			});
 
@@ -95,7 +96,7 @@ refreshBusCap = function() {
 				if(error){
 					growl(error.reason);
 				}else{
-					refreshBusCap();
+					refreshBusCap(data.node.original.class_name);
 					growl( "Update "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
 				}
 			});
@@ -119,10 +120,20 @@ refreshBusCap = function() {
 					Router.go('/nouns/'+data.parent);
 				growl( "Deleted "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
 			}
-			refreshBusCap();
+			refreshBusCap(data.node.original.class_name);
 		});
-
 	});
+	$bus_capabilities.on("move_node.jstree", function(e, data) {
+		//console.log(data.node, data.parent, data.node.original.instance_name, data.node.original.class_name, data.position);
+		Meteor.call('moveNoun', data.old_parent, data.parent, data.node.original.instance_name, data.node.original.class_name, data.position, function(error, noun) {
+			if(error){
+				growl(error.reason);
+			}else{
+			}
+			refreshBusCap(data.node.original.class_name);
+		});
+	});
+	//
 	return true;
 };
 

@@ -84,8 +84,8 @@ Template.tmpl_project_detail.events({
 								growl( "Project deleted", {type:'s', hideSnark:true} );
 								if (this._id === getProjectId()) {
 									setProject(null);
-									sidebar.bus_capabilities.destroy();
-									sidebar.bus_capabilities = null;
+									sidebar.Business_Capability.destroy();
+									sidebar.Business_Capability = null;
 								}
 								Router.go('/projects');
 							}

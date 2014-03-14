@@ -23,12 +23,12 @@ Template.tmpl_bus_layer.events({
 //		if (to) { Meteor.clearTimeout(to); }
 //		to = Meteor.setTimeout(function(){
 //			var v = $(e.currentTarget).val();
-//			$('#bus-capabilities').jstree(true).search(v);
+//			$('#Business_Capability').jstree(true).search(v);
 //		}, 250);
 //	}
 	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
-		var ref = sidebar.bus_capabilities,
+		var ref = sidebar.Business_Capability,
 			sel = ref.get_selected();
 		if(!sel.length) { return false; }
 		sel = sel[0];
@@ -62,7 +62,7 @@ Template.tmpl_bus_layer.events({
 		});
 	},
 	'click button.btn.btn-success.btn-sm': function(e) {
-		var ref = sidebar.bus_capabilities,
+		var ref = sidebar.Business_Capability,
 			sel = ref.get_selected();
 		if(!sel.length) { growl("Select a parent item first.  Your new item will be place under this parent"); return false; }
 		sel = sel[0];
@@ -73,7 +73,7 @@ Template.tmpl_bus_layer.events({
 			growl("Select a parent item first.  Your new item will be place under this parent");
 	},
 	'click button.btn.btn-warning.btn-sm': function(e) {
-		var ref = sidebar.bus_capabilities,
+		var ref = sidebar.Business_Capability,
 			sel = ref.get_selected(true);
 		if(!sel.length) { growl("Select an item first"); return false; }
 		sel = sel[0];
@@ -83,7 +83,7 @@ Template.tmpl_bus_layer.events({
 			growl("Cannot edit this item");
 	},
 	'click button.btn.btn-danger.btn-sm': function(e) {
-		var ref = sidebar.bus_capabilities,
+		var ref = sidebar.Business_Capability,
 			sel = ref.get_selected(true);
 		if(!sel.length) { growl("Select an item first"); return false; }
 		sel = sel[0];
@@ -96,13 +96,13 @@ Template.tmpl_bus_layer.events({
 		}
 	},
 	'click #btn-open-all': function() {
-		var ref = sidebar.bus_capabilities,
+		var ref = sidebar.Business_Capability,
 			sel = ref.get_selected();
 		if(!sel.length) { growl("Select an item first"); return false; }
 		ref.open_all();
 	},
 	'click #btn-close-all': function() {
-		var ref = sidebar.bus_capabilities,
+		var ref = sidebar.Business_Capability,
 			sel = ref.get_selected();
 		if(!sel.length) { growl("Select an item first"); return false; }
 		ref.close_all();
@@ -121,10 +121,10 @@ Template.tmpl_bus_layer.events({
 });
 
 Template.tmpl_bus_layer.rendered = function() {
-	if (!sidebar.bus_capabilities)
-		refreshBusCap();
+	if (!sidebar.Business_Capability)
+		refreshBusCap('Business_Capability');
 };
 
 //Template.tmpl_bus_layer.destroyed = function() {
-//	sidebar.bus_capabilities = null;
+//	sidebar.Business_Capability = null;
 //};

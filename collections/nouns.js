@@ -95,6 +95,8 @@ Meteor.methods({
 	deleteNoun: function(properties, parent_id) {
 		var _id = (properties.original) ? properties.id : properties._id;
 		var class_name = (properties.original) ? properties.original.class_name : properties.class_name;
+		var instance_name = (properties.original) ? properties.original.instance_name : properties.instance_name;
+
 		var user = Meteor.user();
 		if (!user)
 			throw new Meteor.Error(601, 'You need to login to delete a '+class_name);
@@ -103,7 +105,7 @@ Meteor.methods({
 
 		// remove associated stuff
 		if(!this.isSimulation) {
-			Nouns.update(parent_id, {$pull: {contained_business_capabilities: properties.instance_name}});
+			Nouns.update(parent_id, {$pull: {contained_business_capabilities: instance_name}});
 		}
 
 		// NOTIFICATION
@@ -117,6 +119,9 @@ Meteor.methods({
 		return;
 	},
 	updateNounTitle: function(_id, title) {
+		var user = Meteor.user();
+		if (!user)
+			throw new Meteor.Error(601, 'You need to login to update "'+title+'"');
 		// NOTIFICATION
 		//		if (isAdmin()) {
 		//			var m = Nouns.findOne(nounId);
@@ -126,7 +131,20 @@ Meteor.methods({
 
 		Nouns.update(_id, {$set: {title: title}});
 		return;
+	},
+	moveNoun: function(parent_id_old, parent_id, instance_name, class_name, position) {
+		//data.node.parent, data.parent, data.node.original.instance_name, data.node.original.class_name, data.position
+
+		var user = Meteor.user();
+		if (!user)
+			throw new Meteor.Error(601, 'You need to login to move a '+class_name);
+
+		Nouns.update(parent_id_old, {$pull: {contained_business_capabilities: instance_name}});
+
+		var noun = Nouns.findOne(parent_id);
+		if (!noun) return;
+		Nouns.update(parent_id, {$addToSet: {contained_business_capabilities: instance_name}});
+
+		return;
 	}
-
-
 });
