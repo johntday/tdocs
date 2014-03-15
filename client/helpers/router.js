@@ -208,9 +208,9 @@ Router.map(function () {
 		path  : '/projects/:_id',
 		waitOn: function () {
 			return [
-				Meteor.subscribe('pubsub_selected_project', this.params._id),
-				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Capability}, null, null),
-				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Domain}, null, null)
+				Meteor.subscribe('pubsub_selected_project', this.params._id)
+//				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Capability}, null, null),
+//				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Domain}, null, null)
 		        ];
 		},
 		data  : function () {
@@ -223,8 +223,18 @@ Router.map(function () {
 			} else {
 				setProject(project);
 			}
-			refreshBusCap('Business_Capability','contained_business_capabilities');
+
+			//BUSINESS CONCEPTUAL
+			refreshBusCap(ea.class_name.Business_Capability,'contained_business_capabilities');
 			refreshBusCap(ea.class_name.Business_Domain,'contained_business_domains');
+			refreshBusCap(ea.class_name.Business_Role_Type,'children');
+			refreshBusCap(ea.class_name.Business_Principle,'children');
+			refreshBusCap(ea.class_name.Business_Driver,'children');
+			refreshBusCap(ea.class_name.Business_Objective,'children');
+
+			//BUSINESS LOGICAL
+			refreshBusCap(ea.class_name.Business_Activity,'children');
+
 			if (project && project.title) {
 				Session.set('breadcrumbs', {breadcrumbs: [
 					{title:"home", link:"/", isActive:false},

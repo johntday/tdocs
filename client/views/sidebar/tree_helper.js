@@ -187,5 +187,140 @@ treeConfig = {
 		"plugins" : [
 			"dnd", "search", "state", "types", "wholerow"
 		]
+	},
+	Business_Role_Type: {
+		"core" : {
+			"animation" : 0
+			,"check_callback" : true
+			,"themes" : { "stripes" : true }
+			,'data' : null
+		},
+		"types" : {
+			"#" : {
+				"valid_children" : ["root"]
+			}
+			,"root" : {
+				"icon" : "glyphicon glyphicon-certificate"
+				//,"valid_children" : ["default"]
+			}
+			,"top" : {
+				"icon" : "glyphicon glyphicon-user"
+				//,"valid_children" : ["default"]
+			}
+			,"default" : {
+				"icon" : "glyphicon glyphicon-user"
+			}
+		},
+		"plugins" : [
+			"dnd", "search", "state", "types", "wholerow"
+		]
+	},
+	Business_Principle: {
+		"core" : {
+			"animation" : 0
+			,"check_callback" : true
+			,"themes" : { "stripes" : true }
+			,'data' : null
+		},
+		"types" : {
+			"#" : {
+				"valid_children" : ["root"]
+			}
+			,"root" : {
+				"icon" : "glyphicon glyphicon-certificate"
+				//,"valid_children" : ["default"]
+			}
+			,"top" : {
+				"icon" : "glyphicon glyphicon-thumbs-up"
+				//,"valid_children" : ["default"]
+			}
+			,"default" : {
+				"icon" : "glyphicon glyphicon-thumbs-up"
+			}
+		},
+		"plugins" : [
+			"dnd", "search", "state", "types", "wholerow"
+		]
+	},
+	Business_Driver: {
+		"core" : {
+			"animation" : 0
+			,"check_callback" : true
+			,"themes" : { "stripes" : true }
+			,'data' : null
+		},
+		"types" : {
+			"#" : {
+				"valid_children" : ["root"]
+			}
+			,"root" : {
+				"icon" : "glyphicon glyphicon-certificate"
+				//,"valid_children" : ["default"]
+			}
+			,"top" : {
+				"icon" : "glyphicon glyphicon-bookmark"
+				//,"valid_children" : ["default"]
+			}
+			,"default" : {
+				"icon" : "glyphicon glyphicon-bookmark"
+			}
+		},
+		"plugins" : [
+			"dnd", "search", "state", "types", "wholerow"
+		]
+	},
+	Business_Objective: {
+		"core" : {
+			"animation" : 0
+			,"check_callback" : true
+			,"themes" : { "stripes" : true }
+			,'data' : null
+		},
+		"types" : {
+			"#" : {
+				"valid_children" : ["root"]
+			}
+			,"root" : {
+				"icon" : "glyphicon glyphicon-certificate"
+				//,"valid_children" : ["default"]
+			}
+			,"top" : {
+				"icon" : "glyphicon glyphicon-record"
+				//,"valid_children" : ["default"]
+			}
+			,"default" : {
+				"icon" : "glyphicon glyphicon-record"
+			}
+		},
+		"plugins" : [
+			"dnd", "search", "state", "types", "wholerow"
+		]
+	},
+	Business_Activity: {
+		"core" : {
+			"animation" : 0
+			,"check_callback" : true
+			,"themes" : { "stripes" : true }
+			,'data' : null
+		},
+		"types" : {
+			"#" : {
+				"valid_children" : ["root"]
+			}
+			,"root" : {
+				"icon" : "glyphicon glyphicon-certificate"
+				//,"valid_children" : ["default"]
+			}
+			,"top" : {
+				"icon" : "glyphicon glyphicon-leaf"
+				//,"valid_children" : ["default"]
+			}
+			,"default" : {
+				"icon" : "glyphicon glyphicon-leaf"
+			}
+		},
+		"plugins" : [
+			"dnd", "search", "state", "types", "wholerow"
+		]
 	}
 };

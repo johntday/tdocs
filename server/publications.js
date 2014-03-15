@@ -20,6 +20,11 @@ Meteor.reactivePublish(null, function() {
 				returnArray.push( Tables.find( {project_id: project_id} ) );
 				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Capability} ) );
 				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Domain} ) );
+				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Role_Type} ) );
+				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Principle} ) );
+				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Driver} ) );
+				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Objective} ) );
+				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Activity} ) );
 			}
 		}
 	}

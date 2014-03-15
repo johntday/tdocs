@@ -1,60 +1,84 @@
 <template name="tmplSidebar">
+	{{#if pickedProject}}
+		<!--<button type="button" class="btn btn-info btn-sm" title="Search"><span class="glyphicon glyphicon-search"></span> </button>-->
+		<button id="btn-sidebar-help" type="button" class="btn btn-info btn-sm" title="Help"><span class="glyphicon glyphicon-question-sign"></span> </button>
+		<button type="button" class="btn btn-success btn-sm" title="Create"><span class="glyphicon glyphicon-plus"></span> </button>
+		<button type="button" class="btn btn-warning btn-sm" title="Update"><span class="glyphicon glyphicon-pencil"></span> </button>
+		<button type="button" class="btn btn-danger btn-sm" title="Delete"><span class="glyphicon glyphicon-remove"></span> </button>
+		<button id="btn-open-all" type="button" class="btn btn-default btn-sm" title="Open All (Select an item first)"><span
+				class="glyphicon glyphicon-folder-open"></span></button>
+		<button id="btn-close-all" type="button" class="btn btn-default btn-sm" title="Close All (Select an item first)"><span class="glyphicon glyphicon-folder-close"></span> </button>
+		<button type="button" class="btn btn-default btn-sm" title="Goto selected item"><span class="glyphicon glyphicon-arrow-right"></span> </button>
+
+		<span class="pull-right">
+			{{#if chevronLeft}}
+			<button id="sidebar_left" type="button" class="btn btn-default btn-sm" title="Update"><span class="glyphicon glyphicon-chevron-left"></span> </button>
+			{{/if}}
+			{{#if chevronRight}}
+			<button id="sidebar_right" type="button" class="btn btn-default btn-sm" title="Update"><span class="glyphicon glyphicon-chevron-right"></span> </button>
+			{{/if}}
+		</span>
+	{{/if}}
+
 	{{> tmpl_accordian_test}}
-</template>
-
-<template name="tmpl_bus_layer">
-	<div class="panel panel-purple">
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion" href="#busLayer">
-					Business Layer
-				</a>
-				<span class="pull-right">
-					{{#if chevronLeft}}
-					<span id="sidebar_left" class="glyphicon glyphicon-chevron-left" title="Move sidebar left"></span>
-					{{/if}}
-					{{#if chevronRight}}
-					<span id="sidebar_right" class="glyphicon glyphicon-chevron-right" title="Move sidebar right"></span>
-					{{/if}}
-				</span>
-			</h4>
-		</div>
-		<div id="busLayer" class="panel-collapse collapse in">
-			<div class="panel-body">
-				<!--
-				<div>
-					<input type="text" value="" style="box-shadow:inset 0 0 4px #eee; width:100%; margin:0; padding:6px 12px; border-radius:4px; border:1px
-			solid silver; font-size:1.1em;" id="demo_q" placeholder="Search">
-				</div>
-				-->
-				{{#if pickedProject}}
-				<span>
-				<!--<button type="button" class="btn btn-info btn-sm" title="Search"><span class="glyphicon glyphicon-search"></span> </button>-->
-				<button id="btn-sidebar-help" type="button" class="btn btn-info btn-sm" title="Help"><span class="glyphicon glyphicon-question-sign"></span> </button>
-				<button type="button" class="btn btn-success btn-sm" title="Create"><span class="glyphicon glyphicon-plus"></span> </button>
-				<button type="button" class="btn btn-warning btn-sm" title="Update"><span class="glyphicon glyphicon-pencil"></span> </button>
-				<button type="button" class="btn btn-danger btn-sm" title="Delete"><span class="glyphicon glyphicon-remove"></span> </button>
-				<button id="btn-open-all" type="button" class="btn btn-default btn-sm" title="Open All (Select an item first)"><span
-						class="glyphicon glyphicon-folder-open"></span></button>
-				<button id="btn-close-all" type="button" class="btn btn-default btn-sm" title="Close All (Select an item first)"><span class="glyphicon glyphicon-folder-close"></span> </button>
-				<button type="button" class="btn btn-default btn-sm" title="Goto selected item"><span class="glyphicon glyphicon-arrow-right"></span> </button>
-				</span>
-				{{/if}}
-
-				{{#constant}}
-				<div id="Business_Capability"></div>
-				<div id="Business_Domain"></div>
-				{{/constant}}
-
-			</div>
-		</div>
-	</div>
 </template>
 
 <template name="tmpl_accordian_test">
 	<div class="panel-group" id="accordion">
 
-		{{> tmpl_bus_layer}}
+		<div class="panel panel-purple">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#busLayer">
+						Business Layer - Conceptual
+					</a>
+				</h4>
+			</div>
+			<div id="busLayer" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<!--
+					<div>
+						<input type="text" value="" style="box-shadow:inset 0 0 4px #eee; width:100%; margin:0; padding:6px 12px; border-radius:4px; border:1px
+				solid silver; font-size:1.1em;" id="demo_q" placeholder="Search">
+					</div>
+					-->
+
+					{{#constant}}
+					<div id="Business_Capability"></div>
+					<div id="Business_Domain"></div>
+					<div id="Business_Role_Type"></div>
+					<div id="Business_Principle"></div>
+					<div id="Business_Driver"></div>
+					<div id="Business_Objective"></div>
+					{{/constant}}
+
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-purple">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#busLayerlogical">
+						Business Layer - Logical
+					</a>
+				</h4>
+			</div>
+			<div id="busLayerlogical" class="panel-collapse collapse">
+				<div class="panel-body">
+					<!--
+					<div>
+						<input type="text" value="" style="box-shadow:inset 0 0 4px #eee; width:100%; margin:0; padding:6px 12px; border-radius:4px; border:1px
+				solid silver; font-size:1.1em;" id="demo_q" placeholder="Search">
+					</div>
+					-->
+					{{#constant}}
+					<div id="Business_Activity"></div>
+					{{/constant}}
+
+				</div>
+			</div>
+		</div>
 
 		<div class="panel panel-purple">
 			<div class="panel-heading">

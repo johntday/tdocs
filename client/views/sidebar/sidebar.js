@@ -1,12 +1,4 @@
-Template.tmplSidebar.events({
-	'click #hide-sidebar': function(e, template) {
-		e.preventDefault();
-
-		Session.set('has_sidebar', false);
-	}
-});
-
-Template.tmpl_bus_layer.helpers({
+Template.tmplSidebar.helpers({
 	pickedProject: function() {
 		return Meteor.user() && !!getProjectId();
 	},
@@ -18,18 +10,17 @@ Template.tmpl_bus_layer.helpers({
 	}
 });
 
-Template.tmpl_bus_layer.events({
-//	'keyup #demo_q': function(e) {
-//		if (to) { Meteor.clearTimeout(to); }
-//		to = Meteor.setTimeout(function(){
-//			var v = $(e.currentTarget).val();
-//			$('#Business_Capability').jstree(true).search(v);
-//		}, 250);
-//	}
+Template.tmplSidebar.events({
+	//	'keyup #demo_q': function(e) {
+	//		if (to) { Meteor.clearTimeout(to); }
+	//		to = Meteor.setTimeout(function(){
+	//			var v = $(e.currentTarget).val();
+	//			$('#Business_Capability').jstree(true).search(v);
+	//		}, 250);
+	//	}
 	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
 		var selected = getSelected();
-		console.log(selected);
 		if(!selected._id) { return false; }
 		Router.go('/nouns/'+selected._id);
 	},
@@ -48,7 +39,7 @@ Template.tmpl_bus_layer.events({
 				"</ul>" +
 				"<h3>Actions</h3>" +
 				"<ul>" +
-					"<li><b>Drag and Drop</b>: select and move item to drop to another spot</li>" +
+				"<li><b>Drag and Drop</b>: select and move item to drop to another spot</li>" +
 				"</ul>"
 			,buttons: {
 				main: {
@@ -114,12 +105,32 @@ Template.tmpl_bus_layer.events({
 
 });
 
-Template.tmpl_bus_layer.rendered = function() {
+Template.tmplSidebar.rendered = function() {
 	if (!sidebar.Business_Capability)
-		refreshBusCap('Business_Capability', 'contained_business_capabilities');
+		refreshBusCap(ea.class_name.Business_Capability, 'contained_business_capabilities');
 	if (!sidebar.Business_Domain)
-		refreshBusCap('Business_Domain', 'contained_business_domains');
+		refreshBusCap(ea.class_name.Business_Domain, 'contained_business_domains');
+	if (!sidebar.Business_Role_Type)
+		refreshBusCap(ea.class_name.Business_Role_Type, 'children');
+	if (!sidebar.Business_Principle)
+		refreshBusCap(ea.class_name.Business_Principle, 'children');
+	if (!sidebar.Business_Driver)
+		refreshBusCap(ea.class_name.Business_Driver, 'children');
+	if (!sidebar.Business_Objective)
+		refreshBusCap(ea.class_name.Business_Objective, 'children');
+	if (!sidebar.Business_Activity)
+		refreshBusCap(ea.class_name.Business_Activity, 'children');
 };
+
+Template.tmpl_accordian_test.rendered = function() {
+
+};
+Template.tmpl_accordian_test.events({
+//	'click a.collapsed': function(e) {
+//		e.preventDefault();
+//		console.log('hi');
+//	}
+});
 //Template.tmpl_bus_layer.destroyed = function() {
 //	sidebar.Business_Capability = null;
 //};
