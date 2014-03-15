@@ -37,38 +37,15 @@ refreshBusCap = function(class_name, children_name) {
 	}
 
 	var $bus_capabilities = $('#'+class_name);
-	$bus_capabilities.jstree({
-		"core" : {
-			"animation" : 0
-			,"check_callback" : true
-			,"themes" : { "stripes" : true }
-			,'data' : treeData
-		},
-		"types" : {
-			"#" : {
-				"valid_children" : ["root"]
-			}
-			,"root" : {
-				"icon" : "glyphicon glyphicon-certificate"
-				//,"valid_children" : ["default"]
-			}
-			,"top" : {
-				"icon" : "glyphicon glyphicon-flag"
-				//,"valid_children" : ["default"]
-			}
-			,"default" : {
-				"icon" : "glyphicon glyphicon-flag"
-			}
-		},
-		"plugins" : [
-			"dnd", "search", "state", "types", "wholerow"
-		]
-	});
+	var config = treeConfig[class_name];
+	config.core.data = treeData;
+	$bus_capabilities.jstree( config );
 	sidebar[class_name] = $bus_capabilities.jstree(true);
 
 	$bus_capabilities.on("rename_node.jstree", function(e, data) {
 		if (mode === 'i') {
-//			console.log('insert: ', data.node, data.text, data.old, mode);
+			if (!checkRole('Must be an Administrator to create a ', class_name))
+				return false;
 			// INSERT
 			var properties = {
 				title: data.text
@@ -91,8 +68,9 @@ refreshBusCap = function(class_name, children_name) {
 			mode = null;
 		} else if (data.text !== data.old) {
 			mode === 'u';
-//			console.log('rename: ', data.node, data.text, data.old, mode);
 			// UPDATE TITLE
+			if (!checkRole('Must be an Administrator to update a ', class_name))
+				return false;
 			Meteor.call('updateNounTitle', data.node.id, data.text, function(error, noun) {
 				if(error){
 					growl(error.reason);
@@ -106,14 +84,14 @@ refreshBusCap = function(class_name, children_name) {
 	$bus_capabilities.on("create_node.jstree", function(e, data) {
 		mode = 'i';
 		parent = data.parent;
-//		console.log('create: ', data.node, data.parent, data.position, mode);
 	});
 	$bus_capabilities.on("delete_node.jstree", function(e, data) {
 		if (mode === 'e') { return; }
 		mode = 'd';
-//		console.log('delete: ', data.node, data.parent, mode);
+		if (!checkRole('Must be an Administrator to delete a ', class_name))
+			return false;
 		// DELETE
-		Meteor.call('deleteNoun', data.node, data.parent, function(error, noun) {
+		Meteor.call('deleteNoun', data.node, data.parent, children_name, function(error, noun) {
 			if(error){
 				growl(error.reason);
 			}else{
@@ -129,7 +107,9 @@ refreshBusCap = function(class_name, children_name) {
 			growl('Not allowed');
 			return false;
 		}
-		Meteor.call('moveNoun', data.old_parent, data.parent, data.node.original.instance_name, data.node.original.class_name, data.position, function(error, noun) {
+		if (!checkRole('Must be an Administrator to move a ', class_name))
+			return false;
+		Meteor.call('moveNoun', data.old_parent, data.parent, data.node.original.instance_name, data.node.original.class_name, children_name, data.position, function(error, noun) {
 			if(error){
 				growl(error.reason);
 			}else{
@@ -146,3 +126,66 @@ refreshBusCap = function(class_name, children_name) {
 
 var mode, parent = null;
 var retryCnt=0;
+var checkRole = function(text, class_name) {
+	if ( !Roles.userIsInRole(Meteor.user(), ['admin'], getProjectId()) ) {
+		growl(text+class_name);
+		return false;
+	}
+	return true;
+};
+treeConfig = {
+	Business_Capability: {
+		"core" : {
+			"animation" : 0
+			,"check_callback" : true
+			,"themes" : { "stripes" : true }
+			,'data' : null
+		},
+		"types" : {
+			"#" : {
+				"valid_children" : ["root"]
+			}
+			,"root" : {
+				"icon" : "glyphicon glyphicon-certificate"
+				//,"valid_children" : ["default"]
+			}
+			,"top" : {
+				"icon" : "glyphicon glyphicon-flag"
+				//,"valid_children" : ["default"]
+			}
+			,"default" : {
+				"icon" : "glyphicon glyphicon-flag"
+			}
+		},
+		"plugins" : [
+			"dnd", "search", "state", "types", "wholerow"
+		]
+	},
+	Business_Domain: {
+		"core" : {
+			"animation" : 0
+			,"check_callback" : true
+			,"themes" : { "stripes" : true }
+			,'data' : null
+		},
+		"types" : {
+			"#" : {
+				"valid_children" : ["root"]
+			}
+			,"root" : {
+				"icon" : "glyphicon glyphicon-certificate"
+				//,"valid_children" : ["default"]
+			}
+			,"top" : {
+				"icon" : "glyphicon glyphicon-home"
+				//,"valid_children" : ["default"]
+			}
+			,"default" : {
+				"icon" : "glyphicon glyphicon-home"
+			}
+		},
+		"plugins" : [
+			"dnd", "search", "state", "types", "wholerow"
+		]
+	}
+};

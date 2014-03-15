@@ -36,11 +36,10 @@ Nouns.deny({
 
 Meteor.methods({
 	createNoun: function(properties, parent_id){
-		console.log(properties);
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
 		var slug = generateSlug(properties.title);
-		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, class_name:properties.class_name, instance_name: slug} );
+		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, instance_name: slug} );
 		var nounId = '';
 
 		if (!user)
@@ -94,20 +93,21 @@ Meteor.methods({
 		return noun;
 	},
 
-	deleteNoun: function(properties, parent_id) {
-		var _id = (properties.original) ? properties.id : properties._id;
-		var class_name = (properties.original) ? properties.original.class_name : properties.class_name;
-		var instance_name = (properties.original) ? properties.original.instance_name : properties.instance_name;
+	deleteNoun: function(node, parent_id, children_name) {
+		var _id = (node.original) ? node.id : node._id;
+		var class_name = (node.original) ? node.original.class_name : node.class_name;
+		var instance_name = (node.original) ? node.original.instance_name : node.instance_name;
 
 		var user = Meteor.user();
 		if (!user)
 			throw new Meteor.Error(601, 'You need to login to delete a '+class_name);
-		if (properties.children && properties.children.length > 0)
+		if (node.children && node.children.length > 0)
 			throw new Meteor.Error(601, 'Cannot delete a '+class_name+' with children');
 
 		// remove associated stuff
+		var obj = _.object([[children_name, instance_name]]);
 		if(!this.isSimulation) {
-			Nouns.update(parent_id, {$pull: {contained_business_capabilities: instance_name}});
+			Nouns.update(parent_id, {$pull: obj});
 		}
 
 		// NOTIFICATION
@@ -134,18 +134,17 @@ Meteor.methods({
 		Nouns.update(_id, {$set: {title: title}});
 		return;
 	},
-	moveNoun: function(parent_id_old, parent_id, instance_name, class_name, position) {
-		//data.node.parent, data.parent, data.node.original.instance_name, data.node.original.class_name, data.position
-
-		var user = Meteor.user();
-		if (!user)
+	moveNoun: function(parent_id_old, parent_id, instance_name, class_name, children_name, position) {
+		if (!Meteor.user())
 			throw new Meteor.Error(601, 'You need to login to move a '+class_name);
 
-		Nouns.update(parent_id_old, {$pull: {contained_business_capabilities: instance_name}});
+		var obj = _.object([[children_name, instance_name]]);
+
+		Nouns.update(parent_id_old, {$pull: obj});
 
 		var noun = Nouns.findOne(parent_id);
 		if (!noun) return;
-		Nouns.update(parent_id, {$addToSet: {contained_business_capabilities: instance_name}});
+		Nouns.update(parent_id, {$addToSet: obj});
 
 		return;
 	}

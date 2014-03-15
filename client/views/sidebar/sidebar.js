@@ -91,14 +91,14 @@ Template.tmpl_bus_layer.events({
 	},
 	'click #btn-open-all': function() {
 		var selected = getSelected();
-		var sel = selected.sel;
-		if(!sel) { growl("Select an item first"); return false; }
+		var _id = selected._id;
+		if(!_id) { growl("Select an item first"); return false; }
 		sidebar[selected.class_name].open_all();
 	},
 	'click #btn-close-all': function() {
 		var selected = getSelected();
-		var sel = selected.sel;
-		if(!sel) { growl("Select an item first"); return false; }
+		var _id = selected._id;
+		if(!_id) { growl("Select an item first"); return false; }
 		sidebar[selected.class_name].close_all();
 	},
 	'click #sidebar_left': function() {
