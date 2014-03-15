@@ -36,6 +36,7 @@ Nouns.deny({
 
 Meteor.methods({
 	createNoun: function(properties, parent_id){
+		console.log(properties);
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
 		var slug = generateSlug(properties.title);
@@ -57,8 +58,9 @@ Meteor.methods({
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;
 
+		var obj = _.object([[properties.children_name, noun.instance_name]]);
 		if (!this.isSimulation && parent_id) {
-			Nouns.update(parent_id, {$addToSet: {contained_business_capabilities: noun.instance_name}});
+			Nouns.update(parent_id, {$addToSet: obj});
 		}
 		// NOTIFICATION
 //		if (! isAdmin(user)) {

@@ -223,7 +223,8 @@ Router.map(function () {
 			} else {
 				setProject(project);
 			}
-			refreshBusCap('Business_Capability');
+			refreshBusCap('Business_Capability','contained_business_capabilities');
+			refreshBusCap(ea.class_name.Business_Domain,'contained_business_domains');
 			if (project && project.title) {
 				Session.set('breadcrumbs', {breadcrumbs: [
 					{title:"home", link:"/", isActive:false},

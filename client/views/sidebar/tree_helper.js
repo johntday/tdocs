@@ -1,13 +1,13 @@
-refreshBusCap = function(class_name) {
+refreshBusCap = function(class_name, children_name) {
 //	if (!getProjectId()) return false;
 	try {
-		if (sidebar.Business_Capability) { sidebar.Business_Capability.destroy(); sidebar.Business_Capability=null; }
+		if (sidebar[class_name]) { sidebar[class_name].destroy(); sidebar[class_name]=null; }
 	} catch(err) {}
-	var root = Nouns.findOne({class_name: ea.class_name.Business_Capability, type:"root"});
+	var root = Nouns.findOne({class_name: class_name, type:"root"});
 //	if (!root && retryCnt++ < 3) {
 //			// TRY AGAIN
 //			Meteor.setTimeout(function(){
-//				refreshBusCap(class_name);
+//				refreshBusCap(class_name, children_name);
 //				1000});
 //	}
 	var treeData = getTree( root );
@@ -21,13 +21,13 @@ refreshBusCap = function(class_name) {
 			var currentnode = stack.pop();
 			_.extend(currentnode, {id: currentnode._id, text:currentnode.title});
 			var children = [];
-			if (currentnode && currentnode.contained_business_capabilities)
-				children = Nouns.find({instance_name:{$in:currentnode.contained_business_capabilities}}).fetch();
+			if (currentnode && currentnode[children_name])
+				children = Nouns.find({instance_name:{$in:currentnode[children_name]}}).fetch();
 
 			children.forEach(function(child) {
 				_.extend(child, {id: child._id, text:child.title});
 				descendants.push(child);
-				if(child && child.contained_business_capabilities && child.contained_business_capabilities.length>0){
+				if(child && child[children_name] && child[children_name].length>0){
 					stack.push(child);
 				}
 			});
@@ -64,7 +64,7 @@ refreshBusCap = function(class_name) {
 			"dnd", "search", "state", "types", "wholerow"
 		]
 	});
-	sidebar.Business_Capability = $bus_capabilities.jstree(true);
+	sidebar[class_name] = $bus_capabilities.jstree(true);
 
 	$bus_capabilities.on("rename_node.jstree", function(e, data) {
 		if (mode === 'i') {
@@ -73,15 +73,16 @@ refreshBusCap = function(class_name) {
 			var properties = {
 				title: data.text
 				,project_id: getProjectId()
-				,class_name: ea.class_name.Business_Capability
+				,class_name: class_name
+				,children_name: children_name
 			};
 			Meteor.call('createNoun', properties, parent, function(error, noun) {
 				if(error){
 					mode = 'e';
-					sidebar.Business_Capability.delete_node(data.node);
+					sidebar[class_name].delete_node(data.node);
 					growl(error.reason);
 				}else{
-					refreshBusCap(properties.class_name);
+					refreshBusCap(class_name, children_name);
 //					Router.go('/nouns/'+noun.nounId);
 					growl( "Created "+properties.class_name, {type:'s', hideSnark:true} );
 				}
@@ -96,8 +97,8 @@ refreshBusCap = function(class_name) {
 				if(error){
 					growl(error.reason);
 				}else{
-					refreshBusCap(data.node.original.class_name);
-					growl( "Update "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
+					refreshBusCap(class_name, children_name);
+					growl( "Update "+class_name, {type:'s', hideSnark:true} );
 				}
 			});
 		}
@@ -118,20 +119,26 @@ refreshBusCap = function(class_name) {
 			}else{
 				if (Location.state().path === '/nouns/'+data.node.id)
 					Router.go('/nouns/'+data.parent);
-				growl( "Deleted "+ea.class_name.Business_Capability, {type:'s', hideSnark:true} );
+				growl( "Deleted "+class_name, {type:'s', hideSnark:true} );
 			}
-			refreshBusCap(data.node.original.class_name);
+			refreshBusCap(class_name, children_name);
 		});
 	});
 	$bus_capabilities.on("move_node.jstree", function(e, data) {
-		//console.log(data.node, data.parent, data.node.original.instance_name, data.node.original.class_name, data.position);
+		if (data.is_multi) {
+			growl('Not allowed');
+			return false;
+		}
 		Meteor.call('moveNoun', data.old_parent, data.parent, data.node.original.instance_name, data.node.original.class_name, data.position, function(error, noun) {
 			if(error){
 				growl(error.reason);
 			}else{
 			}
-			refreshBusCap(data.node.original.class_name);
+			refreshBusCap(class_name, children_name);
 		});
+	});
+	$bus_capabilities.on("select_node.jstree", function(e, data) {
+		Session.set('selected_tree_noun', {_id: data.node.id, class_name: data.node.original.class_name, type: data.node.type});
 	});
 	//
 	return true;

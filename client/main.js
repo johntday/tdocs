@@ -12,6 +12,7 @@ Session.setDefault('person_sort', 'name');
 
 Session.setDefault('selected_tdoc_id', null);
 Session.setDefault('selected_diagram_id', null);
+Session.setDefault('selected_tree_noun', {_id: null, class_name: null, type: null});
 
 Session.setDefault('tdoc_sort', 'title');
 Session.setDefault('diagram_sort', 'title');
@@ -20,7 +21,7 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
-sidebar = {Business_Capability: null, Business_Actor: null, openAccordian: 'busLayer'};
+sidebar = {Business_Capability: null, Business_Domain: null, openAccordian: 'busLayer'};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs

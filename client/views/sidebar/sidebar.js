@@ -28,11 +28,10 @@ Template.tmpl_bus_layer.events({
 //	}
 	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
-		var ref = sidebar.Business_Capability,
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		sel = sel[0];
-		Router.go('/nouns/'+sel);
+		var selected = getSelected();
+		console.log(selected);
+		if(!selected._id) { return false; }
+		Router.go('/nouns/'+selected._id);
 	},
 	'click #btn-sidebar-help': function() {
 		bootbox.dialog({
@@ -62,50 +61,45 @@ Template.tmpl_bus_layer.events({
 		});
 	},
 	'click button.btn.btn-success.btn-sm': function(e) {
-		var ref = sidebar.Business_Capability,
-			sel = ref.get_selected();
-		if(!sel.length) { growl("Select a parent item first.  Your new item will be place under this parent"); return false; }
-		sel = sel[0];
-		sel = ref.create_node(sel);
+		var selected = getSelected();
+		var sel = selected._id;
+		if(!sel) { growl("Select a parent item first.  Your new item will be place under this parent"); return false; }
+		sel = sidebar[selected.class_name].create_node(sel);
 		if(sel) {
-			ref.edit(sel);
+			sidebar[selected.class_name].edit(sel);
 		} else
 			growl("Select a parent item first.  Your new item will be place under this parent");
 	},
 	'click button.btn.btn-warning.btn-sm': function(e) {
-		var ref = sidebar.Business_Capability,
-			sel = ref.get_selected(true);
-		if(!sel.length) { growl("Select an item first"); return false; }
-		sel = sel[0];
-		if (sel.type !== 'root')
-			ref.edit(sel);
+		var selected = getSelected();
+		var _id = selected._id;
+		if(!_id) { growl("Select an item first"); return false; }
+		if (selected.type !== 'root')
+			sidebar[selected.class_name].edit(_id);
 		else
 			growl("Cannot edit this item");
 	},
 	'click button.btn.btn-danger.btn-sm': function(e) {
-		var ref = sidebar.Business_Capability,
-			sel = ref.get_selected(true);
-		if(!sel.length) { growl("Select an item first"); return false; }
-		sel = sel[0];
-		var id = sel.id;
-		var parent = sel.parent;
-		if (sel.type !== 'root' && sel.type !== 'top') {
-			ref.delete_node(sel);
+		var selected = getSelected();
+		var _id = selected._id;
+		if(!_id) { growl("Select an item first"); return false; }
+		if (selected.type !== 'root' && selected.type !== 'top') {
+			sidebar[selected.class_name].delete_node(_id);
 		} else {
 			growl("Cannot delete this item");
 		}
 	},
 	'click #btn-open-all': function() {
-		var ref = sidebar.Business_Capability,
-			sel = ref.get_selected();
-		if(!sel.length) { growl("Select an item first"); return false; }
-		ref.open_all();
+		var selected = getSelected();
+		var sel = selected.sel;
+		if(!sel) { growl("Select an item first"); return false; }
+		sidebar[selected.class_name].open_all();
 	},
 	'click #btn-close-all': function() {
-		var ref = sidebar.Business_Capability,
-			sel = ref.get_selected();
-		if(!sel.length) { growl("Select an item first"); return false; }
-		ref.close_all();
+		var selected = getSelected();
+		var sel = selected.sel;
+		if(!sel) { growl("Select an item first"); return false; }
+		sidebar[selected.class_name].close_all();
 	},
 	'click #sidebar_left': function() {
 		var nbr = Session.get('sidebar_nbr');
@@ -122,8 +116,14 @@ Template.tmpl_bus_layer.events({
 
 Template.tmpl_bus_layer.rendered = function() {
 	if (!sidebar.Business_Capability)
-		refreshBusCap('Business_Capability');
+		refreshBusCap('Business_Capability', 'contained_business_capabilities');
+	if (!sidebar.Business_Domain)
+		refreshBusCap('Business_Domain', 'contained_business_domains');
 };
 //Template.tmpl_bus_layer.destroyed = function() {
 //	sidebar.Business_Capability = null;
 //};
+
+var getSelected = function() {
+	return Session.get('selected_tree_noun');
+};
