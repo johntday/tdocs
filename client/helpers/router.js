@@ -233,9 +233,10 @@ Router.map(function () {
 			refreshBusCap(ea.class_name.Business_Principle,'children');
 			refreshBusCap(ea.class_name.Business_Driver,'children');
 			refreshBusCap(ea.class_name.Business_Objective,'children');
-
 			//BUSINESS LOGICAL
 			refreshBusCap(ea.class_name.Business_Activity,'children');
+			//APP CONCEPTUAL
+			refreshBusCap(ea.class_name.Application_Architecture_Principle,'children');
 
 			if (project && project.title) {
 				Session.set('breadcrumbs', {breadcrumbs: [

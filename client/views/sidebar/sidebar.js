@@ -113,16 +113,14 @@ Template.tmplSidebar.rendered = function() {
 		refreshBusCap(ea.class_name.Business_Objective, 'children');
 	if (!sidebar.Business_Activity)
 		refreshBusCap(ea.class_name.Business_Activity, 'children');
+	if (!sidebar.Application_Architecture_Principle)
+		refreshBusCap(ea.class_name.Application_Architecture_Principle, 'children');
 };
 
 Template.tmpl_accordian_test.rendered = function() {
-//	if (!sidebar.accordian) {
-//		$("#accordion").on('show.bs.collapse', function() {
-//			var active=$("#accordion .in").attr('id');
-//			console.log('add accor: '+active);
-//			console.log('hi');
-//		});
-//	}
+	$("#accordion").bind('shown', function() {
+		console.log('hi');
+	});
 };
 Template.tmpl_accordian_test.events({
 //	'click h4.panel-title': function(e) {

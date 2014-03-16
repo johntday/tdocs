@@ -37,7 +37,7 @@ refreshBusCap = function(class_name, children_name) {
 	}
 
 	var $bus_capabilities = $('#'+class_name);
-	var config = treeConfig[class_name];
+	var config = treeConfig(class_name);
 	config.core.data = treeData;
 	$bus_capabilities.jstree( config );
 	sidebar[class_name] = $bus_capabilities.jstree(true);
@@ -141,8 +141,9 @@ var checkRole = function(text, class_name) {
 	}
 	return true;
 };
-treeConfig = {
-	Business_Capability: {
+var treeConfig = function(class_name) {
+	var icon = ea.getClassBelongsToArea(class_name).icon;
+	return {
 		"core" : {
 			"animation" : 0
 			,"check_callback" : true
@@ -158,177 +159,15 @@ treeConfig = {
 				//,"valid_children" : ["default"]
 			}
 			,"top" : {
-				"icon" : "glyphicon glyphicon-flag"
+				"icon" : "glyphicon glyphicon-"+icon
 				//,"valid_children" : ["default"]
 			}
 			,"default" : {
-				"icon" : "glyphicon glyphicon-flag"
+				"icon" : "glyphicon glyphicon-"+icon
 			}
 		},
 		"plugins" : [
 			"dnd", "search", "state", "types", "wholerow"
 		]
-	},
-	Business_Domain: {
-		"core" : {
-			"animation" : 0
-			,"check_callback" : true
-			,"themes" : { "stripes" : true }
-			,'data' : null
-		},
-		"types" : {
-			"#" : {
-				"valid_children" : ["root"]
-			}
-			,"root" : {
-				"icon" : "glyphicon glyphicon-certificate"
-				//,"valid_children" : ["default"]
-			}
-			,"top" : {
-				"icon" : "glyphicon glyphicon-home"
-				//,"valid_children" : ["default"]
-			}
-			,"default" : {
-				"icon" : "glyphicon glyphicon-home"
-			}
-		},
-		"plugins" : [
-			"dnd", "search", "state", "types", "wholerow"
-		]
-	},
-	Business_Role_Type: {
-		"core" : {
-			"animation" : 0
-			,"check_callback" : true
-			,"themes" : { "stripes" : true }
-			,'data' : null
-		},
-		"types" : {
-			"#" : {
-				"valid_children" : ["root"]
-			}
-			,"root" : {
-				"icon" : "glyphicon glyphicon-certificate"
-				//,"valid_children" : ["default"]
-			}
-			,"top" : {
-				"icon" : "glyphicon glyphicon-user"
-				//,"valid_children" : ["default"]
-			}
-			,"default" : {
-				"icon" : "glyphicon glyphicon-user"
-			}
-		},
-		"plugins" : [
-			"dnd", "search", "state", "types", "wholerow"
-		]
-	},
-	Business_Principle: {
-		"core" : {
-			"animation" : 0
-			,"check_callback" : true
-			,"themes" : { "stripes" : true }
-			,'data' : null
-		},
-		"types" : {
-			"#" : {
-				"valid_children" : ["root"]
-			}
-			,"root" : {
-				"icon" : "glyphicon glyphicon-certificate"
-				//,"valid_children" : ["default"]
-			}
-			,"top" : {
-				"icon" : "glyphicon glyphicon-thumbs-up"
-				//,"valid_children" : ["default"]
-			}
-			,"default" : {
-				"icon" : "glyphicon glyphicon-thumbs-up"
-			}
-		},
-		"plugins" : [
-			"dnd", "search", "state", "types", "wholerow"
-		]
-	},
-	Business_Driver: {
-		"core" : {
-			"animation" : 0
-			,"check_callback" : true
-			,"themes" : { "stripes" : true }
-			,'data' : null
-		},
-		"types" : {
-			"#" : {
-				"valid_children" : ["root"]
-			}
-			,"root" : {
-				"icon" : "glyphicon glyphicon-certificate"
-				//,"valid_children" : ["default"]
-			}
-			,"top" : {
-				"icon" : "glyphicon glyphicon-bookmark"
-				//,"valid_children" : ["default"]
-			}
-			,"default" : {
-				"icon" : "glyphicon glyphicon-bookmark"
-			}
-		},
-		"plugins" : [
-			"dnd", "search", "state", "types", "wholerow"
-		]
-	},
-	Business_Objective: {
-		"core" : {
-			"animation" : 0
-			,"check_callback" : true
-			,"themes" : { "stripes" : true }
-			,'data' : null
-		},
-		"types" : {
-			"#" : {
-				"valid_children" : ["root"]
-			}
-			,"root" : {
-				"icon" : "glyphicon glyphicon-certificate"
-				//,"valid_children" : ["default"]
-			}
-			,"top" : {
-				"icon" : "glyphicon glyphicon-record"
-				//,"valid_children" : ["default"]
-			}
-			,"default" : {
-				"icon" : "glyphicon glyphicon-record"
-			}
-		},
-		"plugins" : [
-			"dnd", "search", "state", "types", "wholerow"
-		]
-	},
-	Business_Activity: {
-		"core" : {
-			"animation" : 0
-			,"check_callback" : true
-			,"themes" : { "stripes" : true }
-			,'data' : null
-		},
-		"types" : {
-			"#" : {
-				"valid_children" : ["root"]
-			}
-			,"root" : {
-				"icon" : "glyphicon glyphicon-certificate"
-				//,"valid_children" : ["default"]
-			}
-			,"top" : {
-				"icon" : "glyphicon glyphicon-leaf"
-				//,"valid_children" : ["default"]
-			}
-			,"default" : {
-				"icon" : "glyphicon glyphicon-leaf"
-			}
-		},
-		"plugins" : [
-			"dnd", "search", "state", "types", "wholerow"
-		]
-	}
+	};
 };
