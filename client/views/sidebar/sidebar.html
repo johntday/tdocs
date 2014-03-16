@@ -24,25 +24,19 @@
 </template>
 
 <template name="tmpl_accordian_test">
+
 	<div class="panel-group" id="accordion">
 
 		<div class="panel panel-purple">
 			<div class="panel-heading">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion" href="#busLayer">
+					<a data-toggle="collapse" data-parent="#accordion" href="#busLayerConcep">
 						Business Layer - Conceptual
 					</a>
 				</h4>
 			</div>
-			<div id="busLayer" class="panel-collapse collapse in">
+			<div id="busLayerConcep" class="panel-collapse collapse in">
 				<div class="panel-body">
-					<!--
-					<div>
-						<input type="text" value="" style="box-shadow:inset 0 0 4px #eee; width:100%; margin:0; padding:6px 12px; border-radius:4px; border:1px
-				solid silver; font-size:1.1em;" id="demo_q" placeholder="Search">
-					</div>
-					-->
-
 					{{#constant}}
 					<div id="Business_Capability"></div>
 					<div id="Business_Domain"></div>
@@ -66,12 +60,6 @@
 			</div>
 			<div id="busLayerlogical" class="panel-collapse collapse">
 				<div class="panel-body">
-					<!--
-					<div>
-						<input type="text" value="" style="box-shadow:inset 0 0 4px #eee; width:100%; margin:0; padding:6px 12px; border-radius:4px; border:1px
-				solid silver; font-size:1.1em;" id="demo_q" placeholder="Search">
-					</div>
-					-->
 					{{#constant}}
 					<div id="Business_Activity"></div>
 					{{/constant}}
@@ -121,6 +109,7 @@
 		</div>
 
 	</div>
+
 </template>
 
 

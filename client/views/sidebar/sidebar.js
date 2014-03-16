@@ -123,12 +123,15 @@ Template.tmplSidebar.rendered = function() {
 };
 
 Template.tmpl_accordian_test.rendered = function() {
-
+//	$('#busLayer').on('hidden.bs.collapse', function () {
+//		console.log('hi');
+//	});
 };
 Template.tmpl_accordian_test.events({
-//	'click a.collapsed': function(e) {
-//		e.preventDefault();
-//		console.log('hi');
+//	'click h4.panel-title': function(e) {
+//		var new_value = $(e.currentTarget).find('a').attr('href');
+//		sidebar.accordian = (new_value === sidebar.accordian) ? null : new_value;
+//		console.log('sidebar.accordian='+sidebar.accordian);
 //	}
 });
 //Template.tmpl_bus_layer.destroyed = function() {

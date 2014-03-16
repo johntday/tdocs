@@ -94,6 +94,7 @@ Router.map(function () {
 				Session.set('breadcrumbs', {breadcrumbs: [
 					{title:"home", link:"/", isActive:false},
 					{title: ea.getClassBelongsToArea(noun.class_name), link:"#", isActive:false},
+					{title: ea.getClassBelongsToLayer(noun.class_name), link:"#", isActive:false},
 					{title: noun.class_name, link:"#", isActive:false},
 					{title:noun.title, link:"", isActive:true}
 				]});
