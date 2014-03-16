@@ -11,13 +11,6 @@ Template.tmplSidebar.helpers({
 });
 
 Template.tmplSidebar.events({
-	//	'keyup #demo_q': function(e) {
-	//		if (to) { Meteor.clearTimeout(to); }
-	//		to = Meteor.setTimeout(function(){
-	//			var v = $(e.currentTarget).val();
-	//			$('#Business_Capability').jstree(true).search(v);
-	//		}, 250);
-	//	}
 	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
 		var selected = getSelected();
@@ -123,9 +116,13 @@ Template.tmplSidebar.rendered = function() {
 };
 
 Template.tmpl_accordian_test.rendered = function() {
-//	$('#busLayer').on('hidden.bs.collapse', function () {
-//		console.log('hi');
-//	});
+//	if (!sidebar.accordian) {
+//		$("#accordion").on('show.bs.collapse', function() {
+//			var active=$("#accordion .in").attr('id');
+//			console.log('add accor: '+active);
+//			console.log('hi');
+//		});
+//	}
 };
 Template.tmpl_accordian_test.events({
 //	'click h4.panel-title': function(e) {

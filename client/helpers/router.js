@@ -91,10 +91,11 @@ Router.map(function () {
 			var noun = Nouns.findOne(this.params._id);
 
 			if (noun) {
+				var tax = ea.getClassBelongsToArea(noun.class_name);
 				Session.set('breadcrumbs', {breadcrumbs: [
 					{title:"home", link:"/", isActive:false},
-					{title: ea.getClassBelongsToArea(noun.class_name), link:"#", isActive:false},
-					{title: ea.getClassBelongsToLayer(noun.class_name), link:"#", isActive:false},
+					{title: tax.area, link:"#", isActive:false},
+					{title: tax.layer, link:"#", isActive:false},
 					{title: noun.class_name, link:"#", isActive:false},
 					{title:noun.title, link:"", isActive:true}
 				]});

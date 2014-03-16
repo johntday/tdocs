@@ -21,8 +21,8 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
-sidebar = {accordian: null, Business_Capability: null, Business_Domain: null, Business_Role_Type: null, Business_Principle: null, Business_Driver: null, Business_Objective: null,
-	Business_Activity: ea.accordian.busLayerConcep};
+sidebar = {Business_Capability: null, Business_Domain: null, Business_Role_Type: null, Business_Principle: null, Business_Driver: null, Business_Objective: null
+};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs

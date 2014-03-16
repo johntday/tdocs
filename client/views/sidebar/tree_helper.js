@@ -3,7 +3,7 @@ refreshBusCap = function(class_name, children_name) {
 	try {
 		if (sidebar[class_name]) { sidebar[class_name].destroy(); sidebar[class_name]=null; }
 	} catch(err) {}
-	var root = Nouns.findOne({class_name: class_name, type:"root"});
+	var root = Nouns.findOne({project_id: getProjectId(), class_name: class_name, type:"root"});
 //	if (!root && retryCnt++ < 3) {
 //			// TRY AGAIN
 //			Meteor.setTimeout(function(){
@@ -15,14 +15,14 @@ refreshBusCap = function(class_name, children_name) {
 		if (!noun) return;
 		var descendants=[]
 		var stack=[];
-		var item = Nouns.findOne({instance_name:noun.instance_name});
+		var item = Nouns.findOne({project_id: getProjectId(), instance_name:noun.instance_name});
 		stack.push(item);
 		while (stack.length>0){
 			var currentnode = stack.pop();
 			_.extend(currentnode, {id: currentnode._id, text:currentnode.title});
 			var children = [];
 			if (currentnode && currentnode[children_name])
-				children = Nouns.find({instance_name:{$in:currentnode[children_name]}}).fetch();
+				children = Nouns.find({project_id: getProjectId(), instance_name:{$in:currentnode[children_name]}}).fetch();
 
 			children.forEach(function(child) {
 				_.extend(child, {id: child._id, text:child.title});
@@ -118,7 +118,15 @@ refreshBusCap = function(class_name, children_name) {
 		});
 	});
 	$bus_capabilities.on("select_node.jstree", function(e, data) {
-		Session.set('selected_tree_noun', {_id: data.node.id, class_name: data.node.original.class_name, type: data.node.type});
+		var class_name = data.node.original.class_name;
+		Session.set('selected_tree_noun', {_id: data.node.id, class_name: class_name, type: data.node.type});
+
+		var list = _.pairs(sidebar);
+		list.forEach(function(obj){
+			if (obj[0] !== class_name) {
+				obj[1].deselect_all(true);
+			}
+		});
 	});
 	//
 	return true;
