@@ -99,40 +99,59 @@ Template.tmplSidebar.events({
 });
 
 Template.tmplSidebar.rendered = function() {
-	if (!sidebar.Business_Capability)
-		refreshBusCap(ea.class_name.Business_Capability, 'contained_business_capabilities');
-	if (!sidebar.Business_Domain)
-		refreshBusCap(ea.class_name.Business_Domain, 'contained_business_domains');
-	if (!sidebar.Business_Role_Type)
-		refreshBusCap(ea.class_name.Business_Role_Type, 'children');
-	if (!sidebar.Business_Principle)
-		refreshBusCap(ea.class_name.Business_Principle, 'children');
-	if (!sidebar.Business_Driver)
-		refreshBusCap(ea.class_name.Business_Driver, 'children');
-	if (!sidebar.Business_Objective)
-		refreshBusCap(ea.class_name.Business_Objective, 'children');
-	if (!sidebar.Business_Activity)
-		refreshBusCap(ea.class_name.Business_Activity, 'children');
-	if (!sidebar.Application_Architecture_Principle)
-		refreshBusCap(ea.class_name.Application_Architecture_Principle, 'children');
+	var class_names = _.keys(ea.classBelongsToArea);
+	class_names.forEach(function(class_name){
+		var obj = ea.classBelongsToArea[class_name];
+		if (obj && !sidebar[class_name]) {
+			refreshBusCap(class_name, obj.children_name);
+		}
+	});
+	openAccordian();
+
+//	if (!sidebar.Business_Capability)
+//		refreshBusCap(ea.class_name.Business_Capability, 'contained_business_capabilities');
+//	if (!sidebar.Business_Domain)
+//		refreshBusCap(ea.class_name.Business_Domain, 'contained_business_domains');
+//	if (!sidebar.Business_Role_Type)
+//		refreshBusCap(ea.class_name.Business_Role_Type, 'children');
+//	if (!sidebar.Business_Principle)
+//		refreshBusCap(ea.class_name.Business_Principle, 'children');
+//	if (!sidebar.Business_Driver)
+//		refreshBusCap(ea.class_name.Business_Driver, 'children');
+//	if (!sidebar.Business_Objective)
+//		refreshBusCap(ea.class_name.Business_Objective, 'children');
+//	if (!sidebar.Business_Activity)
+//		refreshBusCap(ea.class_name.Business_Activity, 'children');
+//	if (!sidebar.Application_Architecture_Principle)
+//		refreshBusCap(ea.class_name.Application_Architecture_Principle, 'children');
+//	if (!sidebar.Application_Capability)
+//		refreshBusCap(ea.class_name.Application_Capability, 'contained_app_capabilities');
+
+
 };
 
 Template.tmpl_accordian_test.rendered = function() {
-	$("#accordion").bind('shown', function() {
-		console.log('hi');
-	});
+	if (isFirst) {
+		$('#busLayer, #appLayer').on('show.bs.collapse', function (e) {
+			console.log('hi: '+ e.currentTarget.id);
+			accordian.open = e.currentTarget.id;
+		});
+		isFirst = false;
+	}
+	openAccordian();
 };
-Template.tmpl_accordian_test.events({
-//	'click h4.panel-title': function(e) {
-//		var new_value = $(e.currentTarget).find('a').attr('href');
-//		sidebar.accordian = (new_value === sidebar.accordian) ? null : new_value;
-//		console.log('sidebar.accordian='+sidebar.accordian);
-//	}
-});
-//Template.tmpl_bus_layer.destroyed = function() {
-//	sidebar.Business_Capability = null;
-//};
 
 var getSelected = function() {
 	return Session.get('selected_tree_noun');
 };
+var openAccordian = function() {
+	if (accordian.open) {
+		accordian.ids.forEach(function(id){
+			if (id === accordian.open)
+				$('#'+id).collapse('show');
+			else
+				$('#'+id).collapse('hide');
+		});
+	}
+};
+var isFirst = true;

@@ -21,9 +21,12 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
-sidebar = {Business_Capability: null, Business_Domain: null, Business_Role_Type: null, Business_Principle: null, Business_Driver: null, Business_Objective: null,
-	Application_Architecture_Principle: null
-};
+accordian = {open: null, ids: ['busLayer', 'appLayer']};
+sidebar = {};
+var class_names = _.keys(ea.classBelongsToArea);
+class_names.forEach(function(class_name){
+	sidebar[class_name] = null;
+});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs
