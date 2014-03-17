@@ -64,27 +64,25 @@ Meteor.methods({
 
 			// ADD CONFIGURATION DATA
 			var buscap = {
-				instance_name: 'buscap'+projectId,
+				project_id: projectId,
+				instance_name: 'buscap_root'+projectId,
 				class_name: ea.class_name.Business_Capability,
 				type: 'root',
-				business_capability_level: '-1',
 				title: 'BUSINESS CAPABILITIES',
 				contained_business_capabilities: [
-					'root'+projectId
+					'buscap_top'+projectId
 				]
 			};
-			_.extend(buscap, {project_id: projectId});
 			extendWithMetadataForInsert(buscap, userId, user);
 			Nouns.insert(buscap);
 
 			buscap = {
-				instance_name: 'root'+projectId,
+				project_id: projectId,
+				instance_name: 'buscap_top'+projectId,
 				class_name: ea.class_name.Business_Capability,
 				type: 'top',
-				business_capability_level: '0',
 				title: 'My Top Level Business Capability'
 			};
-			_.extend(buscap, {project_id: projectId});
 			extendWithMetadataForInsert(buscap, userId, user);
 			Nouns.insert(buscap);
 		}
@@ -100,8 +98,6 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'Please add a title');
 
 		var project = extendWithMetadataForUpdate( properties );
-
-		MyLog("collections/projects.js/updateProject/1", "properties", properties);
 
 		Projects.update(_id, {$set: project} );
 
