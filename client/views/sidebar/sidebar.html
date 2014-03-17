@@ -1,5 +1,9 @@
 <template name="tmplSidebar">
-	{{#if pickedProject}}
+	{{> tmpl_accordian_test}}
+</template>
+
+<template name="tmpl_sidebar_buttons">
+	<div style="margin-bottom: 5px; margin-top: 5px; margin-left: 5px; margin-right: 5px">
 		<!--<button type="button" class="btn btn-info btn-sm" title="Search"><span class="glyphicon glyphicon-search"></span> </button>-->
 		<button id="btn-sidebar-help" type="button" class="btn btn-info btn-sm" title="Help"><span class="glyphicon glyphicon-question-sign"></span> </button>
 		<button type="button" class="btn btn-success btn-sm" title="Create"><span class="glyphicon glyphicon-plus"></span> </button>
@@ -12,15 +16,13 @@
 
 		<span class="pull-right">
 			{{#if chevronLeft}}
-			<button id="sidebar_left" type="button" class="btn btn-default btn-sm" title="Update"><span class="glyphicon glyphicon-chevron-left"></span> </button>
+			<button id="sidebar_left" type="button" class="btn btn-default btn-sm" title="Narrow sidebar"><span class="glyphicon glyphicon-chevron-left"></span> </button>
 			{{/if}}
 			{{#if chevronRight}}
-			<button id="sidebar_right" type="button" class="btn btn-default btn-sm" title="Update"><span class="glyphicon glyphicon-chevron-right"></span> </button>
+			<button id="sidebar_right" type="button" class="btn btn-default btn-sm" title="Widen sidebar"><span class="glyphicon glyphicon-chevron-right"></span> </button>
 			{{/if}}
 		</span>
-	{{/if}}
-
-	{{> tmpl_accordian_test}}
+	</div>
 </template>
 
 <template name="tmpl_accordian_test">

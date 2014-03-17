@@ -1,7 +1,31 @@
 Template.tmplSidebar.helpers({
 	pickedProject: function() {
 		return Meteor.user() && !!getProjectId();
-	},
+	}
+});
+
+Template.tmplSidebar.rendered = function() {
+	var class_names = _.keys(ea.classBelongsToArea);
+	class_names.forEach(function(class_name){
+		var obj = ea.classBelongsToArea[class_name];
+		if (obj && !sidebar[class_name]) {
+			refreshBusCap(class_name, obj.children_name);
+		}
+	});
+	openAccordian();
+};
+
+Template.tmpl_accordian_test.rendered = function() {
+	if (isFirst) {
+		$('#busLayer, #appLayer').on('show.bs.collapse', function (e) {
+			accordian.open = e.currentTarget.id;
+		});
+		isFirst = false;
+	}
+	//openAccordian();
+};
+
+Template.tmpl_sidebar_buttons.helpers({
 	chevronLeft: function() {
 		return (Session.get('sidebar_nbr') > 2);
 	},
@@ -10,7 +34,7 @@ Template.tmplSidebar.helpers({
 	}
 });
 
-Template.tmplSidebar.events({
+Template.tmpl_sidebar_buttons.events({
 	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
 		var selected = getSelected();
@@ -29,6 +53,8 @@ Template.tmplSidebar.events({
 				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-folder-open'></span> </button> Open all (select an item first)</li>" +
 				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-folder-close'></span> </button> Close all (select an item first)</li>" +
 				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-arrow-right'></span> </button> Goto selected item</li>" +
+				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-chevron-left'></span> </button> Narrow sidebar</li>" +
+				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-chevron-right'></span> </button> Widen sidebar</li>" +
 				"</ul>" +
 				"<h3>Actions</h3>" +
 				"<ul>" +
@@ -98,49 +124,11 @@ Template.tmplSidebar.events({
 
 });
 
-Template.tmplSidebar.rendered = function() {
-	var class_names = _.keys(ea.classBelongsToArea);
-	class_names.forEach(function(class_name){
-		var obj = ea.classBelongsToArea[class_name];
-		if (obj && !sidebar[class_name]) {
-			refreshBusCap(class_name, obj.children_name);
-		}
-	});
-	openAccordian();
-
-//	if (!sidebar.Business_Capability)
-//		refreshBusCap(ea.class_name.Business_Capability, 'contained_business_capabilities');
-//	if (!sidebar.Business_Domain)
-//		refreshBusCap(ea.class_name.Business_Domain, 'contained_business_domains');
-//	if (!sidebar.Business_Role_Type)
-//		refreshBusCap(ea.class_name.Business_Role_Type, 'children');
-//	if (!sidebar.Business_Principle)
-//		refreshBusCap(ea.class_name.Business_Principle, 'children');
-//	if (!sidebar.Business_Driver)
-//		refreshBusCap(ea.class_name.Business_Driver, 'children');
-//	if (!sidebar.Business_Objective)
-//		refreshBusCap(ea.class_name.Business_Objective, 'children');
-//	if (!sidebar.Business_Activity)
-//		refreshBusCap(ea.class_name.Business_Activity, 'children');
-//	if (!sidebar.Application_Architecture_Principle)
-//		refreshBusCap(ea.class_name.Application_Architecture_Principle, 'children');
-//	if (!sidebar.Application_Capability)
-//		refreshBusCap(ea.class_name.Application_Capability, 'contained_app_capabilities');
-
-
-};
-
-Template.tmpl_accordian_test.rendered = function() {
-	if (isFirst) {
-		$('#busLayer, #appLayer').on('show.bs.collapse', function (e) {
-			console.log('hi: '+ e.currentTarget.id);
-			accordian.open = e.currentTarget.id;
-		});
-		isFirst = false;
-	}
+Template.tmpl_sidebar_buttons.rendered = function() {
 	openAccordian();
 };
 
+// FUNCTIONS and VAR --------------------------------------------------------------------
 var getSelected = function() {
 	return Session.get('selected_tree_noun');
 };

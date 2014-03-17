@@ -10,7 +10,9 @@
 	{{> tmplHeader}}
 	<div id="wrapper">
 		<div id="sidebar-wrapper" class="col-md-{{sidebarNbr}}">
-			<h2>hello</h2>
+			{{#if pickedProject}}
+				{{> tmpl_sidebar_buttons}}
+			{{/if}}
 			<div id="sidebar">
 				<ul class="nav list-group">
 					{{#if currentUser}}
