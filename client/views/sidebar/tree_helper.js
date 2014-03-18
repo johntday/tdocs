@@ -119,14 +119,7 @@ refreshBusCap = function(class_name, children_name) {
 	});
 	$bus_capabilities.on("select_node.jstree", function(e, data) {
 		var class_name = data.node.original.class_name;
-		Session.set('selected_tree_noun', {_id: data.node.id, class_name: class_name, type: data.node.type});
-
-		var list = _.pairs(sidebar);
-		list.forEach(function(obj){
-			if (obj[0] !== class_name) {
-				obj[1].deselect_all(true);
-			}
-		});
+		setSelectedTreeItem({_id: data.node.id, class_name: class_name, type: data.node.type, parent_id: data.node.parent});
 	});
 	//
 	return true;

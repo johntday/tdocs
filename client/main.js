@@ -12,7 +12,7 @@ Session.setDefault('person_sort', 'name');
 
 Session.setDefault('selected_tdoc_id', null);
 Session.setDefault('selected_diagram_id', null);
-Session.setDefault('selected_tree_noun', {_id: null, class_name: null, type: null});
+Session.setDefault('selected_tree_noun', {_id: null, class_name: null, type: null, parent_id: null});
 
 Session.setDefault('tdoc_sort', 'title');
 Session.setDefault('diagram_sort', 'title');
@@ -21,12 +21,39 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
-accordian = {open: null, ids: ['busLayer', 'appLayer']};
+accordian = {open: 'busLayer', ids: ['busLayer', 'appLayer']};
 sidebar = {};
 var class_names = _.keys(ea.classBelongsToArea);
 class_names.forEach(function(class_name){
 	sidebar[class_name] = null;
 });
+getSelectedTreeItem = function(full) {
+	var selected = Session.get('selected_tree_noun');
+	if (full) {
+		var handle =  sidebar[selected.class_name];
+		if (handle) {
+			var treeArray = handle.get_selected(true);
+			return (treeArray && treeArray.length>0) ? treeArray[0] : {};
+		} else
+			return growl("Cannot find item for "+selected);
+	}
+	return selected;
+};
+setSelectedTreeItem = function(item) {
+//	var old_item = getSelectedTreeItem();
+//	if (old_item && old_item._id)
+//		sidebar[old_item.class_name].deselect_node(old_item._id);
+
+	Session.set('selected_tree_noun', item);
+	var list = _.pairs(sidebar);
+	list.forEach(function(obj){
+		if (obj[0] !== item.class_name) {
+			obj[1].deselect_all(true);
+		} else {
+			obj[1].select_node(item._id);
+		}
+	});
+};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**
  * Tdocs

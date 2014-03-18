@@ -17,10 +17,10 @@ Template.tmplSidebar.rendered = function() {
 
 Template.tmpl_accordian_test.rendered = function() {
 	if (isFirst) {
+		isFirst = false;
 		$('#busLayer, #appLayer').on('show.bs.collapse', function (e) {
 			accordian.open = e.currentTarget.id;
 		});
-		isFirst = false;
 	}
 	//openAccordian();
 };
@@ -37,7 +37,7 @@ Template.tmpl_sidebar_buttons.helpers({
 Template.tmpl_sidebar_buttons.events({
 	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
-		var selected = getSelected();
+		var selected = getSelectedTreeItem();
 		if(!selected._id) { return false; }
 		Router.go('/nouns/'+selected._id);
 	},
@@ -71,7 +71,7 @@ Template.tmpl_sidebar_buttons.events({
 		});
 	},
 	'click button.btn.btn-success.btn-sm': function(e) {
-		var selected = getSelected();
+		var selected = getSelectedTreeItem();
 		var sel = selected._id;
 		if(!sel) { growl("Select a parent item first.  Your new item will be place under this parent"); return false; }
 		sel = sidebar[selected.class_name].create_node(sel);
@@ -81,7 +81,7 @@ Template.tmpl_sidebar_buttons.events({
 			growl("Select a parent item first.  Your new item will be place under this parent");
 	},
 	'click button.btn.btn-warning.btn-sm': function(e) {
-		var selected = getSelected();
+		var selected = getSelectedTreeItem();
 		var _id = selected._id;
 		if(!_id) { growl("Select an item first"); return false; }
 		if (selected.type !== 'root')
@@ -90,7 +90,7 @@ Template.tmpl_sidebar_buttons.events({
 			growl("Cannot edit this item");
 	},
 	'click button.btn.btn-danger.btn-sm': function(e) {
-		var selected = getSelected();
+		var selected = getSelectedTreeItem();
 		var _id = selected._id;
 		if(!_id) { growl("Select an item first"); return false; }
 		if (selected.type !== 'root' && selected.type !== 'top') {
@@ -100,13 +100,13 @@ Template.tmpl_sidebar_buttons.events({
 		}
 	},
 	'click #btn-open-all': function() {
-		var selected = getSelected();
+		var selected = getSelectedTreeItem();
 		var _id = selected._id;
 		if(!_id) { growl("Select an item first"); return false; }
 		sidebar[selected.class_name].open_all();
 	},
 	'click #btn-close-all': function() {
-		var selected = getSelected();
+		var selected = getSelectedTreeItem();
 		var _id = selected._id;
 		if(!_id) { growl("Select an item first"); return false; }
 		sidebar[selected.class_name].close_all();
@@ -129,9 +129,6 @@ Template.tmpl_sidebar_buttons.rendered = function() {
 };
 
 // FUNCTIONS and VAR --------------------------------------------------------------------
-var getSelected = function() {
-	return Session.get('selected_tree_noun');
-};
 var openAccordian = function() {
 	if (accordian.open) {
 		accordian.ids.forEach(function(id){

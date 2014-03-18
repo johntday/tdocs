@@ -99,6 +99,9 @@ Router.map(function () {
 					{title: noun.class_name, link:"#", isActive:false},
 					{title:noun.title, link:"", isActive:true}
 				]});
+				var item = sidebar[noun.class_name].get_node(noun._id);
+				var parent_id = (item && item.parent !== '#') ? item.parent : null;
+				setSelectedTreeItem({_id: noun._id, class_name: noun.class_name, type: noun.type, parent_id: parent_id});
 			}
 			return noun;
 		}

@@ -46,8 +46,8 @@
       },
       "accounts-admin-ui-bootstrap-3": {
         "git": "https://github.com/hharnisc/meteor-accounts-admin-ui-bootstrap-3.git",
-        "tag": "v0.2.2",
-        "commit": "2e3e6dda1444a3143e32452f0326520c3ff5d65c"
+        "tag": "v0.2.3",
+        "commit": "c396f28bdcfa6f20c67948fe17841746337f9016"
       },
       "spin": {
         "git": "https://github.com/SachaG/meteor-spin.git",
@@ -92,7 +92,7 @@
       "myjointjs": {
         "git": "https://github.com/johntday/meteor-myjointjs.git",
         "branch": "master",
-        "commit": "ec789c46c626f5dea5bfc00afd092de84d9fd2bc"
+        "commit": "f5b73f28ede77ff1256a385b46dc6cfa263c839a"
       },
       "reactive-publish": {
         "git": "https://github.com/Diggsey/meteor-reactive-publish.git",

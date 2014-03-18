@@ -48,16 +48,19 @@ Template.tmpl_noun_detail.helpers({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.events({
+	'click a': function(e) {
+		e.preventDefault();
+		var link = $(e.currentTarget).attr('href');
+		Router.go( link );
+	},
 	'click #btnEditToggle': function(e) {
 		e.preventDefault();
 		Session.set('form_update', true);
 	},
-
 	'click #btnCancelNoun': function(e) {
 		e.preventDefault();
 		Session.set('form_update', false);
 	},
-
 	'click #btnDeleteNoun': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
@@ -196,8 +199,58 @@ Template.tmpl_noun_detail.rendered = function() {
 	$("#description").focus();
 	if ( !Session.get('form_update') )
 		$("#description").blur();
+
+	drawNounDiagram();
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.destroyed = function() {
 	incClickCnt(Nouns, this.data._id);
 };
+/*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
+var drawNounDiagram = function() {
+	var graph = new joint.dia.Graph;
+
+	var $paper = $('#noun_paper');
+	var $container = $("#noun_panel_diagram");
+	var width = $container.width() - 40;
+	var height = 400;
+	var paper = new joint.dia.Paper({
+		el: $paper,
+		width: width,
+		height: height,
+		gridSize: 1,
+		model: graph
+	});
+
+	getOneAway(graph);
+
+	if (animateFrameRequestID) {
+		cancelAnimationFrame(animateFrameRequestID);
+	}
+
+	if (graph.get('cells').length === 0) {
+		// There is nothing to layout.
+		return;
+	}
+
+	var graphLayout = new joint.layout.ForceDirected({
+		graph: graph,
+		width: width - 40,
+		height: height - 60,
+		charge: 780,
+		linkStrength: .5,
+		linkDistance: (width<height) ? width/2 : height/2,
+		gravityCenter: { x: width/2, y: height/2 - 40 }
+	});
+
+	graphLayout.start();
+
+	function animate() {
+		animateFrameRequestID = requestAnimationFrame(animate);
+		graphLayout.step();
+	}
+	animate();
+
+};
+
+var animateFrameRequestID;
