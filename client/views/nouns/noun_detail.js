@@ -212,12 +212,10 @@ Template.tmpl_noun_detail.destroyed = function() {
 var drawNounDiagram = function() {
 	var graph = new joint.dia.Graph;
 
-	var $paper = $('#noun_paper');
-	var $container = $("#noun_panel_diagram");
-	var width = $container.width() - 40;
+	var width = $("#noun_panel_diagram").width() - 40;
 	var height = 400;
 	var paper = new joint.dia.Paper({
-		el: $paper,
+		el: $('#noun_paper'),
 		width: width,
 		height: height,
 		gridSize: 1,
