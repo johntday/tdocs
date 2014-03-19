@@ -101,6 +101,9 @@ Router.map(function () {
 				]});
 				var item = sidebar[noun.class_name].get_node(noun._id);
 				var parent_id = (item && item.parent !== '#') ? item.parent : null;
+				var currentTreeSelected = sidebar[noun.class_name].get_selected();
+				if ( currentTreeSelected !== noun._id )
+					sidebar[noun.class_name].deselect_node(currentTreeSelected, true);
 				setSelectedTreeItem({_id: noun._id, class_name: noun.class_name, type: noun.type, parent_id: parent_id});
 			}
 			return noun;

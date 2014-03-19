@@ -139,6 +139,7 @@ var treeConfig = function(class_name) {
 	return {
 		"core" : {
 			"animation" : 0
+			,"multiple": false
 			,"check_callback" : true
 			,"themes" : { "stripes" : true }
 			,'data' : null

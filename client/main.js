@@ -12,7 +12,7 @@ Session.setDefault('person_sort', 'name');
 
 Session.setDefault('selected_tdoc_id', null);
 Session.setDefault('selected_diagram_id', null);
-Session.setDefault('selected_tree_noun', {_id: null, class_name: null, type: null, parent_id: null});
+//Session.setDefault('selected_tree_noun', {_id: null, class_name: null, type: null, parent_id: null});
 
 Session.setDefault('tdoc_sort', 'title');
 Session.setDefault('diagram_sort', 'title');
@@ -27,8 +27,9 @@ var class_names = _.keys(ea.classBelongsToArea);
 class_names.forEach(function(class_name){
 	sidebar[class_name] = null;
 });
+var selected_tree_noun = {_id: null, class_name: null, type: null, parent_id: null};
 getSelectedTreeItem = function(full) {
-	var selected = Session.get('selected_tree_noun');
+	var selected = selected_tree_noun;
 	if (full) {
 		var handle =  sidebar[selected.class_name];
 		if (handle) {
@@ -40,19 +41,11 @@ getSelectedTreeItem = function(full) {
 	return selected;
 };
 setSelectedTreeItem = function(item) {
-//	var old_item = getSelectedTreeItem();
-//	if (old_item && old_item._id)
-//		sidebar[old_item.class_name].deselect_node(old_item._id);
-
-	Session.set('selected_tree_noun', item);
 	var list = _.pairs(sidebar);
-	list.forEach(function(obj){
-		if (obj[0] !== item.class_name) {
-			obj[1].deselect_all(true);
-		} else {
-			obj[1].select_node(item._id);
-		}
+	_.each(list, function(obj){
+		(obj[0] === item.class_name) ? obj[1].select_node(item._id) : obj[1].deselect_all(true);
 	});
+	selected_tree_noun = item;
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**

@@ -51,7 +51,9 @@ Template.tmpl_noun_detail.events({
 	'click a': function(e) {
 		e.preventDefault();
 		var link = $(e.currentTarget).attr('href');
-		Router.go( link );
+		if (link && link !== '#') {
+			Router.go( link );
+		}
 	},
 	'click #btnEditToggle': function(e) {
 		e.preventDefault();
