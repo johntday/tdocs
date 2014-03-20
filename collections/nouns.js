@@ -38,8 +38,8 @@ Meteor.methods({
 	createNoun: function(properties, parent_id){
 		var user = Meteor.user();
 		var userId = getDocUserIdForSaving(properties, user);
-		var slug = generateSlug(properties.title);
-		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, instance_name: slug} );
+//		var slug = generateSlug(properties.title, properties.project_id);
+//		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, instance_name: slug} );
 		var nounId = '';
 
 		if (!user)
@@ -48,11 +48,11 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'Please add a title');
 		if(!properties.project_id)
 			throw new Meteor.Error(602, 'Must select a project first');
-		if(nounWithSameTitle)
-			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
+//		if(nounWithSameTitle)
+//			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
 
 		var noun = extendWithMetadataForInsert( properties, userId, user );
-		_.extend(noun, {instance_name: slug});
+		noun.instance_name = Random.id();
 
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;
@@ -72,10 +72,17 @@ Meteor.methods({
 
 	updateNoun: function(_id, properties){
 		var user = Meteor.user();
+//		var slug = generateSlug(properties.title, properties.project_id);
+//		var nounWithSameTitle = Nouns.findOne( {project_id: properties.project_id, instance_name: slug} );
+
 		if (!user)
 			throw new Meteor.Error(601, 'You need to login to update a '+properties.class_name);
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
+		if(!properties.project_id)
+			throw new Meteor.Error(602, 'Must select a project first');
+//		if(nounWithSameTitle)
+//			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
 
 		var noun = extendWithMetadataForUpdate( properties );
 

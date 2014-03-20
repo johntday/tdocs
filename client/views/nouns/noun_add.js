@@ -25,7 +25,7 @@ Template.tmpl_noun_add.events({
 
 		// CREATE OBJECT
 		var properties = {
-			type: ea.eaType.Business_Capability
+			type: ea.class_name.Business_Capability
 			, title: $('#title').val()
 			, description: $('#description').val()
 			, project_id: getProjectId()

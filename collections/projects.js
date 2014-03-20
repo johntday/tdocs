@@ -60,31 +60,7 @@ Meteor.methods({
 //		}
 
 		if(!this.isSimulation) {
-			Roles.addUsersToRoles(userId, ['admin'], projectId);
-
-			// ADD CONFIGURATION DATA
-			var buscap = {
-				project_id: projectId,
-				instance_name: 'buscap_root'+projectId,
-				class_name: ea.class_name.Business_Capability,
-				type: 'root',
-				title: 'BUSINESS CAPABILITIES',
-				contained_business_capabilities: [
-					'buscap_top'+projectId
-				]
-			};
-			extendWithMetadataForInsert(buscap, userId, user);
-			Nouns.insert(buscap);
-
-			buscap = {
-				project_id: projectId,
-				instance_name: 'buscap_top'+projectId,
-				class_name: ea.class_name.Business_Capability,
-				type: 'top',
-				title: 'My Top Level Business Capability'
-			};
-			extendWithMetadataForInsert(buscap, userId, user);
-			Nouns.insert(buscap);
+			initNewProject(user, userId, projectId);
 		}
 		return project;
 	},
@@ -150,3 +126,48 @@ Meteor.methods({
 	}
 
 });
+/*------- INITIALIZE NEW PROJECT WITH DATA ----------------------------------------------*/
+function initNewProject(user, userId, projectId) {
+	Roles.addUsersToRoles(userId, ['admin'], projectId);
+
+	// BUSINESS CAPABILITY
+	var noun = {
+		project_id: projectId,
+		instance_name: 'buscap_root'+projectId,
+		class_name: ea.class_name.Business_Capability,
+		type: 'root',
+		title: 'BUSINESS CAPABILITIES',
+		contained_business_capabilities: [
+			'buscap_top'+projectId
+		]
+	};
+	extendWithMetadataForInsert(noun, userId, user);
+	Nouns.insert(noun);
+
+	noun = {
+		project_id: projectId,
+		instance_name: 'buscap_top'+projectId,
+		class_name: ea.class_name.Business_Capability,
+		type: 'top',
+		title: 'My Top Level Business Capability'
+	};
+	extendWithMetadataForInsert(noun, userId, user);
+	Nouns.insert(noun);
+
+
+}
+
+var projectSeedData = [
+	{'class_name': 'Business_Objective', root_title: 'BUSINESS OBJECTIVES', top_title: 'My Business Objectives'},
+	{'class_name': 'Business_Driver', root_title: 'BUSINESS DRIVERS', top_title: 'My Business Driver'},
+	{'class_name': 'Business_Domain', root_title: 'BUSINESS DOMAINS', top_title: ''},
+	{'class_name': 'Business_Principle', root_title: 'BUSINESS PRINCIPLES', top_title: ''},
+	{'class_name': 'Business_Capability', root_title: 'BUSINESS CAPABILITIES', top_title: ''},
+	{'class_name': 'Business_Role_Type', root_title: 'BUSINESS ROLE TYPES', top_title: ''},
+	{'class_name': 'Business_Activity', root_title: 'BUSINESS ACTIVITIES', top_title: ''},
+	{'class_name': 'Application_Function', root_title: 'APPLICATION FUNCTIONS', top_title: ''},
+	{'class_name': 'Application_Provider_Role', root_title: '', top_title: ''},
+	{'class_name': 'Application_Architecture_Principle', root_title: '', top_title: ''},
+	{'class_name': 'Application_Capability', root_title: '', top_title: ''},
+	{'class_name': 'Application_Function_Implementation', root_title: '', top_title: ''}
+];
