@@ -31,7 +31,9 @@
         "git": "https://github.com/johntday/meteor-myjointjs.git",
         "branch": "master"
       },
-      "reactive-publish": {}
+      "reactive-publish": {},
+      "filter-collections": {},
+      "fast-render": {}
     },
     "packages": {
       "roles": {
@@ -98,6 +100,16 @@
         "git": "https://github.com/Diggsey/meteor-reactive-publish.git",
         "tag": "v0.1.6",
         "commit": "dd8c149f109a1f3d1cac7e36293cf5904538ca90"
+      },
+      "filter-collections": {
+        "git": "https://github.com/julianmontagna/filter-collections.git",
+        "tag": "v0.1.4",
+        "commit": "87bc9cee7a23459e427d4613383be3f67f29245c"
+      },
+      "fast-render": {
+        "git": "https://github.com/arunoda/meteor-fast-render.git",
+        "tag": "v0.1.19",
+        "commit": "9e9a34e51885474c0dd9ed7a64dbff7ee9d4315c"
       },
       "server-deps": {
         "git": "https://github.com/Diggsey/meteor-server-deps.git",

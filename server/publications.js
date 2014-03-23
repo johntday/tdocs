@@ -29,6 +29,16 @@ Meteor.reactivePublish(null, function() {
 	return returnArray;
 });
 
+/**
+ * Filter
+ */
+Meteor.FilterCollections.publish(Nouns, {
+	name: 'nouns-full'
+});
+
+Meteor.FilterCollections.publish(Nouns, {
+	name: 'nouns-lite'
+});
 
 /**
  * Tdocs

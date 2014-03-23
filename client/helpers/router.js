@@ -79,7 +79,7 @@ Router.map(function () {
 	/**
 	 * Noun
 	 */
-	//this.route('tmpl_nouns'               ,{path: '/nouns'});
+	this.route('noun_filter_list'         ,{path: '/nouns'});
 	this.route('tmpl_noun_add'            ,{path: '/nounAdd'});
 	this.route('tmpl_noun_detail', {
 		path  : '/nouns/:_id',
@@ -94,8 +94,8 @@ Router.map(function () {
 				var tax = ea.getClassBelongsToArea(noun.class_name);
 				Session.set('breadcrumbs', {breadcrumbs: [
 					{title:"home", link:"/", isActive:false},
-					{title: tax.area, link:"#", isActive:false},
-					{title: noun.class_name, link:"#", isActive:false},
+					{title: tax.area, link:"/nouns", isActive:false},
+					{title: noun.class_name, link:"/nouns", isActive:false},
 					{title:noun.title, link:"", isActive:true}
 				]});
 				if (noun._id) {
@@ -109,6 +109,15 @@ Router.map(function () {
 			}
 			return noun;
 		}
+	});
+	this.route('home', {
+		path: '/home'
+	});
+	this.route('peopleList', {
+		path: '/people'
+	});
+	this.route('productList', {
+		path: '/products'
 	});
 
 	/**

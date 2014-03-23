@@ -1,0 +1,136 @@
+<template name="noun_filter_list">
+	<div class="row">
+		<nav class="navbar navbar-inverse" role="navigation">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Search by Field <b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu">
+							{{#each fcFilterSearchable.available}}
+							<li><a href="#" class="fc-search-fields">{{#if active}}Disable{{else}}Enable{{/if}} {{title}} filter</a></li>
+							{{/each}}
+						</ul>
+					</li>
+				</ul>
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search" value="{{fcFilterSearchable.criteria}}" data-fc-search-target="search-box">
+					</div>
+					<button type="submit" class="btn btn-default fc-search-trigger"
+					        data-fc-search-trigger="search-box"><span class="glyphicon glyphicon-search"></span> </button>
+					{{#if fcFilterSearchable.criteria}}<button type="button" class="btn btn-default fc-search-clear">Reset</button>{{/if}}
+					<button type="button" class="btn btn-info" title="Help"><span class="glyphicon glyphicon-question-sign"></span> </button>
+				</form>
+			</div>
+		</nav>
+
+		<div class="well">
+			<!-- custom filter links-->
+			<strong>Filters</strong>
+			<div class="btn-toolbar" role="toolbar">
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm fc-filter" data-fc-filter-field="area_code" data-fc-filter-value="b">Business</button>
+					<button type="button" class="btn btn-default btn-sm fc-filter" data-fc-filter-field="area_code" data-fc-filter-value="a">Application</button>
+					<button type="button" class="btn btn-default btn-sm fc-filter" data-fc-filter-field="area_code" data-fc-filter-value="t">Technology</button>
+					<button type="button" class="btn btn-default btn-sm fc-filter" data-fc-filter-field="area_code" data-fc-filter-value="m">Motivation</button>
+					<button type="button" class="btn btn-default btn-sm fc-filter" data-fc-filter-field="area_code" data-fc-filter-value="i">Implementation</button>
+				</div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm fc-filter" data-fc-filter-field="stars" data-fc-filter-value="{{userId}}"><span
+							class="glyphicon glyphicon-star">Starred</span></button>
+				</div>
+			</div>
+			<!-- /custom filter links -->
+
+			<!-- active filters -->
+			{{#if fcFilterActive}}
+			<hr/>
+			<strong>Active Filters</strong>
+			<ul class="nav nav-pills">
+				{{#each fcFilterActive}}
+				<li class="active"><a href="#" class="fc-filter-clear">{{title}}: {{operator}} {{value}}</a></li>
+				{{/each}}
+				<li class="active"><a href="#" class="fc-filter-reset">Reset all filters</a></li>
+			</ul>
+			{{/if}}
+			<!-- /active filters -->
+		</div>
+
+		<div class="table-responsive">
+			<table class="table table-striped table-hover table-condensed">
+				<tr>
+					<th class="fc-sort" data-fc-sort="title">
+						Title
+						{{#if fcSort.title.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.title.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					</th>
+					<th class="fc-sort" data-fc-sort="area_code">
+						Area
+						{{#if fcSort.area_code.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.area_code.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					</th>
+					<th class="fc-sort" data-fc-sort="class_name">
+						Class_Name
+						{{#if fcSort.class_name.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.class_name.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					</th>
+					<th class="fc-sort" data-fc-sort="description">
+						Description
+						{{#if fcSort.description.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.description.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					</th>
+				</tr>
+				{{#each fcResults}}
+				<tr>
+					<td><a href="/nouns/{{_id}}">{{title}}</a></td>
+					<td>{{area}}</td>
+					<td>{{class_name}}</td>
+					<td>{{description}}</td>
+				</tr>
+				{{/each}}
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<!-- items per page -->
+			<small><strong>Items per page select</strong></small>
+			<select class="fc-pager-options form-control">
+				{{#each fcPager.options}}
+				<option value="{{value}}" {{status}}>{{value}}</option>
+				{{/each}}
+			</select>
+			<!-- /items per page -->
+			<!-- items per page -->
+			<small><strong>Items per page links</strong></small><br/>
+			<a href="#" class="fc-pager-option" data-fc-pager-page="5">(5) five</a> |
+			<a href="#" class="fc-pager-option" data-fc-pager-page="15">(15) fifteen</a>
+			<!-- /items per page -->
+		</div>
+		<div class="col-md-7 text-center">
+			{{#if fcPager.pages}}
+			<!-- numbered pager -->
+			<ul class="pagination">
+				<li><a href="#" class="fc-pager-first">&lt;&lt;</a></li>
+				<li><a href="#" class="fc-pager-previous">&lt;</a></li>
+				{{#each fcPager.pages}}
+				<li class="{{status}}"><a href="#" class="fc-pager-page" data-fc-pager-page="{{page}}">{{page}}</a></li>
+				{{/each}}
+				<li><a href="#" class="fc-pager-next">&gt;</a></li>
+				<li><a href="#" class="fc-pager-last">&gt;&gt;</a></li>
+			</ul>
+			<!-- /numbered pager -->
+			{{/if}}
+		</div>
+		<div class="col-md-3">
+			<!-- pager status -->
+			<ul class="small">
+				<li>Current page is: <strong>{{fcPager.currentPage}}</strong>.</li>
+				<li>We are displaying <strong>{{fcPager.itemsPerPage}}</strong> results.</li>
+				<li>From <strong>{{fcPager.offsetStart}}</strong> to <strong>{{fcPager.offsetEnd}}</strong>.</li>
+				<li>We have found a total of <strong>{{fcPager.totalItems}}</strong> documents.</li>
+			</ul>
+			<!-- /pager status -->
+		</div>
+	</div>
+</template>

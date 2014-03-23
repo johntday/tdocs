@@ -22,3 +22,5 @@ myhandsontable
 mybootbox
 myjointjs
 reactive-publish
+filter-collections
+fast-render

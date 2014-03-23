@@ -22,6 +22,8 @@
     "myjointjs": {
       "git": "https://github.com/johntday/meteor-myjointjs.git"
     },
-    "reactive-publish": {}
+    "reactive-publish": {},
+    "filter-collections": {},
+    "fast-render": {}
   }
 }

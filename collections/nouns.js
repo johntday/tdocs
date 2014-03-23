@@ -1,4 +1,4 @@
-Nouns = new Meteor.Collection('coll_nouns');
+//Nouns = new Meteor.Collection('coll_nouns');
 /*------------------------------------------------------------------------------------------------------------------------------*/
 // Create a collection where users can only modify documents that
 // they own. Ownership is tracked by an 'userId' field on each
@@ -23,8 +23,8 @@ Nouns.allow({
 
 Nouns.deny({
 	update: function (userId, docs, fields, modifier) {
-		// can't change owners
-		return _.contains(fields, 'userId','owner');
+		// can't change the following fields
+		return _.contains(fields, 'userId','owner','class_name');
 	},
 	remove: function (userId, doc) {
 		// can't remove locked documents
@@ -53,6 +53,7 @@ Meteor.methods({
 
 		var noun = extendWithMetadataForInsert( properties, userId, user );
 		noun.instance_name = Random.id();
+		noun.area_code = ea.getClassBelongsToArea(noun.class_name).area_code;
 
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;
