@@ -79,8 +79,6 @@ Meteor.methods({
 			throw new Meteor.Error(601, 'You need to login to update a '+properties.class_name);
 		if(!properties.title)
 			throw new Meteor.Error(602, 'Please add a title');
-		if(!properties.project_id)
-			throw new Meteor.Error(602, 'Must select a project first');
 //		if(nounWithSameTitle)
 //			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
 

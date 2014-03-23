@@ -16,13 +16,15 @@ Template.tmplSidebar.rendered = function() {
 };
 
 Template.tmpl_accordian_test.rendered = function() {
-	if (isFirst) {
-		isFirst = false;
-		$('#busLayer, #appLayer').on('show.bs.collapse', function (e) {
+	if (!Template.tmpl_accordian_test.isFirst) {
+		Template.tmpl_accordian_test.isFirst = true;
+		$('#busLayer, #appLayer, #techLayer, #implLayer, #modvLayer').on('show.bs.collapse', function (e) {
 			accordian.open = e.currentTarget.id;
 		});
 	}
-	//openAccordian();
+};
+Template.tmpl_accordian_test.destroyed = function() {
+	Template.tmpl_accordian_test.isFirst = null;
 };
 
 Template.tmpl_sidebar_buttons.helpers({
@@ -139,4 +141,3 @@ var openAccordian = function() {
 		});
 	}
 };
-var isFirst = true;

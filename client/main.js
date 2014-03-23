@@ -21,7 +21,7 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
-accordian = {open: 'busLayer', ids: ['busLayer', 'appLayer']};
+accordian = {open: 'busLayer', ids: ['busLayer', 'appLayer', 'techLayer', 'modvLayer', 'implLayer']};
 sidebar = {};
 var class_names = _.keys(ea.classBelongsToArea);
 class_names.forEach(function(class_name){

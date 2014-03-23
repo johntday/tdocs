@@ -40,16 +40,15 @@
 			<div id="busLayer" class="panel-collapse collapse">
 				<div class="panel-body">
 					{{#constant}}
-					<h3 style="margin-top: 0">Conceptual</h3>
-					<div id="Business_Capability"></div>
-					<div id="Business_Domain"></div>
-					<div id="Business_Role_Type"></div>
-					<div id="Business_Principle"></div>
-					<div id="Business_Driver"></div>
-					<div id="Business_Objective"></div>
-
-					<h3>Logical</h3>
-					<div id="Business_Activity"></div>
+					<div id="Business_Actor"></div>
+					<div id="Business_Role"></div>
+					<div id="Business_Interface"></div>
+					<div id="Business_Function"></div>
+					<div id="Business_Process"></div>
+					<div id="Business_Event"></div>
+					<div id="Business_Service"></div>
+					<div id="Business_Object"></div>
+					<div id="Business_Location"></div>
 					{{/constant}}
 				</div>
 			</div>
@@ -66,14 +65,78 @@
 			<div id="appLayer" class="panel-collapse collapse">
 				<div class="panel-body">
 					{{#constant}}
-					<h3 style="margin-top: 0">Conceptual</h3>
-					<div id="Application_Architecture_Principle"></div>
-					<div id="Application_Capability"></div>
-
-					<h3>Logical</h3>
+					<div id="Application_Component"></div>
+					<div id="Application_Interface"></div>
+					<div id="Application_Service"></div>
 					<div id="Application_Function"></div>
-					<div id="Application_Provider_Role"></div>
-					<div id="Application_Function_Implementation"></div>
+					<div id="Application_Data_Object"></div>
+					{{/constant}}
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-purple">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#techLayer">
+						Technology Layer
+					</a>
+				</h4>
+			</div>
+			<div id="techLayer" class="panel-collapse collapse">
+				<div class="panel-body">
+					{{#constant}}
+					<div id="Technology_Artifact"></div>
+					<div id="Technology_Communication_Path"></div>
+					<div id="Technology_Network"></div>
+					<div id="Technology_Interface"></div>
+					<div id="Technology_Function"></div>
+					<div id="Technology_Service"></div>
+					<div id="Technology_Node"></div>
+					<div id="Technology_Software"></div>
+					<div id="Technology_Device"></div>
+					{{/constant}}
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-purple">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#implLayer">
+						Implementation Layer
+					</a>
+				</h4>
+			</div>
+			<div id="implLayer" class="panel-collapse collapse">
+				<div class="panel-body">
+					{{#constant}}
+					<div id="Implementation_Work_Package"></div>
+					<div id="Implementation_Deliverable"></div>
+					<div id="Implementation_Plateau"></div>
+					<div id="Implementation_Gap"></div>
+					{{/constant}}
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-purple">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#modvLayer">
+						Motivation Layer
+					</a>
+				</h4>
+			</div>
+			<div id="modvLayer" class="panel-collapse collapse">
+				<div class="panel-body">
+					{{#constant}}
+					<div id="Motivation_Stakeholder"></div>
+					<div id="Motivation_Driver"></div>
+					<div id="Motivation_Goal"></div>
+					<div id="Motivation_Principle"></div>
+					<div id="Motivation_Requirement"></div>
+					<div id="Motivation_Constraint"></div>
 					{{/constant}}
 				</div>
 			</div>
@@ -82,5 +145,3 @@
 	</div>
 
 </template>
-
-

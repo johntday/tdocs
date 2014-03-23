@@ -22,15 +22,6 @@ Meteor.reactivePublish(null, function() {
 				var class_names = _.keys(ea.classBelongsToArea);
 				var q_class_names = {project_id: project_id, class_name: {$in: class_names} };
 				returnArray.push( Nouns.find( q_class_names ));
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Capability} ) );
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Domain} ) );
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Role_Type} ) );
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Principle} ) );
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Driver} ) );
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Objective} ) );
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Business_Activity} ) );
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Application_Architecture_Principle} ) );
-//				returnArray.push( Nouns.find( {project_id: project_id, class_name: ea.class_name.Application_Capability} ) );
 			}
 		}
 	}

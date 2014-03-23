@@ -95,7 +95,6 @@ Router.map(function () {
 				Session.set('breadcrumbs', {breadcrumbs: [
 					{title:"home", link:"/", isActive:false},
 					{title: tax.area, link:"#", isActive:false},
-					{title: tax.layer, link:"#", isActive:false},
 					{title: noun.class_name, link:"#", isActive:false},
 					{title:noun.title, link:"", isActive:true}
 				]});
@@ -241,19 +240,6 @@ Router.map(function () {
 					refreshBusCap(class_name, obj.children_name);
 				}
 			});
-
-//			//BUSINESS CONCEPTUAL
-//			refreshBusCap(ea.class_name.Business_Capability,'contained_business_capabilities');
-//			refreshBusCap(ea.class_name.Business_Domain,'contained_business_domains');
-//			refreshBusCap(ea.class_name.Business_Role_Type,'children');
-//			refreshBusCap(ea.class_name.Business_Principle,'children');
-//			refreshBusCap(ea.class_name.Business_Driver,'children');
-//			refreshBusCap(ea.class_name.Business_Objective,'children');
-//			//BUSINESS LOGICAL
-//			refreshBusCap(ea.class_name.Business_Activity,'children');
-//			//APP CONCEPTUAL
-//			refreshBusCap(ea.class_name.Application_Architecture_Principle,'children');
-//			refreshBusCap(ea.class_name.Application_Capability,'contained_app_capabilities');
 
 			if (project && project.title) {
 				Session.set('breadcrumbs', {breadcrumbs: [
