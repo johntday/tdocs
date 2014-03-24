@@ -61,14 +61,7 @@ NounsFilter = new Meteor.FilterCollections(Nouns, {
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.noun_filter_list.helpers({
 	area: function() {
-			switch(this.area_code) {
-				case 'a': return 'Application';
-				case 'b': return 'Business';
-				case 't': return 'Technology';
-				case 'm': return 'Motivation';
-				case 'i': return 'Implementation';
-				default: return 'Unknown';
-			}
+		return ea.getAreaName(this.class_name);
 	},
 	userId: function() {
 		return Meteor.userId();
