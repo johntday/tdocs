@@ -135,8 +135,9 @@ function initNewProject(user, userId, projectId) {
 		var top = {
 			project_id: projectId
 			,class_name: data.class_name
+			,area_code: ea.getClassBelongsToArea(data.class_name).area_code
 			,instance_name: Random.id()
-			,type: 'top'
+			//,type: 'top'
 			,title: data.top_title
 			,description: data.top_title
 		};
@@ -146,6 +147,7 @@ function initNewProject(user, userId, projectId) {
 		var root = {
 			project_id: projectId
 			,class_name: data.class_name
+			,area_code: ea.getClassBelongsToArea(data.class_name).area_code
 			,instance_name: Random.id()
 			,type: 'root'
 			,title: data.root_title

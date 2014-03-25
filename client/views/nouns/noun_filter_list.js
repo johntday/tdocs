@@ -61,7 +61,7 @@ NounsFilter = new Meteor.FilterCollections(Nouns, {
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.noun_filter_list.helpers({
 	area: function() {
-		return ea.getAreaName(this.class_name);
+		return ea.getAreaName(this.area_code);
 	},
 	userId: function() {
 		return Meteor.userId();
@@ -93,3 +93,4 @@ Template.noun_filter_list.events({
 		});
 	}
 });
+/*------------------------------------------------------------------------------------------------------------------------------*/

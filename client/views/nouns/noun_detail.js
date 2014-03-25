@@ -48,13 +48,6 @@ Template.tmpl_noun_detail.helpers({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.events({
-	'click a': function(e) {
-		e.preventDefault();
-		var link = $(e.currentTarget).attr('href');
-		if (link && link !== '#') {
-			Router.go( link );
-		}
-	},
 	'click #btnEditToggle': function(e) {
 		e.preventDefault();
 		Session.set('form_update', true);
@@ -82,6 +75,13 @@ Template.tmpl_noun_detail.events({
 				Router.go('/');
 			}
 		});
+	},
+	'click a': function(e) {
+		e.preventDefault();
+		var link = $(e.currentTarget).attr('href');
+		if (link && link !== '#') {
+			Router.go( link );
+		}
 	},
 
 	'click #icon-heart': function(e) {
@@ -190,7 +190,7 @@ Template.tmpl_noun_detail.events({
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
-				growl( "Noun updated", {type:'s', hideSnark:true} );
+				growl( this.class_name + " updated", {type:'s', hideSnark:true} );
 			}
 		});
 	}
