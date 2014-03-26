@@ -137,7 +137,7 @@ Meteor.methods({
 		//			Notifications.insert(n);
 		//		}
 
-		Nouns.update(_id, {$set: {title: title}});
+		Nouns.update(_id, {$set: {title: title, updated: getNow()}});
 		return;
 	},
 	moveNoun: function(parent_id_old, parent_id, instance_name, class_name, children_name, position) {

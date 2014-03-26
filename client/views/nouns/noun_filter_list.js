@@ -29,6 +29,11 @@ NounsFilter = new Meteor.FilterCollections(Nouns, {
 			title: 'starred',
 			condition: '$and',
 			searchable: 'optional'
+		},
+		"favs": {
+			title: 'favs',
+			condition: '$and',
+			searchable: 'optional'
 		}
 	},
 	callbacks: {
@@ -65,6 +70,9 @@ Template.noun_filter_list.helpers({
 	},
 	userId: function() {
 		return Meteor.userId();
+	},
+	icon: function() {
+		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.class_name).icon;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

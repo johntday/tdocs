@@ -51,11 +51,14 @@
 							<li><a href="/diagramGraphAdd" title="Create new Graph Diagram">Create Graph Diagram</a></li>
 							<li><a href="/glossaryAdd" title="Create new Glossary item">Create Glossary</a></li>
 							<li><a href="/tableAdd" title="Create new Table item">Create Table</a></li>
-							<li><a href="/nounAdd" title="Create new Noun">Create Noun</a></li>
+							<li><a href="/nounAdd" title="Create new Noun">Create Model Item</a></li>
 
 						</ul>
 					</li>
    					{{/if}}
+					<li class="{{activeRouteClass  '/help'}}">
+						<a href="/help">Help</a>
+					</li>
 					{{#if isAdmin}}
 					<!-- ADMIN ACTIONS -->
 					<li class="dropdown">
