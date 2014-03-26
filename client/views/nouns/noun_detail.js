@@ -83,7 +83,6 @@ Template.tmpl_noun_detail.events({
 			Router.go( link );
 		}
 	},
-
 	'click #icon-heart': function(e) {
 		var user = Meteor.user();
 		if(!user){
