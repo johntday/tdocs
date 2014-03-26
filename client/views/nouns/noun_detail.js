@@ -109,7 +109,6 @@ Template.tmpl_noun_detail.events({
 			MyLog("noun_details.js/click #icon-heart/1", "add to favs");
 		}
 	},
-
 	'click #icon-eye': function(e) {
 		var user = Meteor.user();
 		if(!user){
@@ -125,7 +124,6 @@ Template.tmpl_noun_detail.events({
 			MyLog("noun_details.js/click #icon-eye/1", "remove from seen");
 		}
 	},
-
 	'click #icon-star': function(e) {
 		var user = Meteor.user();
 		if(!user){
@@ -141,15 +139,13 @@ Template.tmpl_noun_detail.events({
 			MyLog("noun_details.js/click #icon-star/1", "remove from stars");
 		}
 	},
-
-	'keyup #description, focus #description': function(e) {
-		e.preventDefault();
-		var $element = $(e.target).get(0);
-		$element.style.overflow = 'hidden';
-		$element.style.height = 0;
-		$element.style.height = $element.scrollHeight + 'px';
-	},
-
+//	'keyup #description, focus #description': function(e) {
+//		e.preventDefault();
+//		var $element = $(e.target).get(0);
+//		$element.style.overflow = 'hidden';
+//		$element.style.height = 0;
+//		$element.style.height = $element.scrollHeight + 'px';
+//	},
 	'click #btnUpdateNoun': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
@@ -197,7 +193,6 @@ Template.tmpl_noun_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.rendered = function() {
-	$("#title").focus();
 	$("#description").focus();
 	if ( !Session.get('form_update') )
 		$("#description").blur();
