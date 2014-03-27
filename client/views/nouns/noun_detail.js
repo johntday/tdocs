@@ -44,10 +44,21 @@ Template.tmpl_noun_detail.helpers({
 	},
 	stars_cnt: function() {
 		return (this.stars_cnt && this.stars_cnt > -1) ? this.stars_cnt : 0;
+	},
+	area: function() {
+		return ea.getAreaName(this.area_code);
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.events({
+	'click #area': function(e) {
+		e.preventDefault();
+		gotoNounFilterPage('area_code', {value:this.area_code, condition:'$and'});
+	},
+	'click #class_name': function(e) {
+		e.preventDefault();
+		gotoNounFilterPage('class_name', {value:this.class_name, condition:'$and'});
+	},
 	'click #btnEditToggle': function(e) {
 		e.preventDefault();
 		Session.set('form_update', true);

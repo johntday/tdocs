@@ -91,13 +91,13 @@ Router.map(function () {
 			var noun = Nouns.findOne(this.params._id);
 
 			if (noun) {
-				var tax = ea.getClassBelongsToArea(noun.class_name);
-				Session.set('breadcrumbs', {breadcrumbs: [
-					{title:"home", link:"/", isActive:false},
-					{title: tax.area, link:"/nouns", isActive:false},
-					{title: noun.class_name, link:"/nouns", isActive:false},
-					{title:noun.title, link:"", isActive:true}
-				]});
+//				var tax = ea.getClassBelongsToArea(noun.class_name);
+//				Session.set('breadcrumbs', {breadcrumbs: [
+//					{title:"home", link:"/", isActive:false},
+//					{title: tax.area, link:"/nouns", isActive:false},
+//					{title: noun.class_name, link:"/nouns", isActive:false},
+//					{title:noun.title, link:"", isActive:true}
+//				]});
 				if (noun._id) {
 					var item = sidebar[noun.class_name].get_node(noun._id);
 					var parent_id = (item && item.parent !== '#') ? item.parent : null;

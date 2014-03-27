@@ -1,6 +1,12 @@
 NounsFilter = new Meteor.FilterCollections(Nouns, {
 	name: 'nouns-full',
 	template: 'noun_filter_list',
+	pager: {
+		options: [10, 25, 50],
+		itemsPerPage: 10,
+		currentPage: 1,
+		showPages: 5
+	},
 	sort: {
 		order: ['asc', 'desc'],
 		defaults: [
@@ -16,13 +22,13 @@ NounsFilter = new Meteor.FilterCollections(Nouns, {
 		"title": {
 			title: 'title',
 			operator: ['$regex', 'i'],
-			condition: '$or',
+			condition: '$and',
 			searchable: 'required'
 		},
 		"description": {
 			title: 'description',
 			operator: ['$regex', 'i'],
-			condition: '$or',
+			condition: '$and',
 			searchable: 'required'
 		},
 		"stars": {
@@ -34,12 +40,17 @@ NounsFilter = new Meteor.FilterCollections(Nouns, {
 			title: 'favs',
 			condition: '$and',
 			searchable: 'optional'
+		},
+		"class_name": {
+			title: 'class_name',
+			condition: '$and',
+			searchable: 'optional'
 		}
 	},
 	callbacks: {
 		beforeSubscribe: function (query) {
 //			Session.set('loading', true);
-			query.selector.type = {$nin: ['root','top']};
+			query.selector.type = {$nin: ['root']};
 			query.selector.project_id = getProjectId();
 			return query;
 		}
@@ -47,7 +58,7 @@ NounsFilter = new Meteor.FilterCollections(Nouns, {
 //			Session.set('loading', false);
 //		}
 		,beforeResults: function(query){
-			query.selector.type = {$nin: ['root','top']};
+			query.selector.type = {$nin: ['root']};
 			query.selector.project_id = getProjectId();
 			return query;
 		}
@@ -85,6 +96,7 @@ Template.noun_filter_list.events({
 				'<li>Click on one of the <strong>filter buttons</strong> to filter the list</li>' +
 				"<li>or, type in a search string</li>" +
 				'<li>to remove a filter, click on one of the <strong>active filter buttons</strong></li>' +
+				'<li>All filter conditions are <strong>AND</strong>ed together</li>' +
 				"</ul>" +
 				"<h3>Sorting</h3>" +
 				"<ul>" +

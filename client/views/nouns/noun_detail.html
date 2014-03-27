@@ -1,6 +1,10 @@
 <template name="tmpl_noun_detail">
-	{{> tmpl_breadcrumbs breadcrumbs}}
-
+	<ol class="breadcrumb">
+		<li><a href="/">home</a></li>
+		<li><a id="area" href="#">{{area}}</a></li>
+		<li><a id="class_name" href="#">{{class_name}}</a></li>
+		<li class="active">{{title}}</li>
+	</ol>
 	<div class="panel panel-purple">
 		<div class="panel-heading">
 
