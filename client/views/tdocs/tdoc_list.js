@@ -27,6 +27,9 @@ Template.tmpl_tdocs_sort_select.events({
 			Router.go('/tdocs');
 		}
 		$selector = null;
+	},
+	'click button.btn.btn-success.btn-sm': function(e) {
+		Router.go('/tdocAdd');
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

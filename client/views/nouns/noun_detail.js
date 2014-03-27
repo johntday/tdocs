@@ -76,14 +76,15 @@ Template.tmpl_noun_detail.events({
 			$(e.target).removeClass('disabled');
 			return false;
 		}
+		var noun = getSelectedTreeItem(true);
 
-		Meteor.call('deleteNoun', this._id, function(error) {
+		Meteor.call('deleteNoun', this, noun.parent, ea.getClassBelongsToArea(this.class_name).children_name, function(error, _id) {
 			if(error){
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
-				growl( "Deleted "+this.class_name, {type:'s', hideSnark:true} );
-				Router.go('/');
+				sidebar[noun.original.class_name].delete_node(noun.id);
+				Router.go('/nouns');
 			}
 		});
 	},
@@ -191,12 +192,11 @@ Template.tmpl_noun_detail.events({
 
 		Meteor.call('updateNoun', _id, properties, function(error, noun) {
 			if(error){
-				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
 				Session.set('form_update', false);
-				growl( this.class_name + " updated", {type:'s', hideSnark:true} );
+				growl( '"' + noun.title + '" updated', {type:'s', hideSnark:true} );
 			}
 		});
 	}

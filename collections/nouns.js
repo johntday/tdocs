@@ -124,7 +124,7 @@ Meteor.methods({
 //		}
 
 		Nouns.remove(_id);
-		return;
+		return _id;
 	},
 	updateNounTitle: function(_id, title) {
 		var user = Meteor.user();

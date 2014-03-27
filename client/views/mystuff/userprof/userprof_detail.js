@@ -20,6 +20,9 @@ Template.tmpl_userprof_detail.helpers({
 	email: function() {
 		var u = Meteor.user();
 		return (u && u.emails && u.emails.length>0) ? u.emails[0].address : '';
+	},
+	_id: function() {
+		return Meteor.userId();
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

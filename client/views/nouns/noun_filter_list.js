@@ -100,8 +100,23 @@ Template.noun_filter_list.events({
 				"</ul>" +
 				"<h3>Sorting</h3>" +
 				"<ul>" +
-				'<li>Click on a column header to sort.  Each click will toggle between: <strong>Ascending</strong>, <strong>Desending</strong>, <strong>No-sort</strong>' +
+				'<li>Click on a column header to sort.  Each click will toggle between: <strong>Ascending</strong>, <strong>Desending</strong>, <strong>No-sort</strong></li>' +
+				'<li><strong>bug</strong>: First column header is not shown as turned-off, when another column header is selected for sorting</li>' +
 				"</ul>"
+			,buttons: {
+				main: {
+					label: "OK",
+					className: "btn-primary",
+					callback: function() {
+					}
+				}
+			}
+		});
+	},
+	'click button.btn.btn-success': function() {
+		bootbox.dialog({
+			title: "Create"
+			,message: "<h3>Fix Me</h3>"
 			,buttons: {
 				main: {
 					label: "OK",
