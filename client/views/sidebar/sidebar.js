@@ -37,6 +37,10 @@ Template.tmpl_sidebar_buttons.helpers({
 });
 
 Template.tmpl_sidebar_buttons.events({
+	'click #btn-sidebar-search': function(e) {
+		e.preventDefault();
+		Router.go('/nouns');
+	},
 	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
 		var selected = getSelectedTreeItem();

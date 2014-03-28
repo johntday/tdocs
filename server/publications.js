@@ -37,8 +37,13 @@ Meteor.FilterCollections.publish(Nouns, {
 });
 
 Meteor.FilterCollections.publish(Nouns, {
-	name: 'nouns-lite'
+	name: 'nouns-simple'
 });
+
+Meteor.FilterCollections.publish(EA_Relationships, {
+	name: 'ea-relationships'
+});
+
 
 /**
  * Tdocs

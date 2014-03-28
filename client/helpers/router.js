@@ -26,6 +26,7 @@ Router.map(function () {
 		path  : '/admin/users',
 		template: 'accountsAdmin'
 	});
+	this.route('adminCoreData'     ,{path: '/admin/core'});
 
 	/**
 	 * MYSTUFF
@@ -63,6 +64,7 @@ Router.map(function () {
 	 * Noun
 	 */
 	this.route('noun_filter_list'         ,{path: '/nouns'});
+	this.route('noun_filter_list_simple'  ,{path: '/picknoun'});
 	this.route('tmpl_noun_add'            ,{path: '/nounAdd'});
 	this.route('tmpl_noun_detail', {
 		path  : '/nouns/:_id',
@@ -74,13 +76,6 @@ Router.map(function () {
 			var noun = Nouns.findOne(this.params._id);
 
 			if (noun) {
-//				var tax = ea.getClassBelongsToArea(noun.class_name);
-//				Session.set('breadcrumbs', {breadcrumbs: [
-//					{title:"home", link:"/", isActive:false},
-//					{title: tax.area, link:"/nouns", isActive:false},
-//					{title: noun.class_name, link:"/nouns", isActive:false},
-//					{title:noun.title, link:"", isActive:true}
-//				]});
 				if (noun._id) {
 					var item = sidebar[noun.class_name].get_node(noun._id);
 					var parent_id = (item && item.parent !== '#') ? item.parent : null;
@@ -93,15 +88,12 @@ Router.map(function () {
 			return noun;
 		}
 	});
-	this.route('home', {
-		path: '/home'
-	});
-	this.route('peopleList', {
-		path: '/people'
-	});
-	this.route('productList', {
-		path: '/products'
-	});
+
+	/**
+	 * Relationships
+	 */
+	this.route('noun_rel_filter_list'     ,{path: '/relationships'});
+	this.route('relationship_list'        ,{path: '/pickrel'});
 
 	/**
 	 * Diagrams: Sequence

@@ -1,4 +1,4 @@
-	<template name="noun_filter_list">
+<template name="noun_rel_filter_list">
 	<div class="row">
 		<nav class="navbar navbar-inverse" role="navigation">
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -110,6 +110,11 @@
 				<option value="{{value}}" {{status}}>{{value}}</option>
 				{{/each}}
 			</select>
+			<!-- /items per page -->
+			<!-- items per page -->
+			<small><strong>Items per page links</strong></small><br/>
+			<a href="#" class="fc-pager-option" data-fc-pager-page="5">(5) five</a> |
+			<a href="#" class="fc-pager-option" data-fc-pager-page="15">(15) fifteen</a>
 			<!-- /items per page -->
 		</div>
 		<div class="col-md-7 text-center">

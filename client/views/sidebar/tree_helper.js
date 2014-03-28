@@ -4,12 +4,7 @@ refreshBusCap = function(class_name, children_name) {
 		if (sidebar[class_name]) { sidebar[class_name].destroy(); sidebar[class_name]=null; }
 	} catch(err) {}
 	var root = Nouns.findOne({project_id: getProjectId(), class_name: class_name, type:"root"});
-//	if (!root && retryCnt++ < 3) {
-//			// TRY AGAIN
-//			Meteor.setTimeout(function(){
-//				refreshBusCap(class_name, children_name);
-//				1000});
-//	}
+
 	var treeData = getTree( root );
 	function getTree(noun) {
 		if (!noun) return;

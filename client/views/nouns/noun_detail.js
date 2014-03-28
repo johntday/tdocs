@@ -47,6 +47,9 @@ Template.tmpl_noun_detail.helpers({
 	},
 	area: function() {
 		return ea.getAreaName(this.area_code);
+	},
+	addRel: function() {
+		return Session.get('add_rel');
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -207,7 +210,25 @@ Template.tmpl_noun_detail.rendered = function() {
 	if ( !Session.get('form_update') )
 		$("#description").blur();
 
+	Meteor.typeahead(
+		$("#nouns"),
+		nouns,
+		/*onSelection*/function() {
+			$("#nouns").val('');
+			alert('hi');
+		}
+	);
+
 	drawNounDiagram();
+};
+/*------------------------------------------------------------------------------------------------------------------------------*/
+var nouns = function(text, callback){
+	var allnouns = Nouns.find({project_id: getProjectId(), title: {$regex: RegExp.quote(text), $options: 'i'}, type: {$nin: ['root']}}, {sort: {title: 1}}).fetch();
+		callback(
+			allnouns.map(function(v){
+				return { _id: v._id, value: v.title };
+			})
+		);
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.destroyed = function() {

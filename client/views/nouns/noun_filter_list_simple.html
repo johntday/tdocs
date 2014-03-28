@@ -1,0 +1,87 @@
+<template name="noun_filter_list_simple">
+	<h1>Pick an Item</h1>
+	<div class="row">
+		<nav class="navbar navbar-inverse" role="navigation">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search" value="{{fcFilterSearchable.criteria}}" data-fc-search-target="search-box">
+					</div>
+					<button type="submit" class="btn btn-success fc-search-trigger" data-fc-search-trigger="search-box">Submit</button>
+					{{#if fcFilterSearchable.criteria}}<button type="button" class="btn btn-danger fc-search-clear">Reset</button>{{/if}}
+				</form>
+
+				<!-- active filters -->
+				{{#if fcFilterActive}}
+				<div class="navbar-form pull-right">
+					{{#each fcFilterActive}}
+					<a href="#" class="btn btn-info fc-filter-clear">{{title}}: {{operator}} {{value}}</a>
+					{{/each}}
+				</div>
+				{{/if}}
+				<!-- /active filters -->
+			</div>
+		</nav>
+
+		<div class="table-responsive">
+			<table class="table table-striped table-hover table-condensed">
+				<tr>
+					<th>
+					</th>
+					<th class="fc-sort" data-fc-sort="title">
+						Title
+						{{#if fcSort.title.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.title.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					</th>
+					<th class="fc-sort" data-fc-sort="area_code">
+						Layer
+						{{#if fcSort.area_code.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.area_code.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					</th>
+					<th class="fc-sort" data-fc-sort="class_name">
+						Class_Name
+						{{#if fcSort.class_name.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.class_name.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					</th>
+					<th class="fc-sort" data-fc-sort="description">
+						Description
+						{{#if fcSort.description.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.description.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					</th>
+				</tr>
+				{{#each fcResults}}
+				<tr>
+					<td><span class="{{icon}}"></span></td>
+					<td><a href="/nouns/{{_id}}">{{title}}</a></td>
+					<td>{{area}}</td>
+					<td>{{class_name}}</td>
+					<td>{{description}}</td>
+				</tr>
+				{{/each}}
+			</table>
+		</div>
+	</div>
+	{{#if fcPager.pages}}
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<!-- numbered pager -->
+			<ul class="pagination">
+				<li><a href="#" class="fc-pager-first">&lt;&lt;</a></li>
+				<li><a href="#" class="fc-pager-previous">&lt;</a></li>
+				{{#each fcPager.pages}}
+				<li class="{{status}}"><a href="#" class="fc-pager-page" data-fc-pager-page="{{page}}">{{page}}</a></li>
+				{{/each}}
+				<li><a href="#" class="fc-pager-next">&gt;</a></li>
+				<li><a href="#" class="fc-pager-last">&gt;&gt;</a></li>
+			</ul>
+			<!-- /numbered pager -->
+
+			<!-- pager status -->
+			<p>
+				<strong>{{fcPager.offsetStart}}</strong> to <strong>{{fcPager.offsetEnd}}</strong> of <strong>{{fcPager.totalItems}}</strong> records.
+			</p>
+			<!-- /pager status -->
+		</div>
+	</div>
+	{{/if}}
+</template>

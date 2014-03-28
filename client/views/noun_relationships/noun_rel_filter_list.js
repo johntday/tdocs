@@ -1,11 +1,17 @@
 NounsFilter = new Meteor.FilterCollections(Nouns, {
-	name: 'nouns-full',
-	template: 'noun_filter_list',
+	name: 'nouns-rel-full',
+	template: 'noun_rel_filter_list',
 	pager: {
 		options: [50],
 		itemsPerPage: 50,
 		currentPage: 1,
-		showPages: 10
+		showPages: 5
+	},
+	sort: {
+		order: ['asc', 'desc'],
+		defaults: [
+			['title', 'asc']
+		]
 	},
 	filters: {
 		"area_code": {
@@ -43,19 +49,33 @@ NounsFilter = new Meteor.FilterCollections(Nouns, {
 	},
 	callbacks: {
 		beforeSubscribe: function (query) {
-			query.selector.type = {$nin: ['root']};
-			query.selector.project_id = getProjectId();
-			return query;
-		},
-		beforeResults: function(query){
+//			Session.set('loading', true);
 			query.selector.type = {$nin: ['root']};
 			query.selector.project_id = getProjectId();
 			return query;
 		}
+//		,afterSubscribe: function (subscription) {
+//			Session.set('loading', false);
+//		}
+		,beforeResults: function(query){
+			query.selector.type = {$nin: ['root']};
+			query.selector.project_id = getProjectId();
+			return query;
+		}
+//		,afterResults: function(cursor){
+//			var alteredResults = cursor.fetch();
+//			_.each(alteredResults, function(result, idx){
+//				alteredResults[idx].area = ea.getClassBelongsToArea(alteredResults[idx].class_name).area;
+//			});
+//			return alteredResults;
+//		}
+//		,templateCreated: function(template){}
+//		,templateRendered: function(template){}
+//		,templateDestroyed: function(template){}
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.noun_filter_list.helpers({
+Template.noun_rel_filter_list.helpers({
 	area: function() {
 		return ea.getAreaName(this.area_code);
 	},
@@ -67,11 +87,11 @@ Template.noun_filter_list.helpers({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.noun_filter_list.events({
+Template.noun_rel_filter_list.events({
 	'click button.btn.btn-info': function() {
 		bootbox.dialog({
 			title: "Search Help"
-			,message: "<h3>Model Item Filtering</h3>" +
+			,message: "<h3>Model Relationship Filtering</h3>" +
 				"<ul>" +
 				'<li>Click on one of the <strong>filter buttons</strong> to filter the list</li>' +
 				"<li>or, type in a search string</li>" +
