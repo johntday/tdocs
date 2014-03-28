@@ -15,34 +15,37 @@ NounsFilterSimple = new Meteor.FilterCollections(Nouns, {
 			searchable: 'required'
 		}
 	},
-//	sort: {
-//		order: ['asc', 'desc'],
-//		defaults: [
-//			['title', 'asc']
-//		]
-//	},
+	sort: {
+		defaults: [
+			['title', 'asc']
+		]
+	},
 	callbacks: {
 		beforeSubscribe: function (query) {
-//			Session.set('loading', true);
-			query.selector.type = {$nin: ['root']};
 			query.selector.project_id = getProjectId();
+			query.selector.class_name = {$in: ea.getPossibleClassNamesForRelationship(getSelectedTreeItem().class_name)};
+			query.selector.type = {$nin: ['root']};
 			return query;
 		}
 //		,afterSubscribe: function (subscription) {
 //			Session.set('loading', false);
 //		}
 		,beforeResults: function(query){
-			query.selector.type = {$nin: ['root']};
 			query.selector.project_id = getProjectId();
+			query.selector.class_name = {$in: ea.getPossibleClassNamesForRelationship(getSelectedTreeItem().class_name)};
+			query.selector.type = {$nin: ['root']};
 			return query;
+		},
+		afterResults: function(cursor){
+			var alteredResults = cursor.fetch();
+			_.each(alteredResults, function(result, idx){
+				var selectedNoun = getSelectedTreeItem(true);
+				alteredResults[idx].semantic = ea.getRelationshipSemantic(
+					selectedNoun.original.class_name,
+					result.class_name);
+			});
+			return alteredResults;
 		}
-//		,afterResults: function(cursor){
-//			var alteredResults = cursor.fetch();
-//			_.each(alteredResults, function(result, idx){
-//				alteredResults[idx].area = ea.getClassBelongsToArea(alteredResults[idx].class_name).area;
-//			});
-//			return alteredResults;
-//		}
 //		,templateCreated: function(template){}
 //		,templateRendered: function(template){}
 //		,templateDestroyed: function(template){}
@@ -58,48 +61,12 @@ Template.noun_filter_list_simple.helpers({
 	},
 	icon: function() {
 		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.class_name).icon;
+	},
+	source_title: function() {
+		return getSelectedTreeItem().title;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.noun_filter_list_simple.events({
-//	'click button.btn.btn-info': function() {
-//		bootbox.dialog({
-//			title: "Search Help"
-//			,message: "<h3>Model Item Filtering</h3>" +
-//				"<ul>" +
-//				'<li>Click on one of the <strong>filter buttons</strong> to filter the list</li>' +
-//				"<li>or, type in a search string</li>" +
-//				'<li>to remove a filter, click on one of the <strong>active filter buttons</strong></li>' +
-//				'<li>All filter conditions are <strong>AND</strong>ed together</li>' +
-//				"</ul>" +
-//				"<h3>Sorting</h3>" +
-//				"<ul>" +
-//				'<li>Click on a column header to sort.  Each click will toggle between: <strong>Ascending</strong>, <strong>Desending</strong>, <strong>No-sort</strong></li>' +
-//				'<li><strong>bug</strong>: First column header is not shown as turned-off, when another column header is selected for sorting</li>' +
-//				"</ul>"
-//			,buttons: {
-//				main: {
-//					label: "OK",
-//					className: "btn-primary",
-//					callback: function() {
-//					}
-//				}
-//			}
-//		});
-//	},
-//	'click button.btn.btn-success': function() {
-//		bootbox.dialog({
-//			title: "Create"
-//			,message: "<h3>Fix Me</h3>"
-//			,buttons: {
-//				main: {
-//					label: "OK",
-//					className: "btn-primary",
-//					callback: function() {
-//					}
-//				}
-//			}
-//		});
-//	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

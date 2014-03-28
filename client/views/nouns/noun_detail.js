@@ -54,6 +54,33 @@ Template.tmpl_noun_detail.helpers({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.events({
+	'click #btn_create_rel': function(e) {
+		//e.preventDefault();
+
+		bootbox.dialog({
+			title: "List of Possible Relationships"
+			,message:
+				Template.noun_filter_list_simple({contextVar:'SomeValue'})
+			,buttons: {
+				success: {
+					label: "Select",
+					className: "btn-primary",
+					callback: function() {
+						var target_id = $('input:radio[name="_id"]').val();
+						createRelationship(target_id);
+					}
+				},
+				cancel: {
+					label: "Cancel",
+					className: "btn-default",
+					callback: function() {
+					}
+				}
+			}
+			,onEscape: function() {
+			}
+		});
+	},
 	'click #area': function(e) {
 		e.preventDefault();
 		gotoNounFilterPage('area_code', {value:this.area_code, condition:'$and'});
@@ -210,31 +237,34 @@ Template.tmpl_noun_detail.rendered = function() {
 	if ( !Session.get('form_update') )
 		$("#description").blur();
 
-	Meteor.typeahead(
-		$("#nouns"),
-		nouns,
-		/*onSelection*/function() {
-			$("#nouns").val('');
-			alert('hi');
-		}
-	);
+//	Meteor.typeahead(
+//		$("#nouns"),
+//		nouns,
+//		/*onSelection*/function() {
+//			$("#nouns").val('');
+//			alert('hi');
+//		}
+//	);
 
 	drawNounDiagram();
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
-var nouns = function(text, callback){
-	var allnouns = Nouns.find({project_id: getProjectId(), title: {$regex: RegExp.quote(text), $options: 'i'}, type: {$nin: ['root']}}, {sort: {title: 1}}).fetch();
-		callback(
-			allnouns.map(function(v){
-				return { _id: v._id, value: v.title };
-			})
-		);
-};
+//var nouns = function(text, callback){
+//	var allnouns = Nouns.find({project_id: getProjectId(), title: {$regex: RegExp.quote(text), $options: 'i'}, type: {$nin: ['root']}}, {sort: {title: 1}}).fetch();
+//		callback(
+//			allnouns.map(function(v){
+//				return { _id: v._id, value: v.title };
+//			})
+//		);
+//};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.destroyed = function() {
 	incClickCnt(Nouns, this.data._id);
 };
 /*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
+var createRelationship = function(target_id) {
+
+}
 var drawNounDiagram = function() {
 	var graph = new joint.dia.Graph;
 

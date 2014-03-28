@@ -54,6 +54,7 @@ Meteor.methods({
 		var noun = extendWithMetadataForInsert( properties, userId, user );
 		noun.instance_name = Random.id();
 		noun.area_code = ea.getClassBelongsToArea(noun.class_name).area_code;
+		noun.description = noun.description || noun.title;
 
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;

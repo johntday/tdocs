@@ -27,7 +27,7 @@ var class_names = _.keys(ea.classBelongsToArea);
 class_names.forEach(function(class_name){
 	sidebar[class_name] = null;
 });
-var selected_tree_noun = {_id: null, class_name: null, type: null, parent_id: null};
+var selected_tree_noun = {_id: null, title: null, class_name: null, type: null, parent_id: null};
 getSelectedTreeItem = function(full) {
 	var selected = selected_tree_noun;
 	if (full) {
