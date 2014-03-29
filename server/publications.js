@@ -35,13 +35,14 @@ Meteor.reactivePublish(null, function() {
 Meteor.FilterCollections.publish(Nouns, {
 	name: 'nouns-full'
 });
-
 Meteor.FilterCollections.publish(Nouns, {
 	name: 'nouns-simple'
 });
-
 Meteor.FilterCollections.publish(EA_Relationships, {
 	name: 'ea-relationships'
+});
+Meteor.FilterCollections.publish(Relationships, {
+	name: 'nouns-rels'
 });
 
 

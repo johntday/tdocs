@@ -40,9 +40,9 @@ NounsFilterSimple = new Meteor.FilterCollections(Nouns, {
 			var alteredResults = cursor.fetch();
 			_.each(alteredResults, function(result, idx){
 				var selectedNoun = getSelectedTreeItem(true);
-				alteredResults[idx].semantic = ea.getRelationshipSemantic(
-					selectedNoun.original.class_name,
-					result.class_name);
+				var rel = ea.getRelationshipSemantic( selectedNoun.original.class_name, result.class_name );
+				alteredResults[idx].semantic = rel.semantic;
+				alteredResults[idx].rel_name = rel.rel_name;
 			});
 			return alteredResults;
 		}
@@ -67,6 +67,6 @@ Template.noun_filter_list_simple.helpers({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-Template.noun_filter_list_simple.events({
-});
+//Template.noun_filter_list_simple.events({
+//});
 /*------------------------------------------------------------------------------------------------------------------------------*/

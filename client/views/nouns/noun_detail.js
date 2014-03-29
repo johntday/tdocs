@@ -66,8 +66,10 @@ Template.tmpl_noun_detail.events({
 					label: "Select",
 					className: "btn-primary",
 					callback: function() {
-						var target_id = $('input:radio[name="_id"]').val();
-						createRelationship(target_id);
+						var $selected = $( "input:checked" );
+						var target_id = $selected.val();
+						var rel_name = $selected.data('relName');
+						createRelationship(target_id, rel_name);
 					}
 				},
 				cancel: {
@@ -245,7 +247,8 @@ Template.tmpl_noun_detail.rendered = function() {
 //			alert('hi');
 //		}
 //	);
-
+	if (graph)
+		$('#noun_paper').empty();
 	drawNounDiagram();
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -262,11 +265,21 @@ Template.tmpl_noun_detail.destroyed = function() {
 	incClickCnt(Nouns, this.data._id);
 };
 /*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
-var createRelationship = function(target_id) {
+var createRelationship = function(target_id, rel_name) {
+	console.log( target_id, rel_name );
+	var source_id = getSelectedTreeItem()._id;
+	var attrs = undefined;
 
+	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, attrs, function(error, rel_id) {
+		if(error){
+			growl(error.reason);
+		}else{
+			growl( 'Created relationship', {type:'s', hideSnark:true} );
+		}
+	});
 }
 var drawNounDiagram = function() {
-	var graph = new joint.dia.Graph;
+	graph = new joint.dia.Graph;
 
 	var width = $("#noun_panel_diagram").width() - 40;
 	var height = 400;
@@ -310,3 +323,4 @@ var drawNounDiagram = function() {
 };
 
 var animateFrameRequestID;
+var graph;

@@ -38,8 +38,12 @@ Meteor.methods({
 	 * properties = {
 	 *   project_id: 'xxx'
 	 *   ,rel_name: 'composition'
-	 *   ,source_instance_name: 'xxx'
-	 *   ,target_instance_name: 'xxx'
+	 *   ,source_id: 'xxx'
+	 *   ,target_id: 'xxx'
+	 *   ,source_title: 'xxx'
+	 *   ,target_title: 'xxx'
+	 *   ,source_area_code: 'b'
+	 *   ,target_area_code: 'b'
 	 *   ,source_class_name: 'Business_Object'
 	 *   ,target_class_name: 'Business_Object'
 	 *   ,attrs: [ ['name1','value1'], ['name2','value2'] ]
@@ -47,24 +51,20 @@ Meteor.methods({
 	 * @param properties
 	 * @returns {*}
 	 */
-	createRelationship: function(properties){
+	createRelationship: function(project_id, source_id, target_id, rel_name, attrs){
 		var user = Meteor.user();
 
 		if (!user)
 			throw new Meteor.Error(601, 'You need to login to create a new relationship');
-		if(!properties.project_id)
+		if(!project_id)
 			throw new Meteor.Error(602, 'Must select a project first');
-		if(!properties.rel_name)
+		if(!rel_name)
 			throw new Meteor.Error(602, 'Please add a rel_name');
-		if(!properties.source_instance_name)
-			throw new Meteor.Error(602, 'Please add a source_instance_name');
-		if(!properties.target_instance_name)
-			throw new Meteor.Error(602, 'Please add a target_instance_name');
-		if(!properties.source_class_name)
-			throw new Meteor.Error(602, 'Please add a source_class_name');
-		if(!properties.target_class_name)
-			throw new Meteor.Error(602, 'Please add a target_class_name');
-		if(properties.attrs  && !_.isArray(properties.attrs) )
+		if(!source_id)
+			throw new Meteor.Error(602, 'Please add a source_id');
+		if(!target_id)
+			throw new Meteor.Error(602, 'Please add a target_id');
+		if(attrs  && !_.isArray(attrs) )
 			throw new Meteor.Error(602, 'Invalid attrs');
 //		val dupRelationship = Relationships.findOne({
 //			project_id: properties.project_id
@@ -75,11 +75,28 @@ Meteor.methods({
 //			}, {fields:{_id:1}});
 //		if(dupRelationship)
 //			throw new Meteor.Error(602, 'This relationship already exists');
+		var rel = {
+			project_id: project_id
+			,rel_name: rel_name
+		};
+		if (attrs) { rel.attrs = attrs; }
 
-		properties.instance_name = Random.id();
+		//SOURCE
+		var source = Nouns.findOne(source_id);
+		rel.source_id = source_id;
+		rel.source_title = source.title;
+		rel.source_area_code = source.area_code;
+		rel.source_class_name = source.class_name;
+		
+		//TARGET
+		var target = Nouns.findOne(target_id);
+		rel.target_id = target_id;
+		rel.target_title = target.title;
+		rel.target_area_code = target.area_code;
+		rel.target_class_name = target.class_name;
 
-		var nounId = Relationships.insert(properties);
-		properties.nounId = nounId;
+		var rel_id = Relationships.insert(rel);
+		rel._id = rel_id;
 
 		// NOTIFICATION
 		//		if (! isAdmin(user)) {
@@ -87,7 +104,7 @@ Meteor.methods({
 		//			Notifications.insert(n);
 		//		}
 
-		return properties;
+		return rel_id;
 	}
 
 });

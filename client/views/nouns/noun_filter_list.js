@@ -92,20 +92,6 @@ Template.noun_filter_list.events({
 				}
 			}
 		});
-	},
-	'click button.btn.btn-success': function() {
-		bootbox.dialog({
-			title: "Create"
-			,message: "<h3>Fix Me</h3>"
-			,buttons: {
-				main: {
-					label: "OK",
-					className: "btn-primary",
-					callback: function() {
-					}
-				}
-			}
-		});
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

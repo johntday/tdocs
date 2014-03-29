@@ -1,38 +1,30 @@
-<template name="noun_filter_list_simple">
+<template name="noun_rels">
 	<div class="row">
 
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed">
 				<tr>
-					<th>
+					<th class="fc-sort" data-fc-sort="source_title">
+						source_title
+						{{#if fcSort.source_title.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.source_title.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
 					</th>
-					<th>
-						Source
+					<th class="fc-sort" data-fc-sort="rel_name">
+						rel_name
+						{{#if fcSort.rel_name.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.rel_name.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
 					</th>
-					<th>
-						Relationship
-					</th>
-					<th>
-					</th>
-					<th class="fc-sort" data-fc-sort="title">
-						Target
-						{{#if fcSort.title.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
-						{{#if fcSort.title.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
-					</th>
-					<th class="fc-sort" data-fc-sort="class_name">
-						Class_Name
-						{{#if fcSort.class_name.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
-						{{#if fcSort.class_name.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
+					<th class="fc-sort" data-fc-sort="target_title">
+						target_title
+						{{#if fcSort.target_title.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
+						{{#if fcSort.target_title.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
 					</th>
 				</tr>
 				{{#each fcResults}}
 				<tr>
-					<td><input type="radio" name="_id" value="{{_id}}" data-rel-name="{{rel_name}}" /></td>
 					<td>{{source_title}}</td>
-					<td>{{semantic}}</td>
-					<td><span class="{{icon}}"></span></td>
-					<td>{{title}}</td>
-					<td>{{class_name}}</td>
+					<td>{{rel_name}}</td>
+					<td>{{target_title}}</td>
 				</tr>
 				{{/each}}
 			</table>
