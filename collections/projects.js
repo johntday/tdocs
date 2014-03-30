@@ -165,7 +165,7 @@ var projectSeedData = [
 	,{'class_name': 'Application_Service', root_title: 'APPLICATION SERVICES', top_title: 'My Application Service'}
 	,{'class_name': 'Application_Function', root_title: 'APPLICATION FUNCTIONS', top_title: 'My Application Function'}
 	,{'class_name': 'Application_Data_Object', root_title: 'APPLICATION DATA OBJECTS', top_title: 'My Application Data Object'}
-	,{'class_name': 'Business_Domain', root_title: 'BUSINESS DOMAINS', top_title: 'My Business Domain'}
+	,{'class_name': 'Common_Group', root_title: 'GROUPS', top_title: 'Business Domains'}
 	,{'class_name': 'Business_Actor', root_title: 'BUSINESS ACTORS', top_title: 'My Business Actor'}
 	,{'class_name': 'Business_Role', root_title: 'BUSINESS ROLES', top_title: 'My Business Role'}
 	,{'class_name': 'Business_Interface', root_title: 'BUSINESS INTERFACES', top_title: 'My Business Interface'}
