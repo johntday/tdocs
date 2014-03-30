@@ -53,6 +53,7 @@ Template.tmpl_sidebar_buttons.events({
 			,message: "<h3>Buttons</h3>" +
 				"<ul>" +
 				"<li><button class='btn btn-info btn-sm'><span class='glyphicon glyphicon-question-sign'></span> </button> This help dialog</li>" +
+				"<li><button class='btn btn-info btn-sm'><span class='glyphicon glyphicon-search'></span> </button>Search items</li>" +
 				"<li><button class='btn btn-success btn-sm'><span class='glyphicon glyphicon-plus'></span> </button> Add an item under selected parent</li>" +
 				"<li><button class='btn btn-warning btn-sm'><span class='glyphicon glyphicon-pencil'></span> </button> Edit title of the selected item</li>" +
 				"<li><button class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span> </button> Delete the selected item</li>" +

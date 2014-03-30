@@ -37,7 +37,7 @@ Projects.deny({
 Meteor.methods({
 	createProject: function(properties){
 		var user = Meteor.user();
-		var userId = getDocUserIdForSaving(properties, user);
+		var userId = user._id;
 //		var projectWithSameTitle = Projects.findOne( {title: {$regex: project.title, $options: 'i'}} );
 		var projectId = '';
 
@@ -136,23 +136,21 @@ function initNewProject(user, userId, projectId) {
 			project_id: projectId
 			,class_name: data.class_name
 			,area_code: ea.getClassBelongsToArea(data.class_name).area_code
-			,instance_name: Random.id()
 			//,type: 'top'
 			,title: data.top_title
 			,description: data.top_title
 		};
 		extendWithMetadataForInsert(top, userId, user);
-		Nouns.insert(top);
+		var top_id = Nouns.insert(top);
 
 		var root = {
 			project_id: projectId
 			,class_name: data.class_name
 			,area_code: ea.getClassBelongsToArea(data.class_name).area_code
-			,instance_name: Random.id()
 			,type: 'root'
 			,title: data.root_title
 			,description: data.root_title
-			,children: [ top.instance_name ]
+			,children: [ top_id ]
 		};
 		extendWithMetadataForInsert(root, userId, user);
 		Nouns.insert(root);

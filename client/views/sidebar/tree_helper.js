@@ -10,14 +10,14 @@ refreshBusCap = function(class_name, children_name) {
 		if (!noun) return;
 		var descendants=[]
 		var stack=[];
-		var item = Nouns.findOne({project_id: getProjectId(), instance_name:noun.instance_name});
+		var item = Nouns.findOne({project_id: getProjectId(), _id:noun._id});
 		stack.push(item);
 		while (stack.length>0){
 			var currentnode = stack.pop();
 			_.extend(currentnode, {id: currentnode._id, text:currentnode.title});
 			var children = [];
 			if (currentnode && currentnode[children_name])
-				children = Nouns.find({project_id: getProjectId(), instance_name:{$in:currentnode[children_name]}}).fetch();
+				children = Nouns.find({project_id: getProjectId(), _id:{$in:currentnode[children_name]}}).fetch();
 
 			children.forEach(function(child) {
 				_.extend(child, {id: child._id, text:child.title});
@@ -104,7 +104,7 @@ refreshBusCap = function(class_name, children_name) {
 		}
 		if (!checkRole('Must be an Administrator to move a ', class_name))
 			return false;
-		Meteor.call('moveNoun', data.old_parent, data.parent, data.node.original.instance_name, data.node.original.class_name, children_name, data.position, function(error, noun) {
+		Meteor.call('moveNoun', data.old_parent, data.parent, data.node.original._id, data.node.original.class_name, children_name, data.position, function(error, noun) {
 			if(error){
 				growl(error.reason);
 			}else{

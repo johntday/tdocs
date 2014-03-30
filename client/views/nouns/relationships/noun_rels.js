@@ -60,8 +60,22 @@ NounsRelsFilter = new Meteor.FilterCollections(Relationships, {
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.noun_rels.helpers({
+	semantic: function() {
+		return ea.getRelationshipSemantic(this.source_class_name, this.target_class_name).semantic;
+	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
-//Template.noun_rels.events({
-//});
+Template.noun_rels.events({
+	'click button.btn.btn-danger.btn-sm': function(e) {
+		var relationship_id = $(e.currentTarget).data('relationshipId');
+
+		Meteor.call('deleteRelationship', relationship_id, function(error, results) {
+			if(error){
+				growl(error.reason);
+			}else{
+				growl( 'Deleted relationship', {type:'s', hideSnark:true} );
+			}
+		});
+	}
+});
 /*------------------------------------------------------------------------------------------------------------------------------*/

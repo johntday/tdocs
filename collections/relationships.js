@@ -105,6 +105,14 @@ Meteor.methods({
 		//		}
 
 		return rel_id;
+	},
+	deleteRelationship: function(_id) {
+		var user = Meteor.user();
+
+		if (!user)
+			throw new Meteor.Error(601, 'You need to login to delete a relationship');
+
+		Relationships.remove(_id);
 	}
 
 });

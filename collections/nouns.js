@@ -52,14 +52,13 @@ Meteor.methods({
 //			throw new Meteor.Error(602, 'One already exists with title "' + nounWithSameTitle.title + '"');
 
 		var noun = extendWithMetadataForInsert( properties, userId, user );
-		noun.instance_name = Random.id();
 		noun.area_code = ea.getClassBelongsToArea(noun.class_name).area_code;
 		noun.description = noun.description || noun.title;
 
 		nounId = Nouns.insert(noun);
 		noun.nounId = nounId;
 
-		var obj = _.object([[properties.children_name, noun.instance_name]]);
+		var obj = _.object([[properties.children_name, noun.nounId]]);
 		if (!this.isSimulation && parent_id) {
 			Nouns.update(parent_id, {$addToSet: obj});
 		}
@@ -103,7 +102,7 @@ Meteor.methods({
 	deleteNoun: function(node, parent_id, children_name) {
 		var _id = (node.original) ? node.id : node._id;
 		var class_name = (node.original) ? node.original.class_name : node.class_name;
-		var instance_name = (node.original) ? node.original.instance_name : node.instance_name;
+		//var instance_name = (node.original) ? node.original.instance_name : node.instance_name;
 
 		var user = Meteor.user();
 		if (!user)
@@ -112,9 +111,12 @@ Meteor.methods({
 			throw new Meteor.Error(601, 'Cannot delete a '+class_name+' with children');
 
 		// remove associated stuff
-		var obj = _.object([[children_name, instance_name]]);
+		var obj = _.object([[children_name, _id]]);
 		if(!this.isSimulation) {
 			Nouns.update(parent_id, {$pull: obj});
+
+			Relationships.remove( { $or: [{source_id:_id}, {target_id:_id}]} );
+
 		}
 
 		// NOTIFICATION
@@ -141,11 +143,11 @@ Meteor.methods({
 		Nouns.update(_id, {$set: {title: title, updated: getNow()}});
 		return;
 	},
-	moveNoun: function(parent_id_old, parent_id, instance_name, class_name, children_name, position) {
+	moveNoun: function(parent_id_old, parent_id, _id, class_name, children_name, position) {
 		if (!Meteor.user())
 			throw new Meteor.Error(601, 'You need to login to move a '+class_name);
 
-		var obj = _.object([[children_name, instance_name]]);
+		var obj = _.object([[children_name, _id]]);
 
 		Nouns.update(parent_id_old, {$pull: obj});
 
