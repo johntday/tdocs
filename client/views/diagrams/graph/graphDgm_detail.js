@@ -56,7 +56,6 @@ Template.tmpl_graphDgm_detail.events({
 				}
 			}
 		});
-
 	},
 	'click #btn-delete-graph': function(e) {
 		e.preventDefault();
