@@ -95,20 +95,6 @@ Template.tmpl_graphDgm_detail.events({
 		var _id = this._id;
 		var code = JSON.stringify(Template['tmpl_graphDgm_detail'].graph.toJSON());
 
-//		if ( isAdmin(Meteor.user()) ) {
-//			_.extend(properties, {
-//				status: $('#status').val()
-//			});
-//		}
-
-		// VALIDATE AND TRANSFORM
-//		var isInputError = validateGraph(properties);
-//		if (isInputError) {
-//			$(e.target).removeClass('disabled');
-//			return false;
-//		}
-//		transformGraph(properties);
-
 		Meteor.call('updateDiagramCode', _id, code, function(error, diagram) {
 			if(error){
 				MyLog("diagram_details.js/1", "updated diagram", {'error': error, 'diagram': diagram});
@@ -204,7 +190,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		model: selection
 	});
 
-
 	// Initiate selecting when the user grabs the blank area of the paper while the Shift key is pressed.
 	// Otherwise, initiate paper pan.
 	paper.on('blank:pointerdown', function(evt, x, y) {
@@ -271,10 +256,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		//createInspector(cellView);
 	});
 
-
 	// Command Manager - undo/redo.
 	// ----------------------------
-
 	var commandManager = new joint.dia.CommandManager({ graph: Template['tmpl_graphDgm_detail'].graph});
 
 	// Validator
@@ -331,8 +314,6 @@ function resizePaper($paper) {
 	var w = $(window).width();
 	var h = $(window).height();
 
-	//console.log( 'stencil offset left '+$stencil.offset().left);
-
 	$paper.css({
 		position: 'absolute'
 		,top: '120px'
@@ -344,13 +325,9 @@ function resizePaper($paper) {
 		,overflow: 'hidden'
 		,'background-color': 'hsla(220,11%,97%,.95)'
 	});
-	
 }
 
 addNounToGraph = function(noun) {
-
 	var graphNoun = createJoinRect(noun.title.trunc(20), null, 10, null, null, null, null);
 	Template['tmpl_graphDgm_detail'].graph.addCell(graphNoun);
-
 };
-
