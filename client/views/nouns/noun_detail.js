@@ -97,6 +97,7 @@ Template.tmpl_noun_detail.events({
 	},
 	'click #btnCancelNoun': function(e) {
 		e.preventDefault();
+		$('#description').val( this.description );
 		Session.set('form_update', false);
 	},
 	'click #btnDeleteNoun': function(e) {
