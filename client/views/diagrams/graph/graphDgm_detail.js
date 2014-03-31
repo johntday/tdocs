@@ -4,7 +4,7 @@ Template.tmpl_graphDgm_detail.helpers({
 	},
 	breadcrumbs: function() {
 		Meteor.MyClientModule.scrollToTopOfPageFast();
-		console.log( Session.get("breadcrumbs") );
+		//console.log( Session.get("breadcrumbs") );
 		return Session.get("breadcrumbs");
 	},
 	changeTitle: function() {
@@ -283,7 +283,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	$('#btn-clear').on('click', _.bind(Template['tmpl_graphDgm_detail'].graph.clear, Template['tmpl_graphDgm_detail'].graph));
 	$('#btn-svg').on('click', function() {
 		paper.openAsSVG();
-		console.log(paper.toSVG()); // An exmaple of retriving the paper SVG as a string.
+		//console.log(paper.toSVG()); // An exmaple of retriving the paper SVG as a string.
 	});
 	$('#btn-center-content').click(function(){
 		paperScroller.centerContent();
