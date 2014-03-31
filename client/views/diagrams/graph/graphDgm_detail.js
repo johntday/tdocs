@@ -266,7 +266,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	// Hook on toolbar buttons.
 	// ------------------------
-
 	$('#btn-undo').on('click', _.bind(commandManager.undo, commandManager));
 	$('#btn-redo').on('click', _.bind(commandManager.redo, commandManager));
 	$('#btn-clear').on('click', _.bind(Template['tmpl_graphDgm_detail'].graph.clear, Template['tmpl_graphDgm_detail'].graph));
@@ -298,8 +297,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	resizePaper($paper);
 
-		if (this.data.code)
-			Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(this.data.code) );
+	if (this.data.code)
+		Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(this.data.code) );
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.created = function() {
