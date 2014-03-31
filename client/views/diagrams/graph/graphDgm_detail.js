@@ -225,10 +225,45 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	// enable link inspector
 	paper.on('link:options', function(evt, cellView, x, y) {
 		// Here you can create an inspector for the link the same way as it is done for normal elements.
-		console.log('link inspector');
+		console.log(x, y);
+		bootbox.dialog({
+			title: "Link Properties"
+			,message:
+				//Template.graphDgm_link_inspector({contextVar:'SomeValue'})
+				'<h3>Not ready yet</h3>' +
+				'<ul>' +
+				'<li>x: ' + x + '</li>' +
+				'<li>y: ' + y + '</li>' +
+				'</ul>'
+			,buttons: {
+				success: {
+					label: "OK",
+					className: "btn-primary",
+					callback: function() {
+//						var $selected = $( "input:checked" );
+//						var target_id = $selected.val();
+//						var rel_name = $selected.data('relName');
+//						createRelationship(target_id, rel_name);
+					}
+				},
+				cancel: {
+					label: "Cancel",
+					className: "btn-default",
+					callback: function() {
+					}
+				}
+			}
+			,onEscape: function() {
+			}
+		});
 	});
 
-	// An example of a simple element editor.
+	//????
+	Template['tmpl_graphDgm_detail'].graph.on('myevent', function(e){
+		console.log('graphDgm_detail:');
+	}, this);
+
+		// An example of a simple element editor.
 	// --------------------------------------
 
 	//var elementInspector = new ElementInspector();
@@ -260,9 +295,72 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	// ----------------------------
 	var commandManager = new joint.dia.CommandManager({ graph: Template['tmpl_graphDgm_detail'].graph});
 
+
 	// Validator
 	// ---------
-	// nothing
+	var validator = new joint.dia.LinkValidator({ commandManager: commandManager });
+
+	validator.validate('change:target', function (err, command, next) {
+		console.log(command.data);
+		var graph = Template['tmpl_graphDgm_detail'].graph;
+		console.log( graph.getLinks() );
+
+		if (command.action === 'add' && command.batch) return next();
+
+		var data = command.data;
+		var link = graph.getCell( data.id );
+		var source = graph.getCell( link.attributes.source.id );
+		var source_class_name = source.attributes.attrs.text.class_name;
+		link = null;
+		var target = graph.getCell( data.next.target.id );
+		console.log( source, target );
+
+
+		bootbox.dialog({
+			title: "List of Possible Relationships"
+			,message:
+				//Template.noun_filter_list_simple({contextVar:'SomeValue'})
+				'hello'
+			,buttons: {
+				success: {
+					label: "Select",
+					className: "btn-primary",
+					callback: function() {
+					}
+				},
+				cancel: {
+					label: "Cancel",
+					className: "btn-default",
+					callback: function() {
+					}
+				}
+			}
+			,onEscape: function() {
+			}
+		});
+
+		//		var cell = command.data.attributes || graph.getCell(command.data.id).toJSON();
+//		var area = g.rect(cell.position.x, cell.position.y, cell.size.width, cell.size.height);
+//
+//		if (_.find(graph.getElements(), function (e) {
+//
+//			var position = e.get('position'),
+//				size = e.get('size');
+//
+//			return (e.id !== cell.id && area.intersect(g.rect(position.x, position.y, size.width, size.height)));
+//
+//		})) return next("Move the top-left element out of the way first");
+		return next('crap');
+	});
+
+	validator.on('invalid',function(message) {
+		growl(message);
+	});
+
+	Template['tmpl_graphDgm_detail'].graph.on('all', function(e) {
+		//console.log(e);
+	});
+
 
 	// Hook on toolbar buttons.
 	// ------------------------
@@ -327,6 +425,6 @@ function resizePaper($paper) {
 }
 
 addNounToGraph = function(noun) {
-	var graphNoun = createJoinRect(noun.title.trunc(20), null, 10, null, null, null, null);
+	var graphNoun = createJoinRect(noun.class_name, noun.title.trunc(20), null, 10, null, null, null, null);
 	Template['tmpl_graphDgm_detail'].graph.addCell(graphNoun);
 };
