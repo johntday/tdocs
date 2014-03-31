@@ -43,6 +43,11 @@ Template.tmpl_sidebar_buttons.events({
 	},
 	'click button.btn.btn-default.btn-sm': function(e) {
 		e.preventDefault();
+		var path = Location._state.path;
+		if (path && path.indexOf('/graph/') != -1){
+			addNounToGraph( getSelectedTreeItem() );
+			return;
+		}
 		var selected = getSelectedTreeItem();
 		if(!selected._id) { return false; }
 		Router.go('/nouns/'+selected._id);

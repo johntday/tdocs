@@ -125,7 +125,9 @@ Template.tmpl_graphDgm_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.rendered = function() {
-//	if ( !Template['tmpl_graphDgm_detail'].graph )
+	Session.set('sidebar_nbr',3);
+
+	//	if ( !Template['tmpl_graphDgm_detail'].graph )
 //		setTooltips();
 	//	console.log( !!Template['tmpl_graphDgm_detail'].graph );
 //	if (Template['tmpl_graphDgm_detail'].graph) {
@@ -158,38 +160,38 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	paperScroller.center();
 
-	var stencil = new joint.ui.Stencil({
-		graph: Template['tmpl_graphDgm_detail'].graph
-		,paper: paper
-		,width: 200
-		,height: 450
-		,groups: {
-			simple: { label: 'Simple', index: 1, closed: false }
-			//,custom: { label: 'Custom', index: 2, closed: true }
-		}
-	});
-	var $stencil = $('#stencil');
-	$stencil.append(stencil.render().el);
-
-
-	var r = new joint.shapes.basic.Rect({
-		position: { x: 60, y: 20 },
-		size: { width: 100, height: 60 },
-		attrs: {
-			rect: { rx: 2, ry: 2, width: 50, height: 30, fill: '#27AE60' },
-			text: { text: 'rect', fill: 'white', 'font-size': 10 }
-		}
-	});
-	var c = new joint.shapes.basic.Circle({
-		position: { x: 60, y: 100 },
-		size: { width: 100, height: 60 },
-		attrs: {
-			circle: { width: 50, height: 30, fill: '#E74C3C' },
-			text: { text: 'ellipse', fill: 'white', 'font-size': 10 }
-		}
-	});
-
-	stencil.load([r,c], 'simple');
+//	var stencil = new joint.ui.Stencil({
+//		graph: Template['tmpl_graphDgm_detail'].graph
+//		,paper: paper
+//		,width: 200
+//		,height: 450
+//		,groups: {
+//			simple: { label: 'Simple', index: 1, closed: false }
+//			//,custom: { label: 'Custom', index: 2, closed: true }
+//		}
+//	});
+//	var $stencil = $('#stencil');
+//	$stencil.append(stencil.render().el);
+//
+//
+//	var r = new joint.shapes.basic.Rect({
+//		position: { x: 60, y: 20 },
+//		size: { width: 100, height: 60 },
+//		attrs: {
+//			rect: { rx: 2, ry: 2, width: 50, height: 30, fill: '#27AE60' },
+//			text: { text: 'rect', fill: 'white', 'font-size': 10 }
+//		}
+//	});
+//	var c = new joint.shapes.basic.Circle({
+//		position: { x: 60, y: 100 },
+//		size: { width: 100, height: 60 },
+//		attrs: {
+//			circle: { width: 50, height: 30, fill: '#E74C3C' },
+//			text: { text: 'ellipse', fill: 'white', 'font-size': 10 }
+//		}
+//	});
+//
+//	stencil.load([r,c], 'simple');
 
 
 	// Selection.
@@ -312,7 +314,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	$('#btn-zoom-in').on('click', function() { zoom(paper, zoomLevel + 0.2); });
 	$('#btn-zoom-out').on('click', function() { zoom(paper, zoomLevel - 0.2); });
 
-	resizePaper($paper, $stencil);
+	resizePaper($paper);
 
 		if (this.data.code)
 			Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(this.data.code) );
@@ -326,7 +328,7 @@ Template.tmpl_graphDgm_detail.destroyed = function() {
 	incClickCnt(Diagrams, this.data._id);
 };
 
-function resizePaper($paper, $stencil) {
+function resizePaper($paper) {
 	var w = $(window).width();
 	var h = $(window).height();
 
@@ -335,23 +337,21 @@ function resizePaper($paper, $stencil) {
 	$paper.css({
 		position: 'absolute'
 		,top: '120px'
-		,left: '220px'
-		,right: '220px'
-		,width:  (w - $stencil.offset().left - 240) + 'px'
-		,height: (h - $stencil.offset().top -   50) + 'px'
+		,left: '20px'
+		,right: '20px'
+		,width:  (w - 490) + 'px'
+		,height: (h -  200) + 'px'
 		,bottom: 0
 		,overflow: 'hidden'
 		,'background-color': 'hsla(220,11%,97%,.95)'
 	});
 	
-	$stencil.css({
-		position: 'absolute'
-		,top: '120px'
-		,left: 0
-		,width: '240px'
-		,height: (h - $stencil.offset().top -   50) + 'px'
-		,bottom: 0
-		//,border: 1px solid #333
-		,'box-shadow': 'inset 0 0 0 1px rgba(0,0,0,0.1),0px 0 0 1px rgba(255,255,255,0.1)'
-	})
 }
+
+addNounToGraph = function(noun) {
+
+	var graphNoun = createJoinRect(noun.title.trunc(20), null, 10, null, null, null, null);
+	Template['tmpl_graphDgm_detail'].graph.addCell(graphNoun);
+
+};
+

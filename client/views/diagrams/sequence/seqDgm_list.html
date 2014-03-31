@@ -11,7 +11,7 @@
 
 <template name="tmpl_diagrams_sort_select">
 	<div class="row">
-		<div class="col-sm-8">
+		<div class="col-sm-7">
 			<ol class="breadcrumb">
 				{{#each breadcrumbs}}
 				{{#if isActive}}
@@ -21,6 +21,10 @@
 				{{/if}}
 				{{/each}}
 			</ol>
+		</div>
+		<div class="col-sm-1">
+			<button type="button" class="btn btn-success btn-sm" title="Create diagram"><span class="glyphicon glyphicon-plus"></span> </button>
+			<button type="button" class="btn btn-primary btn-sm" title="Create sequence diagram"><span class="glyphicon glyphicon-plus"></span> </button>
 		</div>
 
 		<div class="col-sm-4">
