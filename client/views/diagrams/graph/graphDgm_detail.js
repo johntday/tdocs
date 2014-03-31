@@ -31,6 +31,7 @@ Template.tmpl_graphDgm_detail.events({
 				"<li><b>center</b> Centers the diagram content</li>" +
 				"<li><b>layout</b> Layout the diagram elements</li>" +
 				"<li><b>Delete</b> Deletes your diagram</li>" +
+				"<li><b>Exit</b> Leave diagram</li>" +
 				"</ul>"
 			,buttons: {
 				main: {
@@ -76,6 +77,10 @@ Template.tmpl_graphDgm_detail.events({
 				Router.go('/diagrams');
 			}
 		});
+	},
+	'click #btn-exit': function(e) {
+		e.preventDefault();
+		Router.go('/diagrams');
 	},
 	'click #btn-save': function(e) {
 		e.preventDefault();
