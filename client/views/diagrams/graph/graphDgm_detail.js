@@ -225,25 +225,16 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	// enable link inspector
 	paper.on('link:options', function(evt, cellView, x, y) {
 		// Here you can create an inspector for the link the same way as it is done for normal elements.
-		console.log(x, y);
 		bootbox.dialog({
 			title: "Link Properties"
 			,message:
 				//Template.graphDgm_link_inspector({contextVar:'SomeValue'})
-				'<h3>Not ready yet</h3>' +
-				'<ul>' +
-				'<li>x: ' + x + '</li>' +
-				'<li>y: ' + y + '</li>' +
-				'</ul>'
+				'hello'
 			,buttons: {
 				success: {
 					label: "OK",
 					className: "btn-primary",
 					callback: function() {
-//						var $selected = $( "input:checked" );
-//						var target_id = $selected.val();
-//						var rel_name = $selected.data('relName');
-//						createRelationship(target_id, rel_name);
 					}
 				},
 				cancel: {
@@ -258,20 +249,13 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		});
 	});
 
-	//????
-	Template['tmpl_graphDgm_detail'].graph.on('myevent', function(e){
-		console.log('graphDgm_detail:');
-	}, this);
-
-		// An example of a simple element editor.
+	// An example of a simple element editor.
 	// --------------------------------------
-
 	//var elementInspector = new ElementInspector();
 	//$('.inspector').append(elementInspector.el);
 
 	// Halo - element tools.
 	// ---------------------
-
 	paper.on('cell:pointerup', function(cellView, evt) {
 
 		if (cellView.model instanceof joint.dia.Link || selection.contains(cellView.model)) return;
@@ -300,66 +284,73 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	// ---------
 	var validator = new joint.dia.LinkValidator({ commandManager: commandManager });
 
-	validator.validate('change:target', function (err, command, next) {
-		console.log(command.data);
-		var graph = Template['tmpl_graphDgm_detail'].graph;
-		console.log( graph.getLinks() );
+	validator.validate('change:target',
+		function (err, command, next) {
+			//console.log(command.data);
+			var graph = Template['tmpl_graphDgm_detail'].graph;
+			//console.log( graph.getLinks() );
 
-		if (command.action === 'add' && command.batch) return next();
+			if (command.action === 'add' && command.batch) return next();
 
-		var data = command.data;
-		var link = graph.getCell( data.id );
-		var source = graph.getCell( link.attributes.source.id );
-		var source_class_name = source.attributes.attrs.text.class_name;
-		link = null;
-		var target = graph.getCell( data.next.target.id );
-		console.log( source, target );
+			var data = command.data;
+			relationship_id = data.id;
+			var link = graph.getCell( relationship_id );
+			var source = graph.getCell( link.attributes.source.id );
+			var source_class_name = source.attributes.attrs.text.class_name;
+			var target = graph.getCell( data.next.target.id );
+			// connected to target?
+			if (!target){ return next('drag to another item to create relationship'); }
+			var target_class_name = target.attributes.attrs.text.class_name;
+			//console.log( source, target, source_class_name, target_class_name );
+
+			// any relationships in model?
+			if (!ea.hasRelationship(source_class_name, target_class_name, false)) {
+				return next('No valid relationship exists between '+source_class_name+' and '+target_class_name); }
+
+			// check for dup
+			//TODO
 
 
+			return true;
+		}
+	);
+
+	validator.on('invalid',function(message) { growl(message); });
+
+	validator.on('valid', function() {
+		if (relationshipDialogOpen){ return; }
+		relationshipDialogOpen = true;
 		bootbox.dialog({
-			title: "List of Possible Relationships"
+			title: "Pick a relationship type"
 			,message:
 				//Template.noun_filter_list_simple({contextVar:'SomeValue'})
-				'hello'
+				'heelo'
 			,buttons: {
 				success: {
 					label: "Select",
 					className: "btn-primary",
 					callback: function() {
+						console.log( commandManager );
+						relationshipDialogOpen = false;
 					}
 				},
 				cancel: {
 					label: "Cancel",
 					className: "btn-default",
 					callback: function() {
+						relationshipDialogOpen = false;
+						commandManager.cancel();
 					}
 				}
 			}
 			,onEscape: function() {
 			}
 		});
-
-		//		var cell = command.data.attributes || graph.getCell(command.data.id).toJSON();
-//		var area = g.rect(cell.position.x, cell.position.y, cell.size.width, cell.size.height);
-//
-//		if (_.find(graph.getElements(), function (e) {
-//
-//			var position = e.get('position'),
-//				size = e.get('size');
-//
-//			return (e.id !== cell.id && area.intersect(g.rect(position.x, position.y, size.width, size.height)));
-//
-//		})) return next("Move the top-left element out of the way first");
-		return next('crap');
 	});
 
-	validator.on('invalid',function(message) {
-		growl(message);
-	});
-
-	Template['tmpl_graphDgm_detail'].graph.on('all', function(e) {
-		//console.log(e);
-	});
+//	Template['tmpl_graphDgm_detail'].graph.on('all', function(e) {
+//		console.log(e);
+//	});
 
 
 	// Hook on toolbar buttons.
@@ -406,7 +397,9 @@ Template.tmpl_graphDgm_detail.destroyed = function() {
 	Template['tmpl_graphDgm_detail'].graph = null;
 	incClickCnt(Diagrams, this.data._id);
 };
-
+/*-------- FUNCTIONS AND VARS---------------------------------------------------------------------------------------------------*/
+var relationship_id;
+var relationshipDialogOpen = false;
 function resizePaper($paper) {
 	var w = $(window).width();
 	var h = $(window).height();
@@ -417,7 +410,7 @@ function resizePaper($paper) {
 		,left: '20px'
 		,right: '20px'
 		,width:  (w - 490) + 'px'
-		,height: (h -  200) + 'px'
+		,height: (h -  190) + 'px'
 		,bottom: 0
 		,overflow: 'hidden'
 		,'background-color': 'hsla(220,11%,97%,.95)'

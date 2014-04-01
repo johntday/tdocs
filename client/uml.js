@@ -136,13 +136,24 @@ joint.shapes.uml.Interface = joint.shapes.uml.Class.extend({
 });
 joint.shapes.uml.InterfaceView = joint.shapes.uml.ClassView;
 
+/**
+ * LINKS
+ */
 joint.shapes.uml.Generalization = joint.dia.Link.extend({
 	defaults: {
 		type: 'uml.Generalization',
 		attrs: { '.marker-target': { d: 'M 20 0 L 0 10 L 20 20 z', fill: 'white' }}
 	}
 });
-
+joint.shapes.uml.Trigger = joint.dia.Link.extend({
+	defaults: {
+		type: 'uml.Trigger',
+		attrs: {
+			//'.marker-source': { d: 'M 10 0 L 0 5 L 10 10 z' },
+			'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' }
+		}
+	}
+});
 joint.shapes.uml.flow = joint.dia.Link.extend({
 	defaults: {
 		type: 'uml.flow',
@@ -152,7 +163,6 @@ joint.shapes.uml.flow = joint.dia.Link.extend({
 		}
 	}
 });
-
 joint.shapes.uml.Implementation = joint.dia.Link.extend({
 	defaults: {
 		type: 'uml.Implementation',
@@ -162,7 +172,6 @@ joint.shapes.uml.Implementation = joint.dia.Link.extend({
 		}
 	}
 });
-
 joint.shapes.uml.Aggregation = joint.dia.Link.extend({
 	defaults: {
 		type: 'uml.Aggregation',
@@ -176,7 +185,6 @@ joint.shapes.uml.Composition = joint.dia.Link.extend({
 		attrs: { '.marker-target': { d: 'M 40 10 L 20 20 L 0 10 L 20 0 z', fill: 'black' }}
 	}
 });
-
 joint.shapes.uml.Association = joint.dia.Link.extend({
 	defaults: { type: 'uml.Association' }
 });

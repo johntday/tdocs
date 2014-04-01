@@ -4,6 +4,7 @@ joint.dia.LinkValidator = Backbone.Model.extend({
 		this._map = {};
 		this._commandManager = options.commandManager;
 
+	    //object.listenTo(other, event, callback)
 		this.listenTo(this._commandManager, 'add', this._onCommand);
     },
 
@@ -27,7 +28,7 @@ joint.dia.LinkValidator = Backbone.Model.extend({
 
 		var handoverErr;
 
-		_.each(this._map[command.action], function(route) {
+	    _.each(this._map[command.action], function(route) {
 		    var i = 0;
 
 		    function callbacks(err) {
@@ -36,6 +37,7 @@ joint.dia.LinkValidator = Backbone.Model.extend({
 				try {
 				    if (fn) {
 						fn(err, command, callbacks);
+
 				    } else {
 						handoverErr = err;
 						return;
@@ -48,11 +50,14 @@ joint.dia.LinkValidator = Backbone.Model.extend({
 		    callbacks(handoverErr);
 		});
 
-		if (handoverErr) {
-
+	    if (handoverErr) {
 		    if (this.get('cancelInvalid')) this._commandManager.cancel();
 		    this.trigger('invalid', handoverErr);
 		    return false;
+		} else {
+
+		    if ( _.findWhere(_.last(this._commandManager.undoStack), {action: 'change:target'}) )
+		        this.trigger('valid');
 		}
 
 		//command is valid
@@ -60,7 +65,7 @@ joint.dia.LinkValidator = Backbone.Model.extend({
     },
 
     validate: function(actions) {
-		var callbacks = _.rest(arguments);
+	    var callbacks = _.rest(arguments);
 
 		_.each(callbacks, function(callback) {
 		    if (_.isFunction(callback)) return;
@@ -72,7 +77,7 @@ joint.dia.LinkValidator = Backbone.Model.extend({
 		}, this);
 
 		return this;
-    }
+	}
 
 });
 
