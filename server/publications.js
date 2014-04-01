@@ -128,13 +128,19 @@ Meteor.publish('pubsub_selected_buscap', function(id) {
 	return Nouns.find(id);
 });
 
-
 /**
  * Roles by project
  * TODO:  fix me
  */
 Meteor.publish(null, function (){
 	return Meteor.roles.find({})
+});
+
+/**
+ * EA_Relationships
+ */
+Meteor.publish(null, function (){
+	return EA_Relationships.find({});
 });
 
 /**

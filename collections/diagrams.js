@@ -77,8 +77,6 @@ Meteor.methods({
 			updated: getNow()
 		});
 
-		MyLog("collections/diagrams.js/updateDiagram/1", "properties", properties);
-
 		Diagrams.update(_id, {$set: diagram} );
 
 		// NOTIFICATION
@@ -99,12 +97,7 @@ Meteor.methods({
 		if (!user)
 			throw new Meteor.Error(601, 'You need to login to update a diagram');
 
-		var properties = {code:code};
-		var diagram = _.extend(properties, {
-			updated: getNow()
-		});
-
-		MyLog("collections/diagrams.js/updateDiagram/1", "properties", properties);
+		var diagram = {code:code, updated: getNow()};
 
 		Diagrams.update(_id, {$set: diagram} );
 

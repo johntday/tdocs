@@ -48,7 +48,7 @@ Meteor.methods({
 			,{source:"Implementation_Deliverable",semantic:   "realization of"     ,r_semantic:      "realized by"       ,target:"Business_Object"            ,rel_name:"realization"  ,arrow:"- ->>"   ,bidirectional:false}
 			,{source:"Business_Object"           ,semantic:      "contains"        ,r_semantic:    "is contained by"     ,target:"Business_Object"            ,rel_name:"contains"     ,arrow:"<>--"    ,bidirectional:false}
 			,{source:"Business_Object"           ,semantic:    "composed of"       ,r_semantic:      "composed by"       ,target:"Business_Object"            ,rel_name:"composition"  ,arrow:"<<>--"   ,bidirectional:false}
-			,{source:"Business_Object"           ,semantic: "specialization of"    ,r_semantic:     "generalized by"     ,target:"Business_Object"            ,rel_name:"specialization",arrow:"-->>"    ,bidirectional:false}
+			,{source:"Business_Object"           ,semantic: "specialization of"    ,r_semantic:     "generalized by"     ,target:"Business_Object"            ,rel_name:"specialization",arrow:"-->>"   ,bidirectional:false}
 			,{source:"Business_Product"          ,semantic:     "has value"        ,r_semantic:     "associated to"      ,target:"Business_Value"             ,rel_name:"association"  ,arrow:"---"     ,bidirectional:true}
 			,{source:"Business_Product"          ,semantic:      "contains"        ,r_semantic:    "is contained by"     ,target:"Business_Contract"          ,rel_name:"contains"     ,arrow:"<>--"    ,bidirectional:false}
 			,{source:"Business_Product"          ,semantic:      "contains"        ,r_semantic:    "is contained by"     ,target:"Business_Service"           ,rel_name:"contains"     ,arrow:"<>--"    ,bidirectional:false}
@@ -67,10 +67,13 @@ Meteor.methods({
 			,{source:"Application_Service"       ,semantic:       "CRUDs"          ,r_semantic:        "CRUD by"         ,target:"Application_Data_Object"    ,rel_name:"access"       ,arrow:"-crud->" ,bidirectional:false}
 			,{source:"Technology_Artifact"       ,semantic:   "realization of"     ,r_semantic:      "realized by"       ,target:"Application_Data_Object"    ,rel_name:"realization"  ,arrow:"- ->>"   ,bidirectional:false}
 			,{source:"Application_Data_Object"   ,semantic:    "composed of"       ,r_semantic:      "composed by"       ,target:"Application_Data_Object"    ,rel_name:"composition"  ,arrow:"<<>--"   ,bidirectional:false}
-			,{source:"Application_Data_Object"   ,semantic: "specialization of"    ,r_semantic:     "generalized by"     ,target:"Application_Data_Object"    ,rel_name:"specialization",arrow:"-->>"    ,bidirectional:false}
+			,{source:"Application_Data_Object"   ,semantic: "specialization of"    ,r_semantic:     "generalized by"     ,target:"Application_Data_Object"    ,rel_name:"specialization",arrow:"-->>"   ,bidirectional:false}
 			,{source:"Application_Data_Object"   ,semantic:      "contains"        ,r_semantic:    "is contained by"     ,target:"Application_Data_Object"    ,rel_name:"contains"     ,arrow:"<>--"    ,bidirectional:false}
 			,{source:"Application_Function"      ,semantic:       "CRUDs"          ,r_semantic:        "CRUD by"         ,target:"Application_Data_Object"    ,rel_name:"access"       ,arrow:"-crud->" ,bidirectional:false}
+			,{source:"Motivation_Stakeholder"    ,semantic:       "gives data to"  ,r_semantic:        "gets data from"  ,target:"Motivation_Stakeholder"     ,rel_name:"flow"         ,arrow:"- ->"    ,bidirectional:false}
+			,{source:"Common_Group"              ,semantic:      "contains"        ,r_semantic:    "is contained by"     ,target:"Common_Group"               ,rel_name:"contains"     ,arrow:"<>--"    ,bidirectional:false}
 		];
+
 		var inserted = 0;
 		for (var i=0; i < relationships.length; i++) {
 			EA_Relationships.insert(relationships[i]);

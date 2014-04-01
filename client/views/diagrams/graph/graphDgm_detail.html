@@ -5,20 +5,27 @@
 	<div class="toolbar">
 		<button id="btn-graph-help"    class="btn btn-info"> Help </button>
 		{{#if canEdit}}
-		<button id="btn-save"           class="btn btn-primary"> save </button>
+		<button id="btn-save"           class="btn btn-primary"> Save </button>
 		{{/if}}
-		<button id="btn-undo"           class="btn">undo</button>
-		<button id="btn-redo"           class="btn">redo</button>
-		<button id="btn-svg"            class="btn">picturize</button>
-		<button id="btn-zoom-in"        class="btn">zoom in</button>
-		<button id="btn-zoom-out"       class="btn">zoom out</button>
-		<button id="btn-find-element"   class="btn not-yet"> find </button>
+		<button id="btn-undo"           class="btn">Undo</button>
+		<button id="btn-redo"           class="btn">Redo</button>
+		<button id="btn-svg"            class="btn">Picturize</button>
+		<button id="btn-zoom-in"        class="btn">Zoom in</button>
+		<button id="btn-zoom-out"       class="btn">Zoom out</button>
+		<!--<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Lines<span class="caret"></span></button>
+			<ul class="dropdown-menu" role="menu">
+				<li><a id="btn-line-straight" href="#">Straight</a></li>
+				<li><a id="btn-line-curved" href="#">Curved</a></li>
+			</ul>
+		</div>-->
+		<!--<button id="btn-find-element"   class="btn not-yet"> Find </button>-->
 		<button id="btn-center-content" class="btn">center</button>
-		<button id="btn-layout"         class="btn not-yet">layout</button>
-		<button id="btn-clear"          class="btn btn-danger">clear</button>
-		<button id="btn-exit"           class="btn btn-danger">exit</button>
+		<!--<button id="btn-layout"         class="btn not-yet">Layout</button>-->
+		<button id="btn-clear"          class="btn btn-danger">Clear</button>
+		<button id="btn-exit"           class="btn btn-danger">Exit</button>
 		{{#if canEdit}}
-		<button id="btn-delete-graph"   class="btn btn-danger">delete</button>
+		<button id="btn-delete-graph"   class="btn btn-danger">Delete</button>
 		{{/if}}
 	</div>
 

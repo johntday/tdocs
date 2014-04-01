@@ -16,7 +16,7 @@ Template.tmpl_graphDgm_detail.events({
 	'click #btn-graph-help': function() {
 		bootbox.dialog({
 			title: "Graph Diagram Help"
-			,message: "Works similar to Visio"+
+			,message:
 				"<h3>Buttons</h3>" +
 				"<ul>" +
 				"<li><b>Help</b> Click on header column to sort</li>" +
@@ -32,6 +32,13 @@ Template.tmpl_graphDgm_detail.events({
 				"<li><b>layout</b> Layout the diagram elements</li>" +
 				"<li><b>Delete</b> Deletes your diagram</li>" +
 				"<li><b>Exit</b> Leave diagram</li>" +
+				"</ul>" +
+				"<h3>Actions</h3>" +
+				"<ul>" +
+				"<li><b>Drag Paper</b> Click on paper to drag and move paper (background)</li>" +
+				"<li><b>Selecting More Than One Element</b> Hold down SHIFT-key while you click and move mouse to select multiple elements</li>" +
+				"<li><b>Selecting One at a Time</b> Hold down CTRL-key while clicking on elements to select</li>" +
+				"<li><b>Moving Elements</b> After you select the elements you want to move, just drag them</li>" +
 				"</ul>"
 			,buttons: {
 				main: {
@@ -59,66 +66,68 @@ Template.tmpl_graphDgm_detail.events({
 	},
 	'click #btn-delete-graph': function(e) {
 		e.preventDefault();
-		$(e.target).addClass('disabled');
-
-		if(!Meteor.user()){
-			throwError('You must login to delete a diagram');
-			$(e.target).removeClass('disabled');
-			return false;
-		}
-
-		Meteor.call('deleteDiagram', this._id, function(error) {
-			if(error){
-				throwError(error.reason);
-				$(e.target).removeClass('disabled');
-			}else{
-				growl( "Diagram deleted", {type:'s', hideSnark:true} );
-				Router.go('/diagrams');
+		bootbox.dialog({
+			title: "Delete Diagram"
+			,message:'You sure about this?'
+			,buttons: {
+				delete: {
+					label: "Delete",
+					className: "btn-danger",
+					callback: function() {
+						deleteGraph(this._id);
+					}
+				},
+				cancel: {
+					label: "Cancel",
+					className: "btn-default",
+					callback: function() {
+					}
+				}
+			}
+			,onEscape: function() {
 			}
 		});
 	},
 	'click #btn-exit': function(e) {
 		e.preventDefault();
-		Router.go('/diagrams');
+		bootbox.dialog({
+			title: "Exit Diagram"
+			,message:'Do you want to SAVE first?'
+			,buttons: {
+				save: {
+					label: "Yes, SAVE before Exiting",
+					className: "btn-primary",
+					callback: function() {
+						saveGraph();
+						Router.go('/diagrams');
+					}
+				},
+				leave: {
+					label: "No, just Exit",
+					className: "btn-danger",
+					callback: function() {
+						Router.go('/diagrams');
+					}
+				},
+				cancel: {
+					label: "Cancel",
+					className: "btn-default",
+					callback: function() {
+					}
+				}
+			}
+			,onEscape: function() {
+			}
+		});
 	},
 	'click #btn-save': function(e) {
 		e.preventDefault();
-		$(e.target).addClass('disabled');
-
-		if(!Meteor.user()){
-			throwError('You must login to update a diagram');
-			$(e.target).removeClass('disabled');
-			return false;
-		}
-
-		// GET INPUT
-		var _id = this._id;
-		var code = JSON.stringify(Template['tmpl_graphDgm_detail'].graph.toJSON());
-
-		Meteor.call('updateDiagramCode', _id, code, function(error, diagram) {
-			if(error){
-				MyLog("diagram_details.js/1", "updated diagram", {'error': error, 'diagram': diagram});
-				throwError(error.reason);
-				$(e.target).removeClass('disabled');
-			}else{
-				Session.set('form_update', false);
-				growl( "Diagram updated", {type:'s', hideSnark:true} );
-				MyLog("diagram_details.js/1", "updated diagram", {'_id': _id, 'diagram': diagram});
-			}
-		});
+		saveGraph();
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.rendered = function() {
 	Session.set('sidebar_nbr',3);
-
-	//	if ( !Template['tmpl_graphDgm_detail'].graph )
-//		setTooltips();
-	//	console.log( !!Template['tmpl_graphDgm_detail'].graph );
-//	if (Template['tmpl_graphDgm_detail'].graph) {
-//		console.log('i');
-//		return;
-//	}
 	Session.set('has_sidebar', false);
 
 	Template['tmpl_graphDgm_detail'].graph = new joint.dia.Graph;
@@ -145,43 +154,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	paperScroller.center();
 
-//	var stencil = new joint.ui.Stencil({
-//		graph: Template['tmpl_graphDgm_detail'].graph
-//		,paper: paper
-//		,width: 200
-//		,height: 450
-//		,groups: {
-//			simple: { label: 'Simple', index: 1, closed: false }
-//			//,custom: { label: 'Custom', index: 2, closed: true }
-//		}
-//	});
-//	var $stencil = $('#stencil');
-//	$stencil.append(stencil.render().el);
-//
-//
-//	var r = new joint.shapes.basic.Rect({
-//		position: { x: 60, y: 20 },
-//		size: { width: 100, height: 60 },
-//		attrs: {
-//			rect: { rx: 2, ry: 2, width: 50, height: 30, fill: '#27AE60' },
-//			text: { text: 'rect', fill: 'white', 'font-size': 10 }
-//		}
-//	});
-//	var c = new joint.shapes.basic.Circle({
-//		position: { x: 60, y: 100 },
-//		size: { width: 100, height: 60 },
-//		attrs: {
-//			circle: { width: 50, height: 30, fill: '#E74C3C' },
-//			text: { text: 'ellipse', fill: 'white', 'font-size': 10 }
-//		}
-//	});
-//
-//	stencil.load([r,c], 'simple');
-
-
 	// Selection.
 	// ----------
-
 	var selection = new Backbone.Collection;
 
 	var selectionView = new joint.ui.SelectionView({
@@ -297,10 +271,14 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			var link = graph.getCell( relationship_id );
 			var source = graph.getCell( link.attributes.source.id );
 			source_class_name = source.attributes.attrs.text.class_name;
+			source_id = source.attributes.attrs.text._id;
+			source_graph_id = source.id;
 			var target = graph.getCell( data.next.target.id );
 			// connected to target?
 			if (!target){ return next('drag to another item to create relationship'); }
 			target_class_name = target.attributes.attrs.text.class_name;
+			target_id = target.attributes.attrs.text._id;
+			target_graph_id = target.id;
 			//console.log( source, target, source_class_name, target_class_name );
 
 			// any relationships in model?
@@ -310,6 +288,9 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			// check for dup
 			//TODO
 
+			// get titles
+			source_title = source.attributes.attrs.text.text.replace(/\n/g, '');
+			target_title = target.attributes.attrs.text.text.replace(/\n/g, '');
 
 			return true;
 		}
@@ -323,13 +304,21 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		bootbox.dialog({
 			title: "Pick a relationship type"
 			,message:
-				Template.graphDgm_pick_rel({source_class_name:source_class_name, target_class_name:target_class_name})
+				Template.graphDgm_pick_rel({source_class_name:source_class_name, target_class_name:target_class_name,
+					source_title:source_title, target_title:target_title})
 			,buttons: {
 				success: {
 					label: "Select",
 					className: "btn-primary",
 					callback: function() {
 						relationshipDialogOpen = false;
+						// ADD RELATIONSHIP
+						var rel_name = $( "input:checked").val();
+						//createRelationship(source_id, target_id, rel_name);
+						// REMOVE LINE
+						commandManager.cancel();
+						// ADD CORRECT LINE
+						Template['tmpl_graphDgm_detail'].graph.addCell( createRelLink(rel_name, source_graph_id, target_graph_id) );
 					}
 				},
 				cancel: {
@@ -337,6 +326,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 					className: "btn-default",
 					callback: function() {
 						relationshipDialogOpen = false;
+						// CANCEL
 						commandManager.cancel();
 					}
 				}
@@ -360,9 +350,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		paper.openAsSVG();
 		//console.log(paper.toSVG()); // An exmaple of retriving the paper SVG as a string.
 	});
-	$('#btn-center-content').click(function(){
-		paperScroller.centerContent();
-	});
+	$('#btn-center-content').click(function(){ paperScroller.centerContent(); });
 
 	var zoomLevel = 1;
 
@@ -398,8 +386,9 @@ Template.tmpl_graphDgm_detail.destroyed = function() {
 /*-------- FUNCTIONS AND VARS---------------------------------------------------------------------------------------------------*/
 var relationship_id;
 var relationshipDialogOpen = false;
-var source_class_name;
-var target_class_name;
+var source_class_name, source_title, source_id, source_graph_id;
+var target_class_name, target_title, target_id, target_graph_id;
+
 function resizePaper($paper) {
 	var w = $(window).width();
 	var h = $(window).height();
@@ -418,6 +407,64 @@ function resizePaper($paper) {
 }
 
 addNounToGraph = function(noun) {
-	var graphNoun = createJoinRect(noun.class_name, noun.title.trunc(20), null, 10, null, null, null, null);
+	var graphNoun = createJoinRect(noun._id, noun.class_name, noun.title.trunc(20), null, 10, null, null, null, null);
 	Template['tmpl_graphDgm_detail'].graph.addCell(graphNoun);
 };
+
+var createRelationship = function(source_id, target_id, rel_name) {
+	var attrs = undefined;
+
+	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, attrs, function(error, rel_id) {
+		if(error){
+			growl(error.reason);
+		}else{
+			growl( 'Created relationship', {type:'s', hideSnark:true} );
+		}
+	});
+};
+
+var saveGraph = function() {
+	disableButtons();
+
+	if(!Meteor.user()){
+		throwError('You must login to update a diagram');
+		enableButtons();
+		return false;
+	}
+
+	// GET INPUT
+	var _id = this._id;
+	var code = JSON.stringify(Template['tmpl_graphDgm_detail'].graph.toJSON());
+
+	Meteor.call('updateDiagramCode', _id, code, function(error, diagram) {
+		if(error){
+			growl(error.reason);
+			enableButtons();
+		}else{
+			Session.set('form_update', false);
+			growl( "Diagram updated", {type:'s', hideSnark:true} );
+			enableButtons();
+		}
+	});
+};
+var deleteGraph = function(_id) {
+	if(!Meteor.user()){
+		throwError('You must login to delete a diagram');
+		return false;
+	}
+
+	Meteor.call('deleteDiagram', _id, function(error) {
+		if(error){
+			growl(error.reason);
+		}else{
+			growl( "Diagram deleted", {type:'s', hideSnark:true} );
+			Router.go('/diagrams');
+		}
+	});
+};
+function disableButtons() {
+	//$('button').addClass('disabled');
+}
+function enableButtons() {
+	//$('button').removeClass('disabled');
+}
