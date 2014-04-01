@@ -36,11 +36,9 @@ Diagrams.deny({
 
 Meteor.methods({
 	createDiagram: function(properties){
-		MyLog("collections/diagrams.js/createDiagram/1", "properties", properties);
 		var user = Meteor.user();
-		var userId = getDocUserIdForSaving(properties, user);
+		var userId = user._id;
 		//var diagramWithSameTitle = Diagrams.findOne( {title: {$regex: diagram.title, $options: 'i'}} );
-		var diagramId = '';
 
 		if (!user)
 			throw new Meteor.Error(601, 'You need to login to create a new diagram');
@@ -50,10 +48,9 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'Must select a project first');
 
 		var diagram = extendWithMetadataForInsert( properties, userId, user );
+		diagram.description = diagram.description || diagram.title;
 
-		MyLog("collections/diagrams.js/createDiagram/2", "diagram", diagram);
-
-		diagramId = Diagrams.insert(diagram);
+		var diagramId = Diagrams.insert(diagram);
 		diagram.diagramId = diagramId;
 
 		// NOTIFICATION
@@ -92,6 +89,7 @@ Meteor.methods({
 	},
 
 	updateDiagramCode: function(_id, code){
+		console.log(code);
 		var user = Meteor.user();
 
 		if (!user)
@@ -129,27 +127,6 @@ Meteor.methods({
 
 		Diagrams.remove(diagramId);
 		return diagramId;
-	},
-
-	addDiagramFav: function(_id, userId){
-		addFav(Diagrams, _id, userId);
-	},
-	deleteDiagramFav: function(_id, userId){
-		deleteFav(Diagrams, _id, userId);
-	},
-
-	addDiagramSeen: function(_id, userId){
-		addSeen(Diagrams, _id, userId);
-	},
-	deleteDiagramSeen: function(_id, userId){
-		deleteSeen(Diagrams, _id, userId);
-	},
-
-	addDiagramStar: function(_id, userId){
-		addStar(Diagrams, _id, userId);
-	},
-	deleteDiagramStar: function(_id, userId){
-		deleteStar(Diagrams, _id, userId);
 	}
 
 });

@@ -35,6 +35,7 @@ Template.tmpl_graphDgm_detail.events({
 				"</ul>" +
 				"<h3>Actions</h3>" +
 				"<ul>" +
+				'<li><b>Add Element</b> Click on element in left-panel, and select <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-right"></span> </button></li>' +
 				"<li><b>Drag Paper</b> Click on paper to drag and move paper (background)</li>" +
 				"<li><b>Selecting More Than One Element</b> Hold down SHIFT-key while you click and move mouse to select multiple elements</li>" +
 				"<li><b>Selecting One at a Time</b> Hold down CTRL-key while clicking on elements to select</li>" +
@@ -74,7 +75,7 @@ Template.tmpl_graphDgm_detail.events({
 					label: "Delete",
 					className: "btn-danger",
 					callback: function() {
-						deleteGraph(this._id);
+						deleteGraph(data._id);
 					}
 				},
 				cancel: {
@@ -127,6 +128,7 @@ Template.tmpl_graphDgm_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.rendered = function() {
+	data = this.data;
 	Session.set('sidebar_nbr',3);
 	Session.set('has_sidebar', false);
 
@@ -144,7 +146,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		width: 500,
 		height: 500,
 		gridSize: 10,
-		perpendicularLinks: true,
+		perpendicularLinks: false,
 		model: Template['tmpl_graphDgm_detail'].graph
 	});
 	paperScroller.options.paper = paper;
@@ -314,11 +316,12 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 						relationshipDialogOpen = false;
 						// ADD RELATIONSHIP
 						var rel_name = $( "input:checked").val();
-						//createRelationship(source_id, target_id, rel_name);
+						var _id = createRelationship(source_id, target_id, rel_name);
+						if (!_id){ return; }
 						// REMOVE LINE
 						commandManager.cancel();
 						// ADD CORRECT LINE
-						Template['tmpl_graphDgm_detail'].graph.addCell( createRelLink(rel_name, source_graph_id, target_graph_id) );
+						addRelToGraph(_id, rel_name, source_graph_id, target_graph_id);
 					}
 				},
 				cancel: {
@@ -372,8 +375,9 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	resizePaper($paper);
 
-	if (this.data.code)
-		Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(this.data.code) );
+	if (data.code) {
+		Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(data.code) );
+	}
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.created = function() {
@@ -381,9 +385,10 @@ Template.tmpl_graphDgm_detail.created = function() {
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_graphDgm_detail.destroyed = function() {
 	Template['tmpl_graphDgm_detail'].graph = null;
-	incClickCnt(Diagrams, this.data._id);
+	incClickCnt(Diagrams, data._id);
 };
 /*-------- FUNCTIONS AND VARS---------------------------------------------------------------------------------------------------*/
+var data;
 var relationship_id;
 var relationshipDialogOpen = false;
 var source_class_name, source_title, source_id, source_graph_id;
@@ -405,11 +410,6 @@ function resizePaper($paper) {
 		,'background-color': 'hsla(220,11%,97%,.95)'
 	});
 }
-
-addNounToGraph = function(noun) {
-	var graphNoun = createJoinRect(noun._id, noun.class_name, noun.title.trunc(20), null, 10, null, null, null, null);
-	Template['tmpl_graphDgm_detail'].graph.addCell(graphNoun);
-};
 
 var createRelationship = function(source_id, target_id, rel_name) {
 	var attrs = undefined;
@@ -433,10 +433,9 @@ var saveGraph = function() {
 	}
 
 	// GET INPUT
-	var _id = this._id;
 	var code = JSON.stringify(Template['tmpl_graphDgm_detail'].graph.toJSON());
 
-	Meteor.call('updateDiagramCode', _id, code, function(error, diagram) {
+	Meteor.call('updateDiagramCode', data._id, code, function(error, diagram) {
 		if(error){
 			growl(error.reason);
 			enableButtons();

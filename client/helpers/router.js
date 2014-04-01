@@ -108,6 +108,7 @@ Router.map(function () {
 		},
 		data  : function () {
 			var diagram = Diagrams.findOne(this.params._id);
+			console.log( diagram );
 			if (!diagram) return {};
 			Session.set('form_update', false);
 			if ( diagram && !diagram.code )
