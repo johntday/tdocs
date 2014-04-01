@@ -296,15 +296,15 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			relationship_id = data.id;
 			var link = graph.getCell( relationship_id );
 			var source = graph.getCell( link.attributes.source.id );
-			var source_class_name = source.attributes.attrs.text.class_name;
+			source_class_name = source.attributes.attrs.text.class_name;
 			var target = graph.getCell( data.next.target.id );
 			// connected to target?
 			if (!target){ return next('drag to another item to create relationship'); }
-			var target_class_name = target.attributes.attrs.text.class_name;
+			target_class_name = target.attributes.attrs.text.class_name;
 			//console.log( source, target, source_class_name, target_class_name );
 
 			// any relationships in model?
-			if (!ea.hasRelationship(source_class_name, target_class_name, false)) {
+			if (!ea.hasRelationship(source_class_name, target_class_name, true)) {
 				return next('No valid relationship exists between '+source_class_name+' and '+target_class_name); }
 
 			// check for dup
@@ -323,14 +323,12 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		bootbox.dialog({
 			title: "Pick a relationship type"
 			,message:
-				//Template.noun_filter_list_simple({contextVar:'SomeValue'})
-				'heelo'
+				Template.graphDgm_pick_rel({source_class_name:source_class_name, target_class_name:target_class_name})
 			,buttons: {
 				success: {
 					label: "Select",
 					className: "btn-primary",
 					callback: function() {
-						console.log( commandManager );
 						relationshipDialogOpen = false;
 					}
 				},
@@ -400,6 +398,8 @@ Template.tmpl_graphDgm_detail.destroyed = function() {
 /*-------- FUNCTIONS AND VARS---------------------------------------------------------------------------------------------------*/
 var relationship_id;
 var relationshipDialogOpen = false;
+var source_class_name;
+var target_class_name;
 function resizePaper($paper) {
 	var w = $(window).width();
 	var h = $(window).height();

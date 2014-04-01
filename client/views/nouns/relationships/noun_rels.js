@@ -61,7 +61,7 @@ NounsRelsFilter = new Meteor.FilterCollections(Relationships, {
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.noun_rels.helpers({
 	semantic: function() {
-		return ea.getRelationshipSemantic(this.source_class_name, this.target_class_name).semantic;
+		return ea.getRelationshipSemantic(this.source_class_name, this.target_class_name, '');//TODO
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

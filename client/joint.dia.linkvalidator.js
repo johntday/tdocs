@@ -55,7 +55,6 @@ joint.dia.LinkValidator = Backbone.Model.extend({
 		    this.trigger('invalid', handoverErr);
 		    return false;
 		} else {
-
 		    if ( _.findWhere(_.last(this._commandManager.undoStack), {action: 'change:target'}) )
 		        this.trigger('valid');
 		}
