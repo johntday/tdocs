@@ -89,7 +89,6 @@ Meteor.methods({
 	},
 
 	updateDiagramCode: function(_id, code){
-		console.log(code);
 		var user = Meteor.user();
 
 		if (!user)

@@ -4,7 +4,6 @@ Template.tmpl_graphDgm_detail.helpers({
 	},
 	breadcrumbs: function() {
 		Meteor.MyClientModule.scrollToTopOfPageFast();
-		//console.log( Session.get("breadcrumbs") );
 		return Session.get("breadcrumbs");
 	},
 	changeTitle: function() {
@@ -262,9 +261,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	validator.validate('change:target',
 		function (err, command, next) {
-			//console.log(command.data);
 			var graph = Template['tmpl_graphDgm_detail'].graph;
-			//console.log( graph.getLinks() );
 
 			if (command.action === 'add' && command.batch) return next();
 
@@ -272,16 +269,15 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			relationship_id = data.id;
 			var link = graph.getCell( relationship_id );
 			var source = graph.getCell( link.attributes.source.id );
-			source_class_name = source.attributes.attrs.text.class_name;
-			source_id = source.attributes.attrs.text._id;
+			source_class_name = source.attributes.attrs.custom.class_name;
+			source_id = source.attributes.attrs.custom._id;
 			source_graph_id = source.id;
 			var target = graph.getCell( data.next.target.id );
 			// connected to target?
 			if (!target){ return next('drag to another item to create relationship'); }
-			target_class_name = target.attributes.attrs.text.class_name;
-			target_id = target.attributes.attrs.text._id;
+			target_class_name = target.attributes.attrs.custom.class_name;
+			target_id = target.attributes.attrs.custom._id;
 			target_graph_id = target.id;
-			//console.log( source, target, source_class_name, target_class_name );
 
 			// any relationships in model?
 			if (!ea.hasRelationship(source_class_name, target_class_name, true)) {
@@ -314,14 +310,15 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 					className: "btn-primary",
 					callback: function() {
 						relationshipDialogOpen = false;
-						// ADD RELATIONSHIP
-						var rel_name = $( "input:checked").val();
-						var _id = createRelationship(source_id, target_id, rel_name);
-						if (!_id){ return; }
+
 						// REMOVE LINE
 						commandManager.cancel();
-						// ADD CORRECT LINE
-						addRelToGraph(_id, rel_name, source_graph_id, target_graph_id);
+
+						// ADD RELATIONSHIP
+						var rel_name = $( "input:checked").val();
+
+						console.log( source_id, target_id, rel_name );
+						createRelationship(source_id, target_id, rel_name);
 					}
 				},
 				cancel: {
@@ -338,11 +335,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			}
 		});
 	});
-
-//	Template['tmpl_graphDgm_detail'].graph.on('all', function(e) {
-//		console.log(e);
-//	});
-
 
 	// Hook on toolbar buttons.
 	// ------------------------
@@ -411,18 +403,6 @@ function resizePaper($paper) {
 	});
 }
 
-var createRelationship = function(source_id, target_id, rel_name) {
-	var attrs = undefined;
-
-	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, attrs, function(error, rel_id) {
-		if(error){
-			growl(error.reason);
-		}else{
-			growl( 'Created relationship', {type:'s', hideSnark:true} );
-		}
-	});
-};
-
 var saveGraph = function() {
 	disableButtons();
 
@@ -458,6 +438,20 @@ var deleteGraph = function(_id) {
 		}else{
 			growl( "Diagram deleted", {type:'s', hideSnark:true} );
 			Router.go('/diagrams');
+		}
+	});
+};
+function createRelationship(source_id, target_id, rel_name) {
+	var attrs = undefined;
+
+	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, attrs, function(error, rel_id) {
+		if(error){
+			growl(error.reason);
+		}else{
+			// ADD CORRECT LINE
+			addRelToGraph(rel_id, rel_name, source_graph_id, target_graph_id);
+
+			growl( 'Created relationship', {type:'s', hideSnark:true} );
 		}
 	});
 };
