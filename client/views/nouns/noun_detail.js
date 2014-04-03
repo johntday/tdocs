@@ -136,7 +136,6 @@ Template.tmpl_noun_detail.events({
 					$inc: { favs_cnt: -1 }
 				}
 			);
-			MyLog("noun_details.js/click #icon-heart/1", "remove from favs");
 		} else {
 			Nouns.update(this._id,
 				{
@@ -144,7 +143,6 @@ Template.tmpl_noun_detail.events({
 					$inc: { favs_cnt: 1 }
 				}
 			);
-			MyLog("noun_details.js/click #icon-heart/1", "add to favs");
 		}
 	},
 	'click #icon-eye': function(e) {
@@ -156,10 +154,8 @@ Template.tmpl_noun_detail.events({
 
 		if ( hasSeen(this.seen) ) {
 			Nouns.update(this._id, { $pull: { seen: user._id }, $inc: { seen_cnt: -1 } } );
-			MyLog("noun_details.js/click #icon-eye/2", "remove from seen");
 		} else {
 			Nouns.update(this._id, { $addToSet: { seen: user._id }, $inc: { seen_cnt: 1 } } );
-			MyLog("noun_details.js/click #icon-eye/1", "remove from seen");
 		}
 	},
 	'click #icon-star': function(e) {
@@ -171,19 +167,10 @@ Template.tmpl_noun_detail.events({
 
 		if ( isStar(this.stars) ) {
 			Nouns.update(this._id, { $pull: { stars: user._id }, $inc: { stars_cnt: -1 } } );
-			MyLog("noun_details.js/click #icon-star/2", "remove from stars");
 		} else {
 			Nouns.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
-			MyLog("noun_details.js/click #icon-star/1", "remove from stars");
 		}
 	},
-//	'keyup #description, focus #description': function(e) {
-//		e.preventDefault();
-//		var $element = $(e.target).get(0);
-//		$element.style.overflow = 'hidden';
-//		$element.style.height = 0;
-//		$element.style.height = $element.scrollHeight + 'px';
-//	},
 	'click #btnUpdateNoun': function(e, t) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
@@ -202,20 +189,6 @@ Template.tmpl_noun_detail.events({
 			, title: $('#title').val()
 			, description: $('#description').val()
 		};
-
-		if ( isAdmin(Meteor.user()) ) {
-			_.extend(properties, {
-				status: $('#status').val()
-			});
-		}
-
-		// VALIDATE and TRANSFORM
-//		var isInputError = validateNoun(properties);
-//		if (isInputError) {
-//			$(e.target).removeClass('disabled');
-//			return false;
-//		}
-//		transformNoun(properties);
 
 		Meteor.call('updateNoun', _id, properties, function(error, noun) {
 			if(error){
