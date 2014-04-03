@@ -154,20 +154,20 @@ joint.shapes.uml.Trigger = joint.dia.Link.extend({
 		}
 	}
 });
-joint.shapes.uml.flow = joint.dia.Link.extend({
+joint.shapes.uml.Flow = joint.dia.Link.extend({
 	defaults: {
-		type: 'uml.flow',
+		type: 'uml.Flow',
 		attrs: {
-			'.connection': { stroke: '#3498DB', 'stroke-width': 3, 'stroke-dasharray': '5 2' },
+			'.connection': { stroke: '#3498DB', 'stroke-width': 3, 'stroke-dasharray': '5,2' },
 			'.marker-target': { fill: '#FA5882', d: 'M 10 0 L 0 5 L 10 10 z' }
 		}
 	}
 });
 joint.shapes.uml.Access = joint.dia.Link.extend({
 	defaults: {
-		type: 'uml.access',
+		type: 'uml.Access',
 		attrs: {
-			'.connection': { stroke: '#2E2EFE', 'stroke-width': 3, 'stroke-dasharray': '5 2' },
+			'.connection': { stroke: '#2E2EFE', 'stroke-width': 3, 'stroke-dasharray': '5,2' },
 			'.marker-target': { fill: '#81F781', d: 'M 10 0 L 0 5 L 10 10 z' }
 		}
 	}

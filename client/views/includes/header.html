@@ -33,8 +33,15 @@
 					<li class="{{activeRouteClass  '/diagrams'}}">
 						<a href="/diagrams" title="Browse all diagrams in project">Diagrams</a>
 					</li>
-					<li class="{{activeRouteClass  '/nouns'}}">
-						<a href="/nouns" title="Browse all model items in project">Model</a>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Model <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/nouns" title="Browse all project elements in project">Project Elements</a></li>
+							<li><a href="/relationships" title="Browse all project relationships in project">Project Relationships</a></li>
+							<li role="presentation" class="divider"></li>
+							<li><a href="/ea_nouns" title="Browse all model types">Model Element Types</a></li>
+							<li><a href="/ea_rels" title="Browse all model types">Model Relationship Types</a></li>
+						</ul>
 					</li>
 					<!--<li class="{{activeRouteClass  '/glossarys'}}">
 						<a href="/glossarys" title="Browse glossary items in library">Glossary</a>

@@ -20,6 +20,76 @@ EA_Relationships.allow({
 /*------------------------------------------------------------------------------------------------------------------------------*/
 
 Meteor.methods({
+	resetEA_Nouns: function() {
+		var user = Meteor.user();
+		if (!user || !isAdmin(user))
+			throw new Meteor.Error(601, 'You need be an Administrator to perform this function');
+
+		// NOTIFICATION
+		//		if (isAdmin()) {
+		//			var m = Nouns.findOne(nounId);
+		//			var n = notificationFactory(MOVIE_DELETED_BY_ADMIN, "noun", m.userId, m.title, m.status, "/nouns/"+nounId, getNow());
+		//			Notifications.insert(n);
+		//		}
+
+		EA_Nouns.remove({});
+
+		var ea_nouns = [
+			 {Application_Component        :{}}
+			,{Application_Interface        :{}}
+			,{Application_Service          :{}}
+			,{Application_Function         :{}}
+			,{Application_Data_Object      :{}}
+			,{Common_Group                 :{}}
+			,{Business_Actor               :{}}
+			,{Business_Role                :{}}
+			,{Business_Interface           :{}}
+			,{Business_Function            :{}}
+			,{Business_Process             :{}}
+			,{Business_Event               :{}}
+			,{Business_Service             :{}}
+			,{Business_Object              :{}}
+			,{Business_Location            :{}}
+			,{Technology_Artifact          :{}}
+			,{Technology_Communication_Path:{}}
+			,{Technology_Network           :{}}
+			,{Technology_Interface         :{}}
+			,{Technology_Function          :{}}
+			,{Technology_Service           :{}}
+			,{Technology_Node              :{}}
+			,{Technology_Software          :{}}
+			,{Technology_Device            :{}}
+			,{Motivation_Stakeholder       :{}}
+			,{Motivation_Driver            :{}}
+		//  ,{Motivation_Assessment        :{}}
+			,{Motivation_Goal              :{}}
+			,{Motivation_Principle         :{}}
+			,{Motivation_Requirement       :{}}
+			,{Motivation_Constraint        :{}}
+			,{Implementation_Work_Package  :{}}
+			,{Implementation_Deliverable   :{}}
+			,{Implementation_Plateau       :{}}
+			,{Implementation_Gap           :{}}
+		];
+
+		var inserted = 0;
+		var nouns = _.values(ea_nouns);
+		for (var i=0; i < nouns.length; i++) {
+			var noun = nouns[i];
+			noun.created = getNow();
+			EA_Nouns.insert(noun);
+			inserted++;
+		}
+
+		var found = EA_Nouns.find().count();
+
+		console.log('FINISHED RELOADING EA_NOUNS');
+		console.log('Num of base nouns: '+nouns.length);
+		console.log('Num of loaded EA_Nouns: '+inserted);
+		console.log('Num of loaded EA_Nouns found: '+found);
+
+		return [inserted, found];
+	},
 	resetEA_Relationships: function() {
 		var user = Meteor.user();
 		if (!user || !isAdmin(user))
@@ -91,6 +161,7 @@ var relationships = [
 	,{source:"Application_Data_Object"   ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Object"        ,rel_name:"realization"   }
 	,{source:"Application_Interface"     ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Role"          ,rel_name:"uses"          }
 	,{source:"Technology_Service"        ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Function"   ,rel_name:"uses"          }
+	,{source:"Common_Group"              ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Function"   ,rel_name:"contains"      }
 
 ];
 
