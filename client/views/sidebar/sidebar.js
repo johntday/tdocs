@@ -49,7 +49,10 @@ Template.tmpl_sidebar_buttons.events({
 			return;
 		}
 		var selected = getSelectedTreeItem();
-		if(!selected._id) { return false; }
+		if(!selected._id) {
+			growl('Select an item in the left navbar');
+			return false;
+		}
 		Router.go('/nouns/'+selected._id);
 	},
 	'click #btn-sidebar-help': function() {
@@ -122,16 +125,16 @@ Template.tmpl_sidebar_buttons.events({
 		var _id = selected._id;
 		if(!_id) { growl("Select an item first"); return false; }
 		sidebar[selected.class_name].close_all();
-	},
-	'click #sidebar_left': function() {
-		var nbr = Session.get('sidebar_nbr');
-		if (nbr > 2)
-			Session.set('sidebar_nbr', (nbr-1) );
-	},
-	'click #sidebar_right': function() {
-		var nbr = Session.get('sidebar_nbr');
-		if (nbr < 10)
-			Session.set('sidebar_nbr', (nbr+1) );
+//	},
+//	'click #sidebar_left': function() {
+//		var nbr = Session.get('sidebar_nbr');
+//		if (nbr > 2)
+//			Session.set('sidebar_nbr', (nbr-1) );
+//	},
+//	'click #sidebar_right': function() {
+//		var nbr = Session.get('sidebar_nbr');
+//		if (nbr < 10)
+//			Session.set('sidebar_nbr', (nbr+1) );
 	}
 
 });

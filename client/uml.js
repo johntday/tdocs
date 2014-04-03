@@ -149,7 +149,7 @@ joint.shapes.uml.Trigger = joint.dia.Link.extend({
 	defaults: {
 		type: 'uml.Trigger',
 		attrs: {
-			//'.marker-source': { d: 'M 10 0 L 0 5 L 10 10 z' },
+			'.connection': { stroke: '#2E2EFE' },
 			'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' }
 		}
 	}
@@ -183,6 +183,12 @@ joint.shapes.uml.Composition = joint.dia.Link.extend({
 	defaults: {
 		type: 'uml.Composition',
 		attrs: { '.marker-target': { d: 'M 40 10 L 20 20 L 0 10 L 20 0 z', fill: 'black' }}
+	}
+});
+joint.shapes.uml.Uses = joint.dia.Link.extend({
+	defaults: {
+		type: 'uml.Uses',
+		attrs: { '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z', fill: 'black' }}
 	}
 });
 joint.shapes.uml.Association = joint.dia.Link.extend({

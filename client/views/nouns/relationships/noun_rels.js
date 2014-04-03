@@ -60,8 +60,11 @@ NounsRelsFilter = new Meteor.FilterCollections(Relationships, {
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.noun_rels.helpers({
-	semantic: function() {
-		return "UNKNOWN";
+	target_icon: function() {
+		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.source_class_name).icon;
+	},
+	source_icon: function() {
+		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.target_class_name).icon;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

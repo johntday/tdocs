@@ -313,9 +313,14 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 						commandManager.cancel();
 
 						// ADD RELATIONSHIP
-						var rel_name = $( "input:checked").val();
+						var $selected = $( "input:checked");
+						var rel_name = $selected.val();
+						var semantic = $selected.data("semantic");
 
-						createRelationship(source_id, target_id, rel_name);
+//						createRelationship(source_id, target_id, rel_name, semantic);
+						// ADD CORRECT LINE
+						addRelToGraph('', rel_name, source_graph_id, target_graph_id, semantic);
+
 					}
 				},
 				cancel: {
@@ -343,6 +348,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		//console.log(paper.toSVG()); // An exmaple of retriving the paper SVG as a string.
 	});
 	$('#btn-center-content').click(function(){ paperScroller.centerContent(); });
+	//$('#btn-link-labels').click(function(){ showLabels = !showLabels; showHideAllLinkLabels(Template['tmpl_graphDgm_detail'].graph, showLabels); });
 
 	var zoomLevel = 1;
 
@@ -366,6 +372,9 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	if (data.code) {
 		Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(data.code) );
+
+		//graphCurrentRelationships();
+		//showHideAllLinkLabels(Template['tmpl_graphDgm_detail'].graph, showLabels);
 	}
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -382,6 +391,7 @@ var relationship_id;
 var relationshipDialogOpen = false;
 var source_class_name, source_title, source_id, source_graph_id;
 var target_class_name, target_title, target_id, target_graph_id;
+var showLabels = true;
 
 function resizePaper($paper) {
 	var w = $(window).width();
@@ -433,13 +443,13 @@ var deleteGraph = function(_id) {
 		}
 	});
 };
-function createRelationship(source_id, target_id, rel_name) {
+function createRelationship(source_id, target_id, rel_name, label) {
 	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, function(error, rel_id) {
 		if(error){
 			growl(error.reason);
 		}else{
 			// ADD CORRECT LINE
-			addRelToGraph(rel_id, rel_name, source_graph_id, target_graph_id);
+			addRelToGraph(rel_id, rel_name, source_graph_id, target_graph_id, label);
 
 			growl( 'Created relationship', {type:'s', hideSnark:true} );
 		}
