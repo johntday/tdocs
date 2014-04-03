@@ -123,25 +123,6 @@ Deps.autorun(function(){
 });
 
 /**
- * Glossary
- */
-buscapListSubscription = function(find, options, per_page) {
-	var handle = Meteor.subscribeWithPagination('pubsub_buscap_list', find, options, per_page);
-	handle.fetch = function() {
-		var ourFind = _.isFunction(find) ? find() : find;
-		return limitDocuments(Nouns.find(ourFind, options), handle.loaded());
-	}
-	return handle;
-};
-Deps.autorun(function(){
-	buscapsHandle = buscapListSubscription(
-		{project_id: getProjectId(), class_name: ea.class_name.Business_Capability},
-		nounSort[ Session.get('noun_sort') ],
-		Meteor.MyClientModule.appConfig.pageLimit
-	);
-});
-
-/**
  * Stats
  */
 //TdocsCount = new Meteor.Collection('tdocs_cnt');

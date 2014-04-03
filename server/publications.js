@@ -19,9 +19,12 @@ Meteor.reactivePublish(null, function() {
 				returnArray.push( Tdocs.find( {project_id: project_id} ) );
 				returnArray.push( Tables.find( {project_id: project_id} ) );
 
-				var class_names = _.keys(ea.classBelongsToArea);
-				var q_class_names = {project_id: project_id, class_name: {$in: class_names} };
-				returnArray.push( Nouns.find( q_class_names ));
+//				var class_names = _.keys(ea.classBelongsToArea);
+//				var q_class_names = {project_id: project_id, class_name: {$in: class_names} };
+//				returnArray.push( Nouns.find( q_class_names ));
+
+				returnArray.push( Nouns.find( {project_id: project_id} ) );
+				returnArray.push( Relationships.find( {project_id: project_id} ) );
 			}
 		}
 	}
@@ -114,18 +117,6 @@ Meteor.publish('pubsub_selected_project', function(id) {
 			Projects.find(id),
 			Meteor.users.find( query )
 		];
-});
-
-/**
- * Business Capabilities
- */
-Meteor.publish('pubsub_buscap_list', function(query, options, limit) {
-	options = options || {};
-	if (limit) { options.limit = limit; }
-	return Nouns.find(query || {}, options);
-});
-Meteor.publish('pubsub_selected_buscap', function(id) {
-	return Nouns.find(id);
 });
 
 /**

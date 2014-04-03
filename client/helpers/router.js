@@ -68,9 +68,9 @@ Router.map(function () {
 	this.route('tmpl_noun_add'            ,{path: '/nounAdd'});
 	this.route('tmpl_noun_detail', {
 		path  : '/nouns/:_id',
-		waitOn: function () {
-			return Meteor.subscribe('pubsub_selected_buscap', this.params._id);
-		},
+//		waitOn: function () {
+//			return Meteor.subscribe('pubsub_selected_buscap', this.params._id);
+//		},
 		data  : function () {
 			Session.set('form_update', false);
 			var noun = Nouns.findOne(this.params._id);
@@ -201,11 +201,7 @@ Router.map(function () {
 	this.route('tmpl_project_detail', {
 		path  : '/projects/:_id',
 		waitOn: function () {
-			return [
-				Meteor.subscribe('pubsub_selected_project', this.params._id)
-//				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Capability}, null, null),
-//				Meteor.subscribe('pubsub_buscap_list', {project_id: this.params._id, class_name: ea.class_name.Business_Domain}, null, null)
-		        ];
+			return Meteor.subscribe('pubsub_selected_project', this.params._id);
 		},
 		data  : function () {
 			Session.set('form_update', false);
