@@ -11,7 +11,7 @@ joint.shapes.sketch.ElementLink = joint.shapes.basic.Rect.extend({
 
 
 joint.shapes.sketch.Group = joint.shapes.basic.Generic.extend({
-	markup: '<a><g class="rotatable"><g class="scalable"><rect/></g><path/><text class="sketch-group-name"/><text class="sketch-group-events"/></g></a>',
+	markup: '<a><g class="rotatable"><g class="scalable"><rect/></g><path/><text class="sketch-group-name"/></g></a>',
 
 	defaults: joint.util.deepSupplement({
 
@@ -34,18 +34,17 @@ joint.shapes.sketch.Group = joint.shapes.basic.Generic.extend({
 		_.bindAll(this, 'updatePath');
 
 		this.on({
-			'change:name': function() { this.updateName(); this.trigger('change:attrs'); },
+//			'change:name': function() { this.updateName(); this.trigger('change:attrs'); },
 			'change:size': this.updatePath
 		});
 
-		this.updateName();
+		//this.updateName();
 		this.updatePath();
 		joint.shapes.basic.Generic.prototype.initialize.apply(this, arguments);
 	},
-
-	updateName: function() {
-		this.get('attrs')['.sketch-group-name'].text = this.get('name');
-	},
+//	updateName: function() {
+//		this.get('attrs')['.sketch-group-name'].text = this.get('name');
+//	},
 	updatePath: function() {
 		this.get('attrs')['path'].d = 'M 0 20 L ' + this.get('size').width + ' 20';
 	}
