@@ -235,8 +235,6 @@ Template.tmpl_diagram_detail.rendered = function() {
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 //Template.tmpl_diagram_detail.created = function() {
-//	console.log( this.data._id );
-//	Diagrams.update(this.data._id, {$inc: {click_cnt: 1}})
 //};
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_diagram_detail.destroyed = function() {

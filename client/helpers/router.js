@@ -93,6 +93,7 @@ Router.map(function () {
 	 * Relationships
 	 */
 	this.route('noun_rel_filter_list'     ,{path: '/relationships'});
+	this.route('possible_rels_for_noun'     ,{path: '/nounrels'});
 
 	/**
 	 * Diagrams: Sequence
@@ -107,7 +108,6 @@ Router.map(function () {
 		},
 		data  : function () {
 			var diagram = Diagrams.findOne(this.params._id);
-			console.log( diagram );
 			if (!diagram) return {};
 			Session.set('form_update', false);
 			if ( diagram && !diagram.code )

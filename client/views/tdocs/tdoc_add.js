@@ -38,7 +38,6 @@ Template.tmpl_tdoc_add.events({
 
 		Meteor.call('createTdoc', properties, function(error, tdoc) {
 			if(error){
-				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{

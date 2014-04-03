@@ -59,7 +59,6 @@ Meteor.methods({
 
 	updateUserprof: function(properties) {
 //		if(!this.isSimulation) {
-			console.log(properties);
 			var loggedInUser = Meteor.user();
 			if ( !loggedInUser )
 				throw new Meteor.Error(403, "You must logged in to change your profile");

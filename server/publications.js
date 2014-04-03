@@ -39,6 +39,9 @@ Meteor.FilterCollections.publish(Nouns, {
 	name: 'nouns-full'
 });
 Meteor.FilterCollections.publish(Nouns, {
+	name: 'possible-rels-for-noun'
+});
+Meteor.FilterCollections.publish(Nouns, {
 	name: 'nouns-simple'
 });
 Meteor.FilterCollections.publish(EA_Relationships, {

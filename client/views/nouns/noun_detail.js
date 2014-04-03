@@ -81,6 +81,13 @@ Template.tmpl_noun_detail.events({
 					className: "btn-default",
 					callback: function() {
 					}
+				},
+				showall: {
+					label: "Show All",
+					className: "btn-info",
+					callback: function() {
+						Router.go('/nounrels');
+					}
 				}
 			}
 			,onEscape: function() {
@@ -228,7 +235,6 @@ Template.tmpl_noun_detail.destroyed = function() {
 };
 /*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
 var createRelationship = function(target_id, rel_name) {
-	console.log( target_id, rel_name );
 	var source_id = getSelectedTreeItem()._id;
 
 	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, function(error, rel_id) {

@@ -38,7 +38,6 @@ Template.tmpl_table_add.events({
 
 		Meteor.call('createTable', properties, function(error, table) {
 			if(error){
-				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{

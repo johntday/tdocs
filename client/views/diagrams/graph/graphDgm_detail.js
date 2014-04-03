@@ -349,6 +349,9 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	});
 	$('#btn-center-content').click(function(){ paperScroller.centerContent(); });
 	//$('#btn-link-labels').click(function(){ showLabels = !showLabels; showHideAllLinkLabels(Template['tmpl_graphDgm_detail'].graph, showLabels); });
+	$('#btn-links').click(function(){
+		graphCurrentRelationships();
+	});
 
 	var zoomLevel = 1;
 

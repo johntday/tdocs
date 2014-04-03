@@ -42,7 +42,6 @@ Template.tmpl_noun_add.events({
 
 		Meteor.call('createNoun', properties, function(error, noun) {
 			if(error){
-				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{

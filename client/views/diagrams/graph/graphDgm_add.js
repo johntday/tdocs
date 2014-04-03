@@ -36,7 +36,6 @@ Template.tmpl_graphDgm_add.events({
 
 		Meteor.call('createDiagram', properties, function(error, diagram) {
 			if(error){
-				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{

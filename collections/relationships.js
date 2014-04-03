@@ -49,7 +49,6 @@ Meteor.methods({
 	 * }
 	 */
 	createRelationship: function(project_id, source_id, target_id, rel_name){
-		console.log( arguments );
 		var user = Meteor.user();
 
 		if (!user)
@@ -93,7 +92,6 @@ Meteor.methods({
 		//SEMANTIC
 		var ea_rel = EA_Relationships.findOne( {rel_name:rel_name, source:rel.source_class_name, target:rel.target_class_name} );
 		rel.semantic = (ea_rel) ? ea_rel.semantic : "UNKNOWN";
-		console.log('relationships: '+rel.semantic);
 
 		var rel_id = Relationships.insert(rel);
 		rel._id = rel_id;

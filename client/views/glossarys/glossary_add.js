@@ -43,7 +43,6 @@ Template.tmpl_glossary_add.events({
 
 		Meteor.call('createGlossary', properties, function(error, glossary) {
 			if(error){
-				console.log(JSON.stringify(error));
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{

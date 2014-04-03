@@ -42,7 +42,6 @@ Template.tmpl_project_add.events({
 
 	Meteor.call('createProject', properties, function(error, project) {
 		if(error){
-			console.log(JSON.stringify(error));
 			throwError(error.reason);
 			$(e.target).removeClass('disabled');
 		}else{

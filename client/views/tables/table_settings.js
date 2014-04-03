@@ -10,7 +10,6 @@ var calculateSize = function ($example1) {
 	availableHeight = $window.height() - offset.top + $window.scrollTop() - 40;
 };
 var setDirty = function(templateName) {
-	//console.log( 'Template[templateName].dirty='+Template[templateName].dirty);
 	if ( !Template[templateName].dirty ) {
 		$('#btn-table-save').removeClass('disabled');
 		Template[templateName].dirty = true;

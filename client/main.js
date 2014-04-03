@@ -157,20 +157,3 @@ Template.layout.helpers({
 		return !!getProjectId();
 	}
 });
-
-//function RESIZE() {
-//	var w = $(window).width();
-//	var h = $(window).height();
-//	Session.set('size', {w:w, h:h} );
-//	console.log('resize: '+ JSON.stringify(Session.get('size')));
-//};
-//$( window ).resize(function() {
-//	RESIZE()
-//});
-//RESIZE();
-
-/*
- * set debug=true in "/lib/client_module.js" to log template render counts to console.
- * Set as last statement in "main.js"
- */
-//Meteor.MyClientModule.performanceLogRenders();
