@@ -20,15 +20,15 @@ Template.tmpl_graphDgm_detail.events({
 				"<ul>" +
 				"<li><b>Help</b> Click on header column to sort</li>" +
 				"<li><b>Save</b> Save diagram</li>" +
-				"<li><b>undo</b> Undo last change</li>" +
-				"<li><b>redo</b> Redo last change</li>" +
-				"<li><b>clear</b> Clear - remove all stuff and start with an clean paper</li>" +
-				"<li><b>picturize</b> Opens diagram as a picture in another window.  Useful to save your diagram and use somewhere else</li>" +
-				"<li><b>zoom in</b> Zooms in</li>" +
-				"<li><b>zoom out</b> Zooms out</li>" +
-				"<li><b>find</b> Search for elements by text</li>" +
-				"<li><b>center</b> Centers the diagram content</li>" +
-				"<li><b>layout</b> Layout the diagram elements</li>" +
+				"<li><b>Undo</b> Undo last change</li>" +
+				"<li><b>Redo</b> Redo last change</li>" +
+				"<li><b>Clear</b> Clear - remove all stuff and start with an clean paper</li>" +
+				"<li><b>Picturize</b> Opens diagram as a picture in another window.  Useful to save your diagram and use somewhere else</li>" +
+				"<li><b>Zoom in</b> Zooms in</li>" +
+				"<li><b>Zoom out</b> Zooms out</li>" +
+				"<li><b>Find</b> Search for elements by text</li>" +
+				"<li><b>Center</b> Centers the diagram content</li>" +
+				"<li><b>Layout</b> Layout the diagram elements</li>" +
 				"<li><b>Delete</b> Deletes your diagram</li>" +
 				"<li><b>Exit</b> Leave diagram</li>" +
 				"</ul>" +
@@ -36,8 +36,8 @@ Template.tmpl_graphDgm_detail.events({
 				"<ul>" +
 				'<li><b>Add Element</b> Click on element in left-panel, and select <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-right"></span> </button></li>' +
 				"<li><b>Drag Paper</b> Click on paper to drag and move paper (background)</li>" +
-				"<li><b>Selecting More Than One Element</b> Hold down SHIFT-key while you click and move mouse to select multiple elements</li>" +
-				"<li><b>Selecting One at a Time</b> Hold down CTRL-key while clicking on elements to select</li>" +
+				"<li><b>Selecting More Than One Element</b> Hold down <em>SHIFT-key</em> while you click and move mouse to select multiple elements</li>" +
+				"<li><b>Selecting One at a Time</b> Hold down <em>CTRL-key</em> while clicking on elements to select</li>" +
 				"<li><b>Moving Elements</b> After you select the elements you want to move, just drag them</li>" +
 				"</ul>"
 			,buttons: {
@@ -129,13 +129,11 @@ Template.tmpl_graphDgm_detail.events({
 Template.tmpl_graphDgm_detail.rendered = function() {
 	data = this.data;
 	Session.set('sidebar_nbr',3);
-	Session.set('has_sidebar', false);
 
 	Template['tmpl_graphDgm_detail'].graph = new joint.dia.Graph;
 
 	// Create a paper and wrap it in a PaperScroller.
 	// ----------------------------------------------
-
 	var paperScroller = new joint.ui.PaperScroller({
 		autoResizePaper: true
 	});
@@ -420,7 +418,6 @@ var saveGraph = function() {
 			growl(error.reason);
 			enableButtons();
 		}else{
-			Session.set('form_update', false);
 			growl( "Diagram updated", {type:'s', hideSnark:true} );
 			enableButtons();
 		}

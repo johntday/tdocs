@@ -7,22 +7,17 @@ Template.tmpl_noun_detail.helpers({
 		return Session.get("breadcrumbs");
 	},
 	showEditButton: function() {
-		return showEditButton(this);
+		this.showEditDep.depend();
+		return this.showEditValue;
 	},
 	canEditAndEditToggle: function() {
-		return canEditAndEditToggle(this);
-	},
-	isAdminAndEditToggle: function() {
-		return isAdminAndEditToggle();
+		return !this.showEditValue;
 	},
 	createdAgo: function() {
 		return dateAgo(this.created);
 	},
 	updatedAgo: function() {
 		return dateAgo(this.updated);
-	},
-	statusOptions: function() {
-		return getNounStatusOptions();
 	},
 	isFav: function() {
 		return isFav(this.favs);
@@ -47,9 +42,6 @@ Template.tmpl_noun_detail.helpers({
 	},
 	area: function() {
 		return ea.getAreaName(this.area_code);
-	},
-	addRel: function() {
-		return Session.get('add_rel');
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -91,14 +83,16 @@ Template.tmpl_noun_detail.events({
 		e.preventDefault();
 		gotoNounFilterPage('class_name', {value:this.class_name, condition:'$and'});
 	},
-	'click #btnEditToggle': function(e) {
+	'click #btnEditToggle': function(e, t) {
 		e.preventDefault();
-		Session.set('form_update', true);
+		t.data.showEditValue = !t.data.showEditValue && canEdit();
+		t.data.showEditDep.changed();
 	},
-	'click #btnCancelNoun': function(e) {
+	'click #btnCancelNoun': function(e, t) {
 		e.preventDefault();
 		$('#description').val( this.description );
-		Session.set('form_update', false);
+		t.data.showEditValue = canEdit();
+		t.data.showEditDep.changed();
 	},
 	'click #btnDeleteNoun': function(e) {
 		e.preventDefault();
@@ -190,7 +184,7 @@ Template.tmpl_noun_detail.events({
 //		$element.style.height = 0;
 //		$element.style.height = $element.scrollHeight + 'px';
 //	},
-	'click #btnUpdateNoun': function(e) {
+	'click #btnUpdateNoun': function(e, t) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
@@ -228,7 +222,8 @@ Template.tmpl_noun_detail.events({
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
-				Session.set('form_update', false);
+				t.data.showEditValue = canEdit();
+				t.data.showEditDep.changed();
 				growl( '"' + noun.title + '" updated', {type:'s', hideSnark:true} );
 			}
 		});
@@ -236,34 +231,18 @@ Template.tmpl_noun_detail.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.rendered = function() {
-	$("#description").focus();
-	if ( !Session.get('form_update') )
-		$("#description").blur();
-
-//	Meteor.typeahead(
-//		$("#nouns"),
-//		nouns,
-//		/*onSelection*/function() {
-//			$("#nouns").val('');
-//			alert('hi');
-//		}
-//	);
 	if (graph)
 		$('#noun_paper').empty();
 	drawNounDiagram();
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
-//var nouns = function(text, callback){
-//	var allnouns = Nouns.find({project_id: getProjectId(), title: {$regex: RegExp.quote(text), $options: 'i'}, type: {$nin: ['root']}}, {sort: {title: 1}}).fetch();
-//		callback(
-//			allnouns.map(function(v){
-//				return { _id: v._id, value: v.title };
-//			})
-//		);
-//};
-/*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.destroyed = function() {
 	incClickCnt(Nouns, this.data._id);
+};
+/*------------------------------------------------------------------------------------------------------------------------------*/
+Template.tmpl_noun_detail.created = function() {
+	this.data.showEditValue = canEdit();
+	this.data.showEditDep = new Deps.Dependency();
 };
 /*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
 var createRelationship = function(target_id, rel_name) {
