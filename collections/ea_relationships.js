@@ -80,6 +80,18 @@ var relationships = [
 	,{source:"Application_Function"      ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Application_Data_Object",rel_name:"access"        }
 	,{source:"Motivation_Stakeholder"    ,semantic:"gives data to"    ,r_semantic: "gets data from",target:"Motivation_Stakeholder" ,rel_name:"flow"          }
 	,{source:"Common_Group"              ,semantic:"contains"         ,r_semantic:"is contained by",target:"Common_Group"           ,rel_name:"contains"      }
+
+	,{source:"Business_Service"          ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Business_Interface"     ,rel_name:"assigns"       }
+	,{source:"Business_Service"          ,semantic:"is used by"       ,r_semantic:"uses"           ,target:"Business_Interface"     ,rel_name:"uses"          }
+	,{source:"Technology_Software"       ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Technology_Service"     ,rel_name:"realization"   }
+	,{source:"Technology_Node"           ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Technology_Service"     ,rel_name:"realization"   }
+	,{source:"Technology_Node"           ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Technology_Service"     ,rel_name:"uses"          }
+	,{source:"Application_Service"       ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Interface"  ,rel_name:"uses"          }
+	,{source:"Application_Service"       ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Application_Interface"  ,rel_name:"assigns"       }
+	,{source:"Application_Data_Object"   ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Object"        ,rel_name:"realization"   }
+	,{source:"Application_Interface"     ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Role"          ,rel_name:"uses"          }
+	,{source:"Technology_Service"        ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Function"   ,rel_name:"uses"          }
+
 ];
 
 		var inserted = 0;

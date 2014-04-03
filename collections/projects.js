@@ -142,7 +142,8 @@ function initNewProject(user, userId, projectId) {
 			,description: data.top_title
 		};
 		extendWithMetadataForInsert(top, userId, user);
-		var top_id = Nouns.insert(top);
+		var top_id;
+		top_id = Nouns.insert(top);
 
 		var root = {
 			project_id: projectId
@@ -151,50 +152,88 @@ function initNewProject(user, userId, projectId) {
 			,type: 'root'
 			,title: data.root_title
 			,description: data.root_title
-			,children: [ top_id ]
 		};
+		if (top_id) { root.children = [ top_id ] };
 		extendWithMetadataForInsert(root, userId, user);
 		Nouns.insert(root);
-
 	});
 
 }
 
 var projectSeedData = [
-	{'class_name': 'Application_Component', root_title: 'APPLICATION COMPONENTS', top_title: 'My Application Component'}
-	,{'class_name': 'Application_Interface', root_title: 'APPLICATION INTERFACES', top_title: 'My Application Interface'}
-	,{'class_name': 'Application_Service', root_title: 'APPLICATION SERVICES', top_title: 'My Application Service'}
-	,{'class_name': 'Application_Function', root_title: 'APPLICATION FUNCTIONS', top_title: 'My Application Function'}
-	,{'class_name': 'Application_Data_Object', root_title: 'APPLICATION DATA OBJECTS', top_title: 'My Application Data Object'}
+	{'class_name': 'Application_Component', root_title: 'APPLICATION COMPONENTS', top_title: 'Application Component'}
+	,{'class_name': 'Application_Interface', root_title: 'APPLICATION INTERFACES', top_title: 'Application Interface'}
+	,{'class_name': 'Application_Service', root_title: 'APPLICATION SERVICES', top_title: 'Application Service'}
+	,{'class_name': 'Application_Function', root_title: 'APPLICATION FUNCTIONS', top_title: 'Application Function'}
+	,{'class_name': 'Application_Data_Object', root_title: 'APPLICATION DATA OBJECTS', top_title: 'Application Data Object'}
 	,{'class_name': 'Common_Group', root_title: 'GROUPS', top_title: 'Business Domains'}
-	,{'class_name': 'Business_Actor', root_title: 'BUSINESS ACTORS', top_title: 'My Business Actor'}
-	,{'class_name': 'Business_Role', root_title: 'BUSINESS ROLES', top_title: 'My Business Role'}
-	,{'class_name': 'Business_Interface', root_title: 'BUSINESS INTERFACES', top_title: 'My Business Interface'}
-	,{'class_name': 'Business_Function', root_title: 'BUSINESS FUNCTIONS', top_title: 'My Business Function'}
-	,{'class_name': 'Business_Process', root_title: 'BUSINESS PROCESSES', top_title: 'My Business Process'}
-	,{'class_name': 'Business_Event', root_title: 'BUSINESS EVENTS', top_title: 'My Business Event'}
-	,{'class_name': 'Business_Service', root_title: 'BUSINESS SERVICES', top_title: 'My Business Service'}
-	,{'class_name': 'Business_Object', root_title: 'BUSINESS OBJECTS', top_title: 'My Business Object'}
-	,{'class_name': 'Business_Location', root_title: 'BUSINESS LOCATIONS', top_title: 'My Business Location'}
-	,{'class_name': 'Technology_Artifact', root_title: 'DEPLOYMENT ARTIFACTS', top_title: 'My Deployment Artifact'}
-	,{'class_name': 'Technology_Communication_Path', root_title: 'COMMUNICATION PATHS', top_title: 'My Communication Path'}
-	,{'class_name': 'Technology_Network', root_title: 'NETWORKS', top_title: 'My Network'}
-	,{'class_name': 'Technology_Interface', root_title: 'INFRASTRUCTURE INTERFACES', top_title: 'My Infrastructure Interface'}
-	,{'class_name': 'Technology_Function', root_title: 'INFRASTRUCTURE FUNCTIONS', top_title: 'My Infrastructure Function'}
-	,{'class_name': 'Technology_Service', root_title: 'INFRASTRUCTURE SERVICES', top_title: 'My Infrastructure Service'}
-	,{'class_name': 'Technology_Node', root_title: 'NODES', top_title: 'My Node'}
-	,{'class_name': 'Technology_Software', root_title: 'SYSTEM SOFTWARE', top_title: 'My System Software'}
-	,{'class_name': 'Technology_Device', root_title: 'DEVICES', top_title: 'My Device'}
-	,{'class_name': 'Motivation_Stakeholder', root_title: 'STAKEHOLDERS', top_title: 'My Stakeholder'}
-	,{'class_name': 'Motivation_Driver', root_title: 'DRIVERS', top_title: 'My Driver'}
-	,{'class_name': 'Motivation_Goal', root_title: 'GOALS', top_title: 'My Goal'}
-	,{'class_name': 'Motivation_Principle', root_title: 'PRINCIPLES', top_title: 'My Principle'}
-	,{'class_name': 'Motivation_Requirement', root_title: 'REQUIREMENTS', top_title: 'My Requirement'}
-	,{'class_name': 'Motivation_Constraint', root_title: 'CONSTRAINTS', top_title: 'My Constraint'}
-	,{'class_name': 'Implementation_Work_Package', root_title: 'WORK PACKAGES', top_title: 'My Work Package'}
-	,{'class_name': 'Implementation_Deliverable', root_title: 'DELIVERABLES', top_title: 'My Deliverable'}
-	,{'class_name': 'Implementation_Plateau', root_title: 'PLATEAUS', top_title: 'My Plateau'}
-	,{'class_name': 'Implementation_Gap', root_title: 'GAPS', top_title: 'My Gap'}
+	,{'class_name': 'Business_Actor', root_title: 'BUSINESS ACTORS', top_title: 'Business Actor'}
+	,{'class_name': 'Business_Role', root_title: 'BUSINESS ROLES', top_title: 'Business Role'}
+	,{'class_name': 'Business_Interface', root_title: 'BUSINESS INTERFACES', top_title: 'Business Interface'}
+	,{'class_name': 'Business_Function', root_title: 'BUSINESS FUNCTIONS', top_title: 'Business Function'}
+	,{'class_name': 'Business_Process', root_title: 'BUSINESS PROCESSES', top_title: 'Business Process'}
+	,{'class_name': 'Business_Event', root_title: 'BUSINESS EVENTS', top_title: 'Business Event'}
+	,{'class_name': 'Business_Service', root_title: 'BUSINESS SERVICES', top_title: 'Business Service'}
+	,{'class_name': 'Business_Object', root_title: 'BUSINESS OBJECTS', top_title: 'Business Object'}
+	,{'class_name': 'Business_Location', root_title: 'BUSINESS LOCATIONS', top_title: 'Business Location'}
+	,{'class_name': 'Technology_Artifact', root_title: 'DEPLOYMENT ARTIFACTS', top_title: 'Deployment Artifact'}
+	,{'class_name': 'Technology_Communication_Path', root_title: 'COMMUNICATION PATHS', top_title: 'Communication Path'}
+	,{'class_name': 'Technology_Network', root_title: 'NETWORKS', top_title: 'Network'}
+	,{'class_name': 'Technology_Interface', root_title: 'INFRASTRUCTURE INTERFACES', top_title: 'Infrastructure Interface'}
+	,{'class_name': 'Technology_Function', root_title: 'INFRASTRUCTURE FUNCTIONS', top_title: 'Infrastructure Function'}
+	,{'class_name': 'Technology_Service', root_title: 'INFRASTRUCTURE SERVICES', top_title: 'Infrastructure Service'}
+	,{'class_name': 'Technology_Node', root_title: 'NODES', top_title: 'Node'}
+	,{'class_name': 'Technology_Software', root_title: 'SYSTEM SOFTWARE', top_title: 'System Software'}
+	,{'class_name': 'Technology_Device', root_title: 'DEVICES', top_title: 'Device'}
+	,{'class_name': 'Motivation_Stakeholder', root_title: 'STAKEHOLDERS', top_title: 'Stakeholder'}
+	,{'class_name': 'Motivation_Driver', root_title: 'DRIVERS', top_title: 'Driver'}
+	,{'class_name': 'Motivation_Goal', root_title: 'GOALS', top_title: 'Goal'}
+	,{'class_name': 'Motivation_Principle', root_title: 'PRINCIPLES', top_title: 'Principle'}
+	,{'class_name': 'Motivation_Requirement', root_title: 'REQUIREMENTS', top_title: 'Requirement'}
+	,{'class_name': 'Motivation_Constraint', root_title: 'CONSTRAINTS', top_title: 'Constraint'}
+	,{'class_name': 'Implementation_Work_Package', root_title: 'WORK PACKAGES', top_title: 'Work Package'}
+	,{'class_name': 'Implementation_Deliverable', root_title: 'DELIVERABLES', top_title: 'Deliverable'}
+	,{'class_name': 'Implementation_Plateau', root_title: 'PLATEAUS', top_title: 'Plateau'}
+	,{'class_name': 'Implementation_Gap', root_title: 'GAPS', top_title: 'Gap'}
 
 
 ];
+
+//var projectSeedData = [
+//	{'class_name': 'Application_Component', root_title: 'APPLICATION COMPONENTS', top_title: 'My Application Component'}
+//	,{'class_name': 'Application_Interface', root_title: 'APPLICATION INTERFACES', top_title: 'My Application Interface'}
+//	,{'class_name': 'Application_Service', root_title: 'APPLICATION SERVICES', top_title: 'My Application Service'}
+//	,{'class_name': 'Application_Function', root_title: 'APPLICATION FUNCTIONS', top_title: 'My Application Function'}
+//	,{'class_name': 'Application_Data_Object', root_title: 'APPLICATION DATA OBJECTS', top_title: 'My Application Data Object'}
+//	,{'class_name': 'Common_Group', root_title: 'GROUPS', top_title: 'Business Domains'}
+//	,{'class_name': 'Business_Actor', root_title: 'BUSINESS ACTORS', top_title: 'My Business Actor'}
+//	,{'class_name': 'Business_Role', root_title: 'BUSINESS ROLES', top_title: 'My Business Role'}
+//	,{'class_name': 'Business_Interface', root_title: 'BUSINESS INTERFACES', top_title: 'My Business Interface'}
+//	,{'class_name': 'Business_Function', root_title: 'BUSINESS FUNCTIONS', top_title: 'My Business Function'}
+//	,{'class_name': 'Business_Process', root_title: 'BUSINESS PROCESSES', top_title: 'My Business Process'}
+//	,{'class_name': 'Business_Event', root_title: 'BUSINESS EVENTS', top_title: 'My Business Event'}
+//	,{'class_name': 'Business_Service', root_title: 'BUSINESS SERVICES', top_title: 'My Business Service'}
+//	,{'class_name': 'Business_Object', root_title: 'BUSINESS OBJECTS', top_title: 'My Business Object'}
+//	,{'class_name': 'Business_Location', root_title: 'BUSINESS LOCATIONS', top_title: 'My Business Location'}
+//	,{'class_name': 'Technology_Artifact', root_title: 'DEPLOYMENT ARTIFACTS', top_title: 'My Deployment Artifact'}
+//	,{'class_name': 'Technology_Communication_Path', root_title: 'COMMUNICATION PATHS', top_title: 'My Communication Path'}
+//	,{'class_name': 'Technology_Network', root_title: 'NETWORKS', top_title: 'My Network'}
+//	,{'class_name': 'Technology_Interface', root_title: 'INFRASTRUCTURE INTERFACES', top_title: 'My Infrastructure Interface'}
+//	,{'class_name': 'Technology_Function', root_title: 'INFRASTRUCTURE FUNCTIONS', top_title: 'My Infrastructure Function'}
+//	,{'class_name': 'Technology_Service', root_title: 'INFRASTRUCTURE SERVICES', top_title: 'My Infrastructure Service'}
+//	,{'class_name': 'Technology_Node', root_title: 'NODES', top_title: 'My Node'}
+//	,{'class_name': 'Technology_Software', root_title: 'SYSTEM SOFTWARE', top_title: 'My System Software'}
+//	,{'class_name': 'Technology_Device', root_title: 'DEVICES', top_title: 'My Device'}
+//	,{'class_name': 'Motivation_Stakeholder', root_title: 'STAKEHOLDERS', top_title: 'My Stakeholder'}
+//	,{'class_name': 'Motivation_Driver', root_title: 'DRIVERS', top_title: 'My Driver'}
+//	,{'class_name': 'Motivation_Goal', root_title: 'GOALS', top_title: 'My Goal'}
+//	,{'class_name': 'Motivation_Principle', root_title: 'PRINCIPLES', top_title: 'My Principle'}
+//	,{'class_name': 'Motivation_Requirement', root_title: 'REQUIREMENTS', top_title: 'My Requirement'}
+//	,{'class_name': 'Motivation_Constraint', root_title: 'CONSTRAINTS', top_title: 'My Constraint'}
+//	,{'class_name': 'Implementation_Work_Package', root_title: 'WORK PACKAGES', top_title: 'My Work Package'}
+//	,{'class_name': 'Implementation_Deliverable', root_title: 'DELIVERABLES', top_title: 'My Deliverable'}
+//	,{'class_name': 'Implementation_Plateau', root_title: 'PLATEAUS', top_title: 'My Plateau'}
+//	,{'class_name': 'Implementation_Gap', root_title: 'GAPS', top_title: 'My Gap'}
+//
+//
+//];

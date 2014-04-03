@@ -317,7 +317,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 						var rel_name = $selected.val();
 						var semantic = $selected.data("semantic");
 
-//						createRelationship(source_id, target_id, rel_name, semantic);
+						createRelationship(source_id, target_id, rel_name, semantic);
 						// ADD CORRECT LINE
 						addRelToGraph('', rel_name, source_graph_id, target_graph_id, semantic);
 
@@ -351,6 +351,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	//$('#btn-link-labels').click(function(){ showLabels = !showLabels; showHideAllLinkLabels(Template['tmpl_graphDgm_detail'].graph, showLabels); });
 	$('#btn-links').click(function(){
 		graphCurrentRelationships();
+		growl( "All links restored back from database", {type:'s', hideSnark:true} );
 	});
 
 	var zoomLevel = 1;

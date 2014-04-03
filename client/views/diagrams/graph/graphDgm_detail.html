@@ -4,7 +4,7 @@
 	<div class="toolbar">
 		<button id="btn-graph-help"    class="btn btn-info"> Help </button>
 		{{#if canEdit}}
-		<button id="btn-save"           class="btn btn-primary"> Save </button>
+		<button id="btn-save"           class="btn btn-primary" title="Save diagram.  This includes all new relationships created."> Save </button>
 		{{/if}}
 		<button id="btn-undo"           class="btn">Undo</button>
 		<button id="btn-redo"           class="btn">Redo</button>
@@ -21,11 +21,11 @@
 		<!--<button id="btn-find-element"   class="btn not-yet"> Find </button>-->
 		<button id="btn-center-content" class="btn">center</button>
 		<!--<button id="btn-link-labels"    class="btn" title="Show/Hide Link Labels">Show/Hide Labels</button>-->
-		<button id="btn-links"          class="btn">Restore Links</button>
-		<button id="btn-clear"          class="btn">Clear</button>
-		<button id="btn-exit"           class="btn btn-danger">Exit</button>
+		<button id="btn-links"          class="btn" title="Reset all links to ones saved.  All links not saved will be removed.">Restore Links</button>
+		<button id="btn-clear"          class="btn" title="Clear all stuff.">Clear</button>
+		<button id="btn-exit"           class="btn btn-danger" title="Exit diagram mode">Exit</button>
 		{{#if canEdit}}
-		<button id="btn-delete-graph"   class="btn btn-danger">Delete</button>
+		<button id="btn-delete-graph"   class="btn btn-danger" title="Delete this diagram">Delete</button>
 		{{/if}}
 	</div>
 
