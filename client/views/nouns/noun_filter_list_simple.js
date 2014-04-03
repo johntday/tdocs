@@ -22,8 +22,9 @@ NounsFilterSimple = new Meteor.FilterCollections(Nouns, {
 	},
 	callbacks: {
 		beforeSubscribe: function (query) {
+			var class_names = ea.getPossibleClassNamesForRelationship(getSelectedTreeItem().class_name);
 			query.selector.project_id = getProjectId();
-			query.selector.class_name = {$in: ea.getPossibleClassNamesForRelationship(getSelectedTreeItem().class_name)};
+			query.selector.class_name = { $in: class_names };
 			query.selector.type = {$nin: ['root']};
 			return query;
 		}
@@ -31,18 +32,19 @@ NounsFilterSimple = new Meteor.FilterCollections(Nouns, {
 //			Session.set('loading', false);
 //		}
 		,beforeResults: function(query){
+			var class_names = ea.getPossibleClassNamesForRelationship(getSelectedTreeItem().class_name);
 			query.selector.project_id = getProjectId();
-			query.selector.class_name = {$in: ea.getPossibleClassNamesForRelationship(getSelectedTreeItem().class_name)};
+			query.selector.class_name = { $in: class_names };
 			query.selector.type = {$nin: ['root']};
 			return query;
 		},
 		afterResults: function(cursor){
+			var source_class_name = getSelectedTreeItem().class_name;
+			var rels = ea.getPossibleEARelsForRelationship(source_class_name);
 			var alteredResults = cursor.fetch();
-			_.each(alteredResults, function(result, idx){
-				var selectedNoun = getSelectedTreeItem(true);
-				var semantic = ea.getRelationshipSemantic( selectedNoun.original.class_name, result.class_name, '' );//TODO
-				alteredResults[idx].semantic = semantic;
-				//alteredResults[idx].rel_name = rel.rel_name;
+			_.each(alteredResults, function(item, idx){
+				alteredResults[idx].semantic = rels[ source_class_name + item.class_name ].semantic;
+				alteredResults[idx].rel_name = rels[ source_class_name + item.class_name ].rel_name;
 			});
 			return alteredResults;
 		}
@@ -59,11 +61,14 @@ Template.noun_filter_list_simple.helpers({
 	userId: function() {
 		return Meteor.userId();
 	},
-	icon: function() {
+	target_icon: function() {
 		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.class_name).icon;
 	},
 	source_title: function() {
 		return getSelectedTreeItem().title;
+	},
+	source_icon: function() {
+		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(getSelectedTreeItem().class_name).icon;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

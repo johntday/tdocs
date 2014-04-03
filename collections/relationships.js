@@ -49,6 +49,7 @@ Meteor.methods({
 	 * }
 	 */
 	createRelationship: function(project_id, source_id, target_id, rel_name){
+		console.log( arguments );
 		var user = Meteor.user();
 
 		if (!user)
