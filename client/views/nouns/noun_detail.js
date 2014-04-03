@@ -230,9 +230,8 @@ Template.tmpl_noun_detail.destroyed = function() {
 var createRelationship = function(target_id, rel_name) {
 	console.log( target_id, rel_name );
 	var source_id = getSelectedTreeItem()._id;
-	var attrs = undefined;
 
-	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, attrs, function(error, rel_id) {
+	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, function(error, rel_id) {
 		if(error){
 			growl(error.reason);
 		}else{
