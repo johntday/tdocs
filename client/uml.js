@@ -159,7 +159,16 @@ joint.shapes.uml.flow = joint.dia.Link.extend({
 		type: 'uml.flow',
 		attrs: {
 			'.connection': { stroke: '#3498DB', 'stroke-width': 3, 'stroke-dasharray': '5 2' },
-			'.marker-target': { fill: 'black', d: 'M 10 0 L 0 5 L 10 10 z' }
+			'.marker-target': { fill: '#FA5882', d: 'M 10 0 L 0 5 L 10 10 z' }
+		}
+	}
+});
+joint.shapes.uml.Access = joint.dia.Link.extend({
+	defaults: {
+		type: 'uml.access',
+		attrs: {
+			'.connection': { stroke: '#2E2EFE', 'stroke-width': 3, 'stroke-dasharray': '5 2' },
+			'.marker-target': { fill: '#81F781', d: 'M 10 0 L 0 5 L 10 10 z' }
 		}
 	}
 });
