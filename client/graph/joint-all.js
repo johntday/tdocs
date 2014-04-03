@@ -8266,7 +8266,7 @@ Tween.propHooks = {
 	_default: {
 		get: function( tween ) {
 			var result;
-
+			if ( !tween ){ return 0; }
 			if ( tween.elem[ tween.prop ] != null &&
 				(!tween.elem.style || tween.elem.style[ tween.prop ] == null) ) {
 				return tween.elem[ tween.prop ];

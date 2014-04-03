@@ -315,7 +315,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 						// ADD RELATIONSHIP
 						var rel_name = $( "input:checked").val();
 
-						console.log( source_id, target_id, rel_name );
 						createRelationship(source_id, target_id, rel_name);
 					}
 				},
@@ -401,12 +400,10 @@ function resizePaper($paper) {
 	});
 }
 
-var saveGraph = function() {
-	disableButtons();
+function saveGraph() {
 
 	if(!Meteor.user()){
 		throwError('You must login to update a diagram');
-		enableButtons();
 		return false;
 	}
 
@@ -416,10 +413,8 @@ var saveGraph = function() {
 	Meteor.call('updateDiagramCode', data._id, code, function(error, diagram) {
 		if(error){
 			growl(error.reason);
-			enableButtons();
 		}else{
 			growl( "Diagram updated", {type:'s', hideSnark:true} );
-			enableButtons();
 		}
 	});
 };
