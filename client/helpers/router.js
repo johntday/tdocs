@@ -93,7 +93,6 @@ Router.map(function () {
 	 * Relationships
 	 */
 	this.route('noun_rel_filter_list'     ,{path: '/relationships'});
-	this.route('relationship_list'        ,{path: '/pickrel'});
 
 	/**
 	 * Diagrams: Sequence

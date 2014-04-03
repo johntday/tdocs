@@ -1,18 +1,3 @@
-/**
- * properties = {
-	 *   project_id: 'xxx'
-	 *   ,rel_name: 'composition'
-	 *   ,source_id: 'xxx'
-	 *   ,target_id: 'xxx'
-	 *   ,source_title: 'xxx'
-	 *   ,target_title: 'xxx'
-	 *   ,source_area_code: 'b'
-	 *   ,target_area_code: 'b'
-	 *   ,source_class_name: 'Business_Object'
-	 *   ,target_class_name: 'Business_Object'
-	 *   ,attrs: [ ['name1','value1'], ['name2','value2'] ]
-	 * }
- */
 NounsRelsFilter = new Meteor.FilterCollections(Relationships, {
 	name: 'nouns-rels',
 	template: 'noun_rels',
@@ -61,10 +46,10 @@ NounsRelsFilter = new Meteor.FilterCollections(Relationships, {
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.noun_rels.helpers({
 	target_icon: function() {
-		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.source_class_name).icon;
+		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.target_class_name).icon;
 	},
 	source_icon: function() {
-		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.target_class_name).icon;
+		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.source_class_name).icon;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
