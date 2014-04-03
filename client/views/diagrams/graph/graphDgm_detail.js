@@ -439,9 +439,7 @@ var deleteGraph = function(_id) {
 	});
 };
 function createRelationship(source_id, target_id, rel_name) {
-	var attrs = undefined;
-
-	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, attrs, function(error, rel_id) {
+	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, function(error, rel_id) {
 		if(error){
 			growl(error.reason);
 		}else{

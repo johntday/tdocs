@@ -27,6 +27,10 @@ Template.tmpl_userprof_detail.helpers({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_userprof_detail.events({
+	'keyup #name': function(e) {
+		if (e.which === 13)
+			$('#btnUpdateUserprof').click();
+	},
 	'click #btnEditToggle': function(e) {
 		e.preventDefault();
 		Session.set('form_update', true);

@@ -145,14 +145,6 @@ Template.tmpl_project_detail.events({
 		}
 	},
 
-	'keyup #description, focus #description': function(e) {
-		e.preventDefault();
-		var $element = $(e.target).get(0);
-		$element.style.overflow = 'hidden';
-		$element.style.height = 0;
-		$element.style.height = $element.scrollHeight + 'px';
-	},
-
 	'click #icon-star': function(e) {
 		var user = Meteor.user();
 		if(!user){

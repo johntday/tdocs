@@ -7,17 +7,22 @@ Template.tmpl_noun_detail.helpers({
 		return Session.get("breadcrumbs");
 	},
 	showEditButton: function() {
-		this.showEditDep.depend();
-		return this.showEditValue;
+		return showEditButton(this);
 	},
 	canEditAndEditToggle: function() {
-		return !this.showEditValue;
+		return canEditAndEditToggle(this);
+	},
+	isAdminAndEditToggle: function() {
+		return isAdminAndEditToggle();
 	},
 	createdAgo: function() {
 		return dateAgo(this.created);
 	},
 	updatedAgo: function() {
 		return dateAgo(this.updated);
+	},
+	statusOptions: function() {
+		return getNounStatusOptions();
 	},
 	isFav: function() {
 		return isFav(this.favs);
@@ -42,10 +47,17 @@ Template.tmpl_noun_detail.helpers({
 	},
 	area: function() {
 		return ea.getAreaName(this.area_code);
+	},
+	addRel: function() {
+		return Session.get('add_rel');
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.events({
+	'keyup #title, keyup #description': function(e) {
+		if (e.which === 13)
+			$('#btnUpdateNoun').click();
+	},
 	'click #btn_create_rel': function(e) {
 		//e.preventDefault();
 
@@ -83,16 +95,13 @@ Template.tmpl_noun_detail.events({
 		e.preventDefault();
 		gotoNounFilterPage('class_name', {value:this.class_name, condition:'$and'});
 	},
-	'click #btnEditToggle': function(e, t) {
+	'click #btnEditToggle': function(e) {
 		e.preventDefault();
-		t.data.showEditValue = !t.data.showEditValue && canEdit();
-		t.data.showEditDep.changed();
+		Session.set('form_update', true);
 	},
-	'click #btnCancelNoun': function(e, t) {
+	'click #btnCancelNoun': function(e) {
 		e.preventDefault();
-		$('#description').val( this.description );
-		t.data.showEditValue = canEdit();
-		t.data.showEditDep.changed();
+		Session.set('form_update', false);
 	},
 	'click #btnDeleteNoun': function(e) {
 		e.preventDefault();
@@ -136,6 +145,7 @@ Template.tmpl_noun_detail.events({
 					$inc: { favs_cnt: -1 }
 				}
 			);
+			MyLog("noun_details.js/click #icon-heart/1", "remove from favs");
 		} else {
 			Nouns.update(this._id,
 				{
@@ -143,6 +153,7 @@ Template.tmpl_noun_detail.events({
 					$inc: { favs_cnt: 1 }
 				}
 			);
+			MyLog("noun_details.js/click #icon-heart/1", "add to favs");
 		}
 	},
 	'click #icon-eye': function(e) {
@@ -154,8 +165,10 @@ Template.tmpl_noun_detail.events({
 
 		if ( hasSeen(this.seen) ) {
 			Nouns.update(this._id, { $pull: { seen: user._id }, $inc: { seen_cnt: -1 } } );
+			MyLog("noun_details.js/click #icon-eye/2", "remove from seen");
 		} else {
 			Nouns.update(this._id, { $addToSet: { seen: user._id }, $inc: { seen_cnt: 1 } } );
+			MyLog("noun_details.js/click #icon-eye/1", "remove from seen");
 		}
 	},
 	'click #icon-star': function(e) {
@@ -167,11 +180,13 @@ Template.tmpl_noun_detail.events({
 
 		if ( isStar(this.stars) ) {
 			Nouns.update(this._id, { $pull: { stars: user._id }, $inc: { stars_cnt: -1 } } );
+			MyLog("noun_details.js/click #icon-star/2", "remove from stars");
 		} else {
 			Nouns.update(this._id, { $addToSet: { stars: user._id }, $inc: { stars_cnt: 1 } } );
+			MyLog("noun_details.js/click #icon-star/1", "remove from stars");
 		}
 	},
-	'click #btnUpdateNoun': function(e, t) {
+	'click #btnUpdateNoun': function(e) {
 		e.preventDefault();
 		$(e.target).addClass('disabled');
 
@@ -195,8 +210,7 @@ Template.tmpl_noun_detail.events({
 				throwError(error.reason);
 				$(e.target).removeClass('disabled');
 			}else{
-				t.data.showEditValue = canEdit();
-				t.data.showEditDep.changed();
+				Session.set('form_update', false);
 				growl( '"' + noun.title + '" updated', {type:'s', hideSnark:true} );
 			}
 		});
@@ -211,11 +225,6 @@ Template.tmpl_noun_detail.rendered = function() {
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.destroyed = function() {
 	incClickCnt(Nouns, this.data._id);
-};
-/*------------------------------------------------------------------------------------------------------------------------------*/
-Template.tmpl_noun_detail.created = function() {
-	this.data.showEditValue = canEdit();
-	this.data.showEditDep = new Deps.Dependency();
 };
 /*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
 var createRelationship = function(target_id, rel_name) {

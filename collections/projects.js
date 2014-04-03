@@ -49,6 +49,7 @@ Meteor.methods({
 			throw new Meteor.Error(602, 'Please add a title');
 
 		var project = extendWithMetadataForInsert( properties, userId, user );
+		project.description = project.description || project.title;
 
 		projectId = Projects.insert(project);
 		project.projectId = projectId;
