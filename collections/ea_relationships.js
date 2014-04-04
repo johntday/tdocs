@@ -160,7 +160,7 @@ var relationships = [
 	,{source:"Application_Service"       ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Application_Interface"  ,rel_name:"assigns"       }
 	,{source:"Application_Data_Object"   ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Object"        ,rel_name:"realization"   }
 	,{source:"Business_Role"             ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Interface"  ,rel_name:"uses"          }
-	,{source:"Technology_Service"        ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Function"   ,rel_name:"uses"          }
+	,{source:"Application_Function"      ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Technology_Service"     ,rel_name:"uses"          }
 	,{source:"Technology_Software"       ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Technology_Artifact"    ,rel_name:"access"        }
 	,{source:"Business_Service"          ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Business_Interface"     ,rel_name:"assigns"       }
 	,{source:"Technology_Node"           ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Technology_Artifact"    ,rel_name:"access"        }
@@ -168,6 +168,7 @@ var relationships = [
 	,{source:"Technology_Network"        ,semantic:"associated with"  ,r_semantic:"associated with",target:"Technology_Device"      ,rel_name:"association"   }
 	,{source:"Technology_Device"         ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Technology_Interface"   ,rel_name:"composition"   }
 	,{source:"Application_Component"     ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Technology_Interface"   ,rel_name:"uses"          }
+	,{source:"Technology_Service"        ,semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Technology_Interface"   ,rel_name:"assigns"       }
 
 
 
