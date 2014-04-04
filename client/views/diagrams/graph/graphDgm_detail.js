@@ -373,18 +373,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			cell.remove();
 			legend_id = null;
 		} else {
-//			var legend = joint.shapes.sketch.Legend({
-//				position: { x: 60, y: 20 },
-//				size: { width: 200, height: 200 }
-//			});
-			var legend = new joint.shapes.sketch.Legend({
-				position: { x: 200, y: 200 },
-				size: { width: 200, height: 200 }
-			});
-			legend.get('attrs')['.sketch-legend-name'].text = "Legend";
-
-			Template['tmpl_graphDgm_detail'].graph.addCell( legend );
-			legend_id = legend.id;
+			legend_id = showLegend(Template['tmpl_graphDgm_detail'].graph);
 		}
 	});
 

@@ -10,7 +10,7 @@ joint.shapes.sketch.ElementLink = joint.shapes.basic.Rect.extend({
 });
 
 joint.shapes.sketch.Legend = joint.shapes.basic.Generic.extend({
-	markup: '<g><g><rect/></g><path/><text class="sketch-legend-name"/><link class="Generalization"/></g>',
+	markup: '<g><g><rect/></g><path/><text class="sketch-legend-name"/></g>',
 
 	defaults: joint.util.deepSupplement({
 
@@ -22,9 +22,6 @@ joint.shapes.sketch.Legend = joint.shapes.basic.Generic.extend({
 			'.sketch-legend-name': {
 				'ref': 'rect', 'ref-x': .5, 'ref-y': 5, 'text-anchor': 'middle',
 				'font-family': 'Courier New', 'font-size': 14, fill: '#000000'
-			},
-			'.Generalization': {
-				'd': 'M 20 0 L 0 10 L 20 20 z', fill: 'white'
 			}
 		},
 		name: 'Legend'
