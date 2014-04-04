@@ -2,15 +2,17 @@
 	{{> tmpl_breadcrumbs breadcrumbs}}
 
 	<div class="toolbar">
-		<button id="btn-graph-help"    class="btn btn-info"> Help </button>
+		<button id="btn-graph-help"    class="btn btn-info" title="Help"> <span class="glyphicon glyphicon-question-sign"></span> </button>
+		<button id="btn-graph-legend"  class="btn btn-info" title="Legend"> <span class="glyphicon glyphicon-bookmark"></span> </button>
 		{{#if canEdit}}
-		<button id="btn-save"           class="btn btn-primary" title="Save diagram.  This includes all new relationships created."> Save </button>
+		<button id="btn-save"           class="btn btn-primary" title="Save diagram"> <span
+				class="glyphicon glyphicon-save"></span> </button>
 		{{/if}}
-		<button id="btn-undo"           class="btn">Undo</button>
-		<button id="btn-redo"           class="btn">Redo</button>
-		<button id="btn-svg"            class="btn">Picturize</button>
-		<button id="btn-zoom-in"        class="btn">Zoom in</button>
-		<button id="btn-zoom-out"       class="btn">Zoom out</button>
+		<button id="btn-undo"           class="btn" title="Undo last action">Undo</button>
+		<button id="btn-redo"           class="btn" title="Redo last action"><span class="glyphicon glyphicon-share-alt"></span></button>
+		<button id="btn-svg"            class="btn" title="Create a picture of diagram"><span class="glyphicon glyphicon-picture"></span></button>
+		<button id="btn-zoom-in"        class="btn" title="Zoom-in"><span class="glyphicon glyphicon-zoom-in"></span></button>
+		<button id="btn-zoom-out"       class="btn" title="Zoom-out"><span class="glyphicon glyphicon-zoom-out"></span></button>
 		<!--<div class="btn-group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Lines<span class="caret"></span></button>
 			<ul class="dropdown-menu" role="menu">
@@ -19,7 +21,7 @@
 			</ul>
 		</div>-->
 		<!--<button id="btn-find-element"   class="btn not-yet"> Find </button>-->
-		<button id="btn-center-content" class="btn">center</button>
+		<button id="btn-center-content" class="btn" title="Center diagram">center</button>
 		<!--<button id="btn-link-labels"    class="btn" title="Show/Hide Link Labels">Show/Hide Labels</button>-->
 		<button id="btn-back"           class="btn" title="Put element in the back">to Back</button>
 		<button id="btn-front"          class="btn" title="Put element in the front">to Front</button>
@@ -27,7 +29,7 @@
 		<button id="btn-clear"          class="btn" title="Clear all stuff.">Clear</button>
 		<button id="btn-exit"           class="btn btn-danger" title="Exit diagram mode">Exit</button>
 		{{#if canEdit}}
-		<button id="btn-delete-graph"   class="btn btn-danger" title="Delete this diagram">Delete</button>
+		<button id="btn-delete-graph"   class="btn btn-danger" title="Delete this diagram"><span class="glyphicon glyphicon-trash"></span></button>
 		{{/if}}
 	</div>
 

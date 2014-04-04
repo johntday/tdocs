@@ -9,6 +9,42 @@ joint.shapes.sketch.ElementLink = joint.shapes.basic.Rect.extend({
 	link: ''
 });
 
+joint.shapes.sketch.Legend = joint.shapes.basic.Generic.extend({
+	markup: '<g><g><rect/></g><path/><text class="sketch-legend-name"/><link class="Generalization"/></g>',
+
+	defaults: joint.util.deepSupplement({
+
+		type: 'sketch.Legend',
+
+		attrs: {
+			rect: { 'width': 200, 'height': 200, 'fill': '#ecf0f1', 'stroke': '#bdc3c7', 'stroke-width': 3, 'rx': 10, 'ry': 10 },
+			path: { 'd': 'M 0 20 L 200 20', 'stroke': '#bdc3c7', 'stroke-width': 2 },
+			'.sketch-legend-name': {
+				'ref': 'rect', 'ref-x': .5, 'ref-y': 5, 'text-anchor': 'middle',
+				'font-family': 'Courier New', 'font-size': 14, fill: '#000000'
+			},
+			'.Generalization': {
+				'd': 'M 20 0 L 0 10 L 20 20 z', fill: 'white'
+			}
+		},
+		name: 'Legend'
+	}, joint.shapes.basic.Generic.prototype.defaults),
+
+	initialize: function() {
+		_.bindAll(this, 'updatePath');
+
+		this.on({
+			'change:size': this.updatePath
+		});
+
+		this.updatePath();
+		joint.shapes.basic.Generic.prototype.initialize.apply(this, arguments);
+	},
+	updatePath: function() {
+		this.get('attrs')['path'].d = 'M 0 20 L ' + this.get('size').width + ' 20';
+	}
+
+});
 
 joint.shapes.sketch.Group = joint.shapes.basic.Generic.extend({
 	markup: '<a><g class="rotatable"><g class="scalable"><rect/></g><path/><text class="sketch-group-name"/></g></a>',

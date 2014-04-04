@@ -367,6 +367,26 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			//growl( "Element put front", {type:'s', hideSnark:true} );
 		}
 	});
+	$('#btn-graph-legend').click(function(){
+		if (legend_id) {
+			var cell = Template['tmpl_graphDgm_detail'].graph.getCell(legend_id);
+			cell.remove();
+			legend_id = null;
+		} else {
+//			var legend = joint.shapes.sketch.Legend({
+//				position: { x: 60, y: 20 },
+//				size: { width: 200, height: 200 }
+//			});
+			var legend = new joint.shapes.sketch.Legend({
+				position: { x: 200, y: 200 },
+				size: { width: 200, height: 200 }
+			});
+			legend.get('attrs')['.sketch-legend-name'].text = "Legend";
+
+			Template['tmpl_graphDgm_detail'].graph.addCell( legend );
+			legend_id = legend.id;
+		}
+	});
 
 	var zoomLevel = 1;
 
@@ -411,6 +431,7 @@ var source_class_name, source_title, source_id, source_graph_id;
 var target_class_name, target_title, target_id, target_graph_id;
 var showLabels = true;
 var currentHaloElement;
+var legend_id;
 
 function resizePaper($paper) {
 	var w = $(window).width();
