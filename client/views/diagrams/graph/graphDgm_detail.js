@@ -251,8 +251,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	});
 
 	// DELETE LINK FROM GRAPH
-	graph.on('remove', function(cell) {
-		if (cell instanceof joint.dia.Link) {
+	Template['tmpl_graphDgm_detail'].graph.on('remove', function(cell) {
+		if (!resetLinks && cell instanceof joint.dia.Link) {
 			alert('hello');
 
 		}
@@ -361,7 +361,9 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	$('#btn-center-content').click(function(){ paperScroller.centerContent(); });
 	//$('#btn-link-labels').click(function(){ showLabels = !showLabels; showHideAllLinkLabels(Template['tmpl_graphDgm_detail'].graph, showLabels); });
 	$('#btn-links').click(function(){
+		resetLinks = true;
 		graphCurrentRelationships();
+		resetLinks = false;
 		growl( "All links restored back from database", {type:'s', hideSnark:true} );
 	});
 	$('#btn-back').click(function(){
@@ -430,6 +432,7 @@ var target_class_name, target_title, target_id, target_graph_id;
 var showLabels = true;
 var currentHaloElement;
 var legend_id;
+var resetLinks = false;
 
 function resizePaper($paper) {
 	var w = $(window).width();

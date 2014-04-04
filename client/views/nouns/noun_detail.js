@@ -81,13 +81,13 @@ Template.tmpl_noun_detail.events({
 					className: "btn-default",
 					callback: function() {
 					}
-				},
-				showall: {
-					label: "Show All",
-					className: "btn-info",
-					callback: function() {
-						Router.go('/nounrels');
-					}
+//				},
+//				showall: {
+//					label: "Show All",
+//					className: "btn-info",
+//					callback: function() {
+//						Router.go('/nounrels');
+//					}
 				}
 			}
 			,onEscape: function() {
