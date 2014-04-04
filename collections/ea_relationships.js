@@ -166,6 +166,8 @@ var relationships = [
 	,{source:"Technology_Node"           ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Technology_Artifact"    ,rel_name:"access"        }
 	,{source:"Technology_Software"       ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Technology_Device"      ,rel_name:"assigns"       }
 	,{source:"Technology_Network"        ,semantic:"associated with"  ,r_semantic:"associated with",target:"Technology_Device"      ,rel_name:"association"   }
+	,{source:"Technology_Device"         ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Technology_Interface"   ,rel_name:"composition"   }
+	,{source:"Application_Component"     ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Technology_Interface"   ,rel_name:"uses"          }
 
 
 

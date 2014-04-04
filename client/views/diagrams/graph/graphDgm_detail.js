@@ -250,7 +250,16 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		//createInspector(cellView);
 	});
 
-	// Command Manager - undo/redo.
+	// DELETE LINK FROM GRAPH
+	graph.on('remove', function(cell) {
+		if (cell instanceof joint.dia.Link) {
+			alert('hello');
+
+		}
+	});
+
+
+		// Command Manager - undo/redo.
 	// ----------------------------
 	var commandManager = new joint.dia.CommandManager({ graph: Template['tmpl_graphDgm_detail'].graph});
 
