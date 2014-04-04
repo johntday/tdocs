@@ -159,7 +159,7 @@ var relationships = [
 	,{source:"Application_Service"       ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Interface"  ,rel_name:"uses"          }
 	,{source:"Application_Service"       ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Application_Interface"  ,rel_name:"assigns"       }
 	,{source:"Application_Data_Object"   ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Object"        ,rel_name:"realization"   }
-	,{source:"Application_Interface"     ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Role"          ,rel_name:"uses"          }
+	,{source:"Business_Role"             ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Interface"  ,rel_name:"uses"          }
 	,{source:"Technology_Service"        ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Function"   ,rel_name:"uses"          }
 	,{source:"Technology_Software"       ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Technology_Artifact"    ,rel_name:"access"        }
 	,{source:"Business_Service"          ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Business_Interface"     ,rel_name:"assigns"       }
