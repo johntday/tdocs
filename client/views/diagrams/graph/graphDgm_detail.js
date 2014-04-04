@@ -233,6 +233,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 		if (cellView.model instanceof joint.dia.Link || selection.contains(cellView.model)) return;
 
+		currentHaloElement = cellView.model;
+
 		var halo = new joint.ui.Halo({
 			graph: Template['tmpl_graphDgm_detail'].graph,
 			paper: paper,
@@ -353,6 +355,18 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		graphCurrentRelationships();
 		growl( "All links restored back from database", {type:'s', hideSnark:true} );
 	});
+	$('#btn-back').click(function(){
+		if (currentHaloElement) {
+			currentHaloElement.toBack();
+			//growl( "Element put back", {type:'s', hideSnark:true} );
+		}
+	});
+	$('#btn-front').click(function(){
+		if (currentHaloElement) {
+			currentHaloElement.toFront();
+			//growl( "Element put front", {type:'s', hideSnark:true} );
+		}
+	});
 
 	var zoomLevel = 1;
 
@@ -396,6 +410,7 @@ var relationshipDialogOpen = false;
 var source_class_name, source_title, source_id, source_graph_id;
 var target_class_name, target_title, target_id, target_graph_id;
 var showLabels = true;
+var currentHaloElement;
 
 function resizePaper($paper) {
 	var w = $(window).width();

@@ -154,6 +154,17 @@ joint.shapes.uml.Trigger = joint.dia.Link.extend({
 		}
 	}
 });
+//			'.marker-source': { stroke: '#3498DB', fill: '#3498DB', d: 'M5.5,15.499,15.8,21.447,15.8,15.846,25.5,21.447,25.5,9.552,15.8,15.152,15.8,9.552z' },
+joint.shapes.uml.Assign = joint.dia.Link.extend({
+	defaults: {
+		type: 'uml.Assign',
+		attrs: {
+			'.connection': { stroke: 'black', 'stroke-width': 2 },
+			'.marker-source': { stroke: '#3498DB', fill: '#3498DB', d: 'M3,3m-3,0a3,3 0 1,0 6,0a3,3 0 1,0 -6,0z' },
+			'.marker-target': { stroke: '#3498DB', fill: '#3498DB', d: 'M3,3m-3,0a3,3 0 1,0 6,0a3,3 0 1,0 -6,0z' }
+		}
+	}
+});
 joint.shapes.uml.Flow = joint.dia.Link.extend({
 	defaults: {
 		type: 'uml.Flow',
