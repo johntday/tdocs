@@ -183,6 +183,15 @@ joint.shapes.uml.Access = joint.dia.Link.extend({
 		}
 	}
 });
+joint.shapes.uml.Influence = joint.dia.Link.extend({
+	defaults: {
+		type: 'uml.Influence',
+		attrs: {
+			'.connection': { stroke: '#FE642E', 'stroke-width': 3, 'stroke-dasharray': '5,2' },
+			'.marker-target': { fill: '#F7FE2E', d: 'M 10 0 L 0 5 L 10 10 z' }
+		}
+	}
+});
 joint.shapes.uml.Implementation = joint.dia.Link.extend({
 	defaults: {
 		type: 'uml.Implementation',

@@ -143,7 +143,7 @@ function initNewProject(user, userId, projectId) {
 		};
 		extendWithMetadataForInsert(top, userId, user);
 		var top_id;
-		top_id = Nouns.insert(top);
+		//top_id = Nouns.insert(top);
 
 		var root = {
 			project_id: projectId

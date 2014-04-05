@@ -143,7 +143,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		width: 500,
 		height: 500,
 		gridSize: 10,
-		perpendicularLinks: false,
+		perpendicularLinks: true,
 		model: Template['tmpl_graphDgm_detail'].graph
 	});
 	paperScroller.options.paper = paper;
@@ -152,6 +152,15 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	$paper.append(paperScroller.render().el);
 
 	paperScroller.center();
+
+	// MULTIPLE LINES
+	var myAdjustVertices = _.partial(adjustVertices, Template['tmpl_graphDgm_detail'].graph);
+
+	// adjust vertices when a cell is removed or its source/target was changed
+	Template['tmpl_graphDgm_detail'].graph.on('add remove', myAdjustVertices);
+
+	// also when an user stops interacting with an element.
+	paper.on('cell:pointerup', myAdjustVertices);
 
 	// Selection.
 	// ----------
@@ -321,8 +330,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			//TODO
 
 			// get titles
-			source_title = source.attributes.attrs.text.text.replace(/\n/g, '');
-			target_title = target.attributes.attrs.text.text.replace(/\n/g, '');
+			source_title = source.attributes.attrs.text.text.replace(/\n/g, ' ');
+			target_title = target.attributes.attrs.text.text.replace(/\n/g, ' ');
 
 			return true;
 		}
@@ -354,9 +363,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 						var semantic = $selected.data("semantic");
 
 						createRelationship(source_id, target_id, rel_name, semantic);
-						// ADD CORRECT LINE
-						addRelToGraph('', rel_name, source_graph_id, target_graph_id, semantic);
-
 					}
 				},
 				cancel: {

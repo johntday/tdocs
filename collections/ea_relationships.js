@@ -105,7 +105,9 @@ Meteor.methods({
 		EA_Relationships.remove({});
 
 var relationships = [
-	 {source:"Business_Role"             ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Service"       ,rel_name:"uses"          }
+	 {source:"Business_Actor"            ,semantic:"sends data to"    ,r_semantic:"receives data"  ,target:"Business_Actor"         ,rel_name:"flow"          }
+	,{source:"Business_Role"             ,semantic:"sends data to"    ,r_semantic:"receives data"  ,target:"Business_Role"          ,rel_name:"flow"          }
+	,{source:"Business_Role"             ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Service"       ,rel_name:"uses"          }
 	,{source:"Business_Service"          ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Service"       ,rel_name:"uses"          }
 	,{source:"Business_Service"          ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Service"       ,rel_name:"contains"      }
 	,{source:"Business_Function"         ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Service"       ,rel_name:"realization"   }
@@ -169,6 +171,21 @@ var relationships = [
 	,{source:"Technology_Device"         ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Technology_Interface"   ,rel_name:"composition"   }
 	,{source:"Application_Component"     ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Technology_Interface"   ,rel_name:"uses"          }
 	,{source:"Technology_Service"        ,semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Technology_Interface"   ,rel_name:"assigns"       }
+
+//MOTIVATION
+	,{source:"Motivation_Stakeholder"    ,semantic:"associated with"  ,r_semantic:"associated with",target:"Motivation_Driver"      ,rel_name:"association"   }
+	,{source:"Motivation_Principle"      ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Goal"        ,rel_name:"realization"   }
+	,{source:"Motivation_Driver"         ,semantic:"influences"       ,r_semantic:"influenced by"  ,target:"Motivation_Goal"        ,rel_name:"influence"     }
+	,{source:"Motivation_Constraint"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Principle"   ,rel_name:"realization"   }
+	,{source:"Motivation_Requirement"    ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Principle"   ,rel_name:"realization"   }
+	,{source:"Motivation_Requirement"    ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Goal"        ,rel_name:"realization"   }
+	,{source:"Motivation_Constraint"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Goal"        ,rel_name:"realization"   }
+
+//IMPLEMENTATION
+	,{source:"Implementation_Work_Package",semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Business_Role"         ,rel_name:"assigns"       }
+	,{source:"Implementation_Work_Package",semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Implementation_Deliverable",rel_name:"realization"   }
+	,{source:"Implementation_Deliverable" ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Implementation_Plateau",rel_name:"realization"   }
+	,{source:"Implementation_Plateau"     ,semantic:"associated with"  ,r_semantic:"associated with",target:"Implementation_Gap"      ,rel_name:"association"   }
 
 
 
