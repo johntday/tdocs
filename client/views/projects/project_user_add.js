@@ -2,6 +2,17 @@ Template.tmpl_project_user_add.helpers({
 	admins: function() {
 		var query = findUsersByRoles(this._id, true, 'admin');
 		return Meteor.users.find(query, {sort: {"profile.name": 1}});
+	},
+	editors: function() {
+		var query = findUsersByRoles(this._id, true, 'edit');
+		return Meteor.users.find(query, {sort: {"profile.name": 1}});
+	},
+	readers: function() {
+		var query = findUsersByRoles(this._id, true, 'read');
+		return Meteor.users.find(query, {sort: {"profile.name": 1}});
+	},
+	isProjectAdmin: function() {
+		return isProjectAdmin( Meteor.user() );
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -18,7 +29,33 @@ Template.tmpl_project_user_add.rendered = function() {
 				if(error){
 					throwError(error.reason);
 				} else {
-					growl( "User added to group", {type:'s', hideSnark:true} );
+					growl( "User added to ADMIN group", {type:'s', hideSnark:true} );
+				}
+			});
+		}
+	);
+	Meteor.typeahead(
+		$("#editors"),
+		persons,
+		/*onSelection*/function() {
+			Meteor.call('updateRoles', this._id, ['edit'], getProjectId(), function(error) {
+				if(error){
+					throwError(error.reason);
+				} else {
+					growl( "User added to EDIT group", {type:'s', hideSnark:true} );
+				}
+			});
+		}
+	);
+	Meteor.typeahead(
+		$("#readers"),
+		persons,
+		/*onSelection*/function() {
+			Meteor.call('updateRoles', this._id, ['read'], getProjectId(), function(error) {
+				if(error){
+					throwError(error.reason);
+				} else {
+					growl( "User added to READ group", {type:'s', hideSnark:true} );
 				}
 			});
 		}
@@ -39,8 +76,13 @@ var persons = function(text, callback){
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_project_user_add_item.helpers({
-	notme: function() {
-		return (Meteor.userId() !== this._id && this._id !== getProjectOwnerId());
+	showRemove: function() {
+		var loggedInUserId = Meteor.userId();
+		return (
+			loggedInUserId !== this._id
+			&& this._id !== getProjectOwnerId()
+			&& Roles.userIsInRole(loggedInUserId, ['admin'], getProjectId())
+			);
 	},
 	project_id: function() {
 		return getProjectId();
