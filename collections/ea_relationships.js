@@ -180,12 +180,17 @@ var relationships = [
 	,{source:"Motivation_Requirement"    ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Principle"   ,rel_name:"realization"   }
 	,{source:"Motivation_Requirement"    ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Goal"        ,rel_name:"realization"   }
 	,{source:"Motivation_Constraint"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Goal"        ,rel_name:"realization"   }
+	,{source:"Application_Component"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Requirement" ,rel_name:"realization"   }
+	,{source:"Application_Component"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Constraint"  ,rel_name:"realization"   }
 
 //IMPLEMENTATION
 	,{source:"Implementation_Work_Package",semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Business_Role"         ,rel_name:"assigns"       }
 	,{source:"Implementation_Work_Package",semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Implementation_Deliverable",rel_name:"realization"   }
 	,{source:"Implementation_Deliverable" ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Implementation_Plateau",rel_name:"realization"   }
 	,{source:"Implementation_Plateau"     ,semantic:"associated with"  ,r_semantic:"associated with",target:"Implementation_Gap"      ,rel_name:"association"   }
+	,{source:"Implementation_Plateau"     ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Component"   ,rel_name:"contains"      }
+	,{source:"Implementation_Gap"         ,semantic:"associated with"  ,r_semantic:"associated with",target:"Application_Component"   ,rel_name:"association"   }
+	,{source:"Implementation_Deliverable" ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Component"   ,rel_name:"contains"      }
 
 
 

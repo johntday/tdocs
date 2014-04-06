@@ -156,12 +156,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	// MULTIPLE LINES
 	var myAdjustVertices = _.partial(adjustVertices, Template['tmpl_graphDgm_detail'].graph);
 
-	// adjust vertices when a cell is removed or its source/target was changed
-	Template['tmpl_graphDgm_detail'].graph.on('add remove', myAdjustVertices);
-
-	// also when an user stops interacting with an element.
-	paper.on('cell:pointerup', myAdjustVertices);
-
 	// Selection.
 	// ----------
 	var selection = new Backbone.Collection;
