@@ -7,6 +7,11 @@ NounsFilter = new Meteor.FilterCollections(Nouns, {
 		currentPage: 1,
 		showPages: 10
 	},
+	sort: {
+		defaults: [
+			['title', 'asc']
+		]
+	},
 	filters: {
 		"area_code": {
 			title: 'area_code',
