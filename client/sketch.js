@@ -8,6 +8,13 @@ joint.shapes.sketch.ElementLink = joint.shapes.basic.Rect.extend({
 	}, joint.shapes.basic.Rect.prototype.defaults),
 	link: ''
 });
+joint.shapes.sketch.XXX = joint.shapes.basic.Rect.extend({
+	markup: '<a><g class="rotatable"><g class="scalable"><rect/></g><span class="glyphicon glyphicon-question-sign"></span><text/></g></a>',
+	defaults: joint.util.deepSupplement({
+		type: 'sketch.XXX'
+	}, joint.shapes.basic.Rect.prototype.defaults),
+	link: ''
+});
 
 joint.shapes.sketch.Legend = joint.shapes.basic.Generic.extend({
 	markup: '<g><g><rect/></g><path/><text class="sketch-legend-name"/></g>',

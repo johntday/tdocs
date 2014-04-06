@@ -395,6 +395,26 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		graphCurrentRelationships();
 		growl( "All links restored back from database", {type:'s', hideSnark:true} );
 	});
+	$('#btn-line-manual').click(function(){
+		// adjust vertices when a cell is removed or its source/target was changed
+		Template['tmpl_graphDgm_detail'].graph.off('add remove', myAdjustVertices);
+
+		// also when an user stops interacting with an element.
+		paper.off('cell:pointerup', myAdjustVertices);
+		$('#btn-line-auto').removeClass('active');
+		$(this).addClass('active');
+		growl( 'Line mode set to MANUAL', {type:'s', hideSnark:true} );
+	});
+	$('#btn-line-auto').click(function(){
+		// adjust vertices when a cell is removed or its source/target was changed
+		Template['tmpl_graphDgm_detail'].graph.on('add remove', myAdjustVertices);
+
+		// also when an user stops interacting with an element.
+		paper.on('cell:pointerup', myAdjustVertices);
+		$('#btn-line-manual').removeClass('active');
+		$(this).addClass('active');
+		growl( 'Line mode set to AUTO', {type:'s', hideSnark:true} );
+	});
 	$('#btn-back').click(function(){
 		if (currentHaloElement) {
 			currentHaloElement.toBack();
@@ -461,6 +481,7 @@ var target_class_name, target_title, target_id, target_graph_id;
 var showLabels = true;
 var currentHaloElement;
 var legend_id;
+var links_auto = true;
 
 function resizePaper($paper) {
 	var w = $(window).width();
