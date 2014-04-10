@@ -27,7 +27,7 @@ var class_names = _.keys(ea.classBelongsToArea);
 class_names.forEach(function(class_name){
 	sidebar[class_name] = null;
 });
-var selected_tree_noun = {_id: null, title: null, class_name: null, type: null, parent_id: null};
+var selected_tree_noun = {_id: null, title: null, area_code: null, class_name: null, type: null, parent_id: null};
 getSelectedTreeItem = function(full) {
 	var selected = selected_tree_noun;
 	if (full) {
@@ -46,6 +46,8 @@ setSelectedTreeItem = function(item) {
 		(obj[0] === item.class_name) ? obj[1].select_node(item._id) : obj[1].deselect_all(true);
 	});
 	selected_tree_noun = item;
+
+	openAccordianOfSelected(item);
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**

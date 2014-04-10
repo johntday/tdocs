@@ -147,7 +147,9 @@ Template.tmpl_sidebar_buttons.rendered = function() {
 };
 
 // FUNCTIONS and VAR --------------------------------------------------------------------
-var openAccordian = function() {
+var openAccordian = function(openMe) {
+	if (openMe){ accordian.open = openMe; }
+
 	if (accordian.open) {
 		accordian.ids.forEach(function(id){
 			if (id === accordian.open)
@@ -155,5 +157,18 @@ var openAccordian = function() {
 			else
 				$('#'+id).collapse('hide');
 		});
+	}
+};
+openAccordianOfSelected = function(noun) {
+	var area_code = noun.area_code;
+	if (area_code && accordian.open.substring(0,1)!==area_code){
+		switch(area_code) {
+			case 'a': return openAccordian('appLayer');
+			case 'b': return openAccordian('busLayer');
+			case 't': return openAccordian('techLayer');
+			case 'm': return openAccordian('modvLayer');
+			case 'i': return openAccordian('implLayer');
+			case 'c': return openAccordian('comLayer');
+		}
 	}
 };
