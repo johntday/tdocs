@@ -1,6 +1,6 @@
 Template.tmpl_graphDgm_detail.helpers({
 	canEdit: function() {
-		return canEdit(Meteor.user(), this);
+		return canEdit(Meteor.user());
 	},
 	breadcrumbs: function() {
 		Meteor.MyClientModule.scrollToTopOfPageFast();
@@ -90,7 +90,7 @@ Template.tmpl_graphDgm_detail.events({
 	},
 	'click #btn-exit': function(e) {
 		e.preventDefault();
-		bootbox.dialog({
+		var options = {
 			title: "Exit Diagram"
 			,message:'Do you want to SAVE first?'
 			,buttons: {
@@ -118,7 +118,16 @@ Template.tmpl_graphDgm_detail.events({
 			}
 			,onEscape: function() {
 			}
-		});
+		};
+
+		if ( !canEdit(Meteor.user()) ){
+			options.message = 'Are you sure?';
+			options.buttons.leave.label = "Yes";
+			options.buttons.leave.className = "btn-primary";
+			delete options.buttons.save;
+		}
+
+		bootbox.dialog(options);
 	},
 	'click #btn-save': function(e) {
 		e.preventDefault();
@@ -389,6 +398,12 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		graphCurrentRelationships();
 		growl( "All links restored back from database", {type:'s', hideSnark:true} );
 	});
+	$('#btn-restore').click(function(){
+		Template['tmpl_graphDgm_detail'].graph.clear;
+		if (data.code)
+			Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(data.code) );
+		growl( "Last saved diagram restored", {type:'s', hideSnark:true} );
+	});
 	$('#btn-line-manual').click(function(){
 		// adjust vertices when a cell is removed or its source/target was changed
 		Template['tmpl_graphDgm_detail'].graph.off('add remove', myAdjustVertices);
@@ -421,6 +436,60 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			//growl( "Element put front", {type:'s', hideSnark:true} );
 		}
 	});
+	$('#btn-goto').click(function(){
+		if (currentHaloElement) {
+			var _id = currentHaloElement.attributes.attrs.custom._id;
+			var noun = Nouns.findOne( _id );
+
+			bootbox.dialog({
+				title: noun.title,
+				message: "<strong>Description</strong>:  "+noun.description,
+				buttons: {
+					main: {
+						label: "OK",
+						className: "btn-primary",
+						callback: function() {
+						}
+					},
+					goto: {
+						label: "Goto Details",
+						className: "btn-success",
+						callback: function() {
+							if (canEdit(Meteor.user())){
+								bootbox.dialog({
+									title:'Goto Details for "'+noun.title+'"',
+									message:'Save first?',
+									buttons: {
+										save: {
+											label: "Yes, save my diagram first",
+											className: "btn-primary",
+											callback: function() {
+												saveGraph();
+												Router.go('/nouns/'+_id);
+											}
+										},
+										no: {
+											label: "No, just go",
+											className: "btn-danger",
+											callback: function() {
+												Router.go('/nouns/'+_id);
+											}
+										}
+									}
+								});
+							} else {
+								Router.go('/nouns/'+_id);
+							}
+						}
+					}
+				}
+				,onEscape: function() {
+				}
+			});
+		} else {
+			growl('Select a model item first');
+		}
+	});
 	$('#btn-graph-legend').click(function(){
 		if (legend_id) {
 			var cell = Template['tmpl_graphDgm_detail'].graph.getCell(legend_id);
@@ -434,7 +503,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	var zoomLevel = 1;
 
 	function zoom(paper, newZoomLevel) {
-
 		if (newZoomLevel > 0.2 && newZoomLevel < 20) {
 
 			var ox = (paper.el.scrollLeft + paper.el.clientWidth / 2) / zoomLevel;
@@ -475,7 +543,6 @@ var target_class_name, target_title, target_id, target_graph_id;
 var showLabels = true;
 var currentHaloElement;
 var legend_id;
-var links_auto = true;
 
 function resizePaper($paper) {
 	var w = $(window).width();
