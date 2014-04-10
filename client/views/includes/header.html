@@ -56,9 +56,11 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="/projectAdd" title="Create new Project">Create Project</a></li>
+							{{#if canEdit}}
 							<li><a href="/tdocAdd" title="Create new Tdoc">Create Tdoc</a></li>
 							<li><a href="/diagramAdd" title="Create new Sequence Diagram">Create Sequence Diagram</a></li>
 							<li><a href="/diagramGraphAdd" title="Create new Graph Diagram">Create Graph Diagram</a></li>
+							{{/if}}
 							<!--<li><a href="/glossaryAdd" title="Create new Glossary item">Create Glossary</a></li>-->
 							<!--<li><a href="/tableAdd" title="Create new Table item">Create Table</a></li>-->
 							<!--<li><a href="/nounAdd" title="Create new Noun">Create Model Item</a></li>-->

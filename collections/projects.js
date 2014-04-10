@@ -177,7 +177,7 @@ var projectSeedData = [
 	,{'class_name': 'Business_Object', root_title: 'BUSINESS OBJECTS', top_title: 'Business Object'}
 	,{'class_name': 'Business_Location', root_title: 'BUSINESS LOCATIONS', top_title: 'Business Location'}
 	,{'class_name': 'Technology_Artifact', root_title: 'DEPLOYMENT ARTIFACTS', top_title: 'Deployment Artifact'}
-	,{'class_name': 'Technology_Communication_Path', root_title: 'COMMUNICATION PATHS', top_title: 'Communication Path'}
+	//,{'class_name': 'Technology_Communication_Path', root_title: 'COMMUNICATION PATHS', top_title: 'Communication Path'}
 	,{'class_name': 'Technology_Network', root_title: 'NETWORKS', top_title: 'Network'}
 	,{'class_name': 'Technology_Interface', root_title: 'INFRASTRUCTURE INTERFACES', top_title: 'Infrastructure Interface'}
 	,{'class_name': 'Technology_Function', root_title: 'INFRASTRUCTURE FUNCTIONS', top_title: 'Infrastructure Function'}

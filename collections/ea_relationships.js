@@ -51,7 +51,7 @@ Meteor.methods({
 			,{Business_Object              :{}}
 			,{Business_Location            :{}}
 			,{Technology_Artifact          :{}}
-			,{Technology_Communication_Path:{}}
+			//,{Technology_Communication_Path:{}}
 			,{Technology_Network           :{}}
 			,{Technology_Interface         :{}}
 			,{Technology_Function          :{}}
