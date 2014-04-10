@@ -10,10 +10,10 @@ Accounts.onCreateUser(function(options, user) {
 
 	// SETUP ACCESS TO "SAKS AP" PROJECT
 	user.roles = {};
-	var project_title = 'SAKS AP Integration';
+	var project_title = 'Basic';
 	var project = Projects.findOne({title: project_title});
 	if (project)
-		user.roles[project._id] =  ['admin'];
+		user.roles[project._id] =  ['read'];
 
 
 	// We still want the default hook's 'profile' behavior.
