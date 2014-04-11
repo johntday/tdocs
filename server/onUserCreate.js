@@ -11,7 +11,7 @@ Accounts.onCreateUser(function(options, user) {
 	// SETUP ACCESS TO "SAKS AP" PROJECT
 	user.roles = {};
 	var project_title = 'Basic';
-	var project = Projects.findOne({title: project_title});
+	var project = Projects.findOne({title: project_title, owner:'John T Day'});
 	if (project)
 		user.roles[project._id] =  ['read'];
 
