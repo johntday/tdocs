@@ -1,9 +1,9 @@
+// "tmplSidebar"
 Template.tmplSidebar.helpers({
 	pickedProject: function() {
 		return Meteor.user() && !!getProjectId();
 	}
 });
-
 Template.tmplSidebar.rendered = function() {
 	var class_names = _.keys(ea.classBelongsToArea);
 	class_names.forEach(function(class_name){
@@ -15,6 +15,7 @@ Template.tmplSidebar.rendered = function() {
 	openAccordian();
 };
 
+// "tmpl_accordian_test"
 Template.tmpl_accordian_test.rendered = function() {
 	if (!Template.tmpl_accordian_test.isFirst) {
 		Template.tmpl_accordian_test.isFirst = true;
@@ -27,22 +28,29 @@ Template.tmpl_accordian_test.destroyed = function() {
 	Template.tmpl_accordian_test.isFirst = null;
 };
 
+// "tmpl_sidebar_buttons"
 Template.tmpl_sidebar_buttons.helpers({
-	chevronLeft: function() {
-		return (Session.get('sidebar_nbr') > 2);
-	},
-	chevronRight: function() {
-		return (Session.get('sidebar_nbr') < 10);
+	gotoBtnTitle: function() {
+		if ( Location._state.path.startsWith('/graph/') )
+			return 'Add selected item to your diagram';
+		return 'Goto selected item';
 	}
+//	chevronLeft: function() {
+//		return (Session.get('sidebar_nbr') > 2);
+//	},
+//	chevronRight: function() {
+//		return (Session.get('sidebar_nbr') < 10);
+//	}
 });
-
 Template.tmpl_sidebar_buttons.events({
 	'click #btn-sidebar-search': function(e) {
 		e.preventDefault();
+		$(e.currentTarget).blur();
 		Router.go('/nouns');
 	},
-	'click button.btn.btn-default.btn-sm': function(e) {
+	'click #btn-sidebar-goto': function(e) {
 		e.preventDefault();
+		$(e.currentTarget).blur();
 		var path = Location._state.path;
 		if (path && path.indexOf('/graph/') != -1){
 			addNounToGraph( getSelectedTreeItem() );
@@ -114,13 +122,13 @@ Template.tmpl_sidebar_buttons.events({
 			growl("Cannot delete this item");
 		}
 	},
-	'click #btn-open-all': function() {
+	'click #btn-open-all': function(e) {
 		var selected = getSelectedTreeItem();
 		var _id = selected._id;
 		if(!_id) { growl("Select an item first"); return false; }
 		sidebar[selected.class_name].open_all();
 	},
-	'click #btn-close-all': function() {
+	'click #btn-close-all': function(e) {
 		var selected = getSelectedTreeItem();
 		var _id = selected._id;
 		if(!_id) { growl("Select an item first"); return false; }
@@ -138,7 +146,6 @@ Template.tmpl_sidebar_buttons.events({
 	}
 
 });
-
 Template.tmpl_sidebar_buttons.rendered = function() {
 	openAccordian();
 };
