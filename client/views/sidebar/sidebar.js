@@ -1,9 +1,6 @@
 Template.tmplSidebar.helpers({
 	pickedProject: function() {
 		return Meteor.user() && !!getProjectId();
-	},
-	canEdit: function() {
-		return canEdit( Meteor.user() );
 	}
 });
 
@@ -31,12 +28,15 @@ Template.tmpl_accordian_test.destroyed = function() {
 };
 
 Template.tmpl_sidebar_buttons.helpers({
-	chevronLeft: function() {
-		return (Session.get('sidebar_nbr') > 2);
-	},
-	chevronRight: function() {
-		return (Session.get('sidebar_nbr') < 10);
+	canEdit: function() {
+		return canEdit( Meteor.user() );
 	}
+	//	chevronLeft: function() {
+//		return (Session.get('sidebar_nbr') > 2);
+//	},
+//	chevronRight: function() {
+//		return (Session.get('sidebar_nbr') < 10);
+//	}
 });
 
 Template.tmpl_sidebar_buttons.events({
