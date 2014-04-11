@@ -33,12 +33,12 @@
 					<li class="{{activeRouteClass  '/diagrams'}}">
 						<a href="/diagrams" title="Browse all diagrams in project">Diagrams</a>
 					</li>
-					<li class="dropdown">
+					<li class="{{activeRouteClass  '/nouns'}}">
+						<a href="/nouns">Search</a>
+					</li>
+					<li class="dropdown" title="View / Edit model element types">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Model <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="/nouns" title="Browse all project elements in project">Project Elements</a></li>
-							<li><a href="/relationships" title="Browse all project relationships in project">Project Relationships</a></li>
-							<li role="presentation" class="divider"></li>
 							<li><a href="/ea_nouns" title="Browse all model types">Model Element Types</a></li>
 							<li><a href="/ea_rels" title="Browse all model types">Model Relationship Types</a></li>
 						</ul>
@@ -56,11 +56,9 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="/projectAdd" title="Create new Project">Create Project</a></li>
-							{{#if canEdit}}
 							<li><a href="/tdocAdd" title="Create new Tdoc">Create Tdoc</a></li>
 							<li><a href="/diagramAdd" title="Create new Sequence Diagram">Create Sequence Diagram</a></li>
 							<li><a href="/diagramGraphAdd" title="Create new Graph Diagram">Create Graph Diagram</a></li>
-							{{/if}}
 							<!--<li><a href="/glossaryAdd" title="Create new Glossary item">Create Glossary</a></li>-->
 							<!--<li><a href="/tableAdd" title="Create new Table item">Create Table</a></li>-->
 							<!--<li><a href="/nounAdd" title="Create new Noun">Create Model Item</a></li>-->

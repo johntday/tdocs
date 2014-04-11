@@ -50,9 +50,6 @@ Template.noun_rels.helpers({
 	},
 	source_icon: function() {
 		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.source_class_name).icon;
-	},
-	canEdit: function() {
-		return canEdit( Meteor.user() );
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

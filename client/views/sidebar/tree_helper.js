@@ -114,8 +114,7 @@ refreshBusCap = function(class_name, children_name) {
 	});
 	$bus_capabilities.on("select_node.jstree", function(e, data) {
 		var class_name = data.node.original.class_name;
-		var area_code = data.node.original.area_code;
-		setSelectedTreeItem({_id: data.node.id, title: data.node.text, area_code: area_code, class_name: class_name, type: data.node.type, parent_id: data.node.parent});
+		setSelectedTreeItem({_id: data.node.id, title: data.node.text, class_name: class_name, type: data.node.type, parent_id: data.node.parent});
 	});
 	//
 	return true;

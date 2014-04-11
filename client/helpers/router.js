@@ -82,7 +82,7 @@ Router.map(function () {
 					var currentTreeSelected = sidebar[noun.class_name].get_selected();
 					if ( currentTreeSelected !== noun._id )
 						sidebar[noun.class_name].deselect_node(currentTreeSelected, true);
-					setSelectedTreeItem({_id: noun._id, title: noun.title, area_code: noun.area_code, class_name: noun.class_name, type: noun.type, parent_id: parent_id});
+					setSelectedTreeItem({_id: noun._id, title: noun.title, class_name: noun.class_name, type: noun.type, parent_id: parent_id});
 				}
 			}
 			return noun;

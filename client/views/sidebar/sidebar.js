@@ -28,15 +28,12 @@ Template.tmpl_accordian_test.destroyed = function() {
 };
 
 Template.tmpl_sidebar_buttons.helpers({
-	canEdit: function() {
-		return canEdit( Meteor.user() );
+	chevronLeft: function() {
+		return (Session.get('sidebar_nbr') > 2);
+	},
+	chevronRight: function() {
+		return (Session.get('sidebar_nbr') < 10);
 	}
-	//	chevronLeft: function() {
-//		return (Session.get('sidebar_nbr') > 2);
-//	},
-//	chevronRight: function() {
-//		return (Session.get('sidebar_nbr') < 10);
-//	}
 });
 
 Template.tmpl_sidebar_buttons.events({
@@ -71,8 +68,8 @@ Template.tmpl_sidebar_buttons.events({
 				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-folder-open'></span> </button> Open all (select an item first)</li>" +
 				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-folder-close'></span> </button> Close all (select an item first)</li>" +
 				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-arrow-right'></span> </button> Goto selected item</li>" +
-				//"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-chevron-left'></span> </button> Narrow sidebar</li>" +
-				//"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-chevron-right'></span> </button> Widen sidebar</li>" +
+				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-chevron-left'></span> </button> Narrow sidebar</li>" +
+				"<li><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-chevron-right'></span> </button> Widen sidebar</li>" +
 				"</ul>" +
 				"<h3>Actions</h3>" +
 				"<ul>" +
@@ -147,9 +144,7 @@ Template.tmpl_sidebar_buttons.rendered = function() {
 };
 
 // FUNCTIONS and VAR --------------------------------------------------------------------
-var openAccordian = function(openMe) {
-	if (openMe){ accordian.open = openMe; }
-
+var openAccordian = function() {
 	if (accordian.open) {
 		accordian.ids.forEach(function(id){
 			if (id === accordian.open)
@@ -157,18 +152,5 @@ var openAccordian = function(openMe) {
 			else
 				$('#'+id).collapse('hide');
 		});
-	}
-};
-openAccordianOfSelected = function(noun) {
-	var area_code = noun.area_code;
-	if (area_code && accordian.open.substring(0,1)!==area_code){
-		switch(area_code) {
-			case 'a': return openAccordian('appLayer');
-			case 'b': return openAccordian('busLayer');
-			case 't': return openAccordian('techLayer');
-			case 'm': return openAccordian('modvLayer');
-			case 'i': return openAccordian('implLayer');
-			case 'c': return openAccordian('comLayer');
-		}
 	}
 };

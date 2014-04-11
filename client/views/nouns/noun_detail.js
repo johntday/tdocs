@@ -58,33 +58,42 @@ Template.tmpl_noun_detail.events({
 		if (e.which === 13)
 			$('#btnUpdateNoun').click();
 	},
-//	'click #btn_create_rel': function(e) {
-//		bootbox.dialog({
-//			title: "List of Possible Relationships"
-//			,message:
-//				Template.noun_filter_list_simple({contextVar:'SomeValue'})
-//			,buttons: {
-//				success: {
-//					label: "Select",
-//					className: "btn-primary",
-//					callback: function() {
-//						var $selected = $( "input:checked" );
-//						var target_id = $selected.val();
-//						var rel_name = $selected.data('relName');
-//						createRelationship(target_id, rel_name);
-//					}
+	'click #btn_create_rel': function(e) {
+		//e.preventDefault();
+
+		bootbox.dialog({
+			title: "List of Possible Relationships"
+			,message:
+				Template.noun_filter_list_simple({contextVar:'SomeValue'})
+			,buttons: {
+				success: {
+					label: "Select",
+					className: "btn-primary",
+					callback: function() {
+						var $selected = $( "input:checked" );
+						var target_id = $selected.val();
+						var rel_name = $selected.data('relName');
+						createRelationship(target_id, rel_name);
+					}
+				},
+				cancel: {
+					label: "Cancel",
+					className: "btn-default",
+					callback: function() {
+					}
 //				},
-//				cancel: {
-//					label: "Cancel",
-//					className: "btn-default",
+//				showall: {
+//					label: "Show All",
+//					className: "btn-info",
 //					callback: function() {
+//						Router.go('/nounrels');
 //					}
-//				}
-//			}
-//			,onEscape: function() {
-//			}
-//		});
-//	},
+				}
+			}
+			,onEscape: function() {
+			}
+		});
+	},
 	'click #area': function(e) {
 		e.preventDefault();
 		gotoNounFilterPage('area_code', {value:this.area_code, condition:'$and'});

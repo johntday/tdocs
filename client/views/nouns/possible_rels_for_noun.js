@@ -1,4 +1,4 @@
-NounsPosRelFilter = new Meteor.FilterCollections(Nouns, {
+NounsFilter = new Meteor.FilterCollections(Nouns, {
 	name: 'possible-rels-for-noun',
 	template: 'possible_rels_for_noun',
 	pager: {
