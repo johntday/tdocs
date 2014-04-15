@@ -51,7 +51,6 @@ Meteor.FilterCollections.publish(Relationships, {
 	name: 'nouns-rels'
 });
 
-
 /**
  * Tdocs
  */

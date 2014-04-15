@@ -132,7 +132,6 @@ var relationships = [
 	,{source:"Business_Product"          ,semantic:"has value"        ,r_semantic:"associated to"  ,target:"Business_Value"         ,rel_name:"association"   }
 	,{source:"Business_Product"          ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Contract"      ,rel_name:"contains"      }
 	,{source:"Business_Product"          ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Service"       ,rel_name:"contains"      }
-	,{source:"Application_Collaboration" ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Component"  ,rel_name:"contains"      }
 	,{source:"Application_Component"     ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Application_Component"  ,rel_name:"composition"   }
 	,{source:"Application_Component"     ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Application_Interface"  ,rel_name:"composition"   }
 	,{source:"Technology_Service"        ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Component"  ,rel_name:"uses"          }

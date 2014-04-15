@@ -90,6 +90,11 @@ Router.map(function () {
 	});
 
 	/**
+	 * Model
+	 */
+	this.route('ea_rels'     ,{path: '/ea_rels'});
+
+	/**
 	 * Relationships
 	 */
 	this.route('noun_rel_filter_list'     ,{path: '/relationships'});
