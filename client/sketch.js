@@ -1,4 +1,5 @@
 joint.shapes.sketch = {};
+
 // The following custom shape creates a link out of the whole element.
 joint.shapes.sketch.ElementLink = joint.shapes.basic.Rect.extend({
 	// Note the `<a>` SVG element surrounding the rest of the markup.
@@ -8,11 +9,12 @@ joint.shapes.sketch.ElementLink = joint.shapes.basic.Rect.extend({
 	}, joint.shapes.basic.Rect.prototype.defaults),
 	link: ''
 });
-joint.shapes.sketch.XXX = joint.shapes.basic.Rect.extend({
-	markup: '<a><g class="rotatable"><g class="scalable"><rect/></g><span class="glyphicon glyphicon-question-sign"></span><text/></g></a>',
+
+joint.shapes.sketch.Interface = joint.shapes.basic.Circle.extend({
+	markup: '<a><g class="rotatable"><text/><g class="scalable"><circle/></g></g></a>',
 	defaults: joint.util.deepSupplement({
-		type: 'sketch.XXX'
-	}, joint.shapes.basic.Rect.prototype.defaults),
+		type: 'sketch.Interface'
+	}, joint.shapes.basic.Circle.prototype.defaults),
 	link: ''
 });
 
@@ -88,43 +90,5 @@ joint.shapes.sketch.Group = joint.shapes.basic.Generic.extend({
 	updatePath: function() {
 		this.get('attrs')['path'].d = 'M 0 20 L ' + this.get('size').width + ' 20';
 	}
-
-});
-
-joint.shapes.sketch.StartGroup = joint.shapes.basic.Circle.extend({
-
-	defaults: joint.util.deepSupplement({
-
-		type: 'sketch.StartGroup',
-		attrs: { circle: { 'fill': '#34495e', 'stroke': '#2c3e50', 'stroke-width': 2, 'rx': 1 }}
-
-	}, joint.shapes.basic.Circle.prototype.defaults)
-
-});
-
-joint.shapes.sketch.EndGroup = joint.shapes.basic.Generic.extend({
-
-	markup: '<g class="rotatable"><g class="scalable"><circle class="outer"/><circle class="inner"/></g></g>',
-
-	defaults: joint.util.deepSupplement({
-
-		type: 'sketch.EndGroup',
-		size: { width: 20, height: 20 },
-		attrs: {
-			'circle.outer': {
-				transform: 'translate(10, 10)',
-				r: 10,
-				fill: 'white',
-				stroke: '#2c3e50'
-			},
-
-			'circle.inner': {
-				transform: 'translate(10, 10)',
-				r: 6,
-				fill: '#34495e'
-			}
-		}
-
-	}, joint.shapes.basic.Generic.prototype.defaults)
 
 });
