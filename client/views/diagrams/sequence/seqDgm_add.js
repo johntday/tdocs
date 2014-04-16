@@ -50,15 +50,6 @@ Template.tmpl_diagram_add.events({
 				Router.go('/diagrams/'+diagram.diagramId);
 			}
 		});
-
-	},
-
-	'keyup #code, focus #code, keyup #description, focus #description': function(e) {
-		e.preventDefault();
-		var $element = $(e.target).get(0);
-		$element.style.overflow = 'hidden';
-		$element.style.height = 0;
-		$element.style.height = $element.scrollHeight + 'px';
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

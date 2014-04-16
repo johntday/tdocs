@@ -27,14 +27,6 @@ Template.tmpl_diagrams_sort_select.events({
 			Router.go('/diagrams');
 		}
 		$selector = null;
-	},
-	'click button.btn.btn-success.btn-sm': function(e) {
-		e.preventDefault();
-		Router.go('/diagramGraphAdd');
-	},
-	'click button.btn.btn-primary.btn-sm': function(e) {
-		e.preventDefault();
-		Router.go('/diagramAdd');
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

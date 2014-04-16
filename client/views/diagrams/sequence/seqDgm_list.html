@@ -22,12 +22,19 @@
 				{{/each}}
 			</ol>
 		</div>
-		<div class="col-sm-1">
-			<button type="button" class="btn btn-success btn-sm" title="Create diagram"><span class="glyphicon glyphicon-plus"></span> </button>
-			<button type="button" class="btn btn-primary btn-sm" title="Create sequence diagram"><span class="glyphicon glyphicon-plus"></span> </button>
+		<div class="col-sm-2">
+			<div class="btn-group">
+				<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-plus">Create </span><span class="caret"> </span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li id="btn-seqDgm-create"><a href="/diagramGraphAdd">Create diagram</a></li>
+					<li id="btn-seqDgm-create-seq"><a href="/diagramAdd">Create sequence diagram</a></li>
+				</ul>
+			</div>
 		</div>
 
-		<div class="col-sm-4">
+		<div class="col-sm-3">
 			{{form_options option_value options "diagram-sort"}}
 		</div>
 	</div>

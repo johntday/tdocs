@@ -525,7 +525,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		bootbox.dialog({
 			title: "Adding an Element"
 			,message: 'Click the left-nav-bar button <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-right"></span></button> ' +
-				'will add the selected model element to your diagram'
+				'to add your selected model element to diagram'
 			,buttons: {
 				success: {
 					label: "OK",
