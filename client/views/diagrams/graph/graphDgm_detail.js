@@ -521,9 +521,22 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	if (data.code) {
 		Template['tmpl_graphDgm_detail'].graph.fromJSON( JSON.parse(data.code) );
-
-		//graphCurrentRelationships();
-		//showHideAllLinkLabels(Template['tmpl_graphDgm_detail'].graph, showLabels);
+	} else {
+		bootbox.dialog({
+			title: "Adding an Element"
+			,message: 'Click the left-nav-bar button <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-right"></span></button> ' +
+				'will add the selected model element to your diagram'
+			,buttons: {
+				success: {
+					label: "OK",
+					className: "btn-primary",
+					callback: function() {
+					}
+				}
+			}
+			,onEscape: function() {
+			}
+		});
 	}
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
