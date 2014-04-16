@@ -105,95 +105,151 @@ Meteor.methods({
 		EA_Relationships.remove({});
 
 var relationships = [
-	 {source:"Business_Actor"            ,semantic:"sends data to"    ,r_semantic:"receives data"  ,target:"Business_Actor"         ,rel_name:"flow"          }
-	,{source:"Business_Role"             ,semantic:"sends data to"    ,r_semantic:"receives data"  ,target:"Business_Role"          ,rel_name:"flow"          }
-	,{source:"Business_Role"             ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Service"       ,rel_name:"uses"          }
-	,{source:"Business_Service"          ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Service"       ,rel_name:"uses"          }
-	,{source:"Business_Service"          ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Service"       ,rel_name:"contains"      }
-	,{source:"Business_Function"         ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Service"       ,rel_name:"realization"   }
-	,{source:"Business_Process"          ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Service"       ,rel_name:"realization"   }
-	,{source:"Business_Service"          ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Business_Object"        ,rel_name:"access"        }
-	,{source:"Business_Process"          ,semantic:"flows to"         ,r_semantic:"flows from"     ,target:"Business_Process"       ,rel_name:"flow"          }
-	,{source:"Business_Function"         ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Process"       ,rel_name:"contains"      }
-	,{source:"Business_Role"             ,semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Business_Process"       ,rel_name:"assigns"       }
-	,{source:"Business_Process"          ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Service"    ,rel_name:"uses"          }
-	,{source:"Business_Event"            ,semantic:"triggers"         ,r_semantic:"triggered by"   ,target:"Business_Process"       ,rel_name:"trigger"       }
-	,{source:"Business_Process"          ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Business_Object"        ,rel_name:"access"        }
-	,{source:"Business_Process"          ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Process"       ,rel_name:"contains"      }
-	,{source:"Business_Role"             ,semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Business_Actor"         ,rel_name:"assigns"       }
-	,{source:"Business_Event"            ,semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Business_Role"          ,rel_name:"assigns"       }
-	,{source:"Business_Function"         ,semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Business_Role"          ,rel_name:"assigns"       }
-	,{source:"Business_Role"             ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Business_Interface"     ,rel_name:"uses"          }
-	,{source:"Business_Function"         ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Business_Object"        ,rel_name:"access"        }
-	,{source:"Implementation_Deliverable",semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Object"        ,rel_name:"realization"   }
-	,{source:"Business_Object"           ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Object"        ,rel_name:"contains"      }
-	,{source:"Business_Object"           ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Business_Object"        ,rel_name:"composition"   }
-	,{source:"Business_Object"           ,semantic:"specialization of",r_semantic:"generalized by" ,target:"Business_Object"        ,rel_name:"specialization"}
-	,{source:"Business_Product"          ,semantic:"has value"        ,r_semantic:"associated to"  ,target:"Business_Value"         ,rel_name:"association"   }
-	,{source:"Business_Product"          ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Contract"      ,rel_name:"contains"      }
-	,{source:"Business_Product"          ,semantic:"contains"         ,r_semantic:"is contained by",target:"Business_Service"       ,rel_name:"contains"      }
-	,{source:"Application_Component"     ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Application_Component"  ,rel_name:"composition"   }
-	,{source:"Application_Component"     ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Application_Interface"  ,rel_name:"composition"   }
-	,{source:"Technology_Service"        ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Component"  ,rel_name:"uses"          }
-	,{source:"Application_Function"      ,semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Application_Component"  ,rel_name:"assigns"       }
-	,{source:"Application_Component"     ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Application_Data_Object",rel_name:"access"        }
-	,{source:"Application_Component"     ,semantic:"send data to"     ,r_semantic:"gets data from" ,target:"Application_Component"  ,rel_name:"flow"          }
-	,{source:"Application_Component"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Application_Service"    ,rel_name:"realization"   }
-	,{source:"Application_Service"       ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Service"    ,rel_name:"uses"          }
-	,{source:"Application_Service"       ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Service"    ,rel_name:"contains"      }
-	,{source:"Application_Service"       ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Component"  ,rel_name:"uses"          }
-	,{source:"Application_Function"      ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Application_Service"    ,rel_name:"realization"   }
-	,{source:"Application_Service"       ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Application_Data_Object",rel_name:"access"        }
-	,{source:"Technology_Artifact"       ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Application_Data_Object",rel_name:"realization"   }
-	,{source:"Application_Data_Object"   ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Application_Data_Object",rel_name:"composition"   }
-	,{source:"Application_Data_Object"   ,semantic:"specialization of",r_semantic:"generalized by" ,target:"Application_Data_Object",rel_name:"specialization"}
-	,{source:"Application_Data_Object"   ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Data_Object",rel_name:"contains"      }
-	,{source:"Application_Function"      ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Application_Data_Object",rel_name:"access"        }
-	,{source:"Motivation_Stakeholder"    ,semantic:"gives data to"    ,r_semantic: "gets data from",target:"Motivation_Stakeholder" ,rel_name:"flow"          }
-	,{source:"Common_Group"              ,semantic:"contains"         ,r_semantic:"is contained by",target:"Common_Group"           ,rel_name:"contains"      }
+//BUSINESS
+	{source:"Business_Actor"            ,semantic:"sends data to"    ,target:"Business_Actor"            ,rel_name:"flow"          }
+	,{source:"Business_Actor"            ,semantic:"assigned"         ,target:"Business_Location"         ,rel_name:"assigns"       }
 
-	,{source:"Business_Service"          ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Business_Interface"     ,rel_name:"assigns"       }
-	,{source:"Business_Service"          ,semantic:"is used by"       ,r_semantic:"uses"           ,target:"Business_Interface"     ,rel_name:"uses"          }
-	,{source:"Technology_Software"       ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Technology_Service"     ,rel_name:"realization"   }
-	,{source:"Technology_Node"           ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Technology_Service"     ,rel_name:"realization"   }
-	,{source:"Technology_Node"           ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Technology_Service"     ,rel_name:"uses"          }
-	,{source:"Application_Service"       ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Interface"  ,rel_name:"uses"          }
-	,{source:"Application_Service"       ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Application_Interface"  ,rel_name:"assigns"       }
-	,{source:"Application_Data_Object"   ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Business_Object"        ,rel_name:"realization"   }
-	,{source:"Business_Role"             ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Application_Interface"  ,rel_name:"uses"          }
-	,{source:"Application_Function"      ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Technology_Service"     ,rel_name:"uses"          }
-	,{source:"Technology_Software"       ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Technology_Artifact"    ,rel_name:"access"        }
-	,{source:"Business_Service"          ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Business_Interface"     ,rel_name:"assigns"       }
-	,{source:"Technology_Node"           ,semantic:"CRUDs"            ,r_semantic:"CRUD by"        ,target:"Technology_Artifact"    ,rel_name:"access"        }
-	,{source:"Technology_Software"       ,semantic:"assigned to"      ,r_semantic:"assigned to"    ,target:"Technology_Device"      ,rel_name:"assigns"       }
-	,{source:"Technology_Network"        ,semantic:"associated with"  ,r_semantic:"associated with",target:"Technology_Device"      ,rel_name:"association"   }
-	,{source:"Technology_Device"         ,semantic:"composed of"      ,r_semantic:"composed by"    ,target:"Technology_Interface"   ,rel_name:"composition"   }
-	,{source:"Application_Component"     ,semantic:"uses"             ,r_semantic:"is used by"     ,target:"Technology_Interface"   ,rel_name:"uses"          }
-	,{source:"Technology_Service"        ,semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Technology_Interface"   ,rel_name:"assigns"       }
+	,{source:"Business_Role"             ,semantic:"sends data to"    ,target:"Business_Role"             ,rel_name:"flow"          }
+	,{source:"Business_Role"             ,semantic:"uses"             ,target:"Business_Service"          ,rel_name:"uses"          }
+	,{source:"Business_Role"             ,semantic:"assigned"         ,target:"Business_Process"          ,rel_name:"assigns"       }
+	,{source:"Business_Role"             ,semantic:"assigned"         ,target:"Business_Actor"            ,rel_name:"assigns"       }
+	,{source:"Business_Role"             ,semantic:"uses"             ,target:"Business_Interface"        ,rel_name:"uses"          }
+	,{source:"Business_Role"             ,semantic:"uses"             ,target:"Application_Interface"     ,rel_name:"uses"          }
+	,{source:"Business_Role"             ,semantic:"composed of"      ,target:"Business_Interface"        ,rel_name:"composition"   }
+
+	,{source:"Business_Process"          ,semantic:"realization of"   ,target:"Business_Service"          ,rel_name:"realization"   }
+	,{source:"Business_Process"          ,semantic:"flows to"         ,target:"Business_Process"          ,rel_name:"flow"          }
+	,{source:"Business_Process"          ,semantic:"uses"             ,target:"Application_Service"       ,rel_name:"uses"          }
+	,{source:"Business_Process"          ,semantic:"CRUDs"            ,target:"Business_Object"           ,rel_name:"access"        }
+	,{source:"Business_Process"          ,semantic:"contains"         ,target:"Business_Process"          ,rel_name:"contains"      }
+	,{source:"Business_Process"          ,semantic:"uses"             ,target:"Business_Function"         ,rel_name:"uses"          }
+	,{source:"Business_Process"          ,semantic:"sends data to"    ,target:"Business_Function"         ,rel_name:"flow"          }
+
+	,{source:"Business_Function"         ,semantic:"realization of"   ,target:"Business_Service"          ,rel_name:"realization"   }
+	,{source:"Business_Function"         ,semantic:"contains"         ,target:"Business_Process"          ,rel_name:"contains"      }
+	,{source:"Business_Function"         ,semantic:"assigned"         ,target:"Business_Role"             ,rel_name:"assigns"       }
+	,{source:"Business_Function"         ,semantic:"CRUDs"            ,target:"Business_Object"           ,rel_name:"access"        }
+	,{source:"Business_Function"         ,semantic:"CRUDs"            ,target:"Business_Function"         ,rel_name:"access"        }
+	,{source:"Business_Function"         ,semantic:"uses"             ,target:"Business_Function"         ,rel_name:"uses"          }
+	,{source:"Business_Function"         ,semantic:"sends data to"    ,target:"Business_Function"         ,rel_name:"flow"          }
+	,{source:"Business_Function"         ,semantic:"uses"             ,target:"Business_Process"          ,rel_name:"uses"          }
+
+	,{source:"Business_Service"          ,semantic:"uses"             ,target:"Business_Service"          ,rel_name:"uses"          }
+	,{source:"Business_Service"          ,semantic:"contains"         ,target:"Business_Service"          ,rel_name:"contains"      }
+	,{source:"Business_Service"          ,semantic:"CRUDs"            ,target:"Business_Object"           ,rel_name:"access"        }
+	,{source:"Business_Service"          ,semantic:"assigned to"      ,target:"Business_Interface"        ,rel_name:"assigns"       }
+	,{source:"Business_Service"          ,semantic:"is used by"       ,target:"Business_Interface"        ,rel_name:"uses"          }
+	,{source:"Business_Service"          ,semantic:"assigned to"      ,target:"Business_Interface"        ,rel_name:"assigns"       }
+	,{source:"Business_Service"          ,semantic:"assigned to"      ,target:"Application_Interface"     ,rel_name:"assigns"       }
+	,{source:"Business_Service"          ,semantic:"uses"             ,target:"Business_Process"          ,rel_name:"uses"          }
+	,{source:"Business_Service"          ,semantic:"uses"             ,target:"Business_Function"         ,rel_name:"uses"          }
+
+	,{source:"Business_Event"            ,semantic:"triggers"         ,target:"Business_Process"          ,rel_name:"trigger"       }
+	,{source:"Business_Event"            ,semantic:"assigned"         ,target:"Business_Role"             ,rel_name:"assigns"       }
+
+	,{source:"Business_Object"           ,semantic:"contains"         ,target:"Business_Object"           ,rel_name:"contains"      }
+	,{source:"Business_Object"           ,semantic:"composed of"      ,target:"Business_Object"           ,rel_name:"composition"   }
+	,{source:"Business_Object"           ,semantic:"specialization of",target:"Business_Object"           ,rel_name:"specialization"}
+	,{source:"Business_Object"           ,semantic:"assigned"         ,target:"Business_Location"         ,rel_name:"assigns"       }
+
+	,{source:"Business_Product"          ,semantic:"has value"        ,target:"Business_Value"            ,rel_name:"association"   }
+	,{source:"Business_Product"          ,semantic:"contains"         ,target:"Business_Contract"         ,rel_name:"contains"      }
+	,{source:"Business_Product"          ,semantic:"contains"         ,target:"Business_Service"          ,rel_name:"contains"      }
+
+//APPLICATION
+	,{source:"Application_Component"     ,semantic:"composed of"      ,target:"Application_Component"     ,rel_name:"composition"   }
+	,{source:"Application_Component"     ,semantic:"composed of"      ,target:"Application_Interface"     ,rel_name:"composition"   }
+	,{source:"Application_Component"     ,semantic:"CRUDs"            ,target:"Application_Data_Object"   ,rel_name:"access"        }
+	,{source:"Application_Component"     ,semantic:"send data to"     ,target:"Application_Component"     ,rel_name:"flow"          }
+	,{source:"Application_Component"     ,semantic:"realization of"   ,target:"Application_Service"       ,rel_name:"realization"   }
+	,{source:"Application_Component"     ,semantic:"uses"             ,target:"Technology_Interface"      ,rel_name:"uses"          }
+	,{source:"Application_Component"     ,semantic:"realization of"   ,target:"Motivation_Requirement"    ,rel_name:"realization"   }
+	,{source:"Application_Component"     ,semantic:"realization of"   ,target:"Motivation_Constraint"     ,rel_name:"realization"   }
+	,{source:"Application_Component"     ,semantic:"uses"             ,target:"Application_Interface"     ,rel_name:"uses"          }
+	,{source:"Application_Component"     ,semantic:"uses"             ,target:"Application_Component"     ,rel_name:"uses"          }
+	,{source:"Application_Component"     ,semantic:"assigned"         ,target:"Business_Function"         ,rel_name:"assigns"       }
+	,{source:"Application_Component"     ,semantic:"assigned"         ,target:"Business_Process"          ,rel_name:"assigns"       }
+
+	,{source:"Application_Function"      ,semantic:"assigned"         ,target:"Application_Component"     ,rel_name:"assigns"       }
+	,{source:"Application_Function"      ,semantic:"realization of"   ,target:"Application_Service"       ,rel_name:"realization"   }
+	,{source:"Application_Function"      ,semantic:"CRUDs"            ,target:"Application_Data_Object"   ,rel_name:"access"        }
+	,{source:"Application_Function"      ,semantic:"uses"             ,target:"Technology_Service"        ,rel_name:"uses"          }
+	,{source:"Application_Function"      ,semantic:"uses"             ,target:"Technology_Service"        ,rel_name:"uses"          }
+	,{source:"Application_Function"      ,semantic:"uses"             ,target:"Application_Service"       ,rel_name:"uses"          }
+	,{source:"Application_Function"      ,semantic:"uses"             ,target:"Application_Function"      ,rel_name:"uses"          }
+	,{source:"Application_Function"      ,semantic:"sends data to"    ,target:"Application_Function"      ,rel_name:"flow"          }
+
+	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Application_Service"       ,rel_name:"uses"          }
+	,{source:"Application_Service"       ,semantic:"contains"         ,target:"Application_Service"       ,rel_name:"contains"      }
+	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Application_Component"     ,rel_name:"uses"          }
+	,{source:"Application_Service"       ,semantic:"CRUDs"            ,target:"Application_Data_Object"   ,rel_name:"access"        }
+	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Application_Interface"     ,rel_name:"uses"          }
+	,{source:"Application_Service"       ,semantic:"assigned to"      ,target:"Application_Interface"     ,rel_name:"assigns"       }
+	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Business_Function"         ,rel_name:"uses"          }
+	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Business_Process"          ,rel_name:"uses"          }
+
+	,{source:"Technology_Artifact"       ,semantic:"realization of"   ,target:"Application_Data_Object"   ,rel_name:"realization"   }
+
+	,{source:"Application_Data_Object"   ,semantic:"composed of"      ,target:"Application_Data_Object"   ,rel_name:"composition"   }
+	,{source:"Application_Data_Object"   ,semantic:"specialization of",target:"Application_Data_Object"   ,rel_name:"specialization"}
+	,{source:"Application_Data_Object"   ,semantic:"contains"         ,target:"Application_Data_Object"   ,rel_name:"contains"      }
+	,{source:"Application_Data_Object"   ,semantic:"realization of"   ,target:"Business_Object"           ,rel_name:"realization"   }
+
+
+	,{source:"Technology_Software"       ,semantic:"realization of"   ,target:"Technology_Service"        ,rel_name:"realization"   }
+	,{source:"Technology_Software"       ,semantic:"assigned to"      ,target:"Technology_Device"         ,rel_name:"assigns"       }
+	,{source:"Technology_Software"       ,semantic:"CRUDs"            ,target:"Technology_Artifact"       ,rel_name:"access"        }
+
+	,{source:"Technology_Node"           ,semantic:"realization of"   ,target:"Technology_Service"        ,rel_name:"realization"   }
+	,{source:"Technology_Node"           ,semantic:"uses"             ,target:"Technology_Service"        ,rel_name:"uses"          }
+	,{source:"Technology_Node"           ,semantic:"CRUDs"            ,target:"Technology_Artifact"       ,rel_name:"access"        }
+	,{source:"Technology_Node"           ,semantic:"Located at"       ,target:"Business_Location"         ,rel_name:"assigns"       }
+	,{source:"Technology_Node"           ,semantic:"composed of"      ,target:"Technology_Interface"      ,rel_name:"composition"   }
+	,{source:"Technology_Node"           ,semantic:"composed of"      ,target:"Technology_Software"       ,rel_name:"composition"   }
+
+	,{source:"Technology_Function"       ,semantic:"realization of"   ,target:"Technology_Service"        ,rel_name:"realization"   }
+
+	,{source:"Technology_Network"        ,semantic:"associated with"  ,target:"Technology_Device"         ,rel_name:"association"   }
+	,{source:"Technology_Network"        ,semantic:"Located at"       ,target:"Business_Location"         ,rel_name:"assigns"       }
+
+	,{source:"Technology_Device"         ,semantic:"composed of"      ,target:"Technology_Interface"      ,rel_name:"composition"   }
+	,{source:"Technology_Device"         ,semantic:"specialization of",target:"Technology_Node"           ,rel_name:"specialization"}
+	,{source:"Technology_Device"         ,semantic:"composed of"      ,target:"Technology_Node"           ,rel_name:"composition"   }
+
+	,{source:"Technology_Service"        ,semantic:"assigned"         ,target:"Technology_Interface"      ,rel_name:"assigns"       }
+	,{source:"Technology_Service"        ,semantic:"uses"             ,target:"Application_Component"     ,rel_name:"uses"          }
 
 //MOTIVATION
-	,{source:"Motivation_Stakeholder"    ,semantic:"associated with"  ,r_semantic:"associated with",target:"Motivation_Driver"      ,rel_name:"association"   }
-	,{source:"Motivation_Principle"      ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Goal"        ,rel_name:"realization"   }
-	,{source:"Motivation_Driver"         ,semantic:"influences"       ,r_semantic:"influenced by"  ,target:"Motivation_Goal"        ,rel_name:"influence"     }
-	,{source:"Motivation_Constraint"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Principle"   ,rel_name:"realization"   }
-	,{source:"Motivation_Requirement"    ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Principle"   ,rel_name:"realization"   }
-	,{source:"Motivation_Requirement"    ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Goal"        ,rel_name:"realization"   }
-	,{source:"Motivation_Constraint"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Goal"        ,rel_name:"realization"   }
-	,{source:"Application_Component"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Requirement" ,rel_name:"realization"   }
-	,{source:"Application_Component"     ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Motivation_Constraint"  ,rel_name:"realization"   }
+	,{source:"Motivation_Stakeholder"    ,semantic:"associated with"  ,target:"Motivation_Driver"         ,rel_name:"association"   }
+	,{source:"Motivation_Stakeholder"    ,semantic:"gives data to"    ,target:"Motivation_Stakeholder"    ,rel_name:"flow"          }
+
+	,{source:"Motivation_Principle"      ,semantic:"realization of"   ,target:"Motivation_Goal"           ,rel_name:"realization"   }
+
+	,{source:"Motivation_Driver"         ,semantic:"influences"       ,target:"Motivation_Goal"           ,rel_name:"influence"     }
+
+	,{source:"Motivation_Constraint"     ,semantic:"realization of"   ,target:"Motivation_Principle"      ,rel_name:"realization"   }
+	,{source:"Motivation_Constraint"     ,semantic:"realization of"   ,target:"Motivation_Goal"           ,rel_name:"realization"   }
+
+	,{source:"Motivation_Requirement"    ,semantic:"realization of"   ,target:"Motivation_Principle"      ,rel_name:"realization"   }
+	,{source:"Motivation_Requirement"    ,semantic:"realization of"   ,target:"Motivation_Goal"           ,rel_name:"realization"   }
 
 //IMPLEMENTATION
-	,{source:"Implementation_Work_Package",semantic:"assigned"         ,r_semantic:"assigned"       ,target:"Business_Role"         ,rel_name:"assigns"       }
-	,{source:"Implementation_Work_Package",semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Implementation_Deliverable",rel_name:"realization"   }
-	,{source:"Implementation_Deliverable" ,semantic:"realization of"   ,r_semantic:"realized by"    ,target:"Implementation_Plateau",rel_name:"realization"   }
-	,{source:"Implementation_Plateau"     ,semantic:"associated with"  ,r_semantic:"associated with",target:"Implementation_Gap"      ,rel_name:"association"   }
-	,{source:"Implementation_Plateau"     ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Component"   ,rel_name:"contains"      }
-	,{source:"Implementation_Gap"         ,semantic:"associated with"  ,r_semantic:"associated with",target:"Application_Component"   ,rel_name:"association"   }
-	,{source:"Implementation_Deliverable" ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Component"   ,rel_name:"contains"      }
+	,{source:"Implementation_Work_Package",semantic:"assigned"        ,target:"Business_Role"             ,rel_name:"assigns"       }
+	,{source:"Implementation_Work_Package",semantic:"realization of"  ,target:"Implementation_Deliverable",rel_name:"realization"   }
 
+	,{source:"Implementation_Deliverable" ,semantic:"realization of"  ,target:"Implementation_Plateau"    ,rel_name:"realization"   }
 
+	,{source:"Implementation_Plateau"     ,semantic:"associated with" ,target:"Implementation_Gap"        ,rel_name:"association"   }
+	,{source:"Implementation_Plateau"     ,semantic:"contains"        ,target:"Application_Component"     ,rel_name:"contains"      }
 
-	,{source:"Common_Group"              ,semantic:"contains"         ,r_semantic:"is contained by",target:"Application_Function"   ,rel_name:"contains"      }
+	,{source:"Implementation_Gap"         ,semantic:"associated with" ,target:"Application_Component"     ,rel_name:"association"   }
+
+	,{source:"Implementation_Deliverable" ,semantic:"contains"        ,target:"Application_Component"     ,rel_name:"contains"      }
+	,{source:"Implementation_Deliverable" ,semantic:"realization of"  ,target:"Business_Object"           ,rel_name:"realization"   }
+
+//GROUP
+	,{source:"Common_Group"              ,semantic:"contains"         ,target:"Application_Function"      ,rel_name:"contains"      }
+	,{source:"Common_Group"              ,semantic:"contains"         ,target:"Common_Group"              ,rel_name:"contains"      }
 
 ];
 
@@ -205,17 +261,19 @@ var relationships = [
 				,target: relationships[i].target
 				,rel_name: relationships[i].rel_name
 			};
-			EA_Relationships.insert(rel);
-			inserted++;
+			if ( insert_rel(rel) )
+				inserted++;
 
-			var r_rel = {
-				source:	relationships[i].target
-				,semantic: relationships[i].r_semantic
-				,target: relationships[i].source
-				,rel_name: relationships[i].rel_name
-			};
-			EA_Relationships.insert(r_rel);
-			inserted++;
+			if ( _.contains(['assigns','association','trigger'], relationships[i].rel_name) ){
+				var r_rel = {
+					source:	relationships[i].target
+					,semantic: relationships[i].semantic
+					,target: relationships[i].source
+					,rel_name: relationships[i].rel_name
+				};
+				if ( insert_rel(r_rel) )
+					inserted++;
+			}
 		}
 
 		var found = EA_Relationships.find().count();
@@ -229,3 +287,11 @@ var relationships = [
 	}
 
 });
+
+function insert_rel(rel) {
+	if ( ! EA_Relationships.findOne({source:rel.source, target:rel.target, rel_name:rel.rel_name}) ) {
+		EA_Relationships.insert(rel);
+		return true;
+	}
+	return false;
+}

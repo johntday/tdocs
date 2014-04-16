@@ -1,8 +1,6 @@
 Template.graphDgm_pick_rel.helpers({
 	relationships: function() {
 		input = this;
-//		return EA_Relationships.find( {'$or':[{source:this.target_class_name, target:this.source_class_name},
-//			{source:this.source_class_name, target:this.target_class_name}]} );
 		return EA_Relationships.find( {source:this.source_class_name, target:this.target_class_name} );
 	},
 	source_icon: function() {

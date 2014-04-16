@@ -326,8 +326,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			target_graph_id = target.id;
 
 			// any relationships in model?
-			if (!ea.hasRelationship(source_class_name, target_class_name, true)) {
-				return next('No valid relationship exists between '+source_class_name+' and '+target_class_name); }
+			if (!ea.hasRelationship(source_class_name, target_class_name, false)) {
+				return next('No valid relationship exists between '+source_class_name+' --> '+target_class_name); }
 
 			// check for dup
 			//TODO
