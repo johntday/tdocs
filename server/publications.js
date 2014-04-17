@@ -14,14 +14,10 @@ Meteor.reactivePublish(null, function() {
 		if (user.project) {
 			var project_id = user.project._id;
 			if (project_id) {
-				returnArray.push( Glossarys.find( {project_id: project_id} ) );
-				returnArray.push( Diagrams.find( {project_id: project_id} ) );
-				returnArray.push( Tdocs.find( {project_id: project_id} ) );
-				returnArray.push( Tables.find( {project_id: project_id} ) );
-
-//				var class_names = _.keys(ea.classBelongsToArea);
-//				var q_class_names = {project_id: project_id, class_name: {$in: class_names} };
-//				returnArray.push( Nouns.find( q_class_names ));
+//				returnArray.push( Glossarys.find( {project_id: project_id} ) );
+//				returnArray.push( Diagrams.find( {project_id: project_id} ) );
+//				returnArray.push( Tdocs.find( {project_id: project_id} ) );
+//				returnArray.push( Tables.find( {project_id: project_id} ) );
 
 				returnArray.push( Nouns.find( {project_id: project_id} ) );
 				returnArray.push( Relationships.find( {project_id: project_id} ) );
@@ -49,6 +45,44 @@ Meteor.FilterCollections.publish(EA_Relationships, {
 });
 Meteor.FilterCollections.publish(Relationships, {
 	name: 'nouns-rels'
+});
+Meteor.FilterCollections.publish(Diagrams, {
+	name: 'diagrams',
+	callbacks: {
+//		allow: function(query, handler){
+//			//... do some custom validation (like user permissions)...
+//			return false;
+//		},
+		beforePublish: function(query, handler){
+			var u;
+			if (handler.userId)
+				u = Meteor.users.findOne({_id: handler.userId});
+			var project_id = (u && u.project) ? u.project._id : '';
+
+			query.selector.project_id = project_id;
+
+			return query;
+//		},
+//		afterPublish: function(cursor){
+//			//... your cursor modifier code goes here ...
+//			return cursor;
+		}
+	}
+});
+Meteor.FilterCollections.publish(Diagrams, {
+	name: 'diagrams-pic',
+	callbacks: {
+		beforePublish: function(query, handler){
+			var u;
+			if (handler.userId)
+				u = Meteor.users.findOne({_id: handler.userId});
+			var project_id = (u && u.project) ? u.project._id : '';
+
+			query.selector.project_id = project_id;
+
+			return query;
+		}
+	}
 });
 
 /**

@@ -104,6 +104,7 @@ Router.map(function () {
 	 * Diagrams: Sequence
 	 */
 	this.route('tmpl_diagrams'               ,{path: '/diagrams'});
+	this.route('diagramFilter'               ,{path: '/diagramFilter'});
 	this.route('tmpl_diagram_add'            ,{path: '/diagramAdd'});
 	this.route('tmpl_diagram_detail', {
 		path  : '/diagrams/:_id',

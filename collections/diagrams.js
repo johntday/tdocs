@@ -1,4 +1,3 @@
-Diagrams = new Meteor.Collection('coll_diagrams');
 /*------------------------------------------------------------------------------------------------------------------------------*/
 // Create a collection where users can only modify documents that
 // they own. Ownership is tracked by an 'userId' field on each

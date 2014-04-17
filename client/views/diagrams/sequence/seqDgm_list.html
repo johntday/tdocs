@@ -1,13 +1,51 @@
 <template name="tmpl_diagrams">
 
-	{{> tmpl_diagrams_sort_select}}
+	{{> tmpl_diagrams_sort_select }}
 
-	<div>
-		{{#each diagrams}}
+	<div class="row">
+		{{#each fcResults}}
 			{{> tmpl_diagram_item}}
 		{{/each}}
 	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<!-- items per page -->
+			<small><strong>Items per page select</strong></small>
+			<select class="fc-pager-options form-control">
+				{{#each fcPager.options}}
+				<option value="{{value}}" {{status}}>{{value}}</option>
+				{{/each}}
+			</select>
+			<!-- /items per page -->
+		</div>
+		<div class="col-md-7 text-center">
+			{{#if fcPager.pages}}
+			<!-- numbered pager -->
+			<ul class="pagination">
+				<li><a href="#" class="fc-pager-first">&lt;&lt;</a></li>
+				<li><a href="#" class="fc-pager-previous">&lt;</a></li>
+				{{#each fcPager.pages}}
+				<li class="{{status}}"><a href="#" class="fc-pager-page" data-fc-pager-page="{{page}}">{{page}}</a></li>
+				{{/each}}
+				<li><a href="#" class="fc-pager-next">&gt;</a></li>
+				<li><a href="#" class="fc-pager-last">&gt;&gt;</a></li>
+			</ul>
+			<!-- /numbered pager -->
+			{{/if}}
+		</div>
+		<div class="col-md-3">
+			<!-- pager status -->
+			<ul class="small">
+				<li>Current page is: <strong>{{fcPager.currentPage}}</strong>.</li>
+				<li>Displaying <strong>{{fcPager.itemsPerPage}}</strong> results.</li>
+				<li>From <strong>{{fcPager.offsetStart}}</strong> to <strong>{{fcPager.offsetEnd}}</strong>.</li>
+				<li>Found a total of <strong>{{fcPager.totalItems}}</strong> diagrams.</li>
+			</ul>
+			<!-- /pager status -->
+		</div>
+	</div>
 </template>
+
 
 <template name="tmpl_diagrams_sort_select">
 	<div class="row">
@@ -22,20 +60,23 @@
 				{{/each}}
 			</ol>
 		</div>
-		<div class="col-sm-2">
+		<div class="col-sm-5">
 			<div class="btn-group">
 				<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
 					<span class="glyphicon glyphicon-plus">Create </span><span class="caret"> </span>
 				</button>
 				<ul class="dropdown-menu" role="menu">
-					<li id="btn-seqDgm-create"><a href="/diagramGraphAdd">Create diagram</a></li>
-					<li id="btn-seqDgm-create-seq"><a href="/diagramAdd">Create sequence diagram</a></li>
+					<li><a href="/diagramGraphAdd">Create diagram</a></li>
+					<li><a href="/diagramAdd">Create sequence diagram</a></li>
 				</ul>
 			</div>
-		</div>
 
-		<div class="col-sm-3">
-			{{form_options option_value options "diagram-sort"}}
+			<div class="btn-group">
+				<button id="btn-diagrams-pic" type="button" class="btn btn-default {{#if one}}active{{/if}}"><span class="glyphicon glyphicon-th-large"> </span></button>
+				<button id="btn-diagrams-tbl" type="button" class="btn btn-default {{#if two}}active{{/if}}" title="List and search"><span class="glyphicon glyphicon-list-alt">
+			</span></button>
+			</div>
+
 		</div>
 	</div>
 </template>

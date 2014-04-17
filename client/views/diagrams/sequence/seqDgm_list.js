@@ -1,6 +1,17 @@
-Template.tmpl_diagrams.helpers({
-	diagrams: function() {
-		return diagramsHandle;
+DiagramsPicFilter = new Meteor.FilterCollections(Diagrams, {
+	name: 'diagrams-pic',
+	template: 'tmpl_diagrams',
+	pager: {
+		options: [20, 50],
+		itemsPerPage: 20,
+		currentPage: 1,
+		showPages: 10
+	},
+	sort:{
+		order: ['asc', 'desc'],
+		defaults: [
+			['title', 'asc']
+		]
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -16,17 +27,22 @@ Template.tmpl_diagrams_sort_select.helpers({
 	},
 	options: function() {
 		return getDiagramSortingOptions();
+	},
+	one: function() {
+		return (Location._state.path === '/diagrams') ? true : false;
+	},
+	two: function() {
+		return (Location._state.path === '/diagrams') ? false : true;
 	}
 });
 Template.tmpl_diagrams_sort_select.events({
-	'click #diagram-sort': function(e) {
+	'click #btn-diagrams-pic': function(e) {
 		e.preventDefault();
-		var $selector = $('#diagram-sort');
-		if ( Session.get('diagram_sort') !== $selector.val() ) {
-			Session.set('diagram_sort', $selector.val());
-			Router.go('/diagrams');
-		}
-		$selector = null;
+		Router.go('/diagrams');
+	},
+	'click #btn-diagrams-tbl': function(e) {
+		e.preventDefault();
+		Router.go('/diagramFilter');
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
