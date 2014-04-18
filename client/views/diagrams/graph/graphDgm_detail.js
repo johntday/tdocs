@@ -585,8 +585,9 @@ function saveGraph() {
 
 	// GET INPUT
 	var code = JSON.stringify(Template['tmpl_graphDgm_detail'].graph.toJSON());
+	var properties = {code: code, nouns: graphCurrentNouns()};
 
-	Meteor.call('updateDiagramCode', data._id, code, function(error, diagram) {
+	Meteor.call('updateDiagram', data._id, properties, function(error, diagram) {
 		if(error){
 			growl(error.reason);
 		}else{

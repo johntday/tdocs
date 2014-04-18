@@ -84,6 +84,21 @@ Meteor.FilterCollections.publish(Diagrams, {
 		}
 	}
 });
+Meteor.FilterCollections.publish(Diagrams, {
+	name: 'diagrams-nouns',
+	callbacks: {
+		beforePublish: function(query, handler){
+			var u;
+			if (handler.userId)
+				u = Meteor.users.findOne({_id: handler.userId});
+			var project_id = (u && u.project) ? u.project._id : '';
+
+			query.selector.project_id = project_id;
+
+			return query;
+		}
+	}
+});
 
 /**
  * Tdocs

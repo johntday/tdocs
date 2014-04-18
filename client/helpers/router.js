@@ -66,6 +66,8 @@ Router.map(function () {
 	this.route('noun_filter_list'         ,{path: '/nouns'});
 	this.route('noun_filter_list_simple'  ,{path: '/picknoun'});
 	this.route('tmpl_noun_add'            ,{path: '/nounAdd'});
+	this.route('diagramNounFilter'        ,{path: '/diagramNounFilter'});
+
 	this.route('tmpl_noun_detail', {
 		path  : '/nouns/:_id',
 //		waitOn: function () {
@@ -73,6 +75,9 @@ Router.map(function () {
 //		},
 		data  : function () {
 			Session.set('form_update', false);
+			DiagramsFilter.filter.clear();
+			DiagramsFilter.filter.set('nouns', {value: this.params._id, condition:'$and'});
+
 			var noun = Nouns.findOne(this.params._id);
 
 			if (noun) {
