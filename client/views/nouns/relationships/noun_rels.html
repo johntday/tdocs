@@ -1,3 +1,4 @@
+<!-- UI:Relationships -->
 <template name="noun_rels">
 	<div class="row">
 
@@ -38,27 +39,4 @@
 			</table>
 		</div>
 	</div>
-	{{#if fcPager.pages}}
-	<div class="row">
-		<div class="col-md-12 text-center">
-			<!-- numbered pager -->
-			<ul class="pagination">
-				<li><a href="#" class="fc-pager-first">&lt;&lt;</a></li>
-				<li><a href="#" class="fc-pager-previous">&lt;</a></li>
-				{{#each fcPager.pages}}
-				<li class="{{status}}"><a href="#" class="fc-pager-page" data-fc-pager-page="{{page}}">{{page}}</a></li>
-				{{/each}}
-				<li><a href="#" class="fc-pager-next">&gt;</a></li>
-				<li><a href="#" class="fc-pager-last">&gt;&gt;</a></li>
-			</ul>
-			<!-- /numbered pager -->
-
-			<!-- pager status -->
-			<p>
-				<strong>{{fcPager.offsetStart}}</strong> to <strong>{{fcPager.offsetEnd}}</strong> of <strong>{{fcPager.totalItems}}</strong> records.
-			</p>
-			<!-- /pager status -->
-		</div>
-	</div>
-	{{/if}}
 </template>

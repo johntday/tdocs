@@ -2,8 +2,8 @@ NounsRelsFilter = new Meteor.FilterCollections(Relationships, {
 	name: 'nouns-rels',
 	template: 'noun_rels',
 	pager: {
-		options: [10,50],
-		itemsPerPage: 10,
+		options: [50],
+		itemsPerPage: 50,
 		currentPage: 1,
 		showPages: 5
 	},

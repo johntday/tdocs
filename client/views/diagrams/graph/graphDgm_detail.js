@@ -413,6 +413,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		$('#btn-line-auto').removeClass('active');
 		$(this).addClass('active');
 		growl( 'Line mode set to MANUAL', {type:'s', hideSnark:true} );
+		graphCurrentRelationships();
 	});
 	$('#btn-line-auto').click(function(){
 		// adjust vertices when a cell is removed or its source/target was changed
@@ -423,6 +424,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		$('#btn-line-manual').removeClass('active');
 		$(this).addClass('active');
 		growl( 'Line mode set to AUTO', {type:'s', hideSnark:true} );
+		graphCurrentRelationships();
 	});
 	$('#btn-back').click(function(){
 		if (currentHaloElement) {
