@@ -121,7 +121,6 @@ var relationships = [
 	,{source:"Business_Process"          ,semantic:"flows to"         ,target:"Business_Process"          ,rel_name:"flow"          }
 	,{source:"Business_Process"          ,semantic:"uses"             ,target:"Application_Service"       ,rel_name:"uses"          }
 	,{source:"Business_Process"          ,semantic:"CRUDs"            ,target:"Business_Object"           ,rel_name:"access"        }
-	,{source:"Business_Process"          ,semantic:"contains"         ,target:"Business_Process"          ,rel_name:"contains"      }
 	,{source:"Business_Process"          ,semantic:"uses"             ,target:"Business_Function"         ,rel_name:"uses"          }
 	,{source:"Business_Process"          ,semantic:"sends data to"    ,target:"Business_Function"         ,rel_name:"flow"          }
 
@@ -135,7 +134,6 @@ var relationships = [
 	,{source:"Business_Function"         ,semantic:"uses"             ,target:"Business_Process"          ,rel_name:"uses"          }
 
 	,{source:"Business_Service"          ,semantic:"uses"             ,target:"Business_Service"          ,rel_name:"uses"          }
-	,{source:"Business_Service"          ,semantic:"contains"         ,target:"Business_Service"          ,rel_name:"contains"      }
 	,{source:"Business_Service"          ,semantic:"CRUDs"            ,target:"Business_Object"           ,rel_name:"access"        }
 	,{source:"Business_Service"          ,semantic:"assigned to"      ,target:"Business_Interface"        ,rel_name:"assigns"       }
 	,{source:"Business_Service"          ,semantic:"is used by"       ,target:"Business_Interface"        ,rel_name:"uses"          }
@@ -147,17 +145,13 @@ var relationships = [
 	,{source:"Business_Event"            ,semantic:"triggers"         ,target:"Business_Process"          ,rel_name:"trigger"       }
 	,{source:"Business_Event"            ,semantic:"assigned"         ,target:"Business_Role"             ,rel_name:"assigns"       }
 
-	,{source:"Business_Object"           ,semantic:"contains"         ,target:"Business_Object"           ,rel_name:"contains"      }
-	,{source:"Business_Object"           ,semantic:"composed of"      ,target:"Business_Object"           ,rel_name:"composition"   }
 	,{source:"Business_Object"           ,semantic:"specialization of",target:"Business_Object"           ,rel_name:"specialization"}
 	,{source:"Business_Object"           ,semantic:"assigned"         ,target:"Business_Location"         ,rel_name:"assigns"       }
 
 	,{source:"Business_Product"          ,semantic:"has value"        ,target:"Business_Value"            ,rel_name:"association"   }
-	,{source:"Business_Product"          ,semantic:"contains"         ,target:"Business_Contract"         ,rel_name:"contains"      }
 	,{source:"Business_Product"          ,semantic:"contains"         ,target:"Business_Service"          ,rel_name:"contains"      }
 
 //APPLICATION
-	,{source:"Application_Component"     ,semantic:"composed of"      ,target:"Application_Component"     ,rel_name:"composition"   }
 	,{source:"Application_Component"     ,semantic:"composed of"      ,target:"Application_Interface"     ,rel_name:"composition"   }
 	,{source:"Application_Component"     ,semantic:"CRUDs"            ,target:"Application_Data_Object"   ,rel_name:"access"        }
 	,{source:"Application_Component"     ,semantic:"send data to"     ,target:"Application_Component"     ,rel_name:"flow"          }
@@ -180,7 +174,6 @@ var relationships = [
 	,{source:"Application_Function"      ,semantic:"sends data to"    ,target:"Application_Function"      ,rel_name:"flow"          }
 
 	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Application_Service"       ,rel_name:"uses"          }
-	,{source:"Application_Service"       ,semantic:"contains"         ,target:"Application_Service"       ,rel_name:"contains"      }
 	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Application_Component"     ,rel_name:"uses"          }
 	,{source:"Application_Service"       ,semantic:"CRUDs"            ,target:"Application_Data_Object"   ,rel_name:"access"        }
 	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Application_Interface"     ,rel_name:"uses"          }
@@ -192,7 +185,6 @@ var relationships = [
 
 	,{source:"Application_Data_Object"   ,semantic:"composed of"      ,target:"Application_Data_Object"   ,rel_name:"composition"   }
 	,{source:"Application_Data_Object"   ,semantic:"specialization of",target:"Application_Data_Object"   ,rel_name:"specialization"}
-	,{source:"Application_Data_Object"   ,semantic:"contains"         ,target:"Application_Data_Object"   ,rel_name:"contains"      }
 	,{source:"Application_Data_Object"   ,semantic:"realization of"   ,target:"Business_Object"           ,rel_name:"realization"   }
 
 

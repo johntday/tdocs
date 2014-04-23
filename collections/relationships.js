@@ -48,7 +48,7 @@ Meteor.methods({
 	 *   ,target_class_name: 'Business_Object'
 	 * }
 	 */
-	createRelationship: function(project_id, source_id, target_id, rel_name){
+	createRelationship: function(project_id, source_id, target_id, rel_name, semantic){
 		var user = Meteor.user();
 
 		if (!user)
@@ -90,11 +90,15 @@ Meteor.methods({
 		rel.target_class_name = target.class_name;
 
 		//SEMANTIC
-		var ea_rel = EA_Relationships.findOne( {rel_name:rel_name, source:rel.source_class_name, target:rel.target_class_name} );
-		rel.semantic = (ea_rel) ? ea_rel.semantic : "UNKNOWN";
+		if (semantic)
+			rel.semantic = semantic;
+		else {
+			var ea_rel = EA_Relationships.findOne( {rel_name:rel_name, source:rel.source_class_name, target:rel.target_class_name} );
+			rel.semantic = (ea_rel) ? ea_rel.semantic : "UNKNOWN";
+		}
 
 		if (Relationships.findOne( {source_id:rel.source_id, target_id:rel.target_id, rel_name:rel_name} ) )
-			return undefined;
+			throw new Meteor.Error(601, 'Already have this relationship');
 
 		var rel_id = Relationships.insert(rel);
 		rel._id = rel_id;

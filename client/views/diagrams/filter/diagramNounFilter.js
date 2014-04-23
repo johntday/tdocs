@@ -42,7 +42,6 @@ Template.diagramNounFilter.helpers({
 Template.diagramNounFilter.events({
 	'click button.btn.btn-primary.btn-sm': function(e) {
 		var diagram_id = $(e.currentTarget).data('diagramId');
-		console.log(diagram_id);
 		if (diagram_id)
 			Router.go('/graph/'+diagram_id);
 	}

@@ -326,8 +326,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			target_graph_id = target.id;
 
 			// any relationships in model?
-			if (!ea.hasRelationship(source_class_name, target_class_name, false)) {
-				return next('No valid relationship exists between '+source_class_name+' --> '+target_class_name); }
+//			if (!ea.hasRelationship(source_class_name, target_class_name, false)) {
+//				return next('No valid relationship exists between '+source_class_name+' --> '+target_class_name); }
 
 			// check for dup
 			//TODO
@@ -454,34 +454,11 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 						}
 					},
 					goto: {
-						label: "Goto Details",
+						label: "Goto Details Page",
 						className: "btn-danger",
 						callback: function() {
-							if (canEdit(Meteor.user())){
-								bootbox.dialog({
-									title:'Goto Details for "'+noun.title+'"',
-									message:'Save first?',
-									buttons: {
-										save: {
-											label: "Yes, save my diagram first",
-											className: "btn-primary",
-											callback: function() {
-												saveGraph();
-												Router.go('/nouns/'+_id);
-											}
-										},
-										no: {
-											label: "No, just go",
-											className: "btn-danger",
-											callback: function() {
-												Router.go('/nouns/'+_id);
-											}
-										}
-									}
-								});
-							} else {
-								Router.go('/nouns/'+_id);
-							}
+							saveGraph();
+							Router.go('/nouns/'+_id);
 						}
 					}
 				}
@@ -610,13 +587,13 @@ var deleteGraph = function(_id) {
 		}
 	});
 };
-function createRelationship(source_id, target_id, rel_name, label) {
-	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, function(error, rel_id) {
+function createRelationship(source_id, target_id, rel_name, semantic) {
+	Meteor.call('createRelationship', getProjectId(), source_id, target_id, rel_name, semantic, function(error, rel_id) {
 		if(error){
 			growl(error.reason);
 		}else{
 			// ADD CORRECT LINE
-			addRelToGraph(rel_id, rel_name, source_graph_id, target_graph_id, label);
+			addRelToGraph(rel_id, rel_name, source_graph_id, target_graph_id, semantic);
 
 			growl( 'Created relationship', {type:'s', hideSnark:true} );
 		}

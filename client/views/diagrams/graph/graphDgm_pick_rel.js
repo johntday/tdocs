@@ -1,7 +1,7 @@
 Template.graphDgm_pick_rel.helpers({
 	relationships: function() {
 		input = this;
-		return EA_Relationships.find( {source:this.source_class_name, target:this.target_class_name} );
+		return ea.getRelationships( input.source_class_name, input.target_class_name );
 	},
 	source_icon: function() {
 		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(input.source_class_name).icon;
