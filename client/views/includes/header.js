@@ -33,6 +33,9 @@ Template.tmplHeader.helpers({
 	},
 	brand: function() {
 		return (Meteor.user() && !!getProjectId()) ? getProjectTitle() : "Tdocs";
+	},
+	canEdit: function() {
+		return canEdit( Meteor.user() );
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
