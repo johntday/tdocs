@@ -47,57 +47,13 @@ Meteor.FilterCollections.publish(Relationships, {
 	name: 'nouns-rels'
 });
 Meteor.FilterCollections.publish(Diagrams, {
-	name: 'diagrams',
-	callbacks: {
-//		allow: function(query, handler){
-//			//... do some custom validation (like user permissions)...
-//			return false;
-//		},
-		beforePublish: function(query, handler){
-			var u;
-			if (handler.userId)
-				u = Meteor.users.findOne({_id: handler.userId});
-			var project_id = (u && u.project) ? u.project._id : '';
-
-			query.selector.project_id = project_id;
-
-			return query;
-//		},
-//		afterPublish: function(cursor){
-//			//... your cursor modifier code goes here ...
-//			return cursor;
-		}
-	}
+	name: 'diagrams'
 });
 Meteor.FilterCollections.publish(Diagrams, {
-	name: 'diagrams-pic',
-	callbacks: {
-		beforePublish: function(query, handler){
-			var u;
-			if (handler.userId)
-				u = Meteor.users.findOne({_id: handler.userId});
-			var project_id = (u && u.project) ? u.project._id : '';
-
-			query.selector.project_id = project_id;
-
-			return query;
-		}
-	}
+	name: 'diagrams-pic'
 });
 Meteor.FilterCollections.publish(Diagrams, {
-	name: 'diagrams-nouns',
-	callbacks: {
-		beforePublish: function(query, handler){
-			var u;
-			if (handler.userId)
-				u = Meteor.users.findOne({_id: handler.userId});
-			var project_id = (u && u.project) ? u.project._id : '';
-
-			query.selector.project_id = project_id;
-
-			return query;
-		}
-	}
+	name: 'diagrams-nouns'
 });
 
 /**

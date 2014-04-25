@@ -41,19 +41,17 @@ DiagramsFilter = new Meteor.FilterCollections(Diagrams, {
 			condition: '$and',
 			searchable: 'optional'
 		}
+	},
+	callbacks: {
+		beforeSubscribe: function (query) {
+			query.selector.project_id = getProjectId();
+			return query;
+		},
+		beforeResults: function(query){
+			query.selector.project_id = getProjectId();
+			return query;
+		}
 	}
-//	callbacks: {
-//		beforeSubscribe: function (query) {
-//			query.selector.type = {$nin: ['root']};
-//			query.selector.project_id = getProjectId();
-//			return query;
-//		},
-//		beforeResults: function(query){
-//			query.selector.type = {$nin: ['root']};
-//			query.selector.project_id = getProjectId();
-//			return query;
-//		}
-//	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.diagramFilter.helpers({

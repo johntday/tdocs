@@ -12,6 +12,16 @@ DiagramsPicFilter = new Meteor.FilterCollections(Diagrams, {
 		defaults: [
 			['title', 'asc']
 		]
+	},
+	callbacks: {
+		beforeSubscribe: function (query) {
+			query.selector.project_id = getProjectId();
+			return query;
+		},
+		beforeResults: function(query){
+			query.selector.project_id = getProjectId();
+			return query;
+		}
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
