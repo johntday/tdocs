@@ -180,6 +180,8 @@ var relationships = [
 	,{source:"Application_Service"       ,semantic:"assigned to"      ,target:"Application_Interface"     ,rel_name:"assigns"       }
 	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Business_Function"         ,rel_name:"uses"          }
 	,{source:"Application_Service"       ,semantic:"uses"             ,target:"Business_Process"          ,rel_name:"uses"          }
+	,{source:"Application_Service"       ,semantic:"realization of"   ,target:"Motivation_Requirement"    ,rel_name:"realization"   }
+	,{source:"Application_Service"       ,semantic:"realization of"   ,target:"Motivation_Constraint"     ,rel_name:"realization"   }
 
 	,{source:"Technology_Artifact"       ,semantic:"realization of"   ,target:"Application_Data_Object"   ,rel_name:"realization"   }
 
