@@ -33,6 +33,9 @@ Template.tmpl_diagrams_sort_select.helpers({
 	},
 	two: function() {
 		return (Location._state.path === '/diagrams') ? false : true;
+	},
+	canEdit: function() {
+		return canEdit( Meteor.user() );
 	}
 });
 Template.tmpl_diagrams_sort_select.events({

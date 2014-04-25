@@ -30,12 +30,15 @@ Template.tmpl_accordian_test.destroyed = function() {
 
 // "tmpl_sidebar_buttons"
 Template.tmpl_sidebar_buttons.helpers({
+	canEdit: function() {
+		return canEdit( Meteor.user() );
+	},
 	gotoBtnTitle: function() {
 		if ( Location._state.path.startsWith('/graph/') )
 			return 'Add selected item to your diagram';
 		return 'Goto selected item';
 	}
-//	chevronLeft: function() {
+	//	chevronLeft: function() {
 //		return (Session.get('sidebar_nbr') > 2);
 //	},
 //	chevronRight: function() {

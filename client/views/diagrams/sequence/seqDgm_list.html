@@ -61,6 +61,7 @@
 			</ol>
 		</div>
 		<div class="col-sm-5">
+			{{#if canEdit}}
 			<div class="btn-group">
 				<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
 					<span class="glyphicon glyphicon-plus">Create </span><span class="caret"> </span>
@@ -70,6 +71,7 @@
 					<!--<li><a href="/diagramAdd">Create sequence diagram</a></li>-->
 				</ul>
 			</div>
+			{{/if}}
 
 			<div class="btn-group">
 				<button id="btn-diagrams-pic" type="button" class="btn btn-default {{#if one}}active{{/if}}"><span class="glyphicon glyphicon-th-large"> </span></button>
