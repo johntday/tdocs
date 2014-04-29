@@ -34,7 +34,7 @@ Template.tmpl_sidebar_buttons.helpers({
 		return canEdit( Meteor.user() );
 	},
 	gotoBtnTitle: function() {
-		if ( Location._state.path.startsWith('/graph/') )
+		if ( Location.state().path.startsWith('/graph/') )
 			return 'Add selected item to your diagram';
 		return 'Goto selected item';
 	}
@@ -54,7 +54,7 @@ Template.tmpl_sidebar_buttons.events({
 	'click #btn-sidebar-goto': function(e) {
 		e.preventDefault();
 		$(e.currentTarget).blur();
-		var path = Location._state.path;
+		var path = Location.state().path;
 		if (path && path.indexOf('/graph/') != -1){
 			addNounToGraph( getSelectedTreeItem() );
 			return;

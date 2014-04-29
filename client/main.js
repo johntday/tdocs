@@ -147,7 +147,7 @@ Template.layout.helpers({
 		return (Session.get('has_sidebar')) ? "col-sm-8" : "col-sm-12";
 	},
 	showFooter: function() {
-		return _.contains(['/tables/'], Location._state.path);
+		return false;
 	},
 	sidebarNbr: function() {
 		return Session.get('sidebar_nbr');

@@ -30,11 +30,13 @@
 				<!-- METADATA -->
 				<div class="pull-right" style="margin-right: 40px">
 					<strong>owner:</strong>{{owner}}
-					</br><strong>views:</strong>{{click_cnt}}
+					<div>
+					<strong>views:</strong>{{click_cnt}}
 					<strong>favs:</strong>{{favs_cnt}}
 					<strong>reads:</strong>{{seen_cnt}}
 					<strong>stars:</strong>{{stars_cnt}}
-					</br><strong>created:</strong>{{createdAgo}}
+					</div>
+					<strong>created:</strong>{{createdAgo}}
 					<strong>updated:</strong>{{updatedAgo}}
 				</div>
 				{{#if canEdit}} {{form_select "Status" "status" status statusOptions "" isAdmin true}} {{/if}}

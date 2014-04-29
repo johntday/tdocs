@@ -39,10 +39,10 @@ Template.tmpl_diagrams_sort_select.helpers({
 		return getDiagramSortingOptions();
 	},
 	one: function() {
-		return (Location._state.path === '/diagrams') ? true : false;
+		return (Location.state().path === '/diagrams') ? true : false;
 	},
 	two: function() {
-		return (Location._state.path === '/diagrams') ? false : true;
+		return (Location.state().path === '/diagrams') ? false : true;
 	},
 	canEdit: function() {
 		return canEdit( Meteor.user() );

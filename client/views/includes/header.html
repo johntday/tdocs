@@ -28,8 +28,9 @@
 					{{/if}}
 					{{#if pickedProject}}
 					<!--<li class="{{activeRouteClass  '/tdocs'}}">
-						<a href="/tdocs" title="Browse all tdocs in project">Tdocs</a>-->
+						<a href="/tdocs" title="Browse all tdocs in project">Tdocs</a>
 					</li>
+					-->
 					<li class="{{activeRouteClass  '/diagrams'}}">
 						<a href="/diagrams" title="Browse all diagrams in project">Diagrams</a>
 					</li>
@@ -84,7 +85,7 @@
 
 
 				<ul class="nav navbar-nav navbar-right">
-					<li> <p class="navbar-text">{{loginButtons}}</p> </li>
+					<li> <p class="navbar-text">{{> loginButtons}}</p> </li>
 
 					<li class="dropdown"  style="margin-right: 50px">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Closet <b class="caret"></b></a>
