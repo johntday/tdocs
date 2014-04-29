@@ -6,10 +6,6 @@
       "accounts-ui-bootstrap-3": {},
       "accounts-admin-ui-bootstrap-3": {},
       "spin": {},
-      "mypaginator": {
-        "git": "https://github.com/johntday/meteor-mypaginator.git",
-        "branch": "master"
-      },
       "typeahead": {
         "git": "https://github.com/johntday/meteor-typeahead.git",
         "branch": "master"
@@ -19,10 +15,6 @@
       },
       "moment": {},
       "bootstrap-3": {},
-      "myhandsontable": {
-        "git": "https://github.com/johntday/meteor-myhandsontable.git",
-        "branch": "master"
-      },
       "mybootbox": {
         "git": "https://github.com/johntday/meteor-mybootbox.git",
         "branch": "master"
@@ -38,28 +30,23 @@
     "packages": {
       "roles": {
         "git": "https://github.com/alanning/meteor-roles.git",
-        "tag": "v1.2.6",
-        "commit": "f2a9058281f8f2fe028767841d7445aadd6893cf"
+        "tag": "v1.2.8",
+        "commit": "68844ba216c348d332bdb840825850f497f515bb"
       },
       "accounts-ui-bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-accounts-ui-bootstrap-3.git",
-        "tag": "v0.2.6",
-        "commit": "f3ee0ef6bc506314e19585550b4f9f5620c4ada6"
+        "tag": "v0.3.0-1",
+        "commit": "93ffa5d0e325dc7026de89f6d90c178fa04bdd3a"
       },
       "accounts-admin-ui-bootstrap-3": {
         "git": "https://github.com/hharnisc/meteor-accounts-admin-ui-bootstrap-3.git",
-        "tag": "v0.2.3",
-        "commit": "c396f28bdcfa6f20c67948fe17841746337f9016"
+        "tag": "v0.2.5",
+        "commit": "381d4ca347f16d2ca2e1e6ca5f51c3f2e9c6c5cd"
       },
       "spin": {
         "git": "https://github.com/SachaG/meteor-spin.git",
         "tag": "v0.2.2",
         "commit": "3f655f0016228e4195acc784c45d3e3a247dc39f"
-      },
-      "mypaginator": {
-        "git": "https://github.com/johntday/meteor-mypaginator.git",
-        "branch": "master",
-        "commit": "7626f423cc37b0aea4193b95a0b75be2f01f9fa8"
       },
       "typeahead": {
         "git": "https://github.com/johntday/meteor-typeahead.git",
@@ -73,18 +60,13 @@
       },
       "moment": {
         "git": "https://github.com/acreeger/meteor-moment.git",
-        "tag": "v2.5.1",
-        "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
+        "tag": "v2.6.0",
+        "commit": "26156df681750fd6e6ed77043eef32b6653ebbdf"
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v3.1.1-1",
         "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
-      },
-      "myhandsontable": {
-        "git": "https://github.com/johntday/meteor-myhandsontable.git",
-        "branch": "master",
-        "commit": "5dc890e52881e555b9ecfccb86b66d65ba85c26d"
       },
       "mybootbox": {
         "git": "https://github.com/johntday/meteor-mybootbox.git",
@@ -108,8 +90,8 @@
       },
       "fast-render": {
         "git": "https://github.com/arunoda/meteor-fast-render.git",
-        "tag": "v0.1.19",
-        "commit": "9e9a34e51885474c0dd9ed7a64dbff7ee9d4315c"
+        "tag": "v0.2.4",
+        "commit": "160a64bd61792f53a7c8848c5e979a953be13564"
       },
       "server-deps": {
         "git": "https://github.com/Diggsey/meteor-server-deps.git",

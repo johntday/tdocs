@@ -4,18 +4,12 @@
     "accounts-ui-bootstrap-3": {},
     "accounts-admin-ui-bootstrap-3": {},
     "spin": {},
-    "mypaginator": {
-      "git": "https://github.com/johntday/meteor-mypaginator.git"
-    },
     "typeahead": {
       "git": "https://github.com/johntday/meteor-typeahead.git"
     },
     "iron-router": "0.5.4",
     "moment": {},
     "bootstrap-3": {},
-    "myhandsontable": {
-      "git": "https://github.com/johntday/meteor-myhandsontable.git"
-    },
     "mybootbox": {
       "git": "https://github.com/johntday/meteor-mybootbox.git"
     },

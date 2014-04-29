@@ -19,12 +19,10 @@
 						{{#if pickedProject}}
 							{{> tmplSidebar}}
 						{{else}}
-							<h1>Pick / Create a Project</h1>
-							<!--<h2>Known problem</h2>
-							<p>The first time you select a project, you will need to select it twice before the left panel is populated</p>-->
+							{{> pickProject}}
 						{{/if}}
 					{{else}}
-						<h1>Login / Signup</h1>
+						{{> loginSignup}}
 					{{/if}}
 				</ul>
 			</div>
@@ -36,4 +34,14 @@
 		</div>
 	</div>
 
+</template>
+
+<template name="pickProject">
+	<h1>Pick / Create a Project</h1>
+	<!--<h2>Known problem</h2>
+	<p>The first time you select a project, you will need to select it twice before the left panel is populated</p>-->
+</template>
+
+<template name="loginSignup">
+	<h1>Login / Signup</h1>
 </template>

@@ -38,10 +38,12 @@
 					<button type="button" class="btn btn-default btn-sm fc-filter" data-fc-filter-field="favs" data-fc-filter-value="{{userId}}"><span
 							class="glyphicon glyphicon-heart">Favorites</span></button>
 				</div>
+				<!--
 				<div class="btn-group">
 					<button type="button" class="btn btn-primary btn-sm fc-filter" data-fc-filter-field="type" data-fc-filter-value="g">Diagram</button>
 					<button type="button" class="btn btn-primary btn-sm fc-filter" data-fc-filter-field="type" data-fc-filter-value="s">Sequence</button>
 				</div>
+				-->
 			</div>
 			<!-- /custom filter links -->
 
@@ -92,8 +94,8 @@
 				<tr>
 					<td><a href="/graph/{{_id}}">{{title}}</a></td>
 					<td>{{description}}</td>
-					<td>{{updatedAgo}}</td>
 					<td>{{createdAgo}}</td>
+					<td>{{updatedAgo}}</td>
 					<td>{{owner}}</td>
 				</tr>
 				{{/each}}
