@@ -6,10 +6,6 @@
       "accounts-ui-bootstrap-3": {},
       "accounts-admin-ui-bootstrap-3": {},
       "spin": {},
-      "mypaginator": {
-        "git": "https://github.com/johntday/meteor-mypaginator.git",
-        "branch": "master"
-      },
       "typeahead": {
         "git": "https://github.com/johntday/meteor-typeahead.git",
         "branch": "master"
@@ -19,10 +15,6 @@
       },
       "moment": {},
       "bootstrap-3": {},
-      "myhandsontable": {
-        "git": "https://github.com/johntday/meteor-myhandsontable.git",
-        "branch": "master"
-      },
       "mybootbox": {
         "git": "https://github.com/johntday/meteor-mybootbox.git",
         "branch": "master"
@@ -56,11 +48,6 @@
         "tag": "v0.2.2",
         "commit": "3f655f0016228e4195acc784c45d3e3a247dc39f"
       },
-      "mypaginator": {
-        "git": "https://github.com/johntday/meteor-mypaginator.git",
-        "branch": "master",
-        "commit": "7626f423cc37b0aea4193b95a0b75be2f01f9fa8"
-      },
       "typeahead": {
         "git": "https://github.com/johntday/meteor-typeahead.git",
         "branch": "master",
@@ -81,11 +68,6 @@
         "tag": "v3.1.1-1",
         "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
       },
-      "myhandsontable": {
-        "git": "https://github.com/johntday/meteor-myhandsontable.git",
-        "branch": "master",
-        "commit": "5dc890e52881e555b9ecfccb86b66d65ba85c26d"
-      },
       "mybootbox": {
         "git": "https://github.com/johntday/meteor-mybootbox.git",
         "branch": "master",
@@ -94,7 +76,7 @@
       "myjointjs": {
         "git": "https://github.com/johntday/meteor-myjointjs.git",
         "branch": "master",
-        "commit": "f5b73f28ede77ff1256a385b46dc6cfa263c839a"
+        "commit": "15e357bdec9743458fb1ac04727120db030a5ac4"
       },
       "reactive-publish": {
         "git": "https://github.com/Diggsey/meteor-reactive-publish.git",

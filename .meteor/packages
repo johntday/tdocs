@@ -16,8 +16,6 @@ typeahead
 iron-router
 underscore
 moment
-mypaginator
-myhandsontable
 mybootbox
 myjointjs
 reactive-publish
