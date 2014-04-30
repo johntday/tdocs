@@ -1,9 +1,9 @@
 /**
  * class="active".
  */
-Handlebars.registerHelper('is_active', function(value1, value2) {
+UI.registerHelper('is_active', function(value1, value2) {
 	if (value1 === value2)
-		return new Handlebars.SafeString( " class='active' " );
+		return new Spacebars.SafeString( " class='active' " );
 	else
 		return;
 });
@@ -11,12 +11,12 @@ Handlebars.registerHelper('is_active', function(value1, value2) {
 /**
  * Bootstrap v3 glyphicon.
  */
-Handlebars.registerHelper('glyphicon', function(iconNameTrue, iconNameFalse, htmlElementId, isTrue, tooltip) {
-	return new Handlebars.SafeString( "<span id='" + htmlElementId + "' class='glyphicon glyphicon-" + ((isTrue) ? iconNameTrue : iconNameFalse) + "'" +
+UI.registerHelper('glyphicon', function(iconNameTrue, iconNameFalse, htmlElementId, isTrue, tooltip) {
+	return new Spacebars.SafeString( "<span id='" + htmlElementId + "' class='glyphicon glyphicon-" + ((isTrue) ? iconNameTrue : iconNameFalse) + "'" +
 		((tooltip) ? " title='" + tooltip + "'" : "") +
 		"></span>" );
 });
-Handlebars.registerHelper('trust_icon', function(trust) {
+UI.registerHelper('trust_icon', function(trust) {
 	var icon = "fire";
 	var title = "Fact not checked yet";
 	if (TRUST_MED === trust) {
@@ -26,10 +26,10 @@ Handlebars.registerHelper('trust_icon', function(trust) {
 		icon = "star";
 		title = "Trusted fact";
 	}
-	return new Handlebars.SafeString( "<span class='glyphicon glyphicon-" + icon + "' title='" + title + "'></span>" );
+	return new Spacebars.SafeString( "<span class='glyphicon glyphicon-" + icon + "' title='" + title + "'></span>" );
 });
 
-Handlebars.registerHelper('tabss', function(tabList, activeTab, activeTabDefault) {
+UI.registerHelper('tabss', function(tabList, activeTab, activeTabDefault) {
 	if (! tabList)
 		return;
 	if (! activeTab)
@@ -44,17 +44,17 @@ Handlebars.registerHelper('tabss', function(tabList, activeTab, activeTabDefault
 		}
 	}
 	html += "</ul>";
-	return new Handlebars.SafeString(html);
+	return new Spacebars.SafeString(html);
 });
 /**
  * Template to generate INPUT form elements.
  */
-Handlebars.registerHelper('form_input', function(label, name, value, canEdit, showEmpty, _id, isAdd) {
+UI.registerHelper('form_input', function(label, name, value, canEdit, showEmpty, _id, isAdd) {
 	value = value || '';
 	// CHECK FOR Integer UNKNOWN value
 	if (typeof value === 'number' && value == -1)
 		value = "";
-	return new Handlebars.SafeString(
+	return new Spacebars.SafeString(
 		"<div class='form-group row'>" +
 			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 			"<div class='col-sm-8'>"+
@@ -66,10 +66,10 @@ Handlebars.registerHelper('form_input', function(label, name, value, canEdit, sh
 /**
  * Template to generate INPUT DATE form elements.
  */
-Handlebars.registerHelper('form_date', function(label, name, value, canEdit, showEmpty, _id) {
+UI.registerHelper('form_date', function(label, name, value, canEdit, showEmpty, _id) {
 	value = value || '';
 	if (canEdit) {
-		return new Handlebars.SafeString(
+		return new Spacebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8' id='div-" + name + "'>"+
@@ -81,7 +81,7 @@ Handlebars.registerHelper('form_date', function(label, name, value, canEdit, sho
 			"</div>"
 		);
 	} else if (value || showEmpty === true) {
-		return new Handlebars.SafeString(
+		return new Spacebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8'>"+
@@ -94,10 +94,10 @@ Handlebars.registerHelper('form_date', function(label, name, value, canEdit, sho
 /**
  * Template to generate CHECKBOX form elements.
  */
-Handlebars.registerHelper('form_checkbox', function(label, name, value, canEdit, showEmpty) {
+UI.registerHelper('form_checkbox', function(label, name, value, canEdit, showEmpty) {
 	value = value || '';
 	if (canEdit) {
-		return new Handlebars.SafeString(
+		return new Spacebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8'>"+
@@ -106,7 +106,7 @@ Handlebars.registerHelper('form_checkbox', function(label, name, value, canEdit,
 				"</div>"
 		);
 	} else if (showEmpty === true) {
-		return new Handlebars.SafeString(
+		return new Spacebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8'>"+
@@ -119,13 +119,13 @@ Handlebars.registerHelper('form_checkbox', function(label, name, value, canEdit,
 /**
  * Template to generate TEXTAREA form elements
  */
-Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit, showEmpty, _id, isAdd) {
+UI.registerHelper('form_textarea', function(label, name, value, canEdit, showEmpty, _id, isAdd) {
 	value = value || '';
 	var showField = (value || canEdit || (showEmpty === true));
 	if (! showField)
 		return;
 
-	return new Handlebars.SafeString(
+	return new Spacebars.SafeString(
 		"<div class='form-group row'>" +
 			"<label for='" + name + "' class='col-sm-3 control-label'>" + label + "</label>"+
 			"<div class='col-sm-8'>"+
@@ -139,13 +139,13 @@ Handlebars.registerHelper('form_textarea', function(label, name, value, canEdit,
 /**
  * Template to generate STATIC TEXT form elements
  */
-Handlebars.registerHelper('form_static', function(label, name, value, showEmpty) {
+UI.registerHelper('form_static', function(label, name, value, showEmpty) {
 	value = value || '';
 	var showField = (value || isAdmin() || (showEmpty === true));
 	if (! showField)
 		return;
 
-	return new Handlebars.SafeString(
+	return new Spacebars.SafeString(
 		"<div class='form-group row'>" +
 			"<label class='col-sm-3 control-label'>" + label + "</label>"+
 			"<div class='col-sm-8'>"+
@@ -158,14 +158,14 @@ Handlebars.registerHelper('form_static', function(label, name, value, showEmpty)
  * Template to generate SELECT form elements
  * options: [{id: 'a', label: 'b'}, ...]
  */
-Handlebars.registerHelper('form_select', function(label, name, value, options, defaultValue, canEdit, showEmpty) {
+UI.registerHelper('form_select', function(label, name, value, options, defaultValue, canEdit, showEmpty) {
 	value = value || '';
 	if (canEdit && options && options.length !=0) {
 		var s = "";
 		for (var i=0; i < options.length; i++) {
 			s += "<option value='"+ options[i].id +"'" + ((options[i].id == value) ? " selected" : "") + ">" + options[i].label + "</option>";
 		}
-		return new Handlebars.SafeString(
+		return new Spacebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8'>"+
@@ -181,7 +181,7 @@ Handlebars.registerHelper('form_select', function(label, name, value, options, d
 			if (options[i].id == value)
 				value_label = options[i].label;
 		}
-		return new Handlebars.SafeString(
+		return new Spacebars.SafeString(
 			"<div class='form-group row'>" +
 				"<label class='col-sm-3 control-label'>" + label + "</label>"+
 				"<div class='col-sm-8'>"+
@@ -195,7 +195,7 @@ Handlebars.registerHelper('form_select', function(label, name, value, options, d
 /**
  * Template to generate bootstrap-v3 alert class. Defaults to "danger".
  */
-Handlebars.registerHelper('alert_class', function(messageType) {
+UI.registerHelper('alert_class', function(messageType) {
 	var alertClass = "alert alert-dismissable alert-";
 	if (messageType === "i") {
 		alertClass += "info";
@@ -206,23 +206,23 @@ Handlebars.registerHelper('alert_class', function(messageType) {
 	} else {
 		alertClass += "danger";
 	}
-	return new Handlebars.SafeString(alertClass);
+	return new Spacebars.SafeString(alertClass);
 });
 
-Handlebars.registerHelper('form_options', function(value, options, htmlElementId) {
+UI.registerHelper('form_options', function(value, options, htmlElementId) {
 	value = value || '';
 	var s = "<select class='form-control' id='" + htmlElementId + "'>";
 	for (var i=0; i < options.length; i++) {
 		s += "<option value='"+ options[i].id +"'" + ((options[i].id === value) ? " selected" : "") + ">" + options[i].label + "</option>";
 	}
 	s += "</select>";
-	return new Handlebars.SafeString(s);
+	return new Spacebars.SafeString(s);
 });
 
 /**
  * LEGACY - remove me later TODO
  */
-Handlebars.registerHelper('pluralize', function(n, thing) {
+UI.registerHelper('pluralize', function(n, thing) {
   // fairly stupid pluralizer
   if (n === 1) {
     return '1 ' + thing;

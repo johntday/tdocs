@@ -90,7 +90,7 @@ refreshBusCap = function(class_name, children_name) {
 			if(error){
 				growl(error.reason);
 			}else{
-				if (Location.state().path === '/nouns/'+data.node.id)
+				if (Router.current().path === '/nouns/'+data.node.id)
 					Router.go('/nouns/'+data.parent);
 				growl( "Deleted "+class_name, {type:'s', hideSnark:true} );
 			}
