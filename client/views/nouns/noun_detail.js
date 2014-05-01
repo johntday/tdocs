@@ -195,7 +195,7 @@ Template.tmpl_noun_detail.rendered = function() {
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.destroyed = function() {
-	incClickCnt(Nouns, this.data._id);
+	incClickCnt(Nouns, getSelectedTreeItem()._id);
 };
 /*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
 var createRelationship = function(target_id, rel_name) {

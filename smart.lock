@@ -24,7 +24,10 @@
         "branch": "master"
       },
       "reactive-publish": {},
-      "filter-collections": {},
+      "turnkey-filter": {
+        "git": "https://github.com/johntday/meteor-turnkey-filter.git",
+        "branch": "master"
+      },
       "fast-render": {}
     },
     "packages": {
@@ -83,10 +86,10 @@
         "tag": "v0.1.6",
         "commit": "dd8c149f109a1f3d1cac7e36293cf5904538ca90"
       },
-      "filter-collections": {
-        "git": "https://github.com/julianmontagna/filter-collections.git",
-        "tag": "v0.1.4",
-        "commit": "87bc9cee7a23459e427d4613383be3f67f29245c"
+      "turnkey-filter": {
+        "git": "https://github.com/johntday/meteor-turnkey-filter.git",
+        "branch": "master",
+        "commit": "ac6b70f97d56def57ca08c6f4abc10c1557f92b1"
       },
       "fast-render": {
         "git": "https://github.com/arunoda/meteor-fast-render.git",
