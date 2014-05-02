@@ -52,6 +52,7 @@ Template.tmpl_noun_detail.helpers({
 		return Session.get('add_rel');
 	}
 });
+
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_noun_detail.events({
 	'keyup #title, keyup #description': function(e) {
