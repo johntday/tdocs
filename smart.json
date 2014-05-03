@@ -13,9 +13,6 @@
     "mybootbox": {
       "git": "https://github.com/johntday/meteor-mybootbox.git"
     },
-    "myjointjs": {
-      "git": "https://github.com/johntday/meteor-myjointjs.git"
-    },
     "reactive-publish": {},
     "turnkey-filter": {
 	    "git": "https://github.com/johntday/meteor-turnkey-filter.git"

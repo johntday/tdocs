@@ -19,10 +19,6 @@
         "git": "https://github.com/johntday/meteor-mybootbox.git",
         "branch": "master"
       },
-      "myjointjs": {
-        "git": "https://github.com/johntday/meteor-myjointjs.git",
-        "branch": "master"
-      },
       "reactive-publish": {},
       "turnkey-filter": {
         "git": "https://github.com/johntday/meteor-turnkey-filter.git",
@@ -76,11 +72,6 @@
         "branch": "master",
         "commit": "050eb330e015326971c95766d15b1b45344c7f9c"
       },
-      "myjointjs": {
-        "git": "https://github.com/johntday/meteor-myjointjs.git",
-        "branch": "master",
-        "commit": "15e357bdec9743458fb1ac04727120db030a5ac4"
-      },
       "reactive-publish": {
         "git": "https://github.com/Diggsey/meteor-reactive-publish.git",
         "tag": "v0.1.6",
@@ -89,7 +80,7 @@
       "turnkey-filter": {
         "git": "https://github.com/johntday/meteor-turnkey-filter.git",
         "branch": "master",
-        "commit": "ac6b70f97d56def57ca08c6f4abc10c1557f92b1"
+        "commit": "d293f7b651a88012f7d208e8fa854036af21bcc2"
       },
       "fast-render": {
         "git": "https://github.com/arunoda/meteor-fast-render.git",

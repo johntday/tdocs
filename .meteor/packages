@@ -17,7 +17,6 @@ iron-router
 underscore
 moment
 mybootbox
-myjointjs
 reactive-publish
 turnkey-filter
 fast-render
