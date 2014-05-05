@@ -137,7 +137,7 @@ var treeConfig = function(class_name) {
 			"animation" : 0
 			,"multiple": false
 			,"check_callback" : true
-			,"themes" : { "stripes" : true }
+			//,"themes" : { "stripes" : true }
 			,'data' : null
 		},
 		"types" : {
