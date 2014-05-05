@@ -629,7 +629,7 @@
 								 * @event
 								 * @name ready.jstree
 								 */
-								Meteor.setTimeout($.proxy(function () { this.trigger("ready"); }, this), 0);
+								setTimeout($.proxy(function () { this.trigger("ready"); }, this), 0);
 							}
 						}
 					}, this))
@@ -1606,9 +1606,9 @@
 				this._model.force_full_redraw = true;
 			}
 			//if(this._model.redraw_timeout) {
-			//	Meteor.clearTimeout(this._model.redraw_timeout);
+			//	clearTimeout(this._model.redraw_timeout);
 			//}
-			//this._model.redraw_timeout = Meteor.setTimeout($.proxy(this._redraw, this),0);
+			//this._model.redraw_timeout = setTimeout($.proxy(this._redraw, this),0);
 			this._redraw();
 		},
 		/**
@@ -1772,7 +1772,7 @@
 			}
 			if(obj.state.opened && !obj.state.loaded) {
 				obj.state.opened = false;
-				Meteor.setTimeout($.proxy(function () {
+				setTimeout($.proxy(function () {
 					this.open_node(obj.id, false, 0);
 				}, this), 0);
 			}
@@ -1808,7 +1808,7 @@
 			}
 			if(!this.is_loaded(obj)) {
 				if(this.is_loading(obj)) {
-					return Meteor.setTimeout($.proxy(function () {
+					return setTimeout($.proxy(function () {
 						this.open_node(obj, callback, animation);
 					}, this), 500);
 				}
@@ -2202,7 +2202,7 @@
 			 * @param {Object} node
 			 */
 			this.trigger('hover_node', { 'node' : this.get_node(obj) });
-			Meteor.setTimeout(function () { t.attr('aria-activedescendant', obj[0].id); obj.attr('aria-selected', true); }, 0);
+			setTimeout(function () { t.attr('aria-activedescendant', obj[0].id); obj.attr('aria-selected', true); }, 0);
 		},
 		/**
 		 * removes the hover state from a nodecalled when a node is no longer hovered by the user. Used internally.
@@ -3778,8 +3778,8 @@
 			if(this.settings.checkbox.three_state) {
 				this.element
 					.on('changed.jstree move_node.jstree copy_node.jstree redraw.jstree open_node.jstree', $.proxy(function () {
-							if(this._data.checkbox.uto) { Meteor.clearTimeout(this._data.checkbox.uto); }
-							this._data.checkbox.uto = Meteor.setTimeout($.proxy(this._undetermined, this), 50);
+							if(this._data.checkbox.uto) { clearTimeout(this._data.checkbox.uto); }
+							this._data.checkbox.uto = setTimeout($.proxy(this._undetermined, this), 50);
 						}, this))
 					.on('model.jstree', $.proxy(function (e, data) {
 							var m = this._model.data,
@@ -4057,8 +4057,8 @@
 				tmp.insertBefore(_i.cloneNode(false), tmp.childNodes[0]);
 			}
 			if(!is_callback && this.settings.checkbox.three_state) {
-				if(this._data.checkbox.uto) { Meteor.clearTimeout(this._data.checkbox.uto); }
-				this._data.checkbox.uto = Meteor.setTimeout($.proxy(this._undetermined, this), 50);
+				if(this._data.checkbox.uto) { clearTimeout(this._data.checkbox.uto); }
+				this._data.checkbox.uto = setTimeout($.proxy(this._undetermined, this), 50);
 			}
 			return obj;
 		};
@@ -4144,7 +4144,7 @@
 						var inst = $.jstree.reference(data.reference),
 							obj = inst.get_node(data.reference);
 						inst.create_node(obj, {}, "last", function (new_node) {
-							Meteor.setTimeout(function () { inst.edit(new_node); },0);
+							setTimeout(function () { inst.edit(new_node); },0);
 						});
 					}
 				},
@@ -4573,7 +4573,7 @@
 						return;
 					}
 
-					if(to) { Meteor.clearTimeout(to); }
+					if(to) { clearTimeout(to); }
 					vakata_context.element.find(".vakata-context-hover").removeClass("vakata-context-hover").end();
 
 					$(this)
@@ -4589,7 +4589,7 @@
 				.on("mouseleave", function (e) {
 					$(this).find(".vakata-context-hover").removeClass("vakata-context-hover");
 					if($.vakata.context.settings.hide_onmouseleave) {
-						to = Meteor.setTimeout(
+						to = setTimeout(
 							(function (t) {
 								return function () { $.vakata.context.hide(); };
 							}(this)), $.vakata.context.settings.hide_onmouseleave);
@@ -4753,7 +4753,7 @@
 				lastmv = false;
 			})
 			.bind('dnd_move.vakata', function (e, data) {
-				if(opento) { Meteor.clearTimeout(opento); }
+				if(opento) { clearTimeout(opento); }
 				if(!data.data.jstree) { return; }
 
 				// if we are hovering the marker image do nothing (can happen on "inside" drags)
@@ -4848,7 +4848,7 @@
 								}
 								if(ok) {
 									if(v === 'i' && ref.parent().is('.jstree-closed') && ins.settings.dnd.open_timeout) {
-										opento = Meteor.setTimeout((function (x, z) { return function () { x.open_node(z); }; }(ins, ref)), ins.settings.dnd.open_timeout);
+										opento = setTimeout((function (x, z) { return function () { x.open_node(z); }; }(ins, ref)), ins.settings.dnd.open_timeout);
 									}
 									lastmv = { 'ins' : ins, 'par' : p, 'pos' : i };
 									marker.css({ 'left' : l + 'px', 'top' : t + 'px' }).show();
@@ -4873,7 +4873,7 @@
 				data.helper.find('.jstree-icon:eq(0)').removeClass('jstree-ok').addClass('jstree-er');
 			})
 			.bind('dnd_stop.vakata', function (e, data) {
-				if(opento) { Meteor.clearTimeout(opento); }
+				if(opento) { clearTimeout(opento); }
 				if(!data.data.jstree) { return; }
 				marker.hide();
 				var i, j, nodes = [];
@@ -4943,7 +4943,7 @@
 			},
 			_clean : function () {
 				if(vakata_dnd.helper) { vakata_dnd.helper.remove(); }
-				if(vakata_dnd.scroll_i) { Meteor.clearInterval(vakata_dnd.scroll_i); vakata_dnd.scroll_i = false; }
+				if(vakata_dnd.scroll_i) { clearInterval(vakata_dnd.scroll_i); vakata_dnd.scroll_i = false; }
 				vakata_dnd = {
 					element	: false,
 					is_down	: false,
@@ -4963,11 +4963,11 @@
 			},
 			_scroll : function (init_only) {
 				if(!vakata_dnd.scroll_e || (!vakata_dnd.scroll_l && !vakata_dnd.scroll_t)) {
-					if(vakata_dnd.scroll_i) { Meteor.clearInterval(vakata_dnd.scroll_i); vakata_dnd.scroll_i = false; }
+					if(vakata_dnd.scroll_i) { clearInterval(vakata_dnd.scroll_i); vakata_dnd.scroll_i = false; }
 					return false;
 				}
 				if(!vakata_dnd.scroll_i) {
-					vakata_dnd.scroll_i = Meteor.setInterval($.vakata.dnd._scroll, 100);
+					vakata_dnd.scroll_i = setInterval($.vakata.dnd._scroll, 100);
 					return false;
 				}
 				if(init_only === true) { return false; }
@@ -5610,8 +5610,8 @@
 			parent.bind.call(this);
 			var bind = $.proxy(function () {
 				this.element.on(this.settings.state.events, $.proxy(function () {
-					if(to) { Meteor.clearTimeout(to); }
-					to = Meteor.setTimeout($.proxy(function () { this.save_state(); }, this), 100);
+					if(to) { clearTimeout(to); }
+					to = setTimeout($.proxy(function () { this.save_state(); }, this), 100);
 				}, this));
 			}, this);
 			this.element
