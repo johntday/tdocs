@@ -37,6 +37,9 @@ Template.tmpl_sidebar_buttons.helpers({
 		if ( Router.current().path.startsWith('/graph/') )
 			return 'Add selected item to your diagram';
 		return 'Goto selected item';
+	},
+	showingDiagram: function() {
+		return Router.current().path.startsWith('/graph/');
 	}
 	//	chevronLeft: function() {
 //		return (Session.get('sidebar_nbr') > 2);

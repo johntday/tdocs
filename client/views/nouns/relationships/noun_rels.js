@@ -1,3 +1,4 @@
+// UI:Relationships
 NounsRelsFilter = new Meteor.FilterCollections(Relationships, {
 	name: 'nouns-rels',
 	template: 'noun_rels',

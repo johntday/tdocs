@@ -15,7 +15,7 @@ Meteor.reactivePublish(null, function() {
 			var project_id = user.project._id;
 			if (project_id) {
 //				returnArray.push( Glossarys.find( {project_id: project_id} ) );
-//				returnArray.push( Diagrams.find( {project_id: project_id} ) );
+				returnArray.push( Diagrams.find( {project_id: project_id} ) );
 //				returnArray.push( Tdocs.find( {project_id: project_id} ) );
 //				returnArray.push( Tables.find( {project_id: project_id} ) );
 

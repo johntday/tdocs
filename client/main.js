@@ -21,6 +21,7 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
+selectedTreeItemDep = new Deps.Dependency;
 accordian = {open: 'busLayer', ids: ['comLayer', 'busLayer', 'appLayer', 'techLayer', 'modvLayer', 'implLayer']};
 sidebar = {};
 var class_names = _.keys(ea.classBelongsToArea);
@@ -29,6 +30,7 @@ class_names.forEach(function(class_name){
 });
 var selected_tree_noun = {_id: null, title: null, area_code: null, class_name: null, type: null, parent_id: null};
 getSelectedTreeItem = function(full) {
+	selectedTreeItemDep.depend();
 	var selected = selected_tree_noun;
 	if (full) {
 		var handle =  sidebar[selected.class_name];
@@ -41,6 +43,7 @@ getSelectedTreeItem = function(full) {
 	return selected;
 };
 setSelectedTreeItem = function(item) {
+	Session.setDefault('noun_id', item._id);
 	var list = _.pairs(sidebar);
 	_.each(list, function(obj){
 		(obj[0] === item.class_name) ? obj[1].select_node(item._id) : obj[1].deselect_all(true);
@@ -48,6 +51,7 @@ setSelectedTreeItem = function(item) {
 	selected_tree_noun = item;
 
 	openAccordianOfSelected(item);
+	selectedTreeItemDep.changed();
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 /**

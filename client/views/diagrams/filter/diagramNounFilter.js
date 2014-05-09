@@ -1,3 +1,4 @@
+// UI:Diagrams
 DiagramsFilter = new Meteor.FilterCollections(Diagrams, {
 	name: 'diagrams-nouns',
 	template: 'diagramNounFilter',

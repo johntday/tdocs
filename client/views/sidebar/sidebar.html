@@ -14,7 +14,9 @@
 		<button id="btn-open-all" type="button" class="btn btn-default btn-sm" title="Open All (Select an item first)"><span
 				class="glyphicon glyphicon-folder-open"></span></button>
 		<button id="btn-close-all" type="button" class="btn btn-default btn-sm" title="Close All (Select an item first)"><span class="glyphicon glyphicon-folder-close"></span> </button>
+		{{#if showingDiagram}}
 		<button id="btn-sidebar-goto" type="button" class="btn btn-default btn-sm" title="{{gotoBtnTitle}}"><span class="glyphicon glyphicon-arrow-right"></span> </button>
+		{{/if}}
 	</div>
 </template>
 
