@@ -343,13 +343,17 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	validator.on('invalid',function(message) { growl(message); });
 
 	validator.on('valid', function() {
+
 		if (relationshipDialogOpen){ return; }
 		relationshipDialogOpen = true;
+
 		bootbox.dialog({
 			title: "Pick a relationship type"
 			,message:
-				Template.graphDgm_pick_rel({source_class_name:source_class_name, target_class_name:target_class_name,
-					source_title:source_title, target_title:target_title})
+				UI.renderWithData(
+					Template.graphDgm_pick_rel,
+					{source_class_name:source_class_name, target_class_name:target_class_name, source_title:source_title, target_title:target_title}
+				)
 			,buttons: {
 				success: {
 					label: "Select",
@@ -361,7 +365,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 						commandManager.cancel();
 
 						// ADD RELATIONSHIP
-						var $selected = $( "input:checked");
+						var $selected = $( "input:checked" );
 						var rel_name = $selected.val();
 						var semantic = $selected.data("semantic");
 
