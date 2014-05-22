@@ -1,15 +1,3 @@
-/*! JointJS v0.8.1 - JavaScript diagramming library  2014-03-14 
-
-
-This Source Code Form is subject to the terms of the Mozilla Public
-License, v. 2.0. If a copy of the MPL was not distributed with this
-file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-
 /*
 A complete list of SVG properties that can be set through CSS is here:
 http://www.w3.org/TR/SVG/styling.html
@@ -197,7 +185,7 @@ text.highlighted {
 }
 
 .highlighted {
-    outline: 2px solid #FF0000; /* `outline` doesn't work in Firefox, Opera and IE9+ correctly. */
+    outline: 2px solid #FF0000; /* `outline` doesn't work in Firefox, Opera and IE9+. The only engine supporting outlines on SVG elements is Webkit.  */
     opacity: 0.7 \9; /* It targets only IE9. */
 }
 
@@ -206,7 +194,12 @@ use '@-moz-document url-prefix()' to target all versions if Firefox and nothing 
 See `https://developer.mozilla.org/en-US/docs/Web/CSS/@document`.
 */
 @-moz-document url-prefix() {
+
     .highlighted { opacity: 0.7; } /* only for FF */
+
+    /* Foreign object are placed over the SVG elements in FF. So we wouldn't be able to catch
+       events on the element which meant to be rendered over that foreign object. */
+    .element .fobj, .element .fobj body, .element .fobj div { pointer-events: none; }
 }
 
 /*
@@ -215,6 +208,11 @@ See `http://www.opera.com/docs/specs/presto2.12/css/o-vendor/`.
 */
 doesnotexist:-o-prefocus, .highlighted {
     opacity: 0.7;
+}
+
+/* IE 10+ */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .highlighted { opacity: 0.7; }
 }
 
 /*
@@ -226,12 +224,12 @@ Do not allow adding new vertices: .connection-wrap { pointer-events: none; }
 
 */
 
-/* foreignObject in joint.shapes.basic.TextBlock */
-.TextBlock .fobj body {
+/* foreignObject inside the elements (i.e joint.shapes.basic.TextBlock) */
+.element .fobj body {
     background-color: transparent;
     margin: 0px;
 }
-.TextBlock .fobj div {
+.element .fobj div {
     text-align: center;
     vertical-align: middle;
     display: table-cell;

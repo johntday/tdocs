@@ -257,6 +257,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 				'.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' }
 			}
 		});
+		halo.removeHandle('clone').removeHandle('fork').removeHandle('unlink');
+//		halo.changeHandle('remove', { position: 'se' });
 
 		halo.render();
 		//createInspector(cellView);
@@ -307,6 +309,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	validator.validate('change:target',
 		function (err, command, next) {
+			console.log( 'validator.validate change:target' );
 			var graph = Template['tmpl_graphDgm_detail'].graph;
 
 			if (command.action === 'add' && command.batch) return next();
@@ -343,10 +346,11 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	validator.on('invalid',function(message) { growl(message); });
 
 	validator.on('valid', function() {
+		console.log( 'validator valid relationshipDialogOpen='+relationshipDialogOpen );
+		console.log( {source_class_name:source_class_name, target_class_name:target_class_name, source_title:source_title, target_title:target_title} );
 
 		if (relationshipDialogOpen){ return; }
 		relationshipDialogOpen = true;
-
 		bootbox.dialog({
 			title: "Pick a relationship type"
 			,message:
