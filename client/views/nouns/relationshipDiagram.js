@@ -13,13 +13,19 @@ Template.relationshipDiagram.events({
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.relationshipDiagram.rendered = function() {
-//	if (graph)
-//		$('#noun_paper').empty();
-	drawNounDiagram();
+	Deps.autorun(function () {
+		drawNounDiagram();
+	});
+};
+Template.relationshipDiagram.destroyed = function() {
+		if (graph)
+			$('#noun_paper').empty();
 };
 /*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
 var drawNounDiagram = function() {
-	graph = new joint.dia.Graph;
+	if (graph)
+		$('#noun_paper').empty();
+ 	graph = new joint.dia.Graph;
 
 	var width = $("#noun_panel_diagram").width() - 40;
 	var height = 400;
