@@ -43,7 +43,6 @@ getSelectedTreeItem = function(full) {
 	return selected;
 };
 setSelectedTreeItem = function(item) {
-	Session.setDefault('noun_id', item._id);
 	var list = _.pairs(sidebar);
 	_.each(list, function(obj){
 		(obj[0] === item.class_name) ? obj[1].select_node(item._id) : obj[1].deselect_all(true);

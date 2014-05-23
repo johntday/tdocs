@@ -12291,7 +12291,8 @@ joint.dia.LinkView = joint.dia.CellView.extend({
             var view = this.paper.findViewByModel(end.id);
             var magnetElement = this.paper.viewport.querySelector(selector);
 
-            this.sourceBBox = view.getStrokeBBox(magnetElement);
+	        if (view)
+                this.sourceBBox = view.getStrokeBBox(magnetElement);
 
         } else {
             // the link end is a point ~ rect 1x1
@@ -12315,7 +12316,8 @@ joint.dia.LinkView = joint.dia.CellView.extend({
             var view = this.paper.findViewByModel(end.id);
             var magnetElement = this.paper.viewport.querySelector(selector);
 
-            this.targetBBox = view.getStrokeBBox(magnetElement);
+	        if (view)
+                this.targetBBox = view.getStrokeBBox(magnetElement);
 
         } else {
             // the link end is a point ~ rect 1x1
