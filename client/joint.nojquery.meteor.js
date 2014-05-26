@@ -8037,6 +8037,8 @@
         } else if (name === 'id') {
             el.id = value;
         } else {
+	        if (_.isNumber(value) && value < 0)
+	            value = 0;
             el.setAttribute(name, value);
         }
     }
