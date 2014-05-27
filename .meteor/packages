@@ -16,7 +16,7 @@ typeahead
 iron-router
 underscore
 moment
-mybootbox
+bootboxjs
 reactive-publish
 turnkey-filter
 reactive-table

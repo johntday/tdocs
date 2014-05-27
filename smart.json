@@ -10,9 +10,7 @@
     "iron-router": "0.7.0",
     "moment": {},
     "bootstrap-3": {},
-    "mybootbox": {
-      "git": "https://github.com/johntday/meteor-mybootbox.git"
-    },
+    "bootboxjs": {},
     "reactive-publish": {},
     "turnkey-filter": {
       "git": "https://github.com/johntday/meteor-turnkey-filter.git"

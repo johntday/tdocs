@@ -346,18 +346,14 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	validator.on('invalid',function(message) { growl(message); });
 
 	validator.on('valid', function() {
-		console.log( 'validator valid relationshipDialogOpen='+relationshipDialogOpen );
-		console.log( {source_class_name:source_class_name, target_class_name:target_class_name, source_title:source_title, target_title:target_title} );
 
 		if (relationshipDialogOpen){ return; }
 		relationshipDialogOpen = true;
+
 		bootbox.dialog({
 			title: "Pick a relationship type"
 			,message:
-				UI.renderWithData(
-					Template.graphDgm_pick_rel,
-					{source_class_name:source_class_name, target_class_name:target_class_name, source_title:source_title, target_title:target_title}
-				)
+				'<div id="crap"></div>'
 			,buttons: {
 				success: {
 					label: "Select",
@@ -389,6 +385,12 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			,onEscape: function() {
 			}
 		});
+
+		var crap = UI.renderWithData(
+			Template.graphDgm_pick_rel,
+			{source_class_name:source_class_name, target_class_name:target_class_name, source_title:source_title, target_title:target_title}
+		);
+		UI.insert( crap, $('#crap').get(0) );
 	});
 
 	// Hook on toolbar buttons.

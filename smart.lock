@@ -15,10 +15,7 @@
       },
       "moment": {},
       "bootstrap-3": {},
-      "mybootbox": {
-        "git": "https://github.com/johntday/meteor-mybootbox.git",
-        "branch": "master"
-      },
+      "bootboxjs": {},
       "reactive-publish": {},
       "turnkey-filter": {
         "git": "https://github.com/johntday/meteor-turnkey-filter.git",
@@ -67,10 +64,10 @@
         "tag": "v3.1.1-1",
         "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
       },
-      "mybootbox": {
-        "git": "https://github.com/johntday/meteor-mybootbox.git",
-        "branch": "master",
-        "commit": "050eb330e015326971c95766d15b1b45344c7f9c"
+      "bootboxjs": {
+        "git": "https://github.com/TimHeckel/meteor-bootboxjs.git",
+        "tag": "v4.2.0",
+        "commit": "2b7d18ad028d9e7b37238ecf2a8a7970735cebd1"
       },
       "reactive-publish": {
         "git": "https://github.com/Diggsey/meteor-reactive-publish.git",
