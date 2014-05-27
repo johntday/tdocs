@@ -1,36 +1,4 @@
 // UI:Diagrams
-DiagramsFilter = new Meteor.FilterCollections(Diagrams, {
-	name: 'diagrams-nouns',
-	template: 'diagramNounFilter',
-	pager: {
-		itemsPerPage: 5,
-		currentPage: 1,
-		showPages: 5
-	},
-	sort:{
-		order: ['asc', 'desc'],
-		defaults: [
-			['title', 'asc']
-		]
-	},
-	filters: {
-		"nouns": {
-			title: 'nouns',
-			condition: '$and',
-			searchable: 'optional'
-		}
-	},
-	callbacks: {
-		beforeSubscribe: function (query) {
-			query.selector.project_id = getProjectId();
-			return query;
-		},
-		beforeResults: function(query){
-			query.selector.project_id = getProjectId();
-			return query;
-		}
-	}
-});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.diagramNounFilter.helpers({
 	userId: function() {
@@ -47,14 +15,32 @@ Template.diagramNounFilter.helpers({
 	},
 	updated: function() {
 		return (this.updated) ? moment(this.updated) : "";
-	}
-});
-/*------------------------------------------------------------------------------------------------------------------------------*/
-Template.diagramNounFilter.events({
-	'click button.btn.btn-primary.btn-sm': function(e) {
-		var diagram_id = $(e.currentTarget).data('diagramId');
-		if (diagram_id)
-			Router.go('/graph/'+diagram_id);
+	},
+	tables: function () {
+		var query = {project_id: getProjectId(), nouns: this._id };
+
+		return Diagrams.find(query);
+	},
+	tableSettings: function () {
+		return {
+			rowsPerPage: 15,
+			showNavigation: 'auto',
+			showFilter: false,
+			fields: [
+				{ key: 'title', label: 'Title', fn: function(value, object){
+					var href = '/graph/' + object._id;
+					return new Spacebars.SafeString('<a href="' + href + '">' + value + '</a>');
+				} },
+				{ key: 'description', label: 'Description' },
+				{ key: 'created', label: 'Created', fn: function(value){
+					return (value) ? moment(value).fromNow() : "Never Created";
+				} },
+				{ key: 'updated', label: 'Updated', fn: function(value){
+					return (value) ? moment(value).fromNow() : "Never Updated";
+				} },
+				{ key: 'owner', label: 'Owner' }
+			]
+		};
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

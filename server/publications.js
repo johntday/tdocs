@@ -49,9 +49,6 @@ Meteor.FilterCollections.publish(Diagrams, {
 Meteor.FilterCollections.publish(Diagrams, {
 	name: 'diagrams-pic'
 });
-Meteor.FilterCollections.publish(Diagrams, {
-	name: 'diagrams-nouns'
-});
 
 /**
  * Tdocs

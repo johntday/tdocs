@@ -1,3 +1,4 @@
+// UI:Relationship Diagram
 Template.relationshipDiagram.helpers({
 });
 

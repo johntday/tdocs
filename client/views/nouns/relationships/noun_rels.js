@@ -12,7 +12,7 @@ Template.noun_rels.helpers({
 	},
 	tables: function () {
 		var selected_id = getSelectedTreeItem()._id;
-		var query = {project_id: getProjectId(), $or: [{source_id:selected_id}, {target_id:selected_id}]}
+		var query = {project_id: getProjectId(), $or: [{source_id:selected_id}, {target_id:selected_id}]};
 
 		return Relationships.find(query);
 	},
