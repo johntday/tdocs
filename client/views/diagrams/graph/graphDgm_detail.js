@@ -265,7 +265,7 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 	});
 
 	// DELETE LINK FROM GRAPH
-//	Template['tmpl_graphDgm_detail'].graph.on('my:remove', function(cell) {
+//	Template['tmpl_graphDgm_detail'].graph.on('remove', function(cell) {
 //		if (cell instanceof joint.dia.Link) {
 //			bootbox.dialog({
 //				title: "Delete Relationship"
@@ -309,7 +309,6 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 
 	validator.validate('change:target',
 		function (err, command, next) {
-			console.log( 'validator.validate change:target' );
 			var graph = Template['tmpl_graphDgm_detail'].graph;
 
 			if (command.action === 'add' && command.batch) return next();
