@@ -67,28 +67,28 @@ Router.map(function () {
 	this.route('noun_filter_list_simple'  ,{path: '/picknoun'});
 	this.route('tmpl_noun_add'            ,{path: '/nounAdd'});
 	this.route('diagramNounFilter'        ,{path: '/diagramNounFilter'});
+	this.route('nounNotFound'             ,{path: '/nounNotFound'});
 
 	this.route('tmpl_noun_detail', {
 		path  : '/nouns/:_id',
 //		waitOn: function () {
 //			return Meteor.subscribe('pubsub_selected_buscap', this.params._id);
 //		},
+		notFoundTemplate: 'nounNotFound',
 		data  : function () {
 			Session.set('form_update', false);
-			DiagramsFilter.filter.clear();
-			DiagramsFilter.filter.set('nouns', {value: this.params._id, condition:'$and'});
 
 			var noun = Nouns.findOne(this.params._id);
 
 			if (noun) {
-				if (noun._id) {
-					var item = sidebar[noun.class_name].get_node(noun._id);
-					var parent_id = (item && item.parent !== '#') ? item.parent : null;
-					var currentTreeSelected = sidebar[noun.class_name].get_selected();
-					if ( currentTreeSelected !== noun._id )
-						sidebar[noun.class_name].deselect_node(currentTreeSelected, true);
-					setSelectedTreeItem({_id: noun._id, title: noun.title, area_code: noun.area_code, class_name: noun.class_name, type: noun.type, parent_id: parent_id});
-				}
+				var item = sidebar[noun.class_name].get_node(noun._id);
+				var parent_id = (item && item.parent !== '#') ? item.parent : null;
+				var currentTreeSelected = sidebar[noun.class_name].get_selected();
+				if ( currentTreeSelected !== noun._id )
+					sidebar[noun.class_name].deselect_node(currentTreeSelected, true);
+				setSelectedTreeItem({_id: noun._id, title: noun.title, area_code: noun.area_code, class_name: noun.class_name, type: noun.type, parent_id: parent_id});
+			} else {
+				Router.go('nounNotFound');
 			}
 			return noun;
 		}

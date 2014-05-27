@@ -258,7 +258,32 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 			}
 		});
 		halo.removeHandle('clone').removeHandle('fork').removeHandle('unlink');
-//		halo.changeHandle('remove', { position: 'se' });
+
+		halo.addHandle({ name: 'goto', position: 'ne', icon: '/img/new_window.png' });
+		halo.on('action:goto:pointerdown', function(evt) {
+			evt.stopPropagation();
+			var _id = cellView.model.attributes.attrs.custom._id;
+
+			if (! Nouns.findOne(_id)){
+				bootbox.dialog({
+					title: "Not Found"
+					,message:
+						'Model element not found.  You probably deleted it, but kept it in the diagram.  I would delete this to keep your model elements and diagrams consistent.'
+					,buttons: {
+						success: {
+							label: "OK",
+							className: "btn-primary",
+							callback: function() {
+							}
+						}
+					}
+					,onEscape: function() {
+					}
+				});
+			} else {
+				Router.go('/nouns/'+_id);
+			}
+		});
 
 		halo.render();
 		//createInspector(cellView);
