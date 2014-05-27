@@ -1,13 +1,8 @@
+<!-- UI:Modeled Relationships -->
 <template name="eaRels">
 	<h2>Modeled Relationships</h2>
 
-	{{> featureComparison}}
-</template>
-
-<template name="featureComparison">
-	<div id="table">
-		{{> reactiveTable
-			collection=tables
-			settings=tableSettings}}
-	</div>
+	{{> reactiveTable
+		collection=tables
+		settings=tableSettings}}
 </template>

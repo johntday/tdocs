@@ -32,7 +32,7 @@ Template.tmplHeader.helpers({
 		return Meteor.user() && !!getProjectId();
 	},
 	brand: function() {
-		return (Meteor.user() && !!getProjectId()) ? getProjectTitle() : "Tdocs";
+		return (Meteor.user() && !!getProjectId()) ? getProjectTitle() : "iDiagram.net";
 	},
 	canEdit: function() {
 		return canEdit( Meteor.user() );

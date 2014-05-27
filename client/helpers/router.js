@@ -208,6 +208,32 @@ Router.map(function () {
 	 */
 	this.route('tmpl_projects'               ,{path: '/projects'});
 	this.route('tmpl_project_add'            ,{path: '/projectAdd'});
+	this.route('projectPermissions', {
+		path  : '/projectPermissions',
+		template: 'tmpl_project_detail',
+		waitOn: function () {
+			return Meteor.subscribe('pubsub_selected_project', getProjectId());
+		},
+		data  : function () {
+			Session.set('form_update', false);
+			var project = Projects.findOne(getProjectId());
+			if (!project) {
+				setProject(null);
+				Router.go('/');
+				//this.stop();
+			}
+
+			if (project && project.title) {
+				Session.set('breadcrumbs', {breadcrumbs: [
+					{title:"home", link:"/", isActive:false},
+					{title:"Projects", link:"/projects", isActive:false},
+					{title:project.title, link:"", isActive:true}
+				]});
+			}
+			return project;
+		}
+	});
+
 	this.route('tmpl_project_detail', {
 		path  : '/projects/:_id',
 		waitOn: function () {

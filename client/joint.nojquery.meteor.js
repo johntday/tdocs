@@ -8919,16 +8919,16 @@
     function rect(x, y, w, h) {
         if (!(this instanceof rect))
             return new rect(x, y, w, h);
-        if (y === undefined) {
+        if (y === undefined && x !== undefined) {
             y = x.y;
             w = x.width;
             h = x.height;
             x = x.x;        
         }
-        this.x = x;
-        this.y = y;
-        this.width = w;
-        this.height = h;
+        this.x = x || 0;
+        this.y = y || 0;
+        this.width = w || 0;
+        this.height = h || 0;
     }
     
     rect.prototype = {

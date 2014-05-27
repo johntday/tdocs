@@ -219,5 +219,6 @@ Template.tmpl_project_detail.rendered = function() {
 };
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.tmpl_project_detail.destroyed = function() {
-	incClickCnt(Projects, this.data._id);
+	if (this.data && this.data._id)
+		incClickCnt(Projects, this.data._id);
 };

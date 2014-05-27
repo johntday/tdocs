@@ -1,5 +1,5 @@
-
-Template.featureComparison.helpers({
+//UI: Modeled Relationships
+Template.eaRels.helpers({
 	tables: function () {
 		return EA_Relationships;
 	},
