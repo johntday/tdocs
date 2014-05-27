@@ -1,6 +1,22 @@
-Template.featureComparison.tables = function () {
-	return EA_Relationships;
-};
+
+Template.featureComparison.helpers({
+	tables: function () {
+		return EA_Relationships;
+	},
+
+	tableSettings: function () {
+		return {
+			rowsPerPage: 15,
+			showNavigation: 'auto',
+			fields: [
+				{ key: 'rel_name', label: 'rel_name' },
+				{ key: 'source', label: 'source' },
+				{ key: 'semantic', label: 'semantic' },
+				{ key: 'target', label: 'target' }
+			]
+		};
+	}
+});
 
 var checkOrX = function (value) {
 	var html;
@@ -23,17 +39,4 @@ var checkOrX = function (value) {
 			html += ' (<a href="' + value.link + '">more</a>)';
 	}
 	return new Spacebars.SafeString(html);
-};
-
-Template.featureComparison.tableSettings = function () {
-	return {
-		rowsPerPage: 5,
-		showNavigation: 'auto',
-		fields: [
-			{ key: 'rel_name', label: 'rel_name' },
-			{ key: 'source', label: 'source' },
-			{ key: 'semantic', label: 'semantic' },
-			{ key: 'target', label: 'target' }
-		]
-	};
 };

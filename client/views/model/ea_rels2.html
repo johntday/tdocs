@@ -1,11 +1,13 @@
 <template name="eaRels">
-	<h2>Modeled Relationships between Elements</h2>
+	<h2>Modeled Relationships</h2>
 
 	{{> featureComparison}}
 </template>
 
 <template name="featureComparison">
 	<div id="table">
-		{{> reactiveTable collection=tables settings=tableSettings}}
+		{{> reactiveTable
+			collection=tables
+			settings=tableSettings}}
 	</div>
 </template>
