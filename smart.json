@@ -15,7 +15,8 @@
     },
     "reactive-publish": {},
     "turnkey-filter": {
-	    "git": "https://github.com/johntday/meteor-turnkey-filter.git"
-    }
+      "git": "https://github.com/johntday/meteor-turnkey-filter.git"
+    },
+    "reactive-table": {}
   }
 }

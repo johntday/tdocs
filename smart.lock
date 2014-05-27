@@ -23,13 +23,14 @@
       "turnkey-filter": {
         "git": "https://github.com/johntday/meteor-turnkey-filter.git",
         "branch": "master"
-      }
+      },
+      "reactive-table": {}
     },
     "packages": {
       "roles": {
         "git": "https://github.com/alanning/meteor-roles.git",
-        "tag": "v1.2.8",
-        "commit": "68844ba216c348d332bdb840825850f497f515bb"
+        "tag": "v1.2.9",
+        "commit": "969b17fac5dfec66b6b12bfce4e37471d1a241d4"
       },
       "accounts-ui-bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-accounts-ui-bootstrap-3.git",
@@ -81,6 +82,11 @@
         "branch": "master",
         "commit": "d293f7b651a88012f7d208e8fa854036af21bcc2"
       },
+      "reactive-table": {
+        "git": "https://github.com/ecohealthalliance/reactive-table.git",
+        "tag": "v0.3.11",
+        "commit": "9ec88b8bcded8ced97cc8736f3d2ecbe3e7b926d"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
         "tag": "v0.2.2",
@@ -90,6 +96,11 @@
         "git": "https://github.com/Diggsey/meteor-server-deps.git",
         "tag": "v0.1.2",
         "commit": "2db5d15fad9240723549cbbc5260a74b6b7e1c61"
+      },
+      "just-i18n": {
+        "git": "https://github.com/subhog/meteor-just-i18n.git",
+        "tag": "v0.2.4",
+        "commit": "91decfcf5b3b5e67f202a67658350b862330bf3d"
       }
     }
   }

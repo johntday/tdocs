@@ -97,7 +97,7 @@ Router.map(function () {
 	/**
 	 * Model
 	 */
-	this.route('ea_rels'     ,{path: '/ea_rels'});
+	this.route('eaRels'     ,{path: '/eaRels'});
 
 	/**
 	 * Relationships
