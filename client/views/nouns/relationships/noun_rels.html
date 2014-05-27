@@ -1,41 +1,8 @@
 <!-- UI:Relationships -->
 <template name="noun_rels">
-	<div class="row">
 
-		<div class="table-responsive">
-			<table class="table table-striped table-hover table-condensed">
-				<tr>
-					{{#if canEdit}}<th></th>{{/if}}
-					<th>
-					</th>
-					<th class="fc-sort" data-fc-sort="source_title">
-						Source
-						{{#if fcSort.source_title.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
-						{{#if fcSort.source_title.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
-					</th>
-					<th class="fc-sort" data-fc-sort="semantic">
-						Relationship
-					</th>
-					<th>
-					</th>
-					<th class="fc-sort" data-fc-sort="target_title">
-						Target
-						{{#if fcSort.target_title.asc}}<span class="glyphicon glyphicon-sort-by-alphabet"></span>{{/if}}
-						{{#if fcSort.target_title.desc}}<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>{{/if}}
-					</th>
-				</tr>
-				{{#each fcResults}}
-				<tr>
-					{{#if canEdit}}<td><button data-relationship-id="{{_id}}" type="button" class="btn btn-danger btn-sm" title="Delete"><span
-							class="glyphicon glyphicon-remove"></span></button></td>{{/if}}
-					<td><span class="{{source_icon}}"></span></td>
-					<td>{{source_title}}</td>
-					<td>{{semantic}}</td>
-					<td><span class="{{target_icon}}"></span></td>
-					<td>{{target_title}}</td>
-				</tr>
-				{{/each}}
-			</table>
-		</div>
-	</div>
+	{{> reactiveTable
+	collection=tables
+	settings=tableSettings}}
+
 </template>

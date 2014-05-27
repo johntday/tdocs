@@ -43,9 +43,6 @@ Meteor.FilterCollections.publish(Nouns, {
 Meteor.FilterCollections.publish(EA_Relationships, {
 	name: 'ea-relationships'
 });
-Meteor.FilterCollections.publish(Relationships, {
-	name: 'nouns-rels'
-});
 Meteor.FilterCollections.publish(Diagrams, {
 	name: 'diagrams'
 });

@@ -1,49 +1,4 @@
 // UI:Relationships
-NounsRelsFilter = new Meteor.FilterCollections(Relationships, {
-	name: 'nouns-rels',
-	template: 'noun_rels',
-	pager: {
-		options: [50],
-		itemsPerPage: 50,
-		currentPage: 1,
-		showPages: 5
-	},
-	filters: {
-		"target_title": {
-			title: 'Title',
-			operator: ['$regex', 'i'],
-			condition: '$and',
-			searchable: 'required'
-		}
-	},
-	sort: {
-		defaults: [
-			['target_title', 'asc']
-		]
-	},
-	callbacks: {
-		beforeSubscribe: function (query) {
-			var selected_id = getSelectedTreeItem()._id;
-			query.selector = {project_id: getProjectId(), $or: [{source_id:selected_id}, {target_id:selected_id}]}
-			return query;
-		}
-		,beforeResults: function(query){
-			var selected_id = getSelectedTreeItem()._id;
-			query.selector = {project_id: getProjectId(), $or: [{source_id:selected_id}, {target_id:selected_id}]}
-			return query;
-//		},
-//		afterResults: function(cursor){
-//			var alteredResults = cursor.fetch();
-//			_.each(alteredResults, function(result, idx){
-//				var selectedNoun = getSelectedTreeItem(true);
-//				var rel = ea.getRelationshipSemantic( selectedNoun.original.class_name, result.class_name );
-//				alteredResults[idx].semantic = rel.semantic;
-//				alteredResults[idx].rel_name = rel.rel_name;
-//			});
-//			return alteredResults;
-		}
-	}
-});
 /*------------------------------------------------------------------------------------------------------------------------------*/
 Template.noun_rels.helpers({
 	target_icon: function() {
@@ -54,6 +9,30 @@ Template.noun_rels.helpers({
 	},
 	canEdit: function() {
 		return canEdit( Meteor.user() );
+	},
+	tables: function () {
+		var selected_id = getSelectedTreeItem()._id;
+		var query = {project_id: getProjectId(), $or: [{source_id:selected_id}, {target_id:selected_id}]}
+
+		return Relationships.find(query);
+	},
+	tableSettings: function () {
+		return {
+			rowsPerPage: 15,
+			showNavigation: 'auto',
+			showFilter: false,
+			fields: [
+				{ key: 'source_class_name', label: ' ', fn: function(value){
+					return getIcon(value);
+				} },
+				{ key: 'source_title', label: 'Source' },
+				{ key: 'semantic', label: 'Relationship' },
+				{ key: 'target_class_name', label: ' ', fn: function(value){
+					return getIcon(value);
+				} },
+				{ key: 'target_title', label: 'Target' }
+			]
+		};
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -71,3 +50,8 @@ Template.noun_rels.events({
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/
+/*--------- FUNCTIONS ----------------------------------------------------------------------------------------------------------*/
+var getIcon = function(class_name){
+	var clazz = 'glyphicon glyphicon-' + ea.getClassBelongsToArea(class_name).icon;
+	return new Spacebars.SafeString('<span class="' + clazz + '"></span>');
+};
