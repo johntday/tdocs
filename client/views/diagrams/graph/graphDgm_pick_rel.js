@@ -1,19 +1,16 @@
+var d;
 
 Template.graphDgm_pick_rel.helpers({
 	relationships: function() {
-		return ea.getRelationships( this.source_class_name, this.target_class_name );
+		d = this;
+		var rels = ea.getRelationships( this.source_class_name, this.target_class_name );
+		return rels;
 	},
 	source_icon: function() {
-		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.source_class_name).icon;
+		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(d.source_class_name).icon;
 	},
 	target_icon: function() {
-		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(this.target_class_name).icon;
-	},
-	source_title: function() {
-		return this.source_title;
-	},
-	target_title: function() {
-		return this.target_title;
+		return "glyphicon glyphicon-" + ea.getClassBelongsToArea(d.target_class_name).icon;
 	}
 });
 /*------------------------------------------------------------------------------------------------------------------------------*/

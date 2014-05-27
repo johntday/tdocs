@@ -351,6 +351,8 @@ Template.tmpl_graphDgm_detail.rendered = function() {
 		relationshipDialogOpen = true;
 
 		bootbox.dialog({
+//			template: Template.graphDgm_pick_rel
+//			,data: {source_class_name:source_class_name, target_class_name:target_class_name, source_title:source_title, target_title:target_title}
 			title: "Pick a relationship type"
 			,message:
 				'<div id="crap"></div>'
