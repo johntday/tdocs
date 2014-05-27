@@ -27,7 +27,7 @@ Template.diagramNounFilter.helpers({
 			showNavigation: 'auto',
 			showFilter: false,
 			fields: [
-				{ key: 'title', label: 'Title', fn: function(value, object){
+				{ key: 'title', label: 'Title', sort: 1, fn: function(value, object){
 					var href = '/graph/' + object._id;
 					return new Spacebars.SafeString('<a href="' + href + '">' + value + '</a>');
 				} },
