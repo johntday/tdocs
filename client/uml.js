@@ -1,3 +1,4 @@
+
 joint.shapes.uml = {};
 
 joint.shapes.uml.Class = joint.shapes.basic.Generic.extend({
