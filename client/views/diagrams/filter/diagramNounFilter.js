@@ -23,7 +23,8 @@ Template.diagramNounFilter.helpers({
 	},
 	tableSettings: function () {
 		return {
-			rowsPerPage: 15,
+            group: 'diagramNounFilter',
+            rowsPerPage: 15,
 			showNavigation: 'auto',
 			showFilter: false,
 			fields: [

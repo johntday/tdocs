@@ -12,6 +12,7 @@ Template.noun_filter_list.helpers({
 
     tableSettings: function () {
         return {
+            group: 'noun_filter_list',
             rowsPerPage: 15,
             showNavigation: 'auto',
             fields: [
@@ -19,7 +20,7 @@ Template.noun_filter_list.helpers({
                     var icon_class = "glyphicon glyphicon-" + ea.getClassBelongsToArea(value).icon;
                     return new Spacebars.SafeString('<span class="' + icon_class + '"> </span> ');
                 } },
-                { key: 'title', label: 'Title', fn: function(value, object){
+                { key: 'title', label: 'Title', sort: 1, fn: function(value, object){
                     var href = '/nouns/' + object._id;
                     return new Spacebars.SafeString('<a href="' + href + '">' + value + '</a>');
                 } },

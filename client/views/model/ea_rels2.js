@@ -6,7 +6,8 @@ Template.eaRels.helpers({
 
 	tableSettings: function () {
 		return {
-			rowsPerPage: 15,
+            group: 'eaRels',
+            rowsPerPage: 15,
 			showNavigation: 'auto',
 			fields: [
 				{ key: 'rel_name', label: 'rel_name' },

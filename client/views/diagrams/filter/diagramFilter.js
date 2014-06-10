@@ -8,7 +8,8 @@ Template.diagramFilter.helpers({
 
     tableSettings: function () {
         return {
-            rowsPerPage: 15,
+        group: 'diagramFilter',
+        rowsPerPage: 15,
             showNavigation: 'auto',
             fields: [
                 { key: 'title', label: 'Title', fn: function(value, object){
