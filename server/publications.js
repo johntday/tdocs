@@ -31,24 +31,24 @@ Meteor.reactivePublish(null, function() {
 /**
  * Filter
  */
-Meteor.FilterCollections.publish(Nouns, {
-	name: 'nouns-full'
-});
-Meteor.FilterCollections.publish(Nouns, {
-	name: 'possible-rels-for-noun'
-});
-Meteor.FilterCollections.publish(Nouns, {
-	name: 'nouns-simple'
-});
-Meteor.FilterCollections.publish(EA_Relationships, {
-	name: 'ea-relationships'
-});
-Meteor.FilterCollections.publish(Diagrams, {
-	name: 'diagrams'
-});
-Meteor.FilterCollections.publish(Diagrams, {
-	name: 'diagrams-pic'
-});
+//Meteor.FilterCollections.publish(Nouns, {
+//	name: 'nouns-full'
+//});
+//Meteor.FilterCollections.publish(Nouns, {
+//	name: 'possible-rels-for-noun'
+//});
+//Meteor.FilterCollections.publish(Nouns, {
+//	name: 'nouns-simple'
+//});
+//Meteor.FilterCollections.publish(EA_Relationships, {
+//	name: 'ea-relationships'
+//});
+//Meteor.FilterCollections.publish(Diagrams, {
+//	name: 'diagrams'
+//});
+//Meteor.FilterCollections.publish(Diagrams, {
+//	name: 'diagrams-pic'
+//});
 
 /**
  * Tdocs
@@ -81,28 +81,6 @@ Meteor.publish('pubsub_person_list', function(query, options, limit) {
 });
 Meteor.publish('pubsub_selected_person', function(id) {
 	return Persons.find(id);
-});
-
-/**
- * Glossarys
- */
-Meteor.publish('pubsub_glossary_list', function(query, options, limit) {
-	options = options || {}; options.limit = limit;
-	return Glossarys.find(query || {}, options);
-});
-Meteor.publish('pubsub_selected_glossary', function(id) {
-	return Glossarys.find(id);
-});
-
-/**
- * Tables
- */
-Meteor.publish('pubsub_table_list', function(query, options, limit) {
-	options = options || {}; options.limit = limit;
-	return Tables.find(query || {}, options);
-});
-Meteor.publish('pubsub_selected_table', function(id) {
-	return Tables.find(id);
 });
 
 /**

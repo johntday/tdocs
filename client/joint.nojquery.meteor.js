@@ -8037,8 +8037,6 @@
         } else if (name === 'id') {
             el.id = value;
         } else {
-	        if (_.isNumber(value) && value < 0)
-	            value = 0;
             el.setAttribute(name, value);
         }
     }
@@ -11427,7 +11425,9 @@ joint.dia.ElementView = joint.dia.CellView.extend({
         // relative to the root bounding box following the `ref-x` and `ref-y` attributes.
         if (vel.attr('transform')) {
 
-            vel.attr('transform', vel.attr('transform').replace(/translate\([^)]*\)/g, '') || '');
+            var x = vel.attr('transform').replace(/translate\([^)]*\)/g, '');
+            x = x ? x.trim() : x;
+            vel.attr('transform', x || '');//????
         }
 
         function isDefined(x) {
@@ -11613,6 +11613,8 @@ joint.dia.ElementView = joint.dia.CellView.extend({
             return;
         }
         var scalableBbox = scalable.bbox(true);
+
+        if ( !(scalableBbox && scalableBbox.width !==0 && scalableBbox.height !==0) ) return;
         
         scalable.attr('transform', 'scale(' + (size.width / scalableBbox.width) + ',' + (size.height / scalableBbox.height) + ')');
 
@@ -12990,6 +12992,7 @@ joint.dia.Paper = Backbone.View.extend({
     },
 
     setDimensions: function(width, height) {
+        if ( !(width && width>0 && height && height>0) ) return;
 
         if (width) this.options.width = width;
         if (height) this.options.height = height;

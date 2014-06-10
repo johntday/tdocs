@@ -61,11 +61,11 @@ Template.tmpl_noun_detail.events({
 	},
 	'click #area': function(e) {
 		e.preventDefault();
-		gotoNounFilterPage('area_code', {value:this.area_code, condition:'$and'});
+		gotoNounFilterPage('area_code', this.area_code);
 	},
 	'click #class_name': function(e) {
 		e.preventDefault();
-		gotoNounFilterPage('class_name', {value:this.class_name, condition:'$and'});
+		gotoNounFilterPage('class_name', this.class_name);
 	},
 	'click #btnEditToggle': function(e) {
 		e.preventDefault();
@@ -201,3 +201,7 @@ Template.tmpl_noun_detail.destroyed = function() {
 	}
 };
 /*---------- FUNCTIONS and VARs ------------------------------------------------------------------------------------------------*/
+var gotoNounFilterPage = function(key, filter) {
+    queryFilters.nouns[key] = filter;
+    Router.go('/nouns');
+};

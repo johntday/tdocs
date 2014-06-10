@@ -21,6 +21,8 @@ Session.setDefault('table_sort', 'title');
 Session.setDefault('project_sort', 'title');
 Session.setDefault('noun_sort', 'title');
 
+queryFilters = { nouns: {} };
+
 selectedTreeItemDep = new Deps.Dependency;
 accordian = {open: 'busLayer', ids: ['comLayer', 'busLayer', 'appLayer', 'techLayer', 'modvLayer', 'implLayer']};
 sidebar = {};
